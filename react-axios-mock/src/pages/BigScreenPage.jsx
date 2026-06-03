@@ -1,6 +1,8 @@
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState, useRef, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Box, Typography, Paper, CircularProgress } from '@mui/material'
+import { Box, Typography, Paper, CircularProgress, IconButton } from '@mui/material'
+import FullscreenIcon from '@mui/icons-material/Fullscreen'
+import FullscreenExitIcon from '@mui/icons-material/FullscreenExit'
 import { getEarthquakes } from '../api/earthquake'
 import { getAirQuality } from '../api/airquality'
 import { getCurrentTyphoon } from '../api/typhoon'
@@ -27,6 +29,24 @@ export default function BigScreenPage() {
   const [containerRef, size] = useResize()
   const [loading, setLoading] = useState(true)
   const [data, setData] = useState({ earthquakes: [], airQuality: [], typhoon: null, wind: [] })
+  const [isFullscreen, setIsFullscreen] = useState(false)
+  const pageRef = useRef(null)
+
+  const toggleFullscreen = useCallback(() => {
+    const el = pageRef.current?.parentElement
+    if (!el) return
+    if (document.fullscreenElement) {
+      document.exitFullscreen()
+    } else {
+      el.requestFullscreen()
+    }
+  }, [])
+
+  useEffect(() => {
+    const handler = () => setIsFullscreen(!!document.fullscreenElement)
+    document.addEventListener('fullscreenchange', handler)
+    return () => document.removeEventListener('fullscreenchange', handler)
+  }, [])
 
   const scale = Math.min(size.width / 1920, size.height / 1080)
 
@@ -72,7 +92,7 @@ export default function BigScreenPage() {
 
   return (
     <Box
-      ref={containerRef}
+      ref={(el) => { containerRef.current = el; pageRef.current = el }}
       sx={{
         width: '100%',
         height: '100%',
@@ -82,6 +102,12 @@ export default function BigScreenPage() {
         position: 'relative',
       }}
     >
+      <IconButton
+        onClick={toggleFullscreen}
+        sx={{ position: 'absolute', top: 16, right: 16, zIndex: 10, color: 'rgba(255,255,255,0.7)' }}
+      >
+        {isFullscreen ? <FullscreenExitIcon /> : <FullscreenIcon />}
+      </IconButton>
       <Box
         sx={{
           transform: `scale(${scale})`,
