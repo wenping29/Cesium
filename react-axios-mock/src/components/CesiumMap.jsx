@@ -54,9 +54,9 @@ const BASEMAP_PROVIDERS = {
       minimumLevel: 1, maximumLevel: 18,
     }),
   },
-  amap_traffic: {
+  baidu_traffic: {
     base: new Cesium.UrlTemplateImageryProvider({
-      url: 'https://tm.amap.com/trafficengine/mapabc/traffictile?v=1.0&t=1&x={x}&y={y}&z={z}',
+      url: '/baidu/traffic/TrafficTileService?level={z}&x={x}&y={y}&label=web2&v=017&scaler=2',
       minimumLevel: 1, maximumLevel: 18,
     }),
   },

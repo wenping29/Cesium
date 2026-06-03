@@ -1,24 +1,40 @@
 import Mock from 'mockjs'
-import { generateGoldbergHexGrid, hexGridToGeoJSON } from '../utils/goldberg'
+import { generateLocalHexGrid, hexGridToGeoJSON } from '../utils/goldberg'
 
-const hexGridCells = generateGoldbergHexGrid(4)
-const geoJSON = hexGridToGeoJSON(hexGridCells)
+const cache = {}
 
-Mock.mock('/api/hexgrid/cells', 'get', () => ({
-  code: 200,
-  message: 'success',
-  data: {
-    cells: hexGridCells,
-    total: hexGridCells.length,
-    pentagons: hexGridCells.filter((c) => c.type === 'pentagon').length,
-    hexagons: hexGridCells.filter((c) => c.type === 'hexagon').length,
-  },
-}))
+function getOrGenerate(cellSizeKm) {
+  const key = String(cellSizeKm)
+  if (!cache[key]) {
+    cache[key] = generateLocalHexGrid(35, 108, cellSizeKm, 15)
+  }
+  return cache[key]
+}
 
-Mock.mock('/api/hexgrid/geojson', 'get', () => ({
-  code: 200,
-  message: 'success',
-  data: geoJSON,
-}))
+Mock.mock(/\/api\/hexgrid\/cells(?:\?.*)?$/, 'get', (options) => {
+  const url = new URL(options.url, 'http://localhost')
+  const cellSizeKm = parseFloat(url.searchParams.get('cellSizeKm') || '5')
+  const cells = getOrGenerate(cellSizeKm)
+  return {
+    code: 200,
+    message: 'success',
+    data: {
+      cells,
+      total: cells.length,
+      pentagons: 0,
+      hexagons: cells.length,
+      cellSizeKm,
+    },
+  }
+})
 
-export { hexGridCells, geoJSON }
+Mock.mock(/\/api\/hexgrid\/geojson(?:\?.*)?$/, 'get', (options) => {
+  const url = new URL(options.url, 'http://localhost')
+  const cellSizeKm = parseFloat(url.searchParams.get('cellSizeKm') || '5')
+  const cells = getOrGenerate(cellSizeKm)
+  return {
+    code: 200,
+    message: 'success',
+    data: hexGridToGeoJSON(cells),
+  }
+})

@@ -192,5 +192,57 @@ function hexGridToGeoJSON(cells) {
   }
 }
 
-export { generateGoldbergHexGrid, hexGridToGeoJSON }
+function estimateHexWidth(frequency) {
+  const EARTH_CIRCUMFERENCE = 40075
+  return EARTH_CIRCUMFERENCE / (5 * frequency)
+}
+
+function generateLocalHexGrid(centerLat, centerLng, cellSizeKm = 5, rings = 15) {
+  const w = cellSizeKm
+  const s = w / Math.sqrt(3)
+  const LAT_PER_KM = 1 / 111.32
+  const lngScale = Math.cos(centerLat * Math.PI / 180)
+
+  const cells = []
+  let id = 0
+
+  for (let q = -rings; q <= rings; q++) {
+    for (let r = -rings; r <= rings; r++) {
+      const xKm = w * (q + r * 0.5)
+      const yKm = w * (Math.sqrt(3) / 2) * r
+      if (Math.sqrt(xKm * xKm + yKm * yKm) > rings * w * 0.9) continue
+
+      const lat = centerLat + yKm * LAT_PER_KM
+      const lng = centerLng + xKm * LAT_PER_KM / lngScale
+
+      const sdeg = s * LAT_PER_KM
+      const lngScaleAt = Math.cos(lat * Math.PI / 180)
+      const vertices = []
+      for (let i = 0; i < 6; i++) {
+        const theta = i * 60 * Math.PI / 180
+        const vx = sdeg * Math.sin(theta)
+        const vy = sdeg * Math.cos(theta)
+        vertices.push({ lat: lat + vy, lng: lng + vx / lngScaleAt })
+      }
+
+      cells.push({
+        id: `hex_${id++}`,
+        center: { lat, lng },
+        vertices,
+        type: 'hexagon',
+        numSides: 6,
+        properties: {
+          name: `Cell (${q},${r})`,
+          elevation: Math.floor(Math.random() * 500),
+          population: Math.floor(Math.random() * 1000),
+          region: '',
+        },
+      })
+    }
+  }
+
+  return cells
+}
+
+export { generateGoldbergHexGrid, hexGridToGeoJSON, estimateHexWidth, generateLocalHexGrid }
 export default generateGoldbergHexGrid

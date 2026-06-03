@@ -17,7 +17,7 @@ const BASEMAP_OPTIONS = [
   { id: 'tianditu_ter', name: '天地图地形', type: 'tianditu', layer: 'ter', annotation: 'cta' },
   { id: 'amap_vec', name: '高德街道图', type: 'amap', layer: 'vec' },
   { id: 'amap_img', name: '高德卫星图', type: 'amap', layer: 'img' },
-  { id: 'amap_traffic', name: '高德交通图', type: 'amap', layer: 'traffic' },
+  { id: 'baidu_traffic', name: '百度交通图', type: 'baidu', layer: 'traffic' },
 ]
 
 const LAYER_TYPE_LABELS = { wms: 'WMS', wmts: 'WMTS', xyz: '在线地图' }
@@ -33,6 +33,9 @@ export default function LayerControl({
   onToggleHexGrid,
   hexGridOpacity,
   onHexGridOpacity,
+  hexGridFrequency,
+  onHexGridFrequency,
+  hexGridWidthKm,
 }) {
   const [expanded, setExpanded] = useState(true)
   const [showAddDialog, setShowAddDialog] = useState(false)
@@ -101,6 +104,18 @@ export default function LayerControl({
             <Box sx={{ pl: 4, pr: 1, mb: 1 }}>
               <Typography variant="caption" color="text.secondary">透明度</Typography>
               <Slider value={hexGridOpacity} onChange={(_, v) => onHexGridOpacity(v)} min={0} max={1} step={0.1} size="small" />
+              <Typography variant="caption" color="text.secondary" sx={{ mt: 1, display: 'block' }}>
+                对边距: ~{hexGridWidthKm}km
+              </Typography>
+              <Slider
+                value={hexGridFrequency}
+                onChange={(_, v) => onHexGridFrequency(v)}
+                min={2}
+                max={10}
+                step={1}
+                size="small"
+                marks
+              />
             </Box>
           )}
 

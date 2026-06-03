@@ -18,6 +18,12 @@ export default defineConfig({
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/amap/, ''),
         secure: false,
+      },
+      '/baidu': {
+        target: 'https://its.map.baidu.com',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/baidu/, ''),
+        secure: false,
       }
     }
   }

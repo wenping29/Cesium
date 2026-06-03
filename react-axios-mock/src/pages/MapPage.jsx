@@ -29,6 +29,9 @@ export default function MapPage() {
     setVisible: setHexGridVisible,
     opacity: hexGridOpacity,
     setOpacity: setHexGridOpacity,
+    frequency: hexGridFrequency,
+    setFrequency: setHexGridFrequency,
+    approxWidthKm: hexGridWidthKm,
   } = useHexGridStore()
 
   useEffect(() => {
@@ -93,6 +96,9 @@ export default function MapPage() {
         onToggleHexGrid={() => setHexGridVisible(!hexGridVisible)}
         hexGridOpacity={hexGridOpacity}
         onHexGridOpacity={setHexGridOpacity}
+        hexGridFrequency={hexGridFrequency}
+        onHexGridFrequency={setHexGridFrequency}
+        hexGridWidthKm={hexGridWidthKm}
       />
 
       {!loadingBim && bimData && showBIM && (
