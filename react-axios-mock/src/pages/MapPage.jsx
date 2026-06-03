@@ -1,9 +1,11 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { Box, Typography } from '@mui/material'
 import CesiumMap from '../components/CesiumMap'
 import LayerControl from '../components/LayerControl'
 import BIMControl from '../components/BIMControl'
 import { getBIMModels } from '../api/bim'
+import useLayerStore from '../store/layerStore'
+import useHexGridStore from '../store/hexGridStore'
 
 export default function MapPage() {
   const [currentBasemap, setCurrentBasemap] = useState('tianditu_vec')
@@ -11,48 +13,59 @@ export default function MapPage() {
   const [selectedBimModels, setSelectedBimModels] = useState([])
   const [loadingBim, setLoadingBim] = useState(true)
 
-  // 加载BIM数据
-  const loadBimData = async () => {
+  const {
+    layers: customLayers,
+    fetchLayers,
+    toggleLayer,
+    addLayer,
+    removeLayer,
+  } = useLayerStore()
+
+  const {
+    cells: hexGridCells,
+    fetchCells,
+    visible: hexGridVisible,
+    setVisible: setHexGridVisible,
+    opacity: hexGridOpacity,
+    setOpacity: setHexGridOpacity,
+  } = useHexGridStore()
+
+  useEffect(() => {
+    fetchLayers()
+    fetchCells()
+  }, [fetchLayers, fetchCells])
+
+  const loadBimData = useCallback(async () => {
     try {
       setLoadingBim(true)
       const res = await getBIMModels()
       setBimData(res.data)
-      
-      // 默认选择所有已激活的模型
       const activeModels = res.data.models
-        .filter(model => model.status === 'active')
-        .map(model => model.id)
+        .filter((model) => model.status === 'active')
+        .map((model) => model.id)
       setSelectedBimModels(activeModels)
     } catch (error) {
       console.error('Failed to load BIM data:', error)
     } finally {
       setLoadingBim(false)
     }
-  }
+  }, [])
 
   useEffect(() => {
     loadBimData()
-  }, [])
+  }, [loadBimData])
 
-  // 切换BIM模型显示
   const handleBimModelToggle = (modelId) => {
-    setSelectedBimModels(prev => {
-      if (prev.includes(modelId)) {
-        return prev.filter(id => id !== modelId)
-      } else {
-        return [...prev, modelId]
-      }
-    })
+    setSelectedBimModels((prev) =>
+      prev.includes(modelId) ? prev.filter((id) => id !== modelId) : [...prev, modelId]
+    )
   }
 
-  // 选择BIM模型（飞行到模型位置）
   const handleBimModelSelect = (model) => {
-    // 可以在这里添加额外的选择逻辑
     console.log('Selected BIM model:', model)
   }
 
-  // 获取当前选中的BIM模型数据
-  const activeBimModels = bimData?.models?.filter(model => 
+  const activeBimModels = bimData?.models?.filter((model) =>
     selectedBimModels.includes(model.id)
   ) || []
 
@@ -67,12 +80,20 @@ export default function MapPage() {
       >
         Cesium 3D Map
       </Typography>
-      
-      <LayerControl 
-        currentBasemap={currentBasemap} 
-        onBasemapChange={setCurrentBasemap} 
+
+      <LayerControl
+        currentBasemap={currentBasemap}
+        onBasemapChange={setCurrentBasemap}
+        customLayers={customLayers}
+        onToggleLayer={toggleLayer}
+        onRemoveLayer={removeLayer}
+        onAddLayer={addLayer}
+        hexGridVisible={hexGridVisible}
+        onToggleHexGrid={() => setHexGridVisible(!hexGridVisible)}
+        hexGridOpacity={hexGridOpacity}
+        onHexGridOpacity={setHexGridOpacity}
       />
-      
+
       {!loadingBim && bimData && (
         <BIMControl
           bimData={bimData}
@@ -82,10 +103,14 @@ export default function MapPage() {
           onRefresh={loadBimData}
         />
       )}
-      
-      <CesiumMap 
-        currentBasemap={currentBasemap} 
+
+      <CesiumMap
+        currentBasemap={currentBasemap}
         bimModels={activeBimModels}
+        hexGridCells={hexGridVisible ? hexGridCells : []}
+        hexGridVisible={hexGridVisible}
+        hexGridOpacity={hexGridOpacity}
+        customLayers={customLayers}
       />
     </Box>
   )
