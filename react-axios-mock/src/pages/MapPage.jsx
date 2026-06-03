@@ -259,6 +259,9 @@ export default function MapPage() {
         hexGridVisible={hexGridVisible}
         hexGridOpacity={hexGridOpacity}
         customLayers={customLayers}
+        earthquakeData={earthquakes}
+        earthquakeVisible={earthquakeVisible}
+        selectedEarthquake={selectedEarthquake}
       />
     </Box>
   )

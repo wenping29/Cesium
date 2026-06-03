@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import * as Cesium from 'cesium'
 import { Box, CircularProgress, Typography } from '@mui/material'
+import { useTranslation } from 'react-i18next'
 import { getCities } from '../api/cesium'
 
 Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJiYjM0OTdiZi0yN2EzLTRkNmItODlkZC1iNGQyZWNjODk1MjkiLCJpZCI6NTc3NjQsInN1YiI6IuaEpOaAkueahOmYv-aWhyIsImlzcyI6Imh0dHBzOi8vaW9uLmNlc2l1bS5jb20iLCJhdWQiOiJhcHAyIiwiaWF0IjoxNzc4ODIxOTk4fQ.HTtyOKV1KT7CNZypQcaqPJYQAYCpaInCh0NwfbctEng'
@@ -109,7 +110,11 @@ export default function CesiumMap({
   hexGridVisible = false,
   hexGridOpacity = 0.6,
   customLayers = [],
+  earthquakeData = [],
+  earthquakeVisible = false,
+  selectedEarthquake = null,
 }) {
+  const { t } = useTranslation()
   const containerRef = useRef(null)
   const [error, setError] = useState(null)
   const [loading, setLoading] = useState(true)
@@ -117,6 +122,7 @@ export default function CesiumMap({
   const bimEntitiesRef = useRef({})
   const hexEntitiesRef = useRef([])
   const customImageryRef = useRef({})
+  const earthquakeEntitiesRef = useRef([])
 
   const addBasemapLayer = (viewer, basemapId) => {
     const provider = BASEMAP_PROVIDERS[basemapId]
@@ -282,6 +288,70 @@ export default function CesiumMap({
     })
   }, [hexGridCells, hexGridVisible, hexGridOpacity])
 
+  function getMagnitudeColor(mag) {
+    if (mag < 3) return Cesium.Color.fromCssColorString('#4caf50')
+    if (mag < 5) return Cesium.Color.fromCssColorString('#ff9800')
+    if (mag < 7) return Cesium.Color.fromCssColorString('#f44336')
+    return Cesium.Color.fromCssColorString('#9c27b0')
+  }
+
+  useEffect(() => {
+    const viewer = viewerRef.current
+    if (!viewer || viewer.isDestroyed()) return
+
+    earthquakeEntitiesRef.current.forEach((e) => viewer.entities.remove(e))
+    earthquakeEntitiesRef.current = []
+
+    if (!earthquakeVisible || !earthquakeData.length) return
+
+    earthquakeData.forEach((eq) => {
+      const color = getMagnitudeColor(eq.magnitude)
+      const entity = viewer.entities.add({
+        id: `earthquake-${eq.id}`,
+        name: `M${eq.magnitude} - ${eq.region}`,
+        description: `
+          <div style="padding:10px">
+            <h3>${eq.region}</h3>
+            <p><strong>Magnitude:</strong> ${eq.magnitude}</p>
+            <p><strong>Depth:</strong> ${eq.depth} km</p>
+            <p><strong>Time:</strong> ${eq.time}</p>
+            <p><strong>Region:</strong> ${eq.region}</p>
+            <p>${eq.description || ''}</p>
+          </div>
+        `,
+        position: Cesium.Cartesian3.fromDegrees(eq.lng, eq.lat),
+        point: {
+          color,
+          pixelSize: Math.max(8, eq.magnitude * 3),
+          outlineColor: Cesium.Color.WHITE,
+          outlineWidth: 2,
+          scaleByDistance: new Cesium.NearFarScalar(1.5e6, 1.0, 1.5e7, 0.3),
+          heightReference: Cesium.HeightReference.RELATIVE_TO_GROUND,
+        },
+        label: {
+          text: `M${eq.magnitude.toFixed(1)}`,
+          font: '12px sans-serif',
+          fillColor: color,
+          showBackground: true,
+          backgroundColor: Cesium.Color.BLACK.withAlpha(0.5),
+          pixelOffset: { x: 0, y: -16 },
+          heightReference: Cesium.HeightReference.RELATIVE_TO_GROUND,
+        },
+      })
+      earthquakeEntitiesRef.current.push(entity)
+    })
+  }, [earthquakeData, earthquakeVisible])
+
+  useEffect(() => {
+    const viewer = viewerRef.current
+    if (!viewer || viewer.isDestroyed() || !selectedEarthquake || !earthquakeVisible) return
+
+    viewer.flyTo({
+      destination: Cesium.Cartesian3.fromDegrees(selectedEarthquake.lng, selectedEarthquake.lat, 200000),
+      duration: 2,
+    })
+  }, [selectedEarthquake])
+
   const loadBIMModel = async (viewer, bimModel) => {
     try {
       const position = Cesium.Cartesian3.fromDegrees(
@@ -367,6 +437,11 @@ export default function CesiumMap({
           viewer.flyTo(entity, {
             duration: 2,
             offset: new Cesium.HeadingPitchRange(0, Cesium.Math.toRadians(-45), 500),
+          })
+        } else if (String(entity.id).startsWith('earthquake-')) {
+          viewer.flyTo(entity, {
+            duration: 2,
+            offset: new Cesium.HeadingPitchRange(0, Cesium.Math.toRadians(-30), 200000),
           })
         }
       }
