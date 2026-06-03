@@ -1,22 +1,25 @@
 import { useEffect, useRef, useState } from 'react'
 import {
   Viewer, Cartesian3, Color, NearFarScalar,
-  WebMapTileServiceImageryProvider, WebMercatorTilingScheme,
+  UrlTemplateImageryProvider, WebMercatorTilingScheme, Ion,
 } from 'cesium'
 import { Box, CircularProgress, Typography } from '@mui/material'
 import { getCities } from '../api/cesium'
 
+Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJiYjM0OTdiZi0yN2EzLTRkNmItODlkZC1iNGQyZWNjODk1MjkiLCJpZCI6NTc3NjQsInN1YiI6IuaEpOaAkueahOmYv-aWhyIsImlzcyI6Imh0dHBzOi8vaW9uLmNlc2l1bS5jb20iLCJhdWQiOiJhcHAyIiwiaWF0IjoxNzc4ODIxOTk4fQ.HTtyOKV1KT7CNZypQcaqPJYQAYCpaInCh0NwfbctEng'
+
 const TD_TOKEN = 'b4162ac2911ae0392798662d2ad1eda7'
 
 function tdProvider(layer) {
-  return new WebMapTileServiceImageryProvider({
-    url: `https://t0.tianditu.gov.cn/${layer}_c/wmts?tk=${TD_TOKEN}`,
-    layer,
-    style: 'default',
-    format: 'tiles',
-    tileMatrixSetID: 'c',
+  const layers = { vec: 'vec_c', cva: 'cva_c' }
+  return new UrlTemplateImageryProvider({
+    url: '',
     tilingScheme: new WebMercatorTilingScheme(),
     maximumLevel: 18,
+    getTileUrl(x, y, level) {
+      const yInverted = (1 << level) - 1 - y
+      return `https://t0.tianditu.gov.cn/DataServer?T=${layers[layer]}&X=${x}&Y=${yInverted}&L=${level}&tk=${TD_TOKEN}`
+    },
   })
 }
 
