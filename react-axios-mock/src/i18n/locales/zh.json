@@ -66,6 +66,7 @@
     "cellSize": "对边距",
     "custom": "自定义图层",
     "customEmpty": "暂无自定义图层，点击 + 添加",
+    "clearAll": "清空",
     "thematicModules": "专题模块",
     "switch2d": "2D",
     "switch3d": "3D",

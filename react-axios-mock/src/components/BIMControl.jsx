@@ -23,6 +23,7 @@ import {
   ExpandLess,
   Refresh,
   Close,
+  DeleteSweep,
 } from '@mui/icons-material'
 
 // BIM类型图标映射

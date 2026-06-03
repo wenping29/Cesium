@@ -33,6 +33,7 @@ export default function LayerControl({
   onToggleLayer,
   onRemoveLayer,
   onAddLayer,
+  onClearAllLayers,
   hexGridVisible,
   onToggleHexGrid,
   hexGridOpacity,
@@ -191,9 +192,16 @@ export default function LayerControl({
             <Typography variant="caption" sx={{ fontWeight: 'bold' }}>
               {t('layer.custom')} ({customLayers.length})
             </Typography>
-            <IconButton size="small" onClick={() => setShowAddDialog(true)} color="primary">
-              <AddCircleIcon fontSize="small" />
-            </IconButton>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+              {customLayers.length > 0 && (
+                <IconButton size="small" onClick={onClearAllLayers} color="error" sx={{ fontSize: 10 }}>
+                  {t('layer.clearAll')}
+                </IconButton>
+              )}
+              <IconButton size="small" onClick={() => setShowAddDialog(true)} color="primary">
+                <AddCircleIcon fontSize="small" />
+              </IconButton>
+            </Box>
           </Box>
 
           {customLayers.length === 0 ? (

@@ -31,6 +31,7 @@ export default function MapPage() {
     toggleLayer,
     addLayer,
     removeLayer,
+    clearAllLayers,
   } = useLayerStore()
 
   const {
@@ -198,6 +199,7 @@ export default function MapPage() {
         onToggleLayer={toggleLayer}
         onRemoveLayer={removeLayer}
         onAddLayer={addLayer}
+        onClearAllLayers={clearAllLayers}
         hexGridVisible={hexGridVisible}
         onToggleHexGrid={() => setHexGridVisible(!hexGridVisible)}
         hexGridOpacity={hexGridOpacity}

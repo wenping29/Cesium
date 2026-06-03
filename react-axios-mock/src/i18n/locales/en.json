@@ -66,6 +66,7 @@
     "cellSize": "Cell Size",
     "custom": "Custom Layers",
     "customEmpty": "No custom layers, click + to add",
+    "clearAll": "Clear",
     "thematicModules": "Thematic Modules",
     "switch2d": "2D",
     "switch3d": "3D",

@@ -62,6 +62,16 @@ const useLayerStore = create((set, get) => ({
       console.error('Failed to remove layer:', err)
     }
   },
+
+  clearAllLayers: async () => {
+    const layers = get().layers
+    try {
+      await Promise.all(layers.map((l) => apiDeleteLayer(l.id)))
+      set({ layers: [] })
+    } catch (err) {
+      console.error('Failed to clear layers:', err)
+    }
+  },
 }))
 
 export default useLayerStore
