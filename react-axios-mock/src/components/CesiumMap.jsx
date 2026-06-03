@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react'
-import { Viewer, Cartesian3, Color, NearFarScalar, Entity } from 'cesium'
+import { Viewer, Cartesian3, Color, NearFarScalar } from 'cesium'
 import { getCities } from '../api/cesium'
 
 export default function CesiumMap() {

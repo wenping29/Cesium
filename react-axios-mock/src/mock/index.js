@@ -1,4 +1,6 @@
 import Mock from 'mockjs'
+import './cesium'
+import './auth'
 
 const { Random } = Mock
 

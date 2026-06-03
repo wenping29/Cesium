@@ -1,74 +1,38 @@
-import { useState, useEffect } from 'react'
-import { getUsers, createUser } from './api/user'
-import './App.css'
+import { Routes, Route, Navigate } from 'react-router-dom'
+import { Box } from '@mui/material'
+import useAuthStore from './store/authStore'
+import NavBar from './components/NavBar'
+import UsersPage from './pages/UsersPage'
+import MapPage from './pages/MapPage'
+import LoginPage from './pages/LoginPage'
 
-function App() {
-  const [users, setUsers] = useState([])
-  const [loading, setLoading] = useState(true)
-  const [name, setName] = useState('')
-  const [email, setEmail] = useState('')
+function PrivateRoute({ children }) {
+  const token = useAuthStore((s) => s.token)
+  return token ? children : <Navigate to="/login" replace />
+}
 
-  const fetchUsers = async () => {
-    setLoading(true)
-    try {
-      const res = await getUsers()
-      setUsers(res.data)
-    } catch (err) {
-      console.error(err)
-    } finally {
-      setLoading(false)
-    }
-  }
+export default function App() {
+  const token = useAuthStore((s) => s.token)
 
-  useEffect(() => {
-    fetchUsers()
-  }, [])
-
-  const handleCreate = async (e) => {
-    e.preventDefault()
-    if (!name || !email) return
-    await createUser({ name, email })
-    setName('')
-    setEmail('')
-    fetchUsers()
+  if (!token) {
+    return (
+      <Routes>
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="*" element={<Navigate to="/login" replace />} />
+      </Routes>
+    )
   }
 
   return (
-    <div className="app">
-      <h1>React + axios + Mockjs</h1>
-
-      <form onSubmit={handleCreate}>
-        <input placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} />
-        <input placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
-        <button type="submit">Create User</button>
-      </form>
-
-      {loading ? (
-        <p className="loading">Loading...</p>
-      ) : (
-        <table>
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Age</th>
-              <th>Email</th>
-              <th>Fruit</th>
-            </tr>
-          </thead>
-          <tbody>
-            {users.map((u) => (
-              <tr key={u.id}>
-                <td>{u.name}</td>
-                <td>{u.age}</td>
-                <td>{u.email}</td>
-                <td>{u.fruit}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
-    </div>
+    <Box sx={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
+      <NavBar />
+      <Box sx={{ flex: 1, overflow: 'hidden' }}>
+        <Routes>
+          <Route path="/users" element={<PrivateRoute><UsersPage /></PrivateRoute>} />
+          <Route path="/map" element={<PrivateRoute><MapPage /></PrivateRoute>} />
+          <Route path="*" element={<Navigate to="/users" replace />} />
+        </Routes>
+      </Box>
+    </Box>
   )
 }
-
-export default App
