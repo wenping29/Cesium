@@ -54,6 +54,36 @@
   "map": {
     "title": "Cesium 3D Map"
   },
+  "layer": {
+    "title": "Layer Management",
+    "basemap": "Basemap",
+    "overlay": "Overlay Layers",
+    "hexGrid": "Hex Grid",
+    "opacity": "Opacity",
+    "cellSize": "Cell Size",
+    "custom": "Custom Layers",
+    "customEmpty": "No custom layers, click + to add",
+    "addTitle": "Add Layer",
+    "addName": "Layer Name",
+    "addType": "Layer Type",
+    "addUrl": "URL",
+    "addLayer": "Layer",
+    "addFormat": "Format",
+    "addMaxLevel": "Max Level",
+    "cancel": "Cancel",
+    "confirm": "Add",
+    "typeWms": "WMS",
+    "typeWmts": "WMTS",
+    "typeXyz": "Online Map"
+  },
+  "bim": {
+    "title": "BIM Models",
+    "loading": "Loading BIM data...",
+    "modelCount": "models",
+    "active": "Active",
+    "progress": "Progress",
+    "open": "Open BIM Management"
+  },
   "language": {
     "label": "Language",
     "en": "English",

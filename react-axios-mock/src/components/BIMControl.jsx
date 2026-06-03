@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 import {
   Box,
   Paper,
@@ -41,6 +42,7 @@ export default function BIMControl({
   onRefresh,
   onClose
 }) {
+  const { t } = useTranslation()
   const [expanded, setExpanded] = useState(true)
   const [loading, setLoading] = useState(false)
   const [typeExpanded, setTypeExpanded] = useState({})
@@ -98,7 +100,7 @@ export default function BIMControl({
       >
         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', py: 4 }}>
           <CircularProgress size={24} />
-          <Typography sx={{ ml: 1 }}>加载BIM数据...</Typography>
+          <Typography sx={{ ml: 1 }}>{t('bim.loading')}</Typography>
         </Box>
       </Paper>
     )
@@ -123,7 +125,7 @@ export default function BIMControl({
       {/* 标题栏 */}
       <Box sx={{ p: 2, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <Typography variant="subtitle2" sx={{ fontWeight: 'bold', display: 'flex', alignItems: 'center', gap: 1 }}>
-          📦 BIM模型管理
+          📦 {t('bim.title')}
           <Chip label={`${bimData.total || 0}`} size="small" color="primary" />
         </Typography>
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -156,7 +158,7 @@ export default function BIMControl({
                 </ListItemIcon>
                 <ListItemText
                   primary={type.name}
-                  secondary={`${modelsByType[type.id]?.length || 0} 个模型`}
+                  secondary={`${modelsByType[type.id]?.length || 0} ${t('bim.modelCount')}`}
                 />
                 {typeExpanded[type.id] ? <ExpandLess /> : <ExpandMore />}
               </ListItemButton>
@@ -189,7 +191,7 @@ export default function BIMControl({
                           primary={model.name}
                           secondary={
                             <Box component="span" sx={{ fontSize: '0.75rem' }}>
-                              {model.status === 'active' ? '已激活' : `进度: ${model.progress}%`}
+                              {model.status === 'active' ? t('bim.active') : `${t('bim.progress')}: ${model.progress}%`}
                             </Box>
                           }
                           primaryTypographyProps={{ noWrap: true }}

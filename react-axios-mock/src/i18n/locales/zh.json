@@ -54,6 +54,36 @@
   "map": {
     "title": "Cesium 三维地图"
   },
+  "layer": {
+    "title": "图层管理",
+    "basemap": "底图选择",
+    "overlay": "覆盖图层",
+    "hexGrid": "六角格网",
+    "opacity": "透明度",
+    "cellSize": "对边距",
+    "custom": "自定义图层",
+    "customEmpty": "暂无自定义图层，点击 + 添加",
+    "addTitle": "添加图层",
+    "addName": "图层名称",
+    "addType": "图层类型",
+    "addUrl": "URL",
+    "addLayer": "图层",
+    "addFormat": "格式",
+    "addMaxLevel": "最大层级",
+    "cancel": "取消",
+    "confirm": "添加",
+    "typeWms": "WMS",
+    "typeWmts": "WMTS",
+    "typeXyz": "在线地图"
+  },
+  "bim": {
+    "title": "BIM模型管理",
+    "loading": "加载BIM数据...",
+    "modelCount": "个模型",
+    "active": "已激活",
+    "progress": "进度",
+    "open": "打开BIM模型管理"
+  },
   "language": {
     "label": "语言",
     "en": "English",

@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import {
   Box, FormControl, InputLabel, Select, MenuItem, Paper, Typography,
   Checkbox, FormControlLabel, Collapse, Slider, List, ListItem,
@@ -20,8 +21,6 @@ const BASEMAP_OPTIONS = [
   { id: 'baidu_traffic', name: '百度交通图', type: 'baidu', layer: 'traffic' },
 ]
 
-const LAYER_TYPE_LABELS = { wms: 'WMS', wmts: 'WMTS', xyz: '在线地图' }
-
 export default function LayerControl({
   currentBasemap,
   onBasemapChange,
@@ -33,10 +32,10 @@ export default function LayerControl({
   onToggleHexGrid,
   hexGridOpacity,
   onHexGridOpacity,
-  hexGridFrequency,
-  onHexGridFrequency,
-  hexGridWidthKm,
+  hexGridCellSizeKm,
+  onHexGridCellSizeKm,
 }) {
+  const { t } = useTranslation()
   const [expanded, setExpanded] = useState(true)
   const [showAddDialog, setShowAddDialog] = useState(false)
 
@@ -59,7 +58,7 @@ export default function LayerControl({
       >
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
           <LayersIcon fontSize="small" />
-          <Typography variant="subtitle2" sx={{ fontWeight: 'bold' }}>图层管理</Typography>
+          <Typography variant="subtitle2" sx={{ fontWeight: 'bold' }}>{t('layer.title')}</Typography>
         </Box>
         <IconButton size="small">
           {expanded ? <ExpandLessIcon fontSize="small" /> : <ExpandMoreIcon fontSize="small" />}
@@ -69,8 +68,8 @@ export default function LayerControl({
       <Collapse in={expanded}>
         <Box sx={{ px: 1.5, pb: 1.5 }}>
           <FormControl fullWidth size="small" sx={{ mb: 1.5 }}>
-            <InputLabel>底图选择</InputLabel>
-            <Select value={currentBasemap} label="底图选择" onChange={(e) => onBasemapChange(e.target.value)}>
+            <InputLabel>{t('layer.basemap')}</InputLabel>
+            <Select value={currentBasemap} label={t('layer.basemap')} onChange={(e) => onBasemapChange(e.target.value)}>
               {BASEMAP_OPTIONS.map((opt) => (
                 <MenuItem key={opt.id} value={opt.id}>{opt.name}</MenuItem>
               ))}
@@ -80,7 +79,7 @@ export default function LayerControl({
           <Divider sx={{ my: 1 }} />
 
           <Typography variant="caption" sx={{ fontWeight: 'bold', display: 'block', mb: 0.5 }}>
-            覆盖图层
+            {t('layer.overlay')}
           </Typography>
 
           <FormControlLabel
@@ -94,7 +93,7 @@ export default function LayerControl({
             }
             label={
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                <Typography variant="body2">六角格网</Typography>
+                <Typography variant="body2">{t('layer.hexGrid')}</Typography>
                 <Chip label="Goldberg" size="small" color="primary" variant="outlined" sx={{ height: 18, fontSize: 10 }} />
               </Box>
             }
@@ -102,15 +101,15 @@ export default function LayerControl({
           />
           {hexGridVisible && (
             <Box sx={{ pl: 4, pr: 1, mb: 1 }}>
-              <Typography variant="caption" color="text.secondary">透明度</Typography>
+              <Typography variant="caption" color="text.secondary">{t('layer.opacity')}</Typography>
               <Slider value={hexGridOpacity} onChange={(_, v) => onHexGridOpacity(v)} min={0} max={1} step={0.1} size="small" />
               <Typography variant="caption" color="text.secondary" sx={{ mt: 1, display: 'block' }}>
-                对边距: ~{hexGridWidthKm}km
+                {t('layer.cellSize')}: {hexGridCellSizeKm}km
               </Typography>
               <Slider
-                value={hexGridFrequency}
-                onChange={(_, v) => onHexGridFrequency(v)}
-                min={2}
+                value={hexGridCellSizeKm}
+                onChange={(_, v) => onHexGridCellSizeKm(v)}
+                min={1}
                 max={10}
                 step={1}
                 size="small"
@@ -123,7 +122,7 @@ export default function LayerControl({
 
           <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 0.5 }}>
             <Typography variant="caption" sx={{ fontWeight: 'bold' }}>
-              自定义图层 ({customLayers.length})
+              {t('layer.custom')} ({customLayers.length})
             </Typography>
             <IconButton size="small" onClick={() => setShowAddDialog(true)} color="primary">
               <AddCircleIcon fontSize="small" />
@@ -132,7 +131,7 @@ export default function LayerControl({
 
           {customLayers.length === 0 ? (
             <Typography variant="caption" color="text.secondary" sx={{ display: 'block', textAlign: 'center', py: 1 }}>
-              暂无自定义图层，点击 + 添加
+              {t('layer.customEmpty')}
             </Typography>
           ) : (
             <List dense disablePadding>
@@ -145,7 +144,10 @@ export default function LayerControl({
                     primary={<Typography variant="body2" noWrap>{layer.name}</Typography>}
                     secondary={
                       <Typography variant="caption" color="text.secondary">
-                        {LAYER_TYPE_LABELS[layer.type] || layer.type}
+                        {layer.type === 'wms' ? t('layer.typeWms')
+                          : layer.type === 'wmts' ? t('layer.typeWmts')
+                          : layer.type === 'xyz' ? t('layer.typeXyz')
+                          : layer.type}
                       </Typography>
                     }
                   />

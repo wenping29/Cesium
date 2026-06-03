@@ -12,7 +12,7 @@ export default function MapPage() {
   const [bimData, setBimData] = useState(null)
   const [selectedBimModels, setSelectedBimModels] = useState([])
   const [loadingBim, setLoadingBim] = useState(true)
-  const [showBIM, setShowBIM] = useState(true)
+  const [showBIM, setShowBIM] = useState(false)
 
   const {
     layers: customLayers,
@@ -29,9 +29,8 @@ export default function MapPage() {
     setVisible: setHexGridVisible,
     opacity: hexGridOpacity,
     setOpacity: setHexGridOpacity,
-    frequency: hexGridFrequency,
-    setFrequency: setHexGridFrequency,
-    approxWidthKm: hexGridWidthKm,
+    cellSizeKm: hexGridCellSizeKm,
+    setCellSizeKm: setHexGridCellSizeKm,
   } = useHexGridStore()
 
   useEffect(() => {
@@ -96,9 +95,8 @@ export default function MapPage() {
         onToggleHexGrid={() => setHexGridVisible(!hexGridVisible)}
         hexGridOpacity={hexGridOpacity}
         onHexGridOpacity={setHexGridOpacity}
-        hexGridFrequency={hexGridFrequency}
-        onHexGridFrequency={setHexGridFrequency}
-        hexGridWidthKm={hexGridWidthKm}
+        hexGridCellSizeKm={hexGridCellSizeKm}
+        onHexGridCellSizeKm={setHexGridCellSizeKm}
       />
 
       {!loadingBim && bimData && showBIM && (

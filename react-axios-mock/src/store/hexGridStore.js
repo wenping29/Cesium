@@ -5,7 +5,7 @@ const useHexGridStore = create((set, get) => ({
   cells: [],
   geoJSON: null,
   loading: false,
-  visible: true,
+  visible: false,
   opacity: 0.6,
   color: '#4a90e2',
   cellSizeKm: 5,
