@@ -12,6 +12,7 @@ import LockIcon from '@mui/icons-material/Lock'
 import { useTranslation } from 'react-i18next'
 import useAuthStore from '../store/authStore'
 import LanguageSwitcher from './LanguageSwitcher'
+import ThemeSwitcher from './ThemeSwitcher'
 
 export default function NavBar() {
   const { t } = useTranslation()
@@ -58,6 +59,7 @@ export default function NavBar() {
             </Button>
           ))}
 
+          <ThemeSwitcher />
           <LanguageSwitcher />
 
           <Box

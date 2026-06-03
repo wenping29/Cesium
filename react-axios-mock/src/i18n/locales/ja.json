@@ -59,5 +59,13 @@
     "en": "English",
     "zh": "中文",
     "ja": "日本語"
+  },
+  "theme": {
+    "light": "ライト",
+    "dark": "ダーク",
+    "ocean": "オーシャン",
+    "forest": "フォレスト",
+    "sunset": "サンセット",
+    "midnight": "ミッドナイト"
   }
 }
