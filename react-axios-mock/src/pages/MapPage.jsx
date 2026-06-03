@@ -19,6 +19,7 @@ import useWindStore from '../store/windStore'
 export default function MapPage() {
   const { t } = useTranslation()
   const [currentBasemap, setCurrentBasemap] = useState('tianditu_vec')
+  const [sceneMode, setSceneMode] = useState('3d')
   const [bimData, setBimData] = useState(null)
   const [selectedBimModels, setSelectedBimModels] = useState([])
   const [loadingBim, setLoadingBim] = useState(true)
@@ -191,6 +192,8 @@ export default function MapPage() {
       <LayerControl
         currentBasemap={currentBasemap}
         onBasemapChange={setCurrentBasemap}
+        sceneMode={sceneMode}
+        onSceneModeChange={setSceneMode}
         customLayers={customLayers}
         onToggleLayer={toggleLayer}
         onRemoveLayer={removeLayer}
@@ -243,6 +246,7 @@ export default function MapPage() {
 
       <CesiumMap
         currentBasemap={currentBasemap}
+        sceneMode={sceneMode}
         bimModels={activeBimModels}
         hexGridCells={hexGridVisible ? hexGridCells : []}
         hexGridVisible={hexGridVisible}

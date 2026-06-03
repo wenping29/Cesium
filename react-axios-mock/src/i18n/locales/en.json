@@ -67,6 +67,8 @@
     "custom": "Custom Layers",
     "customEmpty": "No custom layers, click + to add",
     "thematicModules": "Thematic Modules",
+    "switch2d": "2D",
+    "switch3d": "3D",
     "addTitle": "Add Layer",
     "addName": "Layer Name",
     "addType": "Layer Type",

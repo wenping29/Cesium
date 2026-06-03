@@ -14,6 +14,7 @@ import VolcanoIcon from '@mui/icons-material/Volcano'
 import AirIcon from '@mui/icons-material/Air'
 import StormIcon from '@mui/icons-material/Storm'
 import WavesIcon from '@mui/icons-material/Waves'
+import ThreeDRotationIcon from '@mui/icons-material/ThreeDRotation'
 import AddLayerDialog from './AddLayerDialog'
 
 const BASEMAP_OPTIONS = [
@@ -46,6 +47,8 @@ export default function LayerControl({
   onToggleTyphoon,
   windVisible,
   onToggleWind,
+  sceneMode,
+  onSceneModeChange,
 }) {
   const { t } = useTranslation()
   const [expanded, setExpanded] = useState(true)
@@ -162,6 +165,25 @@ export default function LayerControl({
               sx={{ mb: 0.2 }}
             />
           ))}
+
+          <Divider sx={{ my: 1 }} />
+
+          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 0.5 }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+              <ThreeDRotationIcon fontSize="small" sx={{ color: sceneMode === '3d' ? '#1976d2' : '#888' }} />
+              <Typography variant="caption" sx={{ fontWeight: 'bold' }}>
+                {sceneMode === '3d' ? '3D' : '2D'}
+              </Typography>
+            </Box>
+            <IconButton
+              size="small"
+              onClick={() => onSceneModeChange(sceneMode === '3d' ? '2d' : '3d')}
+              color={sceneMode === '3d' ? 'primary' : 'default'}
+              sx={{ border: '1px solid', borderColor: sceneMode === '3d' ? 'primary.main' : 'divider', borderRadius: 1, fontSize: 10, px: 1 }}
+            >
+              {sceneMode === '3d' ? t('layer.switch2d') : t('layer.switch3d')}
+            </IconButton>
+          </Box>
 
           <Divider sx={{ my: 1 }} />
 

@@ -67,6 +67,8 @@
     "custom": "カスタムレイヤー",
     "customEmpty": "カスタムレイヤーなし、+ をクリックして追加",
     "thematicModules": "テーマモジュール",
+    "switch2d": "2D",
+    "switch3d": "3D",
     "addTitle": "レイヤー追加",
     "addName": "レイヤー名",
     "addType": "タイプ",

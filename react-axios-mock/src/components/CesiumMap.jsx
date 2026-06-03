@@ -102,6 +102,7 @@ function createCustomImageryProvider(layer) {
 
 export default function CesiumMap({
   currentBasemap = 'tianditu_vec',
+  sceneMode = '3d',
   bimModels = [],
   onBimLoad = null,
   hexGridCells = [],
@@ -218,6 +219,16 @@ export default function CesiumMap({
       changeBasemap(currentBasemap)
     }
   }, [currentBasemap])
+
+  useEffect(() => {
+    const viewer = viewerRef.current
+    if (!viewer || viewer.isDestroyed()) return
+    if (sceneMode === '2d') {
+      viewer.scene.morphTo2D(2)
+    } else {
+      viewer.scene.morphTo3D(2)
+    }
+  }, [sceneMode])
 
   useEffect(() => {
     const viewer = viewerRef.current
