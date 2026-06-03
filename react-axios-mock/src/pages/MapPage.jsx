@@ -134,6 +134,10 @@ export default function MapPage() {
     console.log('Selected BIM model:', model)
   }
 
+  const handleClearBim = () => {
+    setSelectedBimModels([])
+  }
+
   const activeBimModels = bimData?.models?.filter((model) =>
     selectedBimModels.includes(model.id)
   ) || []
@@ -224,6 +228,7 @@ export default function MapPage() {
           onModelSelect={handleBimModelSelect}
           onRefresh={loadBimData}
           onClose={() => setShowBIM(false)}
+          onClear={handleClearBim}
         />
       )}
 

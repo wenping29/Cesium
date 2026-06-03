@@ -41,7 +41,8 @@ export default function BIMControl({
   onModelToggle,
   onModelSelect,
   onRefresh,
-  onClose
+  onClose,
+  onClear,
 }) {
   const { t } = useTranslation()
   const [expanded, setExpanded] = useState(true)
@@ -130,6 +131,11 @@ export default function BIMControl({
           <Chip label={`${bimData.total || 0}`} size="small" color="primary" />
         </Typography>
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
+          {onClear && (
+            <IconButton size="small" onClick={onClear} color="error">
+              <DeleteSweep fontSize="small" />
+            </IconButton>
+          )}
           <IconButton size="small" onClick={handleRefresh} disabled={loading}>
             <Refresh fontSize="small" />
           </IconButton>
