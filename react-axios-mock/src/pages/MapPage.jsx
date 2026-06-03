@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Box, Typography, Fab, Tooltip } from '@mui/material'
 import CesiumMap from '../components/CesiumMap'
 import LayerControl from '../components/LayerControl'
@@ -8,6 +9,7 @@ import useLayerStore from '../store/layerStore'
 import useHexGridStore from '../store/hexGridStore'
 
 export default function MapPage() {
+  const { t } = useTranslation()
   const [currentBasemap, setCurrentBasemap] = useState('tianditu_vec')
   const [bimData, setBimData] = useState(null)
   const [selectedBimModels, setSelectedBimModels] = useState([])
@@ -111,7 +113,7 @@ export default function MapPage() {
       )}
 
       {!showBIM && (
-        <Tooltip title="打开BIM模型管理" placement="right">
+        <Tooltip title={t('bim.open')} placement="right">
           <Fab
             size="small"
             color="primary"
