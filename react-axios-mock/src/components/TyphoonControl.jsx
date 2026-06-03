@@ -4,7 +4,7 @@ import {
   Box, Paper, Typography, List, ListItem, ListItemText, ListItemIcon,
   Collapse, IconButton, Chip, Divider,
 } from '@mui/material'
-import CycloneIcon from '@mui/icons-material/Cyclone'
+import StormIcon from '@mui/icons-material/Storm'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import ExpandLessIcon from '@mui/icons-material/ExpandLess'
 import CloseIcon from '@mui/icons-material/Close'
@@ -19,6 +19,7 @@ export default function TyphoonControl({
   historical,
   onClose,
   onTyphoonClick,
+  sx = {},
 }) {
   const { t } = useTranslation()
   const [expanded, setExpanded] = useState(true)
@@ -27,22 +28,19 @@ export default function TyphoonControl({
   return (
     <Paper
       sx={{
-        position: 'absolute',
-        top: 80,
-        right: 16,
-        zIndex: 1000,
         width: 300,
-        maxHeight: 'calc(100% - 100px)',
+        maxHeight: 'calc(100vh - 180px)',
         bgcolor: 'rgba(255, 255, 255, 0.95)',
         backdropFilter: 'blur(10px)',
         overflow: 'hidden',
         display: 'flex',
         flexDirection: 'column',
+        ...sx,
       }}
     >
       <Box sx={{ p: 1.5, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
-          <CycloneIcon fontSize="small" color="primary" />
+          <StormIcon fontSize="small" color="primary" />
           <Typography variant="subtitle2" sx={{ fontWeight: 'bold' }}>
             {t('typhoon.title')}
           </Typography>
@@ -80,7 +78,7 @@ export default function TyphoonControl({
 
           <ListItemButton sx={{ bgcolor: 'grey.100' }} onClick={() => setShowHistorical(!showHistorical)}>
             <ListItemIcon sx={{ minWidth: 36 }}>
-              <CycloneIcon fontSize="small" />
+              <StormIcon fontSize="small" />
             </ListItemIcon>
             <ListItemText
               primary={t('typhoon.historical')}

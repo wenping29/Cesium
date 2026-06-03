@@ -4,9 +4,17 @@ import { Box, Typography, Fab, Tooltip } from '@mui/material'
 import CesiumMap from '../components/CesiumMap'
 import LayerControl from '../components/LayerControl'
 import BIMControl from '../components/BIMControl'
+import EarthquakeControl from '../components/EarthquakeControl'
+import AirQualityControl from '../components/AirQualityControl'
+import TyphoonControl from '../components/TyphoonControl'
+import WindControl from '../components/WindControl'
 import { getBIMModels } from '../api/bim'
 import useLayerStore from '../store/layerStore'
 import useHexGridStore from '../store/hexGridStore'
+import useEarthquakeStore from '../store/earthquakeStore'
+import useAirQualityStore from '../store/airQualityStore'
+import useTyphoonStore from '../store/typhoonStore'
+import useWindStore from '../store/windStore'
 
 export default function MapPage() {
   const { t } = useTranslation()
@@ -35,10 +43,64 @@ export default function MapPage() {
     setCellSizeKm: setHexGridCellSizeKm,
   } = useHexGridStore()
 
+  const {
+    earthquakes,
+    fetchEarthquakes,
+    visible: earthquakeVisible,
+    setVisible: setEarthquakeVisible,
+  } = useEarthquakeStore()
+
+  const {
+    stations: airQualityStations,
+    fetchAirQuality,
+    visible: airQualityVisible,
+    setVisible: setAirQualityVisible,
+  } = useAirQualityStore()
+
+  const {
+    current: typhoonCurrent,
+    historical: typhoonHistorical,
+    fetchCurrent: fetchTyphoonCurrent,
+    fetchHistorical: fetchTyphoonHistorical,
+    visible: typhoonVisible,
+    setVisible: setTyphoonVisible,
+  } = useTyphoonStore()
+
+  const {
+    windData,
+    fetchWind,
+    visible: windVisible,
+    setVisible: setWindVisible,
+  } = useWindStore()
+
+  const [selectedEarthquake, setSelectedEarthquake] = useState(null)
+  const [selectedStation, setSelectedStation] = useState(null)
+  const [selectedTyphoon, setSelectedTyphoon] = useState(null)
+  const [selectedWind, setSelectedWind] = useState(null)
+
   useEffect(() => {
     fetchLayers()
     fetchCells()
   }, [fetchLayers, fetchCells])
+
+  useEffect(() => {
+    if (earthquakeVisible) fetchEarthquakes()
+  }, [earthquakeVisible, fetchEarthquakes])
+
+  useEffect(() => {
+    if (airQualityVisible) fetchAirQuality()
+  }, [airQualityVisible, fetchAirQuality])
+
+  useEffect(() => {
+    if (typhoonVisible) {
+      fetchTyphoonCurrent()
+      fetchTyphoonHistorical()
+    }
+  }, [typhoonVisible, fetchTyphoonCurrent, fetchTyphoonHistorical])
+
+  useEffect(() => {
+    if (windVisible) fetchWind()
+  }, [windVisible, fetchWind])
 
   const loadBimData = useCallback(async () => {
     try {
@@ -74,6 +136,46 @@ export default function MapPage() {
     selectedBimModels.includes(model.id)
   ) || []
 
+  const moduleControlProps = [
+    earthquakeVisible && {
+      key: 'earthquake',
+      Component: EarthquakeControl,
+      props: {
+        earthquakes,
+        onClose: () => setEarthquakeVisible(false),
+        onEarthquakeClick: (eq) => setSelectedEarthquake(eq),
+      },
+    },
+    airQualityVisible && {
+      key: 'airQuality',
+      Component: AirQualityControl,
+      props: {
+        stations: airQualityStations,
+        onClose: () => setAirQualityVisible(false),
+        onStationClick: (s) => setSelectedStation(s),
+      },
+    },
+    typhoonVisible && {
+      key: 'typhoon',
+      Component: TyphoonControl,
+      props: {
+        current: typhoonCurrent,
+        historical: typhoonHistorical,
+        onClose: () => setTyphoonVisible(false),
+        onTyphoonClick: (ty) => setSelectedTyphoon(ty),
+      },
+    },
+    windVisible && {
+      key: 'wind',
+      Component: WindControl,
+      props: {
+        windData,
+        onClose: () => setWindVisible(false),
+        onWindClick: (w) => setSelectedWind(w),
+      },
+    },
+  ].filter(Boolean)
+
   return (
     <Box sx={{ width: '100%', height: '100%', position: 'relative' }}>
       <Typography
@@ -99,6 +201,14 @@ export default function MapPage() {
         onHexGridOpacity={setHexGridOpacity}
         hexGridCellSizeKm={hexGridCellSizeKm}
         onHexGridCellSizeKm={setHexGridCellSizeKm}
+        earthquakeVisible={earthquakeVisible}
+        onToggleEarthquake={() => setEarthquakeVisible(!earthquakeVisible)}
+        airQualityVisible={airQualityVisible}
+        onToggleAirQuality={() => setAirQualityVisible(!airQualityVisible)}
+        typhoonVisible={typhoonVisible}
+        onToggleTyphoon={() => setTyphoonVisible(!typhoonVisible)}
+        windVisible={windVisible}
+        onToggleWind={() => setWindVisible(!windVisible)}
       />
 
       {!loadingBim && bimData && showBIM && (
@@ -124,6 +234,12 @@ export default function MapPage() {
           </Fab>
         </Tooltip>
       )}
+
+      {moduleControlProps.map((m, i) => (
+        <Box key={m.key} sx={{ position: 'absolute', top: 80 + i * 380, right: 340, zIndex: 1000 }}>
+          <m.Component {...m.props} />
+        </Box>
+      ))}
 
       <CesiumMap
         currentBasemap={currentBasemap}

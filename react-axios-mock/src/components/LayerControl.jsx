@@ -10,6 +10,10 @@ import AddCircleIcon from '@mui/icons-material/AddCircle'
 import DeleteIcon from '@mui/icons-material/Delete'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import ExpandLessIcon from '@mui/icons-material/ExpandLess'
+import VolcanoIcon from '@mui/icons-material/Volcano'
+import AirIcon from '@mui/icons-material/Air'
+import StormIcon from '@mui/icons-material/Storm'
+import WavesIcon from '@mui/icons-material/Waves'
 import AddLayerDialog from './AddLayerDialog'
 
 const BASEMAP_OPTIONS = [
@@ -34,10 +38,25 @@ export default function LayerControl({
   onHexGridOpacity,
   hexGridCellSizeKm,
   onHexGridCellSizeKm,
+  earthquakeVisible,
+  onToggleEarthquake,
+  airQualityVisible,
+  onToggleAirQuality,
+  typhoonVisible,
+  onToggleTyphoon,
+  windVisible,
+  onToggleWind,
 }) {
   const { t } = useTranslation()
   const [expanded, setExpanded] = useState(true)
   const [showAddDialog, setShowAddDialog] = useState(false)
+
+  const thematicModules = [
+    { key: 'earthquake', label: t('earthquake.title'), visible: earthquakeVisible, onToggle: onToggleEarthquake, icon: <VolcanoIcon fontSize="small" sx={{ color: '#f44336' }} /> },
+    { key: 'airQuality', label: t('airQuality.title'), visible: airQualityVisible, onToggle: onToggleAirQuality, icon: <AirIcon fontSize="small" sx={{ color: '#4caf50' }} /> },
+    { key: 'typhoon', label: t('typhoon.title'), visible: typhoonVisible, onToggle: onToggleTyphoon, icon: <StormIcon fontSize="small" sx={{ color: '#1976d2' }} /> },
+    { key: 'wind', label: t('wind.title'), visible: windVisible, onToggle: onToggleWind, icon: <WavesIcon fontSize="small" sx={{ color: '#00acc1' }} /> },
+  ]
 
   return (
     <Paper
@@ -117,6 +136,32 @@ export default function LayerControl({
               />
             </Box>
           )}
+
+          <Divider sx={{ my: 1 }} />
+
+          <Typography variant="caption" sx={{ fontWeight: 'bold', display: 'block', mb: 0.5 }}>
+            {t('layer.thematicModules')}
+          </Typography>
+
+          {thematicModules.map((mod) => (
+            <FormControlLabel
+              key={mod.key}
+              control={
+                <Checkbox
+                  checked={mod.visible}
+                  onChange={mod.onToggle}
+                  size="small"
+                />
+              }
+              label={
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                  {mod.icon}
+                  <Typography variant="body2">{mod.label}</Typography>
+                </Box>
+              }
+              sx={{ mb: 0.2 }}
+            />
+          ))}
 
           <Divider sx={{ my: 1 }} />
 

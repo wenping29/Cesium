@@ -19,6 +19,7 @@ export default function WindControl({
   windData,
   onClose,
   onWindClick,
+  sx = {},
 }) {
   const { t } = useTranslation()
   const [expanded, setExpanded] = useState(true)
@@ -26,17 +27,14 @@ export default function WindControl({
   return (
     <Paper
       sx={{
-        position: 'absolute',
-        top: 80,
-        right: 16,
-        zIndex: 1000,
         width: 300,
-        maxHeight: 'calc(100% - 100px)',
+        maxHeight: 'calc(100vh - 180px)',
         bgcolor: 'rgba(255, 255, 255, 0.95)',
         backdropFilter: 'blur(10px)',
         overflow: 'hidden',
         display: 'flex',
         flexDirection: 'column',
+        ...sx,
       }}
     >
       <Box sx={{ p: 1.5, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>

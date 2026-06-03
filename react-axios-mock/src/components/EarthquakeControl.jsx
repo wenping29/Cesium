@@ -4,7 +4,7 @@ import {
   Box, Paper, Typography, List, ListItem, ListItemText, ListItemIcon,
   Collapse, IconButton, Chip, Divider,
 } from '@mui/material'
-import EarthquakeIcon from '@mui/icons-material/Earthquake'
+import VolcanoIcon from '@mui/icons-material/Volcano'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import ExpandLessIcon from '@mui/icons-material/ExpandLess'
 import CloseIcon from '@mui/icons-material/Close'
@@ -32,6 +32,7 @@ export default function EarthquakeControl({
   earthquakes,
   onClose,
   onEarthquakeClick,
+  sx = {},
 }) {
   const { t } = useTranslation()
   const [expanded, setExpanded] = useState(true)
@@ -51,7 +52,7 @@ export default function EarthquakeControl({
     >
       <Box sx={{ p: 1.5, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
-          <EarthquakeIcon fontSize="small" color="error" />
+          <VolcanoIcon fontSize="small" color="error" />
           <Typography variant="subtitle2" sx={{ fontWeight: 'bold' }}>
             {t('earthquake.title')}
           </Typography>
