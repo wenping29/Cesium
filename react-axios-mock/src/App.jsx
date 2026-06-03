@@ -5,6 +5,8 @@ import NavBar from './components/NavBar'
 import UsersPage from './pages/UsersPage'
 import MapPage from './pages/MapPage'
 import LoginPage from './pages/LoginPage'
+import EditProfilePage from './pages/EditProfilePage'
+import ChangePasswordPage from './pages/ChangePasswordPage'
 
 function PrivateRoute({ children }) {
   const token = useAuthStore((s) => s.token)
@@ -30,6 +32,8 @@ export default function App() {
         <Routes>
           <Route path="/users" element={<PrivateRoute><UsersPage /></PrivateRoute>} />
           <Route path="/map" element={<PrivateRoute><MapPage /></PrivateRoute>} />
+          <Route path="/profile" element={<PrivateRoute><EditProfilePage /></PrivateRoute>} />
+          <Route path="/change-password" element={<PrivateRoute><ChangePasswordPage /></PrivateRoute>} />
           <Route path="*" element={<Navigate to="/users" replace />} />
         </Routes>
       </Box>

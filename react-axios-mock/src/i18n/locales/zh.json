@@ -1,0 +1,63 @@
+{
+  "nav": {
+    "appTitle": "React 应用",
+    "users": "用户管理",
+    "map": "地图",
+    "editProfile": "修改资料",
+    "changePassword": "修改密码",
+    "logout": "退出登录"
+  },
+  "login": {
+    "title": "登录",
+    "username": "用户名",
+    "password": "密码",
+    "loggingIn": "登录中...",
+    "validation": "请输入用户名和密码",
+    "failed": "登录失败",
+    "invalidCredentials": "用户名或密码错误"
+  },
+  "users": {
+    "title": "用户管理",
+    "name": "姓名",
+    "age": "年龄",
+    "email": "邮箱",
+    "fruit": "水果",
+    "create": "创建",
+    "loading": "加载中..."
+  },
+  "profile": {
+    "title": "修改资料",
+    "success": "资料更新成功",
+    "avatarUrl": "头像链接",
+    "name": "名称",
+    "phone": "手机号",
+    "email": "邮箱",
+    "bio": "个人简介",
+    "save": "保存修改",
+    "saving": "保存中..."
+  },
+  "changePassword": {
+    "title": "修改密码",
+    "currentPassword": "当前密码",
+    "newPassword": "新密码",
+    "confirmPassword": "确认新密码",
+    "success": "密码修改成功",
+    "allRequired": "所有字段均为必填",
+    "notMatch": "两次密码输入不一致",
+    "failed": "密码修改失败",
+    "minLength": "密码长度不能少于8位",
+    "requireLetter": "密码必须包含至少一个字母",
+    "requireDigit": "密码必须包含至少一个数字",
+    "helperText": "至少8位，需包含字母和数字",
+    "submit": "修改密码"
+  },
+  "map": {
+    "title": "Cesium 三维地图"
+  },
+  "language": {
+    "label": "语言",
+    "en": "English",
+    "zh": "中文",
+    "ja": "日本語"
+  }
+}

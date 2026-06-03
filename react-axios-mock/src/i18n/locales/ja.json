@@ -1,0 +1,63 @@
+{
+  "nav": {
+    "appTitle": "React アプリ",
+    "users": "ユーザー管理",
+    "map": "マップ",
+    "editProfile": "プロフィール編集",
+    "changePassword": "パスワード変更",
+    "logout": "ログアウト"
+  },
+  "login": {
+    "title": "ログイン",
+    "username": "ユーザー名",
+    "password": "パスワード",
+    "loggingIn": "ログイン中...",
+    "validation": "ユーザー名とパスワードを入力してください",
+    "failed": "ログイン失敗",
+    "invalidCredentials": "ユーザー名またはパスワードが間違っています"
+  },
+  "users": {
+    "title": "ユーザー管理",
+    "name": "名前",
+    "age": "年齢",
+    "email": "メール",
+    "fruit": "フルーツ",
+    "create": "作成",
+    "loading": "読み込み中..."
+  },
+  "profile": {
+    "title": "プロフィール編集",
+    "success": "プロフィールを更新しました",
+    "avatarUrl": "アバターURL",
+    "name": "名前",
+    "phone": "電話番号",
+    "email": "メール",
+    "bio": "自己紹介",
+    "save": "保存",
+    "saving": "保存中..."
+  },
+  "changePassword": {
+    "title": "パスワード変更",
+    "currentPassword": "現在のパスワード",
+    "newPassword": "新しいパスワード",
+    "confirmPassword": "新しいパスワード（確認）",
+    "success": "パスワードを変更しました",
+    "allRequired": "すべての項目を入力してください",
+    "notMatch": "新しいパスワードが一致しません",
+    "failed": "パスワードの変更に失敗しました",
+    "minLength": "パスワードは8文字以上必要です",
+    "requireLetter": "パスワードは少なくとも1文字の英字を含む必要があります",
+    "requireDigit": "パスワードは少なくとも1文字の数字を含む必要があります",
+    "helperText": "8文字以上、英字と数字を含む必要があります",
+    "submit": "パスワードを変更"
+  },
+  "map": {
+    "title": "Cesium 3D マップ"
+  },
+  "language": {
+    "label": "言語",
+    "en": "English",
+    "zh": "中文",
+    "ja": "日本語"
+  }
+}

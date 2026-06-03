@@ -3,9 +3,11 @@ import { useNavigate } from 'react-router-dom'
 import {
   Box, Card, TextField, Typography, Button, Alert,
 } from '@mui/material'
+import { useTranslation } from 'react-i18next'
 import useAuthStore from '../store/authStore'
 
 export default function LoginPage() {
+  const { t } = useTranslation()
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
@@ -15,14 +17,14 @@ export default function LoginPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    if (!username || !password) { setError('Please enter username and password'); return }
+    if (!username || !password) { setError(t('login.validation')); return }
     setLoading(true)
     setError('')
     try {
       await login({ username, password })
       navigate('/users', { replace: true })
     } catch (err) {
-      setError(err?.response?.data?.message || 'Login failed')
+      setError(err?.response?.data?.message || t('login.failed'))
     } finally {
       setLoading(false)
     }
@@ -38,7 +40,7 @@ export default function LoginPage() {
     }}>
       <Card sx={{ p: 4, width: 360, boxShadow: 4 }}>
         <Typography variant="h5" textAlign="center" fontWeight={600} mb={3}>
-          登录
+          {t('login.title')}
         </Typography>
 
         {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
@@ -46,7 +48,7 @@ export default function LoginPage() {
         <Box component="form" onSubmit={handleSubmit}>
           <TextField
             fullWidth
-            label="Username"
+            label={t('login.username')}
             size="small"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
@@ -54,7 +56,7 @@ export default function LoginPage() {
           />
           <TextField
             fullWidth
-            label="Password"
+            label={t('login.password')}
             type="password"
             size="small"
             value={password}
@@ -68,7 +70,7 @@ export default function LoginPage() {
             disabled={loading}
             sx={{ py: 1.2 }}
           >
-            {loading ? 'Logging in...' : 'Login'}
+            {loading ? t('login.loggingIn') : t('login.title')}
           </Button>
         </Box>
       </Card>

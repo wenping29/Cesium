@@ -1,0 +1,63 @@
+{
+  "nav": {
+    "appTitle": "React App",
+    "users": "Users",
+    "map": "Map",
+    "editProfile": "Edit Profile",
+    "changePassword": "Change Password",
+    "logout": "Logout"
+  },
+  "login": {
+    "title": "Login",
+    "username": "Username",
+    "password": "Password",
+    "loggingIn": "Logging in...",
+    "validation": "Please enter username and password",
+    "failed": "Login failed",
+    "invalidCredentials": "Invalid username or password"
+  },
+  "users": {
+    "title": "User Management",
+    "name": "Name",
+    "age": "Age",
+    "email": "Email",
+    "fruit": "Fruit",
+    "create": "Create",
+    "loading": "Loading..."
+  },
+  "profile": {
+    "title": "Edit Profile",
+    "success": "Profile updated successfully",
+    "avatarUrl": "Avatar URL",
+    "name": "Name",
+    "phone": "Phone",
+    "email": "Email",
+    "bio": "Bio",
+    "save": "Save Changes",
+    "saving": "Saving..."
+  },
+  "changePassword": {
+    "title": "Change Password",
+    "currentPassword": "Current Password",
+    "newPassword": "New Password",
+    "confirmPassword": "Confirm New Password",
+    "success": "Password changed successfully",
+    "allRequired": "All fields are required",
+    "notMatch": "New passwords do not match",
+    "failed": "Failed to change password",
+    "minLength": "Password must be at least 8 characters",
+    "requireLetter": "Password must contain at least one letter",
+    "requireDigit": "Password must contain at least one digit",
+    "helperText": "At least 8 characters, must contain letters and numbers",
+    "submit": "Change Password"
+  },
+  "map": {
+    "title": "Cesium 3D Map"
+  },
+  "language": {
+    "label": "Language",
+    "en": "English",
+    "zh": "中文",
+    "ja": "日本語"
+  }
+}
