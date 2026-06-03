@@ -10,7 +10,7 @@ Cesium.Resource.supportsImageBitmapOptions = function () {
 }
 
 // 天地图 Token (需要在 .env 文件中配置 VITE_TIANDITU_TOKEN)
-const TIANDITU_TOKEN = import.meta.env.VITE_TIANDITU_TOKEN || 'b4162ac2911ae0392798662d2ad1eda7'
+const TIANDITU_TOKEN = import.meta.env.VITE_TIANDITU_TOKEN || ''
 
 // 底图配置
 const BASEMAP_PROVIDERS = {
