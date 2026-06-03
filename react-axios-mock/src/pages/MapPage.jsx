@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react'
-import { Box, Typography } from '@mui/material'
+import { Box, Typography, Fab, Tooltip } from '@mui/material'
 import CesiumMap from '../components/CesiumMap'
 import LayerControl from '../components/LayerControl'
 import BIMControl from '../components/BIMControl'
@@ -12,6 +12,7 @@ export default function MapPage() {
   const [bimData, setBimData] = useState(null)
   const [selectedBimModels, setSelectedBimModels] = useState([])
   const [loadingBim, setLoadingBim] = useState(true)
+  const [showBIM, setShowBIM] = useState(true)
 
   const {
     layers: customLayers,
@@ -94,14 +95,28 @@ export default function MapPage() {
         onHexGridOpacity={setHexGridOpacity}
       />
 
-      {!loadingBim && bimData && (
+      {!loadingBim && bimData && showBIM && (
         <BIMControl
           bimData={bimData}
           selectedModels={selectedBimModels}
           onModelToggle={handleBimModelToggle}
           onModelSelect={handleBimModelSelect}
           onRefresh={loadBimData}
+          onClose={() => setShowBIM(false)}
         />
+      )}
+
+      {!showBIM && (
+        <Tooltip title="打开BIM模型管理" placement="right">
+          <Fab
+            size="small"
+            color="primary"
+            sx={{ position: 'absolute', top: 80, left: 16, zIndex: 1000 }}
+            onClick={() => setShowBIM(true)}
+          >
+            📦
+          </Fab>
+        </Tooltip>
       )}
 
       <CesiumMap

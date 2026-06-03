@@ -20,11 +20,8 @@ import {
 import {
   ExpandMore,
   ExpandLess,
-  LocationOn,
-  Delete,
   Refresh,
-  Visibility,
-  VisibilityOff
+  Close,
 } from '@mui/icons-material'
 
 // BIM类型图标映射
@@ -36,21 +33,13 @@ const TYPE_ICONS = {
   pipeline: '🔧'
 }
 
-// BIM类型颜色映射
-const TYPE_COLORS = {
-  building: '#4a90e2',
-  bridge: '#f5a623',
-  tunnel: '#7ed321',
-  facility: '#bd10e0',
-  pipeline: '#50e3c2'
-}
-
 export default function BIMControl({
   bimData,
   selectedModels,
   onModelToggle,
   onModelSelect,
-  onRefresh
+  onRefresh,
+  onClose
 }) {
   const [expanded, setExpanded] = useState(true)
   const [loading, setLoading] = useState(false)
@@ -137,12 +126,15 @@ export default function BIMControl({
           📦 BIM模型管理
           <Chip label={`${bimData.total || 0}`} size="small" color="primary" />
         </Typography>
-        <Box>
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <IconButton size="small" onClick={handleRefresh} disabled={loading}>
             <Refresh fontSize="small" />
           </IconButton>
           <IconButton size="small" onClick={() => setExpanded(!expanded)}>
             {expanded ? <ExpandLess /> : <ExpandMore />}
+          </IconButton>
+          <IconButton size="small" onClick={onClose}>
+            <Close fontSize="small" />
           </IconButton>
         </Box>
       </Box>
