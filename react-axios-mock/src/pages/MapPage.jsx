@@ -262,6 +262,9 @@ export default function MapPage() {
         earthquakeData={earthquakes}
         earthquakeVisible={earthquakeVisible}
         selectedEarthquake={selectedEarthquake}
+        typhoonData={{ current: typhoonCurrent, historical: typhoonHistorical }}
+        typhoonVisible={typhoonVisible}
+        selectedTyphoon={selectedTyphoon}
       />
     </Box>
   )

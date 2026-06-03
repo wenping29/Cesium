@@ -61,7 +61,10 @@ export default function TyphoonControl({
       <Collapse in={expanded}>
         <Box sx={{ overflow: 'auto', maxHeight: 'calc(100vh - 280px)' }}>
           {current && (
-            <Box sx={{ p: 1.5, bgcolor: 'grey.50' }}>
+            <Box
+              sx={{ p: 1.5, bgcolor: 'grey.50', cursor: 'pointer', '&:hover': { bgcolor: 'grey.200' } }}
+              onClick={() => onTyphoonClick?.(current)}
+            >
               <Typography variant="caption" sx={{ fontWeight: 'bold' }}>{t('typhoon.current')}</Typography>
               <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mt: 0.5 }}>
                 <Chip label={`${t('typhoon.strength')}: ${current.strength}`} size="small" variant="outlined" />

@@ -113,6 +113,9 @@ export default function CesiumMap({
   earthquakeData = [],
   earthquakeVisible = false,
   selectedEarthquake = null,
+  typhoonData = { current: null, historical: [] },
+  typhoonVisible = false,
+  selectedTyphoon = null,
 }) {
   const { t } = useTranslation()
   const containerRef = useRef(null)
@@ -123,6 +126,7 @@ export default function CesiumMap({
   const hexEntitiesRef = useRef([])
   const customImageryRef = useRef({})
   const earthquakeEntitiesRef = useRef([])
+  const typhoonEntitiesRef = useRef([])
 
   const addBasemapLayer = (viewer, basemapId) => {
     const provider = BASEMAP_PROVIDERS[basemapId]
@@ -346,11 +350,123 @@ export default function CesiumMap({
     const viewer = viewerRef.current
     if (!viewer || viewer.isDestroyed() || !selectedEarthquake || !earthquakeVisible) return
 
-    viewer.flyTo({
+    viewer.camera.flyTo({
       destination: Cesium.Cartesian3.fromDegrees(selectedEarthquake.lng, selectedEarthquake.lat, 200000),
       duration: 2,
     })
   }, [selectedEarthquake])
+
+  const typhoonColor = Cesium.Color.fromCssColorString('#42a5f5')
+  const typhoonPathColor = Cesium.Color.fromCssColorString('#42a5f5').withAlpha(0.6)
+
+  useEffect(() => {
+    const viewer = viewerRef.current
+    if (!viewer || viewer.isDestroyed()) return
+
+    typhoonEntitiesRef.current.forEach((e) => viewer.entities.remove(e))
+    typhoonEntitiesRef.current = []
+
+    if (!typhoonVisible) return
+
+    const { current, historical } = typhoonData
+
+    if (current) {
+      const pathPositions = (current.path || []).map((p) =>
+        Cesium.Cartesian3.fromDegrees(p[0], p[1], 0)
+      )
+
+      if (pathPositions.length >= 2) {
+        const pathEntity = viewer.entities.add({
+          id: `typhoon-path-${current.id}`,
+          polyline: {
+            positions: pathPositions,
+            width: 3,
+            material: typhoonPathColor,
+            arcType: Cesium.ArcType.GEODESIC,
+          },
+        })
+        typhoonEntitiesRef.current.push(pathEntity)
+      }
+
+      const currentEntity = viewer.entities.add({
+        id: `typhoon-${current.id}`,
+        name: current.name,
+        description: `
+          <div style="padding:10px">
+            <h3>${current.name}</h3>
+            <p><strong>Strength:</strong> ${current.strength}</p>
+            <p><strong>Wind Speed:</strong> ${current.windSpeed} m/s</p>
+            <p><strong>Pressure:</strong> ${current.pressure} hPa</p>
+            <p><strong>Time:</strong> ${current.time}</p>
+          </div>
+        `,
+        position: Cesium.Cartesian3.fromDegrees(current.lng, current.lat, 0),
+        point: {
+          pixelSize: 20,
+          color: typhoonColor,
+          outlineColor: Cesium.Color.WHITE,
+          outlineWidth: 3,
+          scaleByDistance: new Cesium.NearFarScalar(1.5e6, 1.0, 1.5e7, 0.5),
+          heightReference: Cesium.HeightReference.RELATIVE_TO_GROUND,
+        },
+        label: {
+          text: `${current.name} (${current.windSpeed}m/s)`,
+          font: '14px sans-serif',
+          fillColor: typhoonColor,
+          showBackground: true,
+          backgroundColor: Cesium.Color.BLACK.withAlpha(0.6),
+          pixelOffset: { x: 0, y: -24 },
+          heightReference: Cesium.HeightReference.RELATIVE_TO_GROUND,
+        },
+      })
+      typhoonEntitiesRef.current.push(currentEntity)
+    }
+
+    historical.forEach((ty) => {
+      const hEntity = viewer.entities.add({
+        id: `typhoon-${ty.id}`,
+        name: ty.name,
+        description: `
+          <div style="padding:10px">
+            <h3>${ty.name}</h3>
+            <p><strong>Strength:</strong> ${ty.strength}</p>
+            <p><strong>Wind Speed:</strong> ${ty.windSpeed} m/s</p>
+            <p><strong>Pressure:</strong> ${ty.pressure} hPa</p>
+            <p><strong>Time:</strong> ${ty.time}</p>
+          </div>
+        `,
+        position: Cesium.Cartesian3.fromDegrees(ty.lng, ty.lat, 0),
+        point: {
+          pixelSize: 10,
+          color: typhoonColor.withAlpha(0.6),
+          outlineColor: Cesium.Color.WHITE,
+          outlineWidth: 1,
+          scaleByDistance: new Cesium.NearFarScalar(1.5e6, 1.0, 1.5e7, 0.3),
+          heightReference: Cesium.HeightReference.RELATIVE_TO_GROUND,
+        },
+        label: {
+          text: ty.name,
+          font: '12px sans-serif',
+          fillColor: typhoonColor.withAlpha(0.8),
+          showBackground: true,
+          backgroundColor: Cesium.Color.BLACK.withAlpha(0.4),
+          pixelOffset: { x: 0, y: -16 },
+          heightReference: Cesium.HeightReference.RELATIVE_TO_GROUND,
+        },
+      })
+      typhoonEntitiesRef.current.push(hEntity)
+    })
+  }, [typhoonData, typhoonVisible])
+
+  useEffect(() => {
+    const viewer = viewerRef.current
+    if (!viewer || viewer.isDestroyed() || !selectedTyphoon || !typhoonVisible) return
+
+    viewer.camera.flyTo({
+      destination: Cesium.Cartesian3.fromDegrees(selectedTyphoon.lng, selectedTyphoon.lat, 300000),
+      duration: 2,
+    })
+  }, [selectedTyphoon])
 
   const loadBIMModel = async (viewer, bimModel) => {
     try {
@@ -442,6 +558,11 @@ export default function CesiumMap({
           viewer.flyTo(entity, {
             duration: 2,
             offset: new Cesium.HeadingPitchRange(0, Cesium.Math.toRadians(-30), 200000),
+          })
+        } else if (String(entity.id).startsWith('typhoon-')) {
+          viewer.flyTo(entity, {
+            duration: 2,
+            offset: new Cesium.HeadingPitchRange(0, Cesium.Math.toRadians(-30), 300000),
           })
         }
       }
