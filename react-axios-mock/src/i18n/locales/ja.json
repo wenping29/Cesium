@@ -3,6 +3,9 @@
     "appTitle": "React アプリ",
     "users": "ユーザー管理",
     "map": "マップ",
+    "dashboard": "ダッシュボード",
+    "bigScreen": "大画面",
+    "dataTables": "データテーブル",
     "editProfile": "プロフィール編集",
     "changePassword": "パスワード変更",
     "logout": "ログアウト"
@@ -63,6 +66,7 @@
     "cellSize": "セルサイズ",
     "custom": "カスタムレイヤー",
     "customEmpty": "カスタムレイヤーなし、+ をクリックして追加",
+    "thematicModules": "テーマモジュール",
     "addTitle": "レイヤー追加",
     "addName": "レイヤー名",
     "addType": "タイプ",
@@ -83,6 +87,88 @@
     "active": "アクティブ",
     "progress": "進捗",
     "open": "BIM管理を開く"
+  },
+  "earthquake": {
+    "title": "地震履歴",
+    "minor": "小規模",
+    "moderate": "中規模",
+    "strong": "強震",
+    "major": "大地震",
+    "depth": "深さ"
+  },
+  "airQuality": {
+    "title": "大気質",
+    "level": "レベル"
+  },
+  "typhoon": {
+    "title": "台風",
+    "current": "現在の台風",
+    "historical": "過去の台風",
+    "records": "件",
+    "strength": "強さ",
+    "windSpeed": "風速",
+    "pressure": "気圧"
+  },
+  "wind": {
+    "title": "風向",
+    "direction": "風向",
+    "gust": "突風"
+  },
+  "dashboard": {
+    "title": "ダッシュボード",
+    "earthquakes": "地震記録",
+    "airQuality": "大気質観測所",
+    "typhoon": "台風記録",
+    "wind": "風域数"
+  },
+  "bigScreen": {
+    "title": "リアルタイムデータモニター",
+    "earthquakeTotal": "地震記録",
+    "strongEarthquakes": "強震 (M≥5)",
+    "avgAqi": "平均AQI",
+    "stations": "観測所",
+    "typhoonCurrent": "現在の台風",
+    "noData": "活動中の台風なし",
+    "maxWind": "最大風速",
+    "regions": "エリア",
+    "recentEarthquakes": "最近の地震",
+    "airQualityStations": "大気質",
+    "windRegions": "風向モニター"
+  },
+  "earthquakeTable": {
+    "title": "地震データ",
+    "magnitude": "マグニチュード",
+    "depth": "深さ",
+    "region": "地域",
+    "time": "時刻",
+    "location": "位置"
+  },
+  "typhoonTable": {
+    "title": "台風データ",
+    "name": "名称",
+    "strength": "強さ",
+    "windSpeed": "風速",
+    "pressure": "気圧",
+    "time": "時刻",
+    "status": "状態",
+    "active": "活動中",
+    "historical": "履歴"
+  },
+  "windTable": {
+    "title": "風向データ",
+    "region": "地域",
+    "direction": "風向",
+    "speed": "風速",
+    "gust": "突風",
+    "location": "位置",
+    "time": "時刻"
+  },
+  "airQualityTable": {
+    "title": "大気質データ",
+    "station": "観測所",
+    "aqi": "AQI",
+    "level": "レベル",
+    "time": "時刻"
   },
   "language": {
     "label": "言語",

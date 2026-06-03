@@ -3,6 +3,9 @@
     "appTitle": "React App",
     "users": "Users",
     "map": "Map",
+    "dashboard": "Dashboard",
+    "bigScreen": "Big Screen",
+    "dataTables": "Data Tables",
     "editProfile": "Edit Profile",
     "changePassword": "Change Password",
     "logout": "Logout"
@@ -63,6 +66,7 @@
     "cellSize": "Cell Size",
     "custom": "Custom Layers",
     "customEmpty": "No custom layers, click + to add",
+    "thematicModules": "Thematic Modules",
     "addTitle": "Add Layer",
     "addName": "Layer Name",
     "addType": "Layer Type",
@@ -83,6 +87,88 @@
     "active": "Active",
     "progress": "Progress",
     "open": "Open BIM Management"
+  },
+  "earthquake": {
+    "title": "Historical Earthquakes",
+    "minor": "Minor",
+    "moderate": "Moderate",
+    "strong": "Strong",
+    "major": "Major",
+    "depth": "Depth"
+  },
+  "airQuality": {
+    "title": "Air Quality",
+    "level": "Level"
+  },
+  "typhoon": {
+    "title": "Typhoon",
+    "current": "Current Typhoon",
+    "historical": "Historical Typhoons",
+    "records": "records",
+    "strength": "Strength",
+    "windSpeed": "Wind",
+    "pressure": "Pressure"
+  },
+  "wind": {
+    "title": "Wind Direction",
+    "direction": "Direction",
+    "gust": "Gust"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "earthquakes": "Earthquake Records",
+    "airQuality": "Air Quality Stations",
+    "typhoon": "Typhoon Records",
+    "wind": "Wind Regions"
+  },
+  "bigScreen": {
+    "title": "Real-time Data Monitor",
+    "earthquakeTotal": "Earthquake Records",
+    "strongEarthquakes": "Strong (M≥5)",
+    "avgAqi": "Avg AQI",
+    "stations": "stations",
+    "typhoonCurrent": "Current Typhoon",
+    "noData": "No active typhoon",
+    "maxWind": "Max Wind Speed",
+    "regions": "regions",
+    "recentEarthquakes": "Recent Earthquakes",
+    "airQualityStations": "Air Quality",
+    "windRegions": "Wind Regions"
+  },
+  "earthquakeTable": {
+    "title": "Earthquake Data",
+    "magnitude": "Magnitude",
+    "depth": "Depth",
+    "region": "Region",
+    "time": "Time",
+    "location": "Location"
+  },
+  "typhoonTable": {
+    "title": "Typhoon Data",
+    "name": "Name",
+    "strength": "Strength",
+    "windSpeed": "Wind Speed",
+    "pressure": "Pressure",
+    "time": "Time",
+    "status": "Status",
+    "active": "Active",
+    "historical": "Historical"
+  },
+  "windTable": {
+    "title": "Wind Data",
+    "region": "Region",
+    "direction": "Direction",
+    "speed": "Speed",
+    "gust": "Gust",
+    "location": "Location",
+    "time": "Time"
+  },
+  "airQualityTable": {
+    "title": "Air Quality Data",
+    "station": "Station",
+    "aqi": "AQI",
+    "level": "Level",
+    "time": "Time"
   },
   "language": {
     "label": "Language",

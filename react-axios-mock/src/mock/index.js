@@ -4,6 +4,10 @@ import './auth'
 import './bim'
 import './hexgrid'
 import './layers'
+import './earthquake'
+import './airquality'
+import './typhoon'
+import './wind'
 
 const { Random } = Mock
 

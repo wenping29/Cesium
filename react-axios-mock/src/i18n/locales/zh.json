@@ -3,6 +3,9 @@
     "appTitle": "React 应用",
     "users": "用户管理",
     "map": "地图",
+    "dashboard": "仪表盘",
+    "bigScreen": "大屏",
+    "dataTables": "数据表格",
     "editProfile": "修改资料",
     "changePassword": "修改密码",
     "logout": "退出登录"
@@ -63,6 +66,7 @@
     "cellSize": "对边距",
     "custom": "自定义图层",
     "customEmpty": "暂无自定义图层，点击 + 添加",
+    "thematicModules": "专题模块",
     "addTitle": "添加图层",
     "addName": "图层名称",
     "addType": "图层类型",
@@ -83,6 +87,88 @@
     "active": "已激活",
     "progress": "进度",
     "open": "打开BIM模型管理"
+  },
+  "earthquake": {
+    "title": "地震专题",
+    "minor": "微震",
+    "moderate": "中震",
+    "strong": "强震",
+    "major": "大地震",
+    "depth": "深度"
+  },
+  "airQuality": {
+    "title": "空气质量",
+    "level": "等级"
+  },
+  "typhoon": {
+    "title": "台风专题",
+    "current": "当前台风",
+    "historical": "历史台风",
+    "records": "条记录",
+    "strength": "强度",
+    "windSpeed": "风速",
+    "pressure": "气压"
+  },
+  "wind": {
+    "title": "风向专题",
+    "direction": "风向",
+    "gust": "阵风"
+  },
+  "dashboard": {
+    "title": "数据仪表盘",
+    "earthquakes": "地震记录",
+    "airQuality": "空气质量站点",
+    "typhoon": "台风记录",
+    "wind": "风区数量"
+  },
+  "bigScreen": {
+    "title": "实时数据监控大屏",
+    "earthquakeTotal": "地震记录",
+    "strongEarthquakes": "强震 (M≥5)",
+    "avgAqi": "平均AQI",
+    "stations": "个站点",
+    "typhoonCurrent": "当前台风",
+    "noData": "无活跃台风",
+    "maxWind": "最大风速",
+    "regions": "个区域",
+    "recentEarthquakes": "最近地震",
+    "airQualityStations": "空气质量",
+    "windRegions": "风向监测"
+  },
+  "earthquakeTable": {
+    "title": "地震数据表格",
+    "magnitude": "震级",
+    "depth": "深度",
+    "region": "区域",
+    "time": "时间",
+    "location": "位置"
+  },
+  "typhoonTable": {
+    "title": "台风数据表格",
+    "name": "名称",
+    "strength": "强度",
+    "windSpeed": "风速",
+    "pressure": "气压",
+    "time": "时间",
+    "status": "状态",
+    "active": "活跃中",
+    "historical": "已结束"
+  },
+  "windTable": {
+    "title": "风向数据表格",
+    "region": "区域",
+    "direction": "风向",
+    "speed": "风速",
+    "gust": "阵风",
+    "location": "位置",
+    "time": "时间"
+  },
+  "airQualityTable": {
+    "title": "空气质量数据表格",
+    "station": "站点",
+    "aqi": "AQI",
+    "level": "等级",
+    "time": "时间"
   },
   "language": {
     "label": "语言",
