@@ -158,24 +158,36 @@ const BASEMAP_PROVIDERS = {
   },
 }
 
-function createTileLayer(basemapId) {
-  const cfg = BASEMAP_PROVIDERS[basemapId]
-  if (!cfg) return L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; OpenStreetMap',
-    maxZoom: 19,
-  })
-  return L.tileLayer(cfg.url, {
-    attribution: cfg.attribution,
-    maxZoom: cfg.maxZoom || 18,
-  })
+const ANNOTATION_PROVIDERS = {
+  tianditu_vec: { layer: 'cva' },
+  tianditu_img: { layer: 'cia' },
+  tianditu_ter: { layer: 'cta' },
 }
 
-function getMagnitudeColor(mag) {
-  if (mag < 3) return '#4caf50'
-  if (mag < 5) return '#ff9800'
-  if (mag < 7) return '#f44336'
-  return '#9c27b0'
+function makeAnnotationUrl(basemapId) {
+  const cfg = BASEMAP_PROVIDERS[basemapId]
+  const ann = ANNOTATION_PROVIDERS[basemapId]
+  if (!cfg || !ann) return null
+  return `https://t0.tianditu.gov.cn/${ann.layer}_w/wmts?tk=${TIANDITU_TOKEN}&SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=${ann.layer}&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}`
 }
+
+function createBasemapLayers(basemapId) {
+  const cfg = BASEMAP_PROVIDERS[basemapId]
+  const base = cfg
+    ? L.tileLayer(cfg.url, { attribution: cfg.attribution, maxZoom: cfg.maxZoom || 18 })
+    : L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap',
+        maxZoom: 19,
+      })
+
+  const annUrl = makeAnnotationUrl(basemapId)
+  const annotation = annUrl
+    ? L.tileLayer(annUrl, { attribution: cfg.attribution, maxZoom: cfg.maxZoom || 18 })
+    : null
+
+  return { base, annotation }
+}
+
 
 function getWindSpeedColor(speed) {
   if (speed < 5) return '#4caf50'
@@ -252,12 +264,14 @@ export default function LeafletMap({
         zoomControl: true,
       })
 
-      const basemapLayer = createTileLayer(currentBasemap)
+      const { base: basemapLayer, annotation: annLayer } = createBasemapLayers(currentBasemap)
       basemapLayer.addTo(map)
-      basemapLayerRef.current = basemapLayer
+      if (annLayer) annLayer.addTo(map)
+      basemapLayerRef.current = { base: basemapLayer, annotation: annLayer }
 
       hexGroupRef.current = L.layerGroup().addTo(map)
-      earthquakeGroupRef.current = L.layerGroup().addTo(map)
+      const heatmap = new HeatmapCanvas({ radius: 20, blur: 15 }).addTo(map)
+      earthquakeHeatmapRef.current = heatmap
       typhoonGroupRef.current = L.layerGroup().addTo(map)
       windGroupRef.current = L.layerGroup().addTo(map)
 
@@ -304,11 +318,16 @@ export default function LeafletMap({
     const map = mapRef.current
     if (!map) return
 
-    if (basemapLayerRef.current) map.removeLayer(basemapLayerRef.current)
+    const old = basemapLayerRef.current
+    if (old) {
+      if (old.base) map.removeLayer(old.base)
+      if (old.annotation) map.removeLayer(old.annotation)
+    }
 
-    const newBasemap = createTileLayer(currentBasemap)
-    newBasemap.addTo(map)
-    basemapLayerRef.current = newBasemap
+    const { base, annotation } = createBasemapLayers(currentBasemap)
+    base.addTo(map)
+    if (annotation) annotation.addTo(map)
+    basemapLayerRef.current = { base, annotation }
   }, [currentBasemap])
 
   useEffect(() => {
@@ -372,38 +391,9 @@ export default function LeafletMap({
   }, [hexGridCells, hexGridVisible, hexGridOpacity])
 
   useEffect(() => {
-    const map = mapRef.current
-    if (!map) return
-
-    const group = earthquakeGroupRef.current
-    group.clearLayers()
-
-    if (!earthquakeVisible || !earthquakeData.length) return
-
-    earthquakeData.forEach((eq) => {
-      const color = getMagnitudeColor(eq.magnitude)
-      const marker = L.circleMarker([eq.lat, eq.lng], {
-        radius: Math.max(5, eq.magnitude * 2),
-        fillColor: color,
-        fillOpacity: 0.8,
-        color: '#fff',
-        weight: 2,
-      })
-      marker.bindPopup(`
-        <div style="padding:10px;min-width:200px">
-          <h3 style="margin:0 0 8px">${eq.region}</h3>
-          <p><strong>Magnitude:</strong> ${eq.magnitude}</p>
-          <p><strong>Depth:</strong> ${eq.depth} km</p>
-          <p><strong>Time:</strong> ${eq.time}</p>
-          <p>${eq.description || ''}</p>
-        </div>
-      `)
-      marker.bindTooltip(`M${eq.magnitude.toFixed(1)}`, {
-        offset: [0, -16],
-        direction: 'top',
-      })
-      group.addLayer(marker)
-    })
+    const heatmap = earthquakeHeatmapRef.current
+    if (!heatmap) return
+    heatmap.setData(earthquakeVisible ? earthquakeData : [])
   }, [earthquakeData, earthquakeVisible])
 
   useEffect(() => {

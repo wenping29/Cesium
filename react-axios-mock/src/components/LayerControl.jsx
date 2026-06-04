@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useTheme } from '@mui/material/styles'
 import {
   Box, FormControl, InputLabel, Select, MenuItem, Paper, Typography,
   Checkbox, FormControlLabel, Collapse, Slider, List, ListItem,
@@ -52,6 +53,7 @@ export default function LayerControl({
   onSceneModeChange,
 }) {
   const { t } = useTranslation()
+  const theme = useTheme()
   const [expanded, setExpanded] = useState(true)
   const [showAddDialog, setShowAddDialog] = useState(false)
 
@@ -71,7 +73,7 @@ export default function LayerControl({
         zIndex: 1000,
         minWidth: 260,
         maxWidth: 320,
-        bgcolor: 'rgba(255, 255, 255, 0.95)',
+        bgcolor: theme.palette.background.paper,
         backdropFilter: 'blur(10px)',
       }}
     >

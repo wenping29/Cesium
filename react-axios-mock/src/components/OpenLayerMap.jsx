@@ -60,14 +60,19 @@ const BASEMAP_PROVIDERS = {
   },
 }
 
-function createWMTSLayer(basemapId) {
-  const cfg = BASEMAP_PROVIDERS[basemapId]
-  if (!cfg) return null
-  if (cfg.type === 'xyz') {
-    return new TileLayer({
-      source: new XYZ({ url: cfg.url, maxZoom: 18 }),
-    })
-  }
+const ANNOTATION_PROVIDERS = {
+  tianditu_vec: { layer: 'cva', matrixSet: 'w' },
+  tianditu_img: { layer: 'cia', matrixSet: 'w' },
+  tianditu_ter: { layer: 'cta', matrixSet: 'w' },
+}
+
+function createTileLayer(cfg, url) {
+  return new TileLayer({
+    source: new XYZ({ url: url || cfg.url, maxZoom: 18 }),
+  })
+}
+
+function createWMTSLayer(url, layer, matrixSet) {
   const projection = getProjection('EPSG:3857')
   const projectionExtent = projection.getExtent()
   const size = getExtentWidth(projectionExtent) / 256
@@ -79,11 +84,11 @@ function createWMTSLayer(basemapId) {
   }
   return new TileLayer({
     source: new WMTS({
-      url: cfg.url,
-      layer: cfg.layer,
-      matrixSet: cfg.matrixSet,
-      format: cfg.format,
-      style: cfg.style,
+      url,
+      layer,
+      matrixSet,
+      format: 'tiles',
+      style: 'default',
       projection,
       tileGrid: new WMTSTileGrid({
         origin: [-20037508.342789244, 20037508.342789244],
@@ -94,6 +99,27 @@ function createWMTSLayer(basemapId) {
       wrapX: true,
     }),
   })
+}
+
+function createBasemapLayers(basemapId) {
+  const cfg = BASEMAP_PROVIDERS[basemapId]
+  if (!cfg) return { base: null, annotation: null }
+
+  let base
+  if (cfg.type === 'xyz') {
+    base = createTileLayer(cfg)
+  } else {
+    base = createWMTSLayer(cfg.url, cfg.layer, cfg.matrixSet)
+  }
+
+  let annotation = null
+  const annCfg = ANNOTATION_PROVIDERS[basemapId]
+  if (annCfg) {
+    const annUrl = cfg.url.replace(`${cfg.layer}_w`, `${annCfg.layer}_w`)
+    annotation = createWMTSLayer(annUrl, annCfg.layer, annCfg.matrixSet)
+  }
+
+  return { base, annotation }
 }
 
 function createCustomLayer(layer) {
@@ -150,12 +176,6 @@ function createCustomLayer(layer) {
   }
 }
 
-function getMagnitudeColor(mag) {
-  if (mag < 3) return '#4caf50'
-  if (mag < 5) return '#ff9800'
-  if (mag < 7) return '#f44336'
-  return '#9c27b0'
-}
 
 function getWindSpeedColor(speed) {
   if (speed < 5) return '#4caf50'
@@ -198,8 +218,8 @@ export default function OpenLayerMap({
     if (!el) return
 
     try {
-      const basemapLayer = createWMTSLayer(currentBasemap)
-      basemapLayerRef.current = basemapLayer
+      const { base: basemapLayer, annotation: annLayer } = createBasemapLayers(currentBasemap)
+      basemapLayerRef.current = { base: basemapLayer, annotation: annLayer }
 
       const vectorSource = new VectorSource()
       const vectorLayer = new VectorLayer({ source: vectorSource })
@@ -242,7 +262,7 @@ export default function OpenLayerMap({
 
       const map = new Map({
         target: el,
-        layers: [basemapLayer, vectorLayer, hexLayer, earthquakeLayer, typhoonLayer, windLayer],
+        layers: [basemapLayer, annLayer, vectorLayer, hexLayer, earthquakeLayer, typhoonLayer, windLayer].filter(Boolean),
         view: new View({
           center: fromLonLat([108, 35]),
           zoom: 5,
@@ -347,12 +367,18 @@ export default function OpenLayerMap({
     const map = mapRef.current
     if (!map) return
 
-    const oldBasemap = basemapLayerRef.current
-    if (oldBasemap) map.removeLayer(oldBasemap)
+    const old = basemapLayerRef.current
+    if (old) {
+      if (old.base) map.removeLayer(old.base)
+      if (old.annotation) map.removeLayer(old.annotation)
+    }
 
-    const newBasemap = createWMTSLayer(currentBasemap)
-    basemapLayerRef.current = newBasemap
-    if (newBasemap) map.getLayers().insertAt(0, newBasemap)
+    const { base, annotation } = createBasemapLayers(currentBasemap)
+    basemapLayerRef.current = { base, annotation }
+    if (base) {
+      map.getLayers().insertAt(0, base)
+      if (annotation) map.getLayers().insertAt(1, annotation)
+    }
   }, [currentBasemap])
 
   useEffect(() => {
