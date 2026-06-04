@@ -4,6 +4,7 @@ import Map from 'ol/Map'
 import View from 'ol/View'
 import TileLayer from 'ol/layer/Tile'
 import VectorLayer from 'ol/layer/Vector'
+import HeatmapLayer from 'ol/layer/Heatmap'
 import XYZ from 'ol/source/XYZ'
 import TileWMS from 'ol/source/TileWMS'
 import VectorSource from 'ol/source/Vector'
@@ -20,7 +21,7 @@ import CircleStyle from 'ol/style/Circle'
 import Fill from 'ol/style/Fill'
 import Stroke from 'ol/style/Stroke'
 import Text from 'ol/style/Text'
-import Icon from 'ol/style/Icon'
+import RegularShape from 'ol/style/RegularShape'
 import Overlay from 'ol/Overlay'
 import { fromLonLat } from 'ol/proj'
 import { getCities } from '../api/cesium'
@@ -215,7 +216,12 @@ export default function OpenLayerMap({
       hexLayerRef.current = { layer: hexLayer, source: hexSource }
 
       const earthquakeSource = new VectorSource()
-      const earthquakeLayer = new VectorLayer({ source: earthquakeSource })
+      const earthquakeLayer = new HeatmapLayer({
+        source: earthquakeSource,
+        blur: 20,
+        radius: 12,
+        gradient: ['#00f', '#0ff', '#0f0', '#ff0', '#f00'],
+      })
       earthquakeLayerRef.current = { layer: earthquakeLayer, source: earthquakeSource }
 
       const typhoonSource = new VectorSource()
@@ -401,9 +407,9 @@ export default function OpenLayerMap({
     if (!earthquakeVisible || !earthquakeData.length) return
 
     const features = earthquakeData.map((eq) => {
-      const color = getMagnitudeColor(eq.magnitude)
       const feature = new Feature({
         geometry: new Point(fromLonLat([eq.lng, eq.lat])),
+        weight: Math.min(eq.magnitude / 10, 1),
         magnitude: eq.magnitude,
         region: eq.region,
         depth: eq.depth,
@@ -420,20 +426,6 @@ export default function OpenLayerMap({
         `,
         id: `earthquake-${eq.id}`,
       })
-      feature.setStyle(new Style({
-        image: new CircleStyle({
-          radius: Math.max(5, eq.magnitude * 2),
-          fill: new Fill({ color }),
-          stroke: new Stroke({ color: '#fff', width: 2 }),
-        }),
-        text: new Text({
-          text: `M${eq.magnitude.toFixed(1)}`,
-          font: '12px sans-serif',
-          fill: new Fill({ color }),
-          backgroundFill: new Fill({ color: 'rgba(0,0,0,0.5)' }),
-          offsetY: -16,
-        }),
-      }))
       return feature
     })
     source.addFeatures(features)
@@ -571,32 +563,6 @@ export default function OpenLayerMap({
     }
   }
 
-  function createArrowDataUrl() {
-    const canvas = document.createElement('canvas')
-    canvas.width = 40
-    canvas.height = 40
-    const ctx = canvas.getContext('2d')
-    const cx = 20, cy = 20
-    ctx.clearRect(0, 0, 40, 40)
-    ctx.beginPath()
-    ctx.moveTo(cx, cy - 14)
-    ctx.lineTo(cx + 10, cy + 2)
-    ctx.lineTo(cx + 3, cy)
-    ctx.lineTo(cx + 3, cy + 10)
-    ctx.lineTo(cx - 3, cy + 10)
-    ctx.lineTo(cx - 3, cy)
-    ctx.lineTo(cx - 10, cy + 2)
-    ctx.closePath()
-    ctx.fillStyle = '#fff'
-    ctx.fill()
-    ctx.strokeStyle = 'rgba(255,255,255,0.9)'
-    ctx.lineWidth = 1
-    ctx.stroke()
-    return canvas.toDataURL()
-  }
-
-  const arrowDataUrl = createArrowDataUrl()
-
   useEffect(() => {
     const map = mapRef.current
     if (!map) return
@@ -616,6 +582,22 @@ export default function OpenLayerMap({
     const gridRows = Math.ceil((maxLat - minLat) / step)
     const gridCols = Math.ceil((maxLng - minLng) / step)
 
+    const shaft = new RegularShape({
+      points: 2,
+      radius: 6,
+      stroke: new Stroke({ width: 2, color: '#fff' }),
+      rotateWithView: true,
+    })
+
+    const head = new RegularShape({
+      points: 3,
+      radius: 6,
+      fill: new Fill({ color: '#fff' }),
+      rotateWithView: true,
+    })
+
+    const arrowStyles = [new Style({ image: shaft }), new Style({ image: head })]
+
     const features = []
 
     for (let r = 0; r < gridRows; r++) {
@@ -624,32 +606,22 @@ export default function OpenLayerMap({
         const gridLat = minLat + r * step + step / 2
         const { speed, direction } = idwInterpolate(gridLng, gridLat, windData)
         const color = getWindSpeedColor(speed)
+        const angle = ((direction - 180) * Math.PI) / 180
+        const scale = speed / 10
 
-        const feature = new Feature({
+        shaft.setScale([1, scale])
+        shaft.setRotation(angle)
+        shaft.setStroke(new Stroke({ width: 2, color }))
+        head.setDisplacement([0, head.getRadius() / 2 + shaft.getRadius() * scale])
+        head.setRotation(angle)
+        head.setFill(new Fill({ color }))
+
+        const arrowFeature = new Feature({
           geometry: new Point(fromLonLat([gridLng, gridLat])),
           speed,
           direction,
         })
-        feature.setStyle(new Style({
-          image: new CircleStyle({
-            radius: 4,
-            fill: new Fill({ color }),
-            stroke: new Stroke({ color: '#fff', width: 1 }),
-          }),
-        }))
-        features.push(feature)
-
-        const arrowFeature = new Feature({
-          geometry: new Point(fromLonLat([gridLng, gridLat])),
-        })
-        arrowFeature.setStyle(new Style({
-          image: new Icon({
-            src: arrowDataUrl,
-            rotation: (-direction * Math.PI) / 180,
-            scale: 0.5,
-            opacity: 0.8,
-          }),
-        }))
+        arrowFeature.setStyle(arrowStyles)
         features.push(arrowFeature)
       }
     }
@@ -687,7 +659,7 @@ export default function OpenLayerMap({
     })
 
     source.addFeatures(features)
-  }, [windData, windVisible, arrowDataUrl])
+  }, [windData, windVisible])
 
   useEffect(() => {
     const map = mapRef.current

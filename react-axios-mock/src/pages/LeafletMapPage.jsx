@@ -68,8 +68,11 @@ export default function LeafletMapPage() {
 
   useEffect(() => {
     fetchLayers()
-    fetchCells()
-  }, [fetchLayers, fetchCells])
+  }, [fetchLayers])
+
+  useEffect(() => {
+    setHexGridCells(generateHexGrid(hexGridCellSizeKm))
+  }, [hexGridCellSizeKm])
 
   useEffect(() => {
     if (earthquakeVisible) fetchEarthquakes()

@@ -4,6 +4,118 @@ import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
 import { getCities } from '../api/cesium'
 
+const HeatmapCanvas = L.Layer.extend({
+  initialize: function (options) {
+    L.setOptions(this, options)
+    this._data = []
+  },
+  onAdd: function (map) {
+    this._map = map
+    const canvas = L.DomUtil.create('canvas', 'leaflet-heatmap-canvas')
+    this._canvas = canvas
+    this._ctx = canvas.getContext('2d')
+    const pane = map.getPane('overlayPane')
+    pane.appendChild(canvas)
+    map.on('moveend', this._reset, this)
+    map.on('zoomend', this._reset, this)
+    this._reset()
+  },
+  onRemove: function (map) {
+    map.off('moveend', this._reset, this)
+    map.off('zoomend', this._reset, this)
+    const parent = this._canvas && this._canvas.parentNode
+    if (parent) parent.removeChild(this._canvas)
+  },
+  setData: function (data) {
+    this._data = data || []
+    if (this._map) this._reset()
+  },
+  _reset: function () {
+    const map = this._map
+    const size = map.getSize()
+    const canvas = this._canvas
+    canvas.width = size.x
+    canvas.height = size.y
+    canvas.style.width = size.x + 'px'
+    canvas.style.height = size.y + 'px'
+    canvas.style.pointerEvents = 'none'
+    this._draw()
+  },
+  _draw: function () {
+    const ctx = this._ctx
+    const map = this._map
+    const data = this._data
+    if (!data.length) return
+
+    const { radius = 20, blur = 15 } = this.options
+
+    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
+
+    const tempCanvas = document.createElement('canvas')
+    tempCanvas.width = ctx.canvas.width
+    tempCanvas.height = ctx.canvas.height
+    const tempCtx = tempCanvas.getContext('2d')
+
+    data.forEach((eq) => {
+      const point = map.latLngToContainerPoint([eq.lat, eq.lng])
+      const r = radius + eq.magnitude * 3
+      const gradient = tempCtx.createRadialGradient(point.x, point.y, 0, point.x, point.y, r)
+      gradient.addColorStop(0, 'rgba(0,0,0,1)')
+      gradient.addColorStop(1, 'rgba(0,0,0,0)')
+      const alpha = Math.min(eq.magnitude / 8, 1)
+      tempCtx.fillStyle = gradient
+      tempCtx.globalAlpha = alpha
+      tempCtx.beginPath()
+      tempCtx.arc(point.x, point.y, r, 0, Math.PI * 2)
+      tempCtx.fill()
+    })
+
+    tempCtx.globalAlpha = 1
+
+    const imageData = tempCtx.getImageData(0, 0, tempCanvas.width, tempCanvas.height)
+    const pixels = imageData.data
+
+    const gradientColors = [
+      { stop: 0, color: [0, 0, 255] },
+      { stop: 0.25, color: [0, 255, 255] },
+      { stop: 0.5, color: [0, 255, 0] },
+      { stop: 0.75, color: [255, 255, 0] },
+      { stop: 1, color: [255, 0, 0] },
+    ]
+
+    function getColor(t) {
+      t = Math.max(0, Math.min(1, t))
+      for (let i = 0; i < gradientColors.length - 1; i++) {
+        const a = gradientColors[i]
+        const b = gradientColors[i + 1]
+        if (t >= a.stop && t <= b.stop) {
+          const f = (t - a.stop) / (b.stop - a.stop)
+          return [
+            Math.round(a.color[0] + (b.color[0] - a.color[0]) * f),
+            Math.round(a.color[1] + (b.color[1] - a.color[1]) * f),
+            Math.round(a.color[2] + (b.color[2] - a.color[2]) * f),
+          ]
+        }
+      }
+      return gradientColors[gradientColors.length - 1].color
+    }
+
+    for (let i = 0; i < pixels.length; i += 4) {
+      const alpha = pixels[i + 3]
+      if (alpha > 0) {
+        const intensity = alpha / 255
+        const [r, g, b] = getColor(intensity)
+        pixels[i] = r
+        pixels[i + 1] = g
+        pixels[i + 2] = b
+        pixels[i + 3] = Math.min(alpha * 1.5, 255)
+      }
+    }
+
+    ctx.putImageData(imageData, 0, 0)
+  },
+})
+
 delete L.Icon.Default.prototype._getIconUrl
 L.Icon.Default.mergeOptions({
   iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
@@ -94,7 +206,7 @@ export default function LeafletMap({
   const basemapLayerRef = useRef(null)
   const cityGroupRef = useRef(null)
   const hexGroupRef = useRef(null)
-  const earthquakeGroupRef = useRef(null)
+  const earthquakeHeatmapRef = useRef(null)
   const typhoonGroupRef = useRef(null)
   const windGroupRef = useRef(null)
   const customLayerRefs = useRef({})
