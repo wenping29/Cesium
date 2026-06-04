@@ -13,6 +13,7 @@ import EarthquakeTablePage from './pages/EarthquakeTablePage'
 import TyphoonTablePage from './pages/TyphoonTablePage'
 import WindTablePage from './pages/WindTablePage'
 import AirQualityTablePage from './pages/AirQualityTablePage'
+import OpenLayerMapPage from './pages/OpenLayerMapPage'
 
 function PrivateRoute({ children }) {
   const token = useAuthStore((s) => s.token)
@@ -44,6 +45,7 @@ export default function App() {
           <Route path="/airquality-table" element={<PrivateRoute><AirQualityTablePage /></PrivateRoute>} />
           <Route path="/users" element={<PrivateRoute><UsersPage /></PrivateRoute>} />
           <Route path="/map" element={<PrivateRoute><MapPage /></PrivateRoute>} />
+          <Route path="/openlayer-map" element={<PrivateRoute><OpenLayerMapPage /></PrivateRoute>} />
           <Route path="/profile" element={<PrivateRoute><EditProfilePage /></PrivateRoute>} />
           <Route path="/change-password" element={<PrivateRoute><ChangePasswordPage /></PrivateRoute>} />
           <Route path="*" element={<Navigate to="/dashboard" replace />} />

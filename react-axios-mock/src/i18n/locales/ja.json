@@ -3,6 +3,7 @@
     "appTitle": "React アプリ",
     "users": "ユーザー管理",
     "map": "マップ",
+    "olMap": "OLマップ",
     "dashboard": "ダッシュボード",
     "bigScreen": "大画面",
     "dataTables": "データテーブル",
@@ -55,7 +56,8 @@
     "submit": "パスワードを変更"
   },
   "map": {
-    "title": "Cesium 3D マップ"
+    "title": "Cesium 3D マップ",
+    "olTitle": "OpenLayers 2D マップ"
   },
   "layer": {
     "title": "レイヤー管理",

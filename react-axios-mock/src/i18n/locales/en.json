@@ -3,6 +3,7 @@
     "appTitle": "React App",
     "users": "Users",
     "map": "Map",
+    "olMap": "OL Map",
     "dashboard": "Dashboard",
     "bigScreen": "Big Screen",
     "dataTables": "Data Tables",
@@ -55,7 +56,8 @@
     "submit": "Change Password"
   },
   "map": {
-    "title": "Cesium 3D Map"
+    "title": "Cesium 3D Map",
+    "olTitle": "OpenLayers 2D Map"
   },
   "layer": {
     "title": "Layer Management",

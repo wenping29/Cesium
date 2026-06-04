@@ -3,6 +3,7 @@
     "appTitle": "React 应用",
     "users": "用户管理",
     "map": "地图",
+    "olMap": "OL地图",
     "dashboard": "仪表盘",
     "bigScreen": "大屏",
     "dataTables": "数据表格",
@@ -55,7 +56,8 @@
     "submit": "修改密码"
   },
   "map": {
-    "title": "Cesium 三维地图"
+    "title": "Cesium 三维地图",
+    "olTitle": "OpenLayers 二维地图"
   },
   "layer": {
     "title": "图层管理",
