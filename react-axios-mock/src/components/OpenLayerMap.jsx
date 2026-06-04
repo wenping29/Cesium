@@ -164,7 +164,6 @@ function getWindSpeedColor(speed) {
 
 export default function OpenLayerMap({
   currentBasemap = 'tianditu_vec',
-  bimModels = [],
   hexGridCells = [],
   hexGridVisible = false,
   hexGridOpacity = 0.6,
@@ -192,7 +191,6 @@ export default function OpenLayerMap({
   const earthquakeLayerRef = useRef(null)
   const typhoonLayerRef = useRef(null)
   const windLayerRef = useRef(null)
-  const bimLayerRef = useRef(null)
 
   const initMap = useCallback(() => {
     const el = containerRef.current
@@ -228,10 +226,6 @@ export default function OpenLayerMap({
       const windLayer = new VectorLayer({ source: windSource })
       windLayerRef.current = { layer: windLayer, source: windSource }
 
-      const bimSource = new VectorSource()
-      const bimLayer = new VectorLayer({ source: bimSource })
-      bimLayerRef.current = { layer: bimLayer, source: bimSource }
-
       const overlay = new Overlay({
         element: popupRef.current,
         positioning: 'bottom-center',
@@ -242,7 +236,7 @@ export default function OpenLayerMap({
 
       const map = new Map({
         target: el,
-        layers: [basemapLayer, vectorLayer, hexLayer, earthquakeLayer, typhoonLayer, windLayer, bimLayer],
+        layers: [basemapLayer, vectorLayer, hexLayer, earthquakeLayer, typhoonLayer, windLayer],
         view: new View({
           center: fromLonLat([108, 35]),
           zoom: 5,
@@ -705,50 +699,6 @@ export default function OpenLayerMap({
       duration: 1000,
     })
   }, [selectedWind, windVisible])
-
-  useEffect(() => {
-    const map = mapRef.current
-    if (!map) return
-
-    const { source } = bimLayerRef.current
-    source.clear()
-
-    if (!bimModels.length) return
-
-    const features = bimModels.map((model) => {
-      const feature = new Feature({
-        geometry: new Point(fromLonLat([model.position.lng, model.position.lat, model.position.height || 0])),
-        name: model.name,
-        popupContent: `
-          <div style="padding:10px">
-            <h3 style="margin:0 0 8px">${model.name}</h3>
-            <p><strong>Type:</strong> ${model.type}</p>
-            <p><strong>Description:</strong> ${model.description || ''}</p>
-            <p><strong>Status:</strong> ${model.status === 'active' ? 'Active' : 'Processing'}</p>
-            <p><strong>Progress:</strong> ${model.progress || 0}%</p>
-          </div>
-        `,
-        id: model.id,
-      })
-      feature.setStyle(new Style({
-        image: new CircleStyle({
-          radius: 8,
-          fill: new Fill({ color: model.status === 'active' ? '#00ff00' : '#ffaa00' }),
-          stroke: new Stroke({ color: '#fff', width: 2 }),
-        }),
-        text: new Text({
-          text: model.name,
-          font: '14px sans-serif',
-          fill: new Fill({ color: '#fff' }),
-          backgroundFill: new Fill({ color: 'rgba(0,0,0,0.7)' }),
-          offsetY: -18,
-        }),
-      }))
-      return feature
-    })
-
-    source.addFeatures(features)
-  }, [bimModels])
 
   return (
     <Box sx={{ width: '100%', height: '100%', position: 'relative' }}>

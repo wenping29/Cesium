@@ -1,16 +1,14 @@
 import { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Box, Typography, Fab, Tooltip } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import LeafletMap from '../components/LeafletMap'
 import LayerControl from '../components/LayerControl'
-import BIMControl from '../components/BIMControl'
 import EarthquakeControl from '../components/EarthquakeControl'
 import AirQualityControl from '../components/AirQualityControl'
 import TyphoonControl from '../components/TyphoonControl'
 import WindControl from '../components/WindControl'
-import { getBIMModels } from '../api/bim'
+import { generateHexGrid } from '../utils/hexGrid'
 import useLayerStore from '../store/layerStore'
-import useHexGridStore from '../store/hexGridStore'
 import useEarthquakeStore from '../store/earthquakeStore'
 import useAirQualityStore from '../store/airQualityStore'
 import useTyphoonStore from '../store/typhoonStore'
@@ -19,10 +17,10 @@ import useWindStore from '../store/windStore'
 export default function LeafletMapPage() {
   const { t } = useTranslation()
   const [currentBasemap, setCurrentBasemap] = useState('tianditu_vec')
-  const [bimData, setBimData] = useState(null)
-  const [selectedBimModels, setSelectedBimModels] = useState([])
-  const [loadingBim, setLoadingBim] = useState(true)
-  const [showBIM, setShowBIM] = useState(false)
+  const [hexGridCells, setHexGridCells] = useState([])
+  const [hexGridVisible, setHexGridVisible] = useState(false)
+  const [hexGridOpacity, setHexGridOpacity] = useState(0.6)
+  const [hexGridCellSizeKm, setHexGridCellSizeKm] = useState(5)
 
   const {
     layers: customLayers,
@@ -32,17 +30,6 @@ export default function LeafletMapPage() {
     removeLayer,
     clearAllLayers,
   } = useLayerStore()
-
-  const {
-    cells: hexGridCells,
-    fetchCells,
-    visible: hexGridVisible,
-    setVisible: setHexGridVisible,
-    opacity: hexGridOpacity,
-    setOpacity: setHexGridOpacity,
-    cellSizeKm: hexGridCellSizeKm,
-    setCellSizeKm: setHexGridCellSizeKm,
-  } = useHexGridStore()
 
   const {
     earthquakes,
@@ -103,44 +90,6 @@ export default function LeafletMapPage() {
     if (windVisible) fetchWind()
   }, [windVisible, fetchWind])
 
-  const loadBimData = async () => {
-    try {
-      setLoadingBim(true)
-      const res = await getBIMModels()
-      setBimData(res.data)
-      const activeModels = res.data.models
-        .filter((model) => model.status === 'active')
-        .map((model) => model.id)
-      setSelectedBimModels(activeModels)
-    } catch (error) {
-      console.error('Failed to load BIM data:', error)
-    } finally {
-      setLoadingBim(false)
-    }
-  }
-
-  useEffect(() => {
-    loadBimData()
-  }, [])
-
-  const handleBimModelToggle = (modelId) => {
-    setSelectedBimModels((prev) =>
-      prev.includes(modelId) ? prev.filter((id) => id !== modelId) : [...prev, modelId]
-    )
-  }
-
-  const handleBimModelSelect = (model) => {
-    console.log('Selected BIM model:', model)
-  }
-
-  const handleClearBim = () => {
-    setSelectedBimModels([])
-  }
-
-  const activeBimModels = bimData?.models?.filter((model) =>
-    selectedBimModels.includes(model.id)
-  ) || []
-
   const moduleControlProps = [
     earthquakeVisible && {
       key: 'earthquake',
@@ -196,8 +145,6 @@ export default function LeafletMapPage() {
       <LayerControl
         currentBasemap={currentBasemap}
         onBasemapChange={setCurrentBasemap}
-        sceneMode="2d"
-        onSceneModeChange={() => {}}
         customLayers={customLayers}
         onToggleLayer={toggleLayer}
         onRemoveLayer={removeLayer}
@@ -219,31 +166,6 @@ export default function LeafletMapPage() {
         onToggleWind={() => setWindVisible(!windVisible)}
       />
 
-      {!loadingBim && bimData && showBIM && (
-        <BIMControl
-          bimData={bimData}
-          selectedModels={selectedBimModels}
-          onModelToggle={handleBimModelToggle}
-          onModelSelect={handleBimModelSelect}
-          onRefresh={loadBimData}
-          onClose={() => setShowBIM(false)}
-          onClear={handleClearBim}
-        />
-      )}
-
-      {!showBIM && (
-        <Tooltip title={t('bim.open')} placement="right">
-          <Fab
-            size="small"
-            color="primary"
-            sx={{ position: 'absolute', top: 80, left: 16, zIndex: 1000 }}
-            onClick={() => setShowBIM(true)}
-          >
-            📦
-          </Fab>
-        </Tooltip>
-      )}
-
       {moduleControlProps.map((m, i) => (
         <Box key={m.key} sx={{ position: 'absolute', top: 80 + i * 380, right: 340, zIndex: 1000 }}>
           <m.Component {...m.props} />
@@ -252,7 +174,6 @@ export default function LeafletMapPage() {
 
       <LeafletMap
         currentBasemap={currentBasemap}
-        bimModels={activeBimModels}
         hexGridCells={hexGridVisible ? hexGridCells : []}
         hexGridVisible={hexGridVisible}
         hexGridOpacity={hexGridOpacity}

@@ -73,7 +73,6 @@ function getWindSpeedColor(speed) {
 
 export default function LeafletMap({
   currentBasemap = 'tianditu_vec',
-  bimModels = [],
   hexGridCells = [],
   hexGridVisible = false,
   hexGridOpacity = 0.6,
@@ -98,7 +97,6 @@ export default function LeafletMap({
   const earthquakeGroupRef = useRef(null)
   const typhoonGroupRef = useRef(null)
   const windGroupRef = useRef(null)
-  const bimGroupRef = useRef(null)
   const customLayerRefs = useRef({})
 
   const addCityMarkers = useCallback(async (map) => {
@@ -150,7 +148,6 @@ export default function LeafletMap({
       earthquakeGroupRef.current = L.layerGroup().addTo(map)
       typhoonGroupRef.current = L.layerGroup().addTo(map)
       windGroupRef.current = L.layerGroup().addTo(map)
-      bimGroupRef.current = L.layerGroup().addTo(map)
 
       map.on('click', () => {
         map.closePopup()
@@ -477,38 +474,6 @@ export default function LeafletMap({
 
     map.flyTo([selectedWind.lat, selectedWind.lng], 7, { duration: 1 })
   }, [selectedWind, windVisible])
-
-  useEffect(() => {
-    const map = mapRef.current
-    if (!map) return
-
-    const group = bimGroupRef.current
-    group.clearLayers()
-
-    if (!bimModels.length) return
-
-    bimModels.forEach((model) => {
-      const statusColor = model.status === 'active' ? '#00ff00' : '#ffaa00'
-      const marker = L.circleMarker([model.position.lat, model.position.lng], {
-        radius: 8,
-        fillColor: statusColor,
-        fillOpacity: 0.8,
-        color: '#fff',
-        weight: 2,
-      })
-      marker.bindPopup(`
-        <div style="padding:10px">
-          <h3 style="margin:0 0 8px">${model.name}</h3>
-          <p><strong>Type:</strong> ${model.type}</p>
-          <p><strong>Description:</strong> ${model.description || ''}</p>
-          <p><strong>Status:</strong> ${model.status === 'active' ? 'Active' : 'Processing'}</p>
-          <p><strong>Progress:</strong> ${model.progress || 0}%</p>
-        </div>
-      `)
-      marker.bindTooltip(model.name, { offset: [0, -18], direction: 'top' })
-      group.addLayer(marker)
-    })
-  }, [bimModels])
 
   return (
     <Box sx={{ width: '100%', height: '100%', position: 'relative' }}>
