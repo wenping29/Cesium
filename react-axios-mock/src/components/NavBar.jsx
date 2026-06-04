@@ -7,6 +7,7 @@ import {
 import PeopleIcon from '@mui/icons-material/People'
 import MapIcon from '@mui/icons-material/Map'
 import LayersIcon from '@mui/icons-material/Layers'
+import MapOutlinedIcon from '@mui/icons-material/MapOutlined'
 import DashboardIcon from '@mui/icons-material/Dashboard'
 import DesktopWindowsIcon from '@mui/icons-material/DesktopWindows'
 import TableChartIcon from '@mui/icons-material/TableChart'
@@ -50,6 +51,7 @@ export default function NavBar() {
     { label: t('nav.bigScreen'), path: '/big-screen', icon: <DesktopWindowsIcon sx={{ mr: 0.5 }} /> },
     { label: t('nav.map'), path: '/map', icon: <MapIcon sx={{ mr: 0.5 }} /> },
     { label: t('nav.olMap'), path: '/openlayer-map', icon: <LayersIcon sx={{ mr: 0.5 }} /> },
+    { label: t('nav.leafletMap'), path: '/leaflet-map', icon: <MapOutlinedIcon sx={{ mr: 0.5 }} /> },
   ]
 
   const dataTableItems = [

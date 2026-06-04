@@ -4,6 +4,7 @@
     "users": "Users",
     "map": "Map",
     "olMap": "OL Map",
+    "leafletMap": "Leaflet Map",
     "dashboard": "Dashboard",
     "bigScreen": "Big Screen",
     "dataTables": "Data Tables",
@@ -57,7 +58,8 @@
   },
   "map": {
     "title": "Cesium 3D Map",
-    "olTitle": "OpenLayers 2D Map"
+    "olTitle": "OpenLayers 2D Map",
+    "leafletTitle": "Leaflet 2D Map"
   },
   "layer": {
     "title": "Layer Management",

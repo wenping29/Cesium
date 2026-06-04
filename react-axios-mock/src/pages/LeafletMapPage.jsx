@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Box, Typography, Fab, Tooltip } from '@mui/material'
-import OpenLayerMap from '../components/OpenLayerMap'
+import LeafletMap from '../components/LeafletMap'
 import LayerControl from '../components/LayerControl'
 import BIMControl from '../components/BIMControl'
 import EarthquakeControl from '../components/EarthquakeControl'
@@ -16,7 +16,7 @@ import useAirQualityStore from '../store/airQualityStore'
 import useTyphoonStore from '../store/typhoonStore'
 import useWindStore from '../store/windStore'
 
-export default function OpenLayerMapPage() {
+export default function LeafletMapPage() {
   const { t } = useTranslation()
   const [currentBasemap, setCurrentBasemap] = useState('tianditu_vec')
   const [bimData, setBimData] = useState(null)
@@ -190,7 +190,7 @@ export default function OpenLayerMapPage() {
           color: 'white', bgcolor: 'rgba(0,0,0,0.5)', px: 2, py: 0.5, borderRadius: 1,
         }}
       >
-        {t('map.olTitle')}
+        {t('map.leafletTitle')}
       </Typography>
 
       <LayerControl
@@ -250,7 +250,7 @@ export default function OpenLayerMapPage() {
         </Box>
       ))}
 
-      <OpenLayerMap
+      <LeafletMap
         currentBasemap={currentBasemap}
         bimModels={activeBimModels}
         hexGridCells={hexGridVisible ? hexGridCells : []}

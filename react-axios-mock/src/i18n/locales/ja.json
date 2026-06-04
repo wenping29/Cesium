@@ -4,6 +4,7 @@
     "users": "ユーザー管理",
     "map": "マップ",
     "olMap": "OLマップ",
+    "leafletMap": "Leaflet マップ",
     "dashboard": "ダッシュボード",
     "bigScreen": "大画面",
     "dataTables": "データテーブル",
@@ -57,7 +58,8 @@
   },
   "map": {
     "title": "Cesium 3D マップ",
-    "olTitle": "OpenLayers 2D マップ"
+    "olTitle": "OpenLayers 2D マップ",
+    "leafletTitle": "Leaflet 2D マップ"
   },
   "layer": {
     "title": "レイヤー管理",
