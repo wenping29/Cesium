@@ -15,31 +15,31 @@ const TIANDITU_TOKEN = import.meta.env.VITE_TIANDITU_TOKEN || ''
 const BASEMAP_PROVIDERS = {
   tianditu_vec: {
     base: new Cesium.WebMapTileServiceImageryProvider({
-      url: `/tianditu/vec_w/wmts?tk=${TIANDITU_TOKEN}`,
+      url: `https://t0.tianditu.gov.cn/vec_w/wmts?tk=${TIANDITU_TOKEN}`,
       layer: 'vec', style: 'default', format: 'tiles', tileMatrixSetID: 'w', maximumLevel: 18,
     }),
     annotation: new Cesium.WebMapTileServiceImageryProvider({
-      url: `/tianditu/cva_w/wmts?tk=${TIANDITU_TOKEN}`,
+      url: `https://t0.tianditu.gov.cn/cva_w/wmts?tk=${TIANDITU_TOKEN}`,
       layer: 'cva', style: 'default', format: 'tiles', tileMatrixSetID: 'w', maximumLevel: 18,
     }),
   },
   tianditu_img: {
     base: new Cesium.WebMapTileServiceImageryProvider({
-      url: `/tianditu/img_w/wmts?tk=${TIANDITU_TOKEN}`,
+      url: `https://t0.tianditu.gov.cn/img_w/wmts?tk=${TIANDITU_TOKEN}`,
       layer: 'img', style: 'default', format: 'tiles', tileMatrixSetID: 'w', maximumLevel: 18,
     }),
     annotation: new Cesium.WebMapTileServiceImageryProvider({
-      url: `/tianditu/cia_w/wmts?tk=${TIANDITU_TOKEN}`,
+      url: `https://t0.tianditu.gov.cn/cia_w/wmts?tk=${TIANDITU_TOKEN}`,
       layer: 'cia', style: 'default', format: 'tiles', tileMatrixSetID: 'w', maximumLevel: 18,
     }),
   },
   tianditu_ter: {
     base: new Cesium.WebMapTileServiceImageryProvider({
-      url: `/tianditu/ter_w/wmts?tk=${TIANDITU_TOKEN}`,
+      url: `https://t0.tianditu.gov.cn/ter_w/wmts?tk=${TIANDITU_TOKEN}`,
       layer: 'ter', style: 'default', format: 'tiles', tileMatrixSetID: 'w', maximumLevel: 14,
     }),
     annotation: new Cesium.WebMapTileServiceImageryProvider({
-      url: `/tianditu/cta_w/wmts?tk=${TIANDITU_TOKEN}`,
+      url: `https://t0.tianditu.gov.cn/cta_w/wmts?tk=${TIANDITU_TOKEN}`,
       layer: 'cta', style: 'default', format: 'tiles', tileMatrixSetID: 'w', maximumLevel: 14,
     }),
   },
@@ -57,7 +57,7 @@ const BASEMAP_PROVIDERS = {
   },
   baidu_traffic: {
     base: new Cesium.UrlTemplateImageryProvider({
-      url: '/baidu/traffic/TrafficTileService?level={z}&x={x}&y={y}&label=web2&v=017&scaler=2',
+      url: 'https://its.map.baidu.com/traffic/TrafficTileService?level={z}&x={x}&y={y}&label=web2&v=017&scaler=2',
       minimumLevel: 1, maximumLevel: 18,
     }),
   },

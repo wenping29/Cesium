@@ -5,26 +5,34 @@ import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig({
   plugins: [react(), cesium(), tailwindcss()],
-  server: {
-    proxy: {
-      '/tianditu': {
-        target: 'https://t0.tianditu.gov.cn',
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/tianditu/, ''),
-        secure: false,
+
+  build: {
+    outDir: 'dist',
+    sourcemap: false,
+    minify: 'esbuild',
+    cssMinify: 'esbuild',
+    cssCodeSplit: false,
+    target: 'es2020',
+
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes('node_modules/cesium')) {
+            return 'cesium'
+          }
+          if (id.includes('node_modules/react-dom') || id.includes('node_modules/react/')) {
+            return 'react'
+          }
+          if (id.includes('node_modules/@mui')) {
+            return 'mui'
+          }
+          if (id.includes('node_modules')) {
+            return 'vendor'
+          }
+        },
       },
-      '/amap': {
-        target: 'https://webrd01.is.autonavi.com',
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/amap/, ''),
-        secure: false,
-      },
-      '/baidu': {
-        target: 'https://its.map.baidu.com',
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/baidu/, ''),
-        secure: false,
-      }
-    }
-  }
+    },
+
+    chunkSizeWarningLimit: 2000,
+  },
 })
