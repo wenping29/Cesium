@@ -116,6 +116,9 @@ export default function CesiumMap({
   typhoonData = { current: null, historical: [] },
   typhoonVisible = false,
   selectedTyphoon = null,
+  windData = [],
+  windVisible = false,
+  selectedWind = null,
 }) {
   const { t } = useTranslation()
   const containerRef = useRef(null)
@@ -127,6 +130,7 @@ export default function CesiumMap({
   const customImageryRef = useRef({})
   const earthquakeEntitiesRef = useRef([])
   const typhoonEntitiesRef = useRef([])
+  const windEntitiesRef = useRef([])
 
   const addBasemapLayer = (viewer, basemapId) => {
     const provider = BASEMAP_PROVIDERS[basemapId]
@@ -468,6 +472,155 @@ export default function CesiumMap({
     })
   }, [selectedTyphoon])
 
+  function getWindSpeedColor(speed) {
+    if (speed < 5) return Cesium.Color.fromCssColorString('#4caf50')
+    if (speed < 10) return Cesium.Color.fromCssColorString('#ff9800')
+    return Cesium.Color.fromCssColorString('#f44336')
+  }
+
+  function createArrowCanvas() {
+    const canvas = document.createElement('canvas')
+    canvas.width = 40
+    canvas.height = 40
+    const ctx = canvas.getContext('2d')
+    const cx = 20, cy = 20
+    ctx.clearRect(0, 0, 40, 40)
+    ctx.beginPath()
+    ctx.moveTo(cx, cy - 14)
+    ctx.lineTo(cx + 10, cy + 2)
+    ctx.lineTo(cx + 3, cy)
+    ctx.lineTo(cx + 3, cy + 10)
+    ctx.lineTo(cx - 3, cy + 10)
+    ctx.lineTo(cx - 3, cy)
+    ctx.lineTo(cx - 10, cy + 2)
+    ctx.closePath()
+    ctx.fillStyle = '#fff'
+    ctx.fill()
+    ctx.strokeStyle = 'rgba(255,255,255,0.9)'
+    ctx.lineWidth = 1
+    ctx.stroke()
+    return canvas
+  }
+
+  const arrowCanvas = createArrowCanvas()
+
+  useEffect(() => {
+    const viewer = viewerRef.current
+    if (!viewer || viewer.isDestroyed()) return
+
+    windEntitiesRef.current.forEach((e) => viewer.entities.remove(e))
+    windEntitiesRef.current = []
+
+    if (!windVisible || !windData.length) return
+
+    const lats = windData.map((w) => w.lat)
+    const lngs = windData.map((w) => w.lng)
+    const minLat = Math.min(...lats) - 3
+    const maxLat = Math.max(...lats) + 3
+    const minLng = Math.min(...lngs) - 3
+    const maxLng = Math.max(...lngs) + 3
+
+    const step = 2
+    const gridRows = Math.ceil((maxLat - minLat) / step)
+    const gridCols = Math.ceil((maxLng - minLng) / step)
+
+    function idwInterpolate(gridLng, gridLat) {
+      let weightedSpeed = 0, weightedCos = 0, weightedSin = 0, totalW = 0
+      for (const s of windData) {
+        const d = Math.sqrt((s.lng - gridLng) ** 2 + (s.lat - gridLat) ** 2)
+        if (d < 0.01) return { speed: s.speed, direction: s.direction }
+        const w = 1 / (d * d)
+        const rad = Cesium.Math.toRadians(s.direction)
+        weightedSpeed += w * s.speed
+        weightedCos += w * Math.cos(rad)
+        weightedSin += w * Math.sin(rad)
+        totalW += w
+      }
+      return {
+        speed: weightedSpeed / totalW,
+        direction: (Cesium.Math.toDegrees(Math.atan2(weightedSin, weightedCos)) + 360) % 360,
+      }
+    }
+
+    const gridEntities = []
+
+    for (let r = 0; r < gridRows; r++) {
+      for (let c = 0; c < gridCols; c++) {
+        const gridLng = minLng + c * step + step / 2
+        const gridLat = minLat + r * step + step / 2
+        const { speed, direction } = idwInterpolate(gridLng, gridLat)
+        const color = getWindSpeedColor(speed)
+
+        const entity = viewer.entities.add({
+          id: `wind-grid-${r}-${c}`,
+          position: Cesium.Cartesian3.fromDegrees(gridLng, gridLat, 0),
+          point: {
+            pixelSize: 6,
+            color,
+            outlineColor: Cesium.Color.WHITE,
+            outlineWidth: 1,
+            heightReference: Cesium.HeightReference.RELATIVE_TO_GROUND,
+          },
+          billboard: {
+            image: arrowCanvas,
+            rotation: -Cesium.Math.toRadians(direction),
+            scale: 0.5,
+            verticalOrigin: Cesium.VerticalOrigin.CENTER,
+            horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
+            heightReference: Cesium.HeightReference.RELATIVE_TO_GROUND,
+          },
+        })
+        gridEntities.push(entity)
+      }
+    }
+
+    windData.forEach((w) => {
+      const color = getWindSpeedColor(w.speed)
+      const entity = viewer.entities.add({
+        id: `wind-station-${w.id}`,
+        name: w.region,
+        description: `
+          <div style="padding:10px">
+            <h3>${w.region}</h3>
+            <p><strong>Direction:</strong> ${w.direction}°</p>
+            <p><strong>Speed:</strong> ${w.speed} m/s</p>
+            <p><strong>Gust:</strong> ${w.gust} m/s</p>
+          </div>
+        `,
+        position: Cesium.Cartesian3.fromDegrees(w.lng, w.lat, 0),
+        point: {
+          pixelSize: 12,
+          color,
+          outlineColor: Cesium.Color.WHITE,
+          outlineWidth: 2,
+          heightReference: Cesium.HeightReference.RELATIVE_TO_GROUND,
+        },
+        label: {
+          text: `${w.region} ${w.speed.toFixed(1)}m/s`,
+          font: '12px sans-serif',
+          fillColor: color,
+          showBackground: true,
+          backgroundColor: Cesium.Color.BLACK.withAlpha(0.5),
+          pixelOffset: { x: 0, y: -18 },
+          heightReference: Cesium.HeightReference.RELATIVE_TO_GROUND,
+        },
+      })
+      gridEntities.push(entity)
+    })
+
+    windEntitiesRef.current = gridEntities
+  }, [windData, windVisible])
+
+  useEffect(() => {
+    const viewer = viewerRef.current
+    if (!viewer || viewer.isDestroyed() || !selectedWind || !windVisible) return
+
+    viewer.camera.flyTo({
+      destination: Cesium.Cartesian3.fromDegrees(selectedWind.lng, selectedWind.lat, 500000),
+      duration: 2,
+    })
+  }, [selectedWind])
+
   const loadBIMModel = async (viewer, bimModel) => {
     try {
       const position = Cesium.Cartesian3.fromDegrees(
@@ -563,6 +716,11 @@ export default function CesiumMap({
           viewer.flyTo(entity, {
             duration: 2,
             offset: new Cesium.HeadingPitchRange(0, Cesium.Math.toRadians(-30), 300000),
+          })
+        } else if (String(entity.id).startsWith('wind-')) {
+          viewer.flyTo(entity, {
+            duration: 2,
+            offset: new Cesium.HeadingPitchRange(0, Cesium.Math.toRadians(-30), 500000),
           })
         }
       }

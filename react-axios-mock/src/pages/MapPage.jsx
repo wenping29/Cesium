@@ -265,6 +265,9 @@ export default function MapPage() {
         typhoonData={{ current: typhoonCurrent, historical: typhoonHistorical }}
         typhoonVisible={typhoonVisible}
         selectedTyphoon={selectedTyphoon}
+        windData={windData}
+        windVisible={windVisible}
+        selectedWind={selectedWind}
       />
     </Box>
   )
