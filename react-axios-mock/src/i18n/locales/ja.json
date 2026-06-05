@@ -10,7 +10,8 @@
     "dataTables": "データテーブル",
     "editProfile": "プロフィール編集",
     "changePassword": "パスワード変更",
-    "logout": "ログアウト"
+    "logout": "ログアウト",
+    "imageToBim": "画像からBIMへ"
   },
   "login": {
     "title": "ログイン",
@@ -190,5 +191,34 @@
     "forest": "フォレスト",
     "sunset": "サンセット",
     "midnight": "ミッドナイト"
+  },
+  "imageToBim": {
+    "title": "画像からBIMへの変換",
+    "dropHint": "画像をドラッグ＆ドロップ、またはクリックして選択",
+    "supportFormat": "PNG、JPG、JPEG、TIFF 対応（最大10MB）",
+    "fileTooLarge": "ファイルサイズが10MBを超えています",
+    "startConvert": "変換開始",
+    "cancel": "キャンセル",
+    "processing": "画像を分析中...",
+    "processingHint": "建築物の特徴を抽出中です。お待ちください",
+    "convertFailed": "変換に失敗しました。もう一度お試しください",
+    "convertResult": "変換結果",
+    "processingTime": "処理時間",
+    "imageName": "画像",
+    "name": "名称",
+    "type": "種類",
+    "height": "高さ",
+    "area": "面積",
+    "confidence": "信頼度",
+    "position": "位置",
+    "status": "状態",
+    "completed": "完了",
+    "detectedCount": "{{count}} 個のオブジェクトを検出",
+    "createdAt": "作成日時",
+    "history": "変換履歴",
+    "noHistory": "変換履歴はありません",
+    "refresh": "更新",
+    "clearHistory": "クリア",
+    "clickToView": "クリックして詳細を表示"
   }
 }

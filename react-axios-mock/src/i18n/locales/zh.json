@@ -10,7 +10,8 @@
     "dataTables": "数据表格",
     "editProfile": "修改资料",
     "changePassword": "修改密码",
-    "logout": "退出登录"
+    "logout": "退出登录",
+    "imageToBim": "图片转BIM"
   },
   "login": {
     "title": "登录",
@@ -190,5 +191,34 @@
     "forest": "森林",
     "sunset": "日落",
     "midnight": "午夜"
+  },
+  "imageToBim": {
+    "title": "图片转BIM转换",
+    "dropHint": "拖放图片到此处，或点击选择",
+    "supportFormat": "支持 PNG、JPG、JPEG、TIFF 格式（最大10MB）",
+    "fileTooLarge": "文件大小超过10MB限制",
+    "startConvert": "开始转换",
+    "cancel": "取消",
+    "processing": "正在分析图片...",
+    "processingHint": "正在提取建筑特征，请稍候",
+    "convertFailed": "转换失败，请重试",
+    "convertResult": "转换结果",
+    "processingTime": "处理时间",
+    "imageName": "图片",
+    "name": "名称",
+    "type": "类型",
+    "height": "高度",
+    "area": "面积",
+    "confidence": "置信度",
+    "position": "位置",
+    "status": "状态",
+    "completed": "已完成",
+    "detectedCount": "检测到 {{count}} 个对象",
+    "createdAt": "创建时间",
+    "history": "转换历史",
+    "noHistory": "暂无转换历史",
+    "refresh": "刷新",
+    "clearHistory": "清空",
+    "clickToView": "点击查看详情"
   }
 }

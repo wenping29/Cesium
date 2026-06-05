@@ -1,4 +1,37 @@
 import Mock from 'mockjs'
+
+// MockJS fails to propagate xhr.responseType to the native XHR when proxying
+// non-matching requests. This breaks Cesium terrain tiles (ArrayBuffer responses).
+(function patchMockXHR() {
+  const MockXHR = window.XMLHttpRequest
+  if (!MockXHR?.prototype) return
+
+  delete MockXHR.prototype.responseType
+
+  Object.defineProperty(MockXHR.prototype, 'responseType', {
+    get() {
+      return this._mockResponseType ?? ''
+    },
+    set(v) {
+      this._mockResponseType = v
+      if (this.custom?.xhr) {
+        try { this.custom.xhr.responseType = v } catch { /* native XHR may reject invalid responseType */ }
+      }
+    },
+    configurable: true,
+  })
+
+  const origOpen = MockXHR.prototype.open
+  if (origOpen) {
+    MockXHR.prototype.open = function (...args) {
+      origOpen.apply(this, args)
+      if (this._mockResponseType && this.custom?.xhr) {
+        try { this.custom.xhr.responseType = this._mockResponseType } catch { /* native XHR may reject invalid responseType */ }
+      }
+    }
+  }
+})()
+
 import './cesium'
 import './auth'
 import './bim'
@@ -8,6 +41,7 @@ import './earthquake'
 import './airquality'
 import './typhoon'
 import './wind'
+import './imageToBim'
 
 const { Random } = Mock
 

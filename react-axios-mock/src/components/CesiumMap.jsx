@@ -176,7 +176,20 @@ export default function CesiumMap({
           animation: false, timeline: false, geocoder: false,
           homeButton: false, sceneModePicker: false, baseLayerPicker: false,
           navigationHelpButton: false, infoBox: false,
+          // terrain: Cesium.Terrain.fromWorldTerrain({
+          //   requestWaterMask: true,
+          //   requestVertexNormals: true,
+          // }),
         })
+
+        viewer.scene.setTerrain(
+          new Cesium.Terrain(
+            Cesium.ArcGISTiledElevationTerrainProvider.fromUrl(
+              "https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer",
+            ),
+          ),
+        );
+        viewer.scene.globe.depthTestAgainstTerrain = true
 
         viewerRef.current = viewer
         viewer.imageryLayers.removeAll()
@@ -185,6 +198,10 @@ export default function CesiumMap({
         viewer.camera.setView({
           destination: Cesium.Cartesian3.fromDegrees(108, 35, 6000000),
         })
+
+        // viewer.scene.setTerrain(Cesium.Terrain.fromWorldTerrain({
+        //     requestVertexNormals: true,
+        //   }));
 
         const res = await getCities()
         if (cancelled || !viewer || viewer.isDestroyed()) return
