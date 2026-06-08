@@ -104,6 +104,12 @@
     "major": "大地震",
     "depth": "深度"
   },
+  "earthquakeHeatmap": {
+    "title": "地震热力图",
+    "opacity": "透明度",
+    "radius": "热力半径",
+    "legend": "图例"
+  },
   "airQuality": {
     "title": "空气质量",
     "level": "等级"

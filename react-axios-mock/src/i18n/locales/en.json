@@ -104,6 +104,12 @@
     "major": "Major",
     "depth": "Depth"
   },
+  "earthquakeHeatmap": {
+    "title": "Earthquake Heatmap",
+    "opacity": "Opacity",
+    "radius": "Heat Radius",
+    "legend": "Legend"
+  },
   "airQuality": {
     "title": "Air Quality",
     "level": "Level"

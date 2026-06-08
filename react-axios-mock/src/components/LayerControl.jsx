@@ -12,6 +12,7 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import ExpandLessIcon from '@mui/icons-material/ExpandLess'
 import VolcanoIcon from '@mui/icons-material/Volcano'
+import WhatshotIcon from '@mui/icons-material/Whatshot'
 import AirIcon from '@mui/icons-material/Air'
 import StormIcon from '@mui/icons-material/Storm'
 import WavesIcon from '@mui/icons-material/Waves'
@@ -43,6 +44,8 @@ export default function LayerControl({
   onHexGridCellSizeKm,
   earthquakeVisible,
   onToggleEarthquake,
+  earthquakeHeatmapVisible,
+  onToggleEarthquakeHeatmap,
   airQualityVisible,
   onToggleAirQuality,
   typhoonVisible,
@@ -59,6 +62,7 @@ export default function LayerControl({
 
   const thematicModules = [
     { key: 'earthquake', label: t('earthquake.title'), visible: earthquakeVisible, onToggle: onToggleEarthquake, icon: <VolcanoIcon fontSize="small" sx={{ color: '#f44336' }} /> },
+    { key: 'earthquakeHeatmap', label: t('earthquakeHeatmap.title'), visible: earthquakeHeatmapVisible, onToggle: onToggleEarthquakeHeatmap, icon: <WhatshotIcon fontSize="small" sx={{ color: '#ff5722' }} /> },
     { key: 'airQuality', label: t('airQuality.title'), visible: airQualityVisible, onToggle: onToggleAirQuality, icon: <AirIcon fontSize="small" sx={{ color: '#4caf50' }} /> },
     { key: 'typhoon', label: t('typhoon.title'), visible: typhoonVisible, onToggle: onToggleTyphoon, icon: <StormIcon fontSize="small" sx={{ color: '#1976d2' }} /> },
     { key: 'wind', label: t('wind.title'), visible: windVisible, onToggle: onToggleWind, icon: <WavesIcon fontSize="small" sx={{ color: '#00acc1' }} /> },

@@ -3,6 +3,7 @@ import * as Cesium from 'cesium'
 import { Box, CircularProgress, Typography } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 import { getCities } from '../api/cesium'
+import { generateEarthquakeHeatmap } from '../utils/heatmap'
 
 Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJiYjM0OTdiZi0yN2EzLTRkNmItODlkZC1iNGQyZWNjODk1MjkiLCJpZCI6NTc3NjQsInN1YiI6IuaEpOaAkueahOmYv-aWhyIsImlzcyI6Imh0dHBzOi8vaW9uLmNlc2l1bS5jb20iLCJhdWQiOiJhcHAyIiwiaWF0IjoxNzc4ODIxOTk4fQ.HTtyOKV1KT7CNZypQcaqPJYQAYCpaInCh0NwfbctEng'
 
@@ -112,6 +113,9 @@ export default function CesiumMap({
   customLayers = [],
   earthquakeData = [],
   earthquakeVisible = false,
+  earthquakeHeatmapVisible = false,
+  earthquakeHeatmapOpacity = 0.6,
+  earthquakeHeatmapRadius = 30,
   selectedEarthquake = null,
   typhoonData = { current: null, historical: [] },
   typhoonVisible = false,
@@ -129,6 +133,7 @@ export default function CesiumMap({
   const hexEntitiesRef = useRef([])
   const customImageryRef = useRef({})
   const earthquakeEntitiesRef = useRef([])
+  const earthquakeHeatmapLayerRef = useRef(null)
   const typhoonEntitiesRef = useRef([])
   const windEntitiesRef = useRef([])
 
@@ -366,6 +371,34 @@ export default function CesiumMap({
       earthquakeEntitiesRef.current.push(entity)
     })
   }, [earthquakeData, earthquakeVisible])
+
+  useEffect(() => {
+    const viewer = viewerRef.current
+    if (!viewer || viewer.isDestroyed()) return
+
+    if (earthquakeHeatmapLayerRef.current) {
+      viewer.imageryLayers.remove(earthquakeHeatmapLayerRef.current, false)
+      earthquakeHeatmapLayerRef.current = null
+    }
+
+    if (!earthquakeHeatmapVisible || !earthquakeData.length) return
+
+    const canvas = generateEarthquakeHeatmap(earthquakeData, {
+      width: 1024,
+      height: 512,
+      radius: earthquakeHeatmapRadius,
+      blur: earthquakeHeatmapRadius,
+    })
+
+    const provider = new Cesium.SingleTileImageryProvider({
+      url: canvas.toDataURL(),
+      rectangle: Cesium.Rectangle.fromDegrees(-180, -90, 180, 90),
+    })
+
+    const layer = viewer.imageryLayers.addImageryProvider(provider)
+    layer.alpha = earthquakeHeatmapOpacity
+    earthquakeHeatmapLayerRef.current = layer
+  }, [earthquakeData, earthquakeHeatmapVisible, earthquakeHeatmapOpacity, earthquakeHeatmapRadius])
 
   useEffect(() => {
     const viewer = viewerRef.current
