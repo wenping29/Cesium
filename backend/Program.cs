@@ -1,5 +1,6 @@
 using System.Text;
 using CesiumApi.Data;
+using CesiumApi.Helpers;
 using CesiumApi.Models;
 using CesiumApi.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -78,6 +79,41 @@ using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     await context.Database.EnsureCreatedAsync();
+
+    var adminRole = await context.Roles.FirstOrDefaultAsync(r => r.Name == "Admin");
+    if (adminRole == null)
+    {
+        adminRole = new Role { Name = "Admin", Description = "系统管理员" };
+        context.Roles.Add(adminRole);
+        await context.SaveChangesAsync();
+    }
+
+    var userRole = await context.Roles.FirstOrDefaultAsync(r => r.Name == "User");
+    if (userRole == null)
+    {
+        userRole = new Role { Name = "User", Description = "普通用户" };
+        context.Roles.Add(userRole);
+        await context.SaveChangesAsync();
+    }
+
+    var adminUser = await context.Users.FirstOrDefaultAsync(u => u.Username == "admin");
+    if (adminUser == null)
+    {
+        adminUser = new User
+        {
+            Username = "admin",
+            Email = "admin@example.com",
+            PasswordHash = PasswordHelper.HashPassword("Admin123!"),
+            IsActive = true,
+            CreatedAt = DateTime.UtcNow
+        };
+        context.Users.Add(adminUser);
+        await context.SaveChangesAsync();
+
+        context.UserRoles.Add(new UserRole { UserId = adminUser.Id, RoleId = adminRole.Id });
+        context.UserRoles.Add(new UserRole { UserId = adminUser.Id, RoleId = userRole.Id });
+        await context.SaveChangesAsync();
+    }
 }
 
 app.UseSwagger();
