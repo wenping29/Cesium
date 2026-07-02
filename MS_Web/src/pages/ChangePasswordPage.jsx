@@ -57,7 +57,8 @@ export default function ChangePasswordPage() {
       setSuccess(t('changePassword.success'))
       setForm({ currentPassword: '', newPassword: '', confirmPassword: '' })
     } catch (err) {
-      setError(err?.response?.data?.message || t('changePassword.failed'))
+      const errorMessage = err?.response?.data || err?.message || t('changePassword.failed')
+      setError(errorMessage)
     } finally {
       setLoading(false)
     }

@@ -2,35 +2,20 @@ import { useEffect, useState } from 'react'
 import {
   Box, Typography, Table, TableHead, TableBody, TableRow, TableCell,
   TextField, Button, CircularProgress, Alert, Paper, TableContainer,
+  Chip
 } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 import useUserStore from '../store/userStore'
 
 export default function UsersPage() {
   const { t } = useTranslation()
-  const { users, loading, error, fetchUsers, createUser } = useUserStore()
-  const [name, setName] = useState('')
-  const [email, setEmail] = useState('')
+  const { users, loading, error, fetchUsers } = useUserStore()
 
   useEffect(() => { fetchUsers() }, [fetchUsers])
-
-  const handleSubmit = async (e) => {
-    e.preventDefault()
-    if (!name || !email) return
-    await createUser({ name, email })
-    setName('')
-    setEmail('')
-  }
 
   return (
     <Box sx={{ p: 4 }}>
       <Typography variant="h4" gutterBottom>{t('users.title')}</Typography>
-
-      <Box component="form" onSubmit={handleSubmit} sx={{ display: 'flex', gap: 2, mb: 3, flexWrap: 'wrap' }}>
-        <TextField label={t('users.name')} size="small" value={name} onChange={(e) => setName(e.target.value)} />
-        <TextField label={t('users.email')} size="small" value={email} onChange={(e) => setEmail(e.target.value)} />
-        <Button type="submit" variant="contained">{t('users.create')}</Button>
-      </Box>
 
       {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
 
@@ -43,19 +28,25 @@ export default function UsersPage() {
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell>{t('users.name')}</TableCell>
-                <TableCell>{t('users.age')}</TableCell>
-                <TableCell>{t('users.email')}</TableCell>
-                <TableCell>{t('users.fruit')}</TableCell>
+                <TableCell>ID</TableCell>
+                <TableCell>用户名</TableCell>
+                <TableCell>邮箱</TableCell>
+                <TableCell>角色</TableCell>
+                <TableCell>创建时间</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {users.map((u) => (
                 <TableRow key={u.id}>
-                  <TableCell>{u.name}</TableCell>
-                  <TableCell>{u.age}</TableCell>
+                  <TableCell>{u.id}</TableCell>
+                  <TableCell>{u.username}</TableCell>
                   <TableCell>{u.email}</TableCell>
-                  <TableCell>{u.fruit}</TableCell>
+                  <TableCell>
+                    {u.roles?.map((role) => (
+                      <Chip key={role} label={role} size="small" sx={{ mr: 0.5, mb: 0.5 }} />
+                    ))}
+                  </TableCell>
+                  <TableCell>{u.createdAt ? new Date(u.createdAt).toLocaleDateString() : '-'}</TableCell>
                 </TableRow>
               ))}
             </TableBody>

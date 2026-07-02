@@ -24,7 +24,8 @@ export default function LoginPage() {
       await login({ username, password })
       navigate('/users', { replace: true })
     } catch (err) {
-      setError(err?.response?.data?.message || t('login.failed'))
+      const errorMessage = err?.response?.data || err?.message || t('login.failed')
+      setError(errorMessage)
     } finally {
       setLoading(false)
     }

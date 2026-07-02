@@ -1,13 +1,13 @@
 import { create } from 'zustand'
-import { login as apiLogin, logout as apiLogout, updateProfile as apiUpdateProfile } from '../api/auth'
+import { login as apiLogin, logout as apiLogout, getMe as apiGetMe, changePassword as apiChangePassword } from '../api/auth'
 
-const useAuthStore = create((set) => ({
+const useAuthStore = create((set, get) => ({
   user: JSON.parse(localStorage.getItem('user') || 'null'),
   token: localStorage.getItem('token') || null,
 
   login: async (credentials) => {
     const res = await apiLogin(credentials)
-    const { token, user } = res.data
+    const { token, user } = res
     localStorage.setItem('token', token)
     localStorage.setItem('user', JSON.stringify(user))
     set({ token, user })
@@ -21,12 +21,21 @@ const useAuthStore = create((set) => ({
     set({ token: null, user: null })
   },
 
-  updateProfile: async (data) => {
-    const res = await apiUpdateProfile(data)
-    const updatedUser = { ...useAuthStore.getState().user, ...res.data }
-    localStorage.setItem('user', JSON.stringify(updatedUser))
-    set({ user: updatedUser })
+  getProfile: async () => {
+    const res = await apiGetMe()
+    const user = res
+    localStorage.setItem('user', JSON.stringify(user))
+    set({ user })
     return res
+  },
+
+  changePassword: async (data) => {
+    return await apiChangePassword(data)
+  },
+
+  hasRole: (roleName) => {
+    const user = get().user
+    return user?.roles?.includes(roleName) || false
   },
 }))
 
