@@ -1,5 +1,6 @@
 using CesiumApi.Data;
 using CesiumApi.DTOs;
+using CesiumApi.Helpers;
 using CesiumApi.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -105,7 +106,7 @@ public class UserController : ControllerBase
         {
             Username = dto.Username,
             Email = dto.Email,
-            PasswordHash = BCrypt.Net.BCrypt.HashPassword(dto.Password),
+            PasswordHash = PasswordHelper.HashPassword(dto.Password),
             Phone = dto.Phone,
             DepartmentId = dto.DepartmentId,
             IsActive = true

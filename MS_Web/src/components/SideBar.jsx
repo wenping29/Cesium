@@ -31,6 +31,9 @@ import WavesIcon from '@mui/icons-material/Waves'
 import AirIcon from '@mui/icons-material/Air'
 import PeopleIcon from '@mui/icons-material/People'
 import InsightsIcon from '@mui/icons-material/Insights'
+import SettingsIcon from '@mui/icons-material/Settings'
+import ShieldIcon from '@mui/icons-material/Shield'
+import BusinessIcon from '@mui/icons-material/Business'
 import { useTranslation } from 'react-i18next'
 
 const DRAWER_WIDTH = 240
@@ -41,7 +44,7 @@ export default function SideBar() {
   const navigate = useNavigate()
   const location = useLocation()
   const [open, setOpen] = useState(true)
-  const [expandedMenus, setExpandedMenus] = useState(['dataTables'])
+  const [expandedMenus, setExpandedMenus] = useState(['dataTables', 'permission'])
 
   const toggleDrawer = () => setOpen(!open)
 
@@ -90,16 +93,21 @@ export default function SideBar() {
       ]
     },
     {
+      id: 'permission',
+      label: t('nav.permissionManagement'),
+      icon: <SettingsIcon />,
+      children: [
+        { id: 'userMgmt', label: t('nav.userManagement'), path: '/user-management', icon: <PeopleIcon /> },
+        { id: 'roleMgmt', label: t('nav.roleManagement'), path: '/role-management', icon: <ShieldIcon /> },
+        { id: 'menuMgmt', label: t('nav.menuManagement'), path: '/menu-management', icon: <MenuIcon /> },
+        { id: 'deptMgmt', label: t('nav.departmentManagement'), path: '/department-management', icon: <BusinessIcon /> }
+      ]
+    },
+    {
       id: 'imageToBim',
       label: t('nav.imageToBim'),
       path: '/image-to-bim',
       icon: <InsightsIcon />
-    },
-    {
-      id: 'users',
-      label: t('nav.users'),
-      path: '/users',
-      icon: <PeopleIcon />
     }
   ]
 

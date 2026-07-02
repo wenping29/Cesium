@@ -17,6 +17,10 @@ import AirQualityTablePage from './pages/AirQualityTablePage'
 import OpenLayerMapPage from './pages/OpenLayerMapPage'
 import LeafletMapPage from './pages/LeafletMapPage'
 import ImageToBimPage from './pages/ImageToBimPage'
+import UserManagementPage from './pages/UserManagementPage'
+import RoleManagementPage from './pages/RoleManagementPage'
+import MenuManagementPage from './pages/MenuManagementPage'
+import DepartmentManagementPage from './pages/DepartmentManagementPage'
 
 function PrivateRoute({ children }) {
   const token = useAuthStore((s) => s.token)
@@ -49,6 +53,10 @@ export default function App() {
             <Route path="/wind-table" element={<PrivateRoute><WindTablePage /></PrivateRoute>} />
             <Route path="/airquality-table" element={<PrivateRoute><AirQualityTablePage /></PrivateRoute>} />
             <Route path="/users" element={<PrivateRoute><UsersPage /></PrivateRoute>} />
+            <Route path="/user-management" element={<PrivateRoute><UserManagementPage /></PrivateRoute>} />
+            <Route path="/role-management" element={<PrivateRoute><RoleManagementPage /></PrivateRoute>} />
+            <Route path="/menu-management" element={<PrivateRoute><MenuManagementPage /></PrivateRoute>} />
+            <Route path="/department-management" element={<PrivateRoute><DepartmentManagementPage /></PrivateRoute>} />
             <Route path="/map" element={<PrivateRoute><MapPage /></PrivateRoute>} />
             <Route path="/openlayer-map" element={<PrivateRoute><OpenLayerMapPage /></PrivateRoute>} />
             <Route path="/leaflet-map" element={<PrivateRoute><LeafletMapPage /></PrivateRoute>} />

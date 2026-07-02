@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { getUsers, createUser as apiCreateUser, addRole, removeRole } from '../api/user'
+import { getUsers, createUser, updateUser, deleteUser, addRole, removeRole } from '../api/user'
 
 const useUserStore = create((set) => ({
   users: [],
@@ -18,7 +18,27 @@ const useUserStore = create((set) => ({
 
   createUser: async (data) => {
     try {
-      await apiCreateUser(data)
+      await createUser(data)
+      const res = await getUsers()
+      set({ users: res })
+    } catch (err) {
+      set({ error: err?.response?.data || err?.message })
+    }
+  },
+
+  updateUser: async (id, data) => {
+    try {
+      await updateUser(id, data)
+      const res = await getUsers()
+      set({ users: res })
+    } catch (err) {
+      set({ error: err?.response?.data || err?.message })
+    }
+  },
+
+  deleteUser: async (id) => {
+    try {
+      await deleteUser(id)
       const res = await getUsers()
       set({ users: res })
     } catch (err) {
