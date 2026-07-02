@@ -3,6 +3,7 @@
     "appTitle": "React 应用",
     "users": "用户管理",
     "map": "地图",
+    "mapCategory": "地图管理",
     "olMap": "OL地图",
     "leafletMap": "Leaflet地图",
     "dashboard": "仪表盘",

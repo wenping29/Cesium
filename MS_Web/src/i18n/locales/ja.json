@@ -3,6 +3,7 @@
     "appTitle": "React アプリ",
     "users": "ユーザー管理",
     "map": "マップ",
+    "mapCategory": "マップ管理",
     "olMap": "OLマップ",
     "leafletMap": "Leaflet マップ",
     "dashboard": "ダッシュボード",

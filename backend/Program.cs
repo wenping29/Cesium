@@ -78,15 +78,6 @@ using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     await context.Database.EnsureCreatedAsync();
-
-    if (!await context.Roles.AnyAsync())
-    {
-        await context.Roles.AddRangeAsync(
-            new Role { Name = "Admin", Description = "Administrator with full access" },
-            new Role { Name = "User", Description = "Standard user" }
-        );
-        await context.SaveChangesAsync();
-    }
 }
 
 if (app.Environment.IsDevelopment())
