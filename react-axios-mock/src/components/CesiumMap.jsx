@@ -176,6 +176,7 @@ export default function CesiumMap({
           animation: false, timeline: false, geocoder: false,
           homeButton: false, sceneModePicker: false, baseLayerPicker: false,
           navigationHelpButton: false, infoBox: false,
+          terrainProvider: new Cesium.EllipsoidTerrainProvider(),
         })
 
         viewerRef.current = viewer

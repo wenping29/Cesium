@@ -39,7 +39,7 @@ export default function LoginPage() {
       background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
     }}>
       <Card sx={{ p: 4, width: 360, boxShadow: 4 }}>
-        <Typography variant="h5" textAlign="center" fontWeight={600} mb={3}>
+        <Typography variant="h5" sx={{ textAlign: 'center', fontWeight: 600, mb: 3 }}>
           {t('login.title')}
         </Typography>
 
