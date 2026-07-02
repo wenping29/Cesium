@@ -50,6 +50,12 @@ export default function MapPage() {
     fetchEarthquakes,
     visible: earthquakeVisible,
     setVisible: setEarthquakeVisible,
+    heatmapVisible: earthquakeHeatmapVisible,
+    setHeatmapVisible: setEarthquakeHeatmapVisible,
+    heatmapOpacity: earthquakeHeatmapOpacity,
+    setHeatmapOpacity: setEarthquakeHeatmapOpacity,
+    heatmapRadius: earthquakeHeatmapRadius,
+    setHeatmapRadius: setEarthquakeHeatmapRadius,
   } = useEarthquakeStore()
 
   const {
@@ -86,8 +92,8 @@ export default function MapPage() {
   }, [fetchLayers, fetchCells])
 
   useEffect(() => {
-    if (earthquakeVisible) fetchEarthquakes()
-  }, [earthquakeVisible, fetchEarthquakes])
+    if (earthquakeVisible || earthquakeHeatmapVisible) fetchEarthquakes()
+  }, [earthquakeVisible, earthquakeHeatmapVisible, fetchEarthquakes])
 
   useEffect(() => {
     if (airQualityVisible) fetchAirQuality()
@@ -212,6 +218,8 @@ export default function MapPage() {
         onHexGridCellSizeKm={setHexGridCellSizeKm}
         earthquakeVisible={earthquakeVisible}
         onToggleEarthquake={() => setEarthquakeVisible(!earthquakeVisible)}
+        earthquakeHeatmapVisible={earthquakeHeatmapVisible}
+        onToggleEarthquakeHeatmap={() => setEarthquakeHeatmapVisible(!earthquakeHeatmapVisible)}
         airQualityVisible={airQualityVisible}
         onToggleAirQuality={() => setAirQualityVisible(!airQualityVisible)}
         typhoonVisible={typhoonVisible}
@@ -261,6 +269,9 @@ export default function MapPage() {
         customLayers={customLayers}
         earthquakeData={earthquakes}
         earthquakeVisible={earthquakeVisible}
+        earthquakeHeatmapVisible={earthquakeHeatmapVisible}
+        earthquakeHeatmapOpacity={earthquakeHeatmapOpacity}
+        earthquakeHeatmapRadius={earthquakeHeatmapRadius}
         selectedEarthquake={selectedEarthquake}
         typhoonData={{ current: typhoonCurrent, historical: typhoonHistorical }}
         typhoonVisible={typhoonVisible}

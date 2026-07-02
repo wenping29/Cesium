@@ -15,6 +15,7 @@ import VolcanoIcon from '@mui/icons-material/Volcano'
 import StormIcon from '@mui/icons-material/Storm'
 import WavesIcon from '@mui/icons-material/Waves'
 import AirIcon from '@mui/icons-material/Air'
+import InsightsIcon from '@mui/icons-material/Insights'
 import LogoutIcon from '@mui/icons-material/Logout'
 import PersonIcon from '@mui/icons-material/Person'
 import LockIcon from '@mui/icons-material/Lock'
@@ -52,6 +53,7 @@ export default function NavBar() {
     { label: t('nav.map'), path: '/map', icon: <MapIcon sx={{ mr: 0.5 }} /> },
     { label: t('nav.olMap'), path: '/openlayer-map', icon: <LayersIcon sx={{ mr: 0.5 }} /> },
     { label: t('nav.leafletMap'), path: '/leaflet-map', icon: <MapOutlinedIcon sx={{ mr: 0.5 }} /> },
+    { label: t('nav.imageToBim'), path: '/image-to-bim', icon: <InsightsIcon sx={{ mr: 0.5 }} /> },
   ]
 
   const dataTableItems = [

@@ -5,6 +5,9 @@ const useEarthquakeStore = create((set) => ({
   earthquakes: [],
   loading: false,
   visible: false,
+  heatmapVisible: false,
+  heatmapOpacity: 0.6,
+  heatmapRadius: 30,
   fetchEarthquakes: async (params) => {
     set({ loading: true })
     try {
@@ -15,6 +18,9 @@ const useEarthquakeStore = create((set) => ({
     }
   },
   setVisible: (visible) => set({ visible }),
+  setHeatmapVisible: (heatmapVisible) => set({ heatmapVisible }),
+  setHeatmapOpacity: (heatmapOpacity) => set({ heatmapOpacity }),
+  setHeatmapRadius: (heatmapRadius) => set({ heatmapRadius }),
 }))
 
 export default useEarthquakeStore

@@ -10,7 +10,8 @@
     "dataTables": "Data Tables",
     "editProfile": "Edit Profile",
     "changePassword": "Change Password",
-    "logout": "Logout"
+    "logout": "Logout",
+    "imageToBim": "Image to BIM"
   },
   "login": {
     "title": "Login",
@@ -103,6 +104,12 @@
     "major": "Major",
     "depth": "Depth"
   },
+  "earthquakeHeatmap": {
+    "title": "Earthquake Heatmap",
+    "opacity": "Opacity",
+    "radius": "Heat Radius",
+    "legend": "Legend"
+  },
   "airQuality": {
     "title": "Air Quality",
     "level": "Level"
@@ -190,5 +197,34 @@
     "forest": "Forest",
     "sunset": "Sunset",
     "midnight": "Midnight"
+  },
+  "imageToBim": {
+    "title": "Image to BIM Conversion",
+    "dropHint": "Drag & drop an image here, or click to select",
+    "supportFormat": "Supports PNG, JPG, JPEG, TIFF (max 10MB)",
+    "fileTooLarge": "File size exceeds 10MB limit",
+    "startConvert": "Start Conversion",
+    "cancel": "Cancel",
+    "processing": "Analyzing image...",
+    "processingHint": "Extracting building features, please wait",
+    "convertFailed": "Conversion failed, please try again",
+    "convertResult": "Conversion Result",
+    "processingTime": "Processing Time",
+    "imageName": "Image",
+    "name": "Name",
+    "type": "Type",
+    "height": "Height",
+    "area": "Area",
+    "confidence": "Confidence",
+    "position": "Position",
+    "status": "Status",
+    "completed": "Completed",
+    "detectedCount": "{{count}} objects detected",
+    "createdAt": "Created At",
+    "history": "Conversion History",
+    "noHistory": "No conversion history yet",
+    "refresh": "Refresh",
+    "clearHistory": "Clear",
+    "clickToView": "Click to view details"
   }
 }
