@@ -87,7 +87,9 @@ npm run dev
 ```
 
 前端将在 `http://localhost:5173` 启动
+https://element-plus-admin.cn/#/dashboard/analysis
 
+https://preview.pro.ant.design/user/login?redirect=%2Fuser%2Flogin%2F%3Fredirect%3D%252Fwelcome%252F
 ## 测试账号
 
 系统预置了以下测试账号（所有用户密码均已加密存储）：
