@@ -38,12 +38,12 @@ public class AppDbContext : DbContext
 
         modelBuilder.Entity<RoleMenu>()
             .HasOne(rm => rm.Role)
-            .WithMany(r => r.RoleMenus ?? new List<RoleMenu>())
+            .WithMany(r => r.RoleMenus)
             .HasForeignKey(rm => rm.RoleId);
 
         modelBuilder.Entity<RoleMenu>()
             .HasOne(rm => rm.Menu)
-            .WithMany(m => m.RoleMenus ?? new List<RoleMenu>())
+            .WithMany(m => m.RoleMenus)
             .HasForeignKey(rm => rm.MenuId);
 
         // Menu configuration

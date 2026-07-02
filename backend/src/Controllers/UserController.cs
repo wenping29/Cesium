@@ -84,11 +84,11 @@ public class UserController : ControllerBase
         {
             Id = user.Id,
             Username = user.Username,
-            Email = u.Email,
-            Phone = u.Phone,
-            Avatar = u.Avatar,
-            DepartmentId = u.DepartmentId,
-            DepartmentName = u.Department?.Name,
+            Email = user.Email,
+            Phone = user.Phone,
+            Avatar = user.Avatar,
+            DepartmentId = user.DepartmentId,
+            DepartmentName = user.Department?.Name,
             IsActive = user.IsActive,
             Roles = user.UserRoles.Select(ur => ur.Role.Name).ToList(),
             CreatedAt = user.CreatedAt
