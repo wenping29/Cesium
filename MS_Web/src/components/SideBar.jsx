@@ -34,6 +34,8 @@ import InsightsIcon from '@mui/icons-material/Insights'
 import SettingsIcon from '@mui/icons-material/Settings'
 import ShieldIcon from '@mui/icons-material/Shield'
 import BusinessIcon from '@mui/icons-material/Business'
+import HomeIcon from '@mui/icons-material/Home'
+import AnalyticsIcon from '@mui/icons-material/Analytics'
 import { useTranslation } from 'react-i18next'
 
 const DRAWER_WIDTH = 240
@@ -44,7 +46,7 @@ export default function SideBar() {
   const navigate = useNavigate()
   const location = useLocation()
   const [open, setOpen] = useState(true)
-  const [expandedMenus, setExpandedMenus] = useState(['dataTables', 'permission'])
+  const [expandedMenus, setExpandedMenus] = useState(['home', 'dataTables', 'permission'])
 
   const toggleDrawer = () => setOpen(!open)
 
@@ -59,6 +61,15 @@ export default function SideBar() {
   const isActive = (path) => location.pathname === path
 
   const menuItems = [
+    {
+      id: 'home',
+      label: t('nav.home'),
+      icon: <HomeIcon />,
+      children: [
+        { id: 'workbench', label: t('nav.workbench'), path: '/workbench', icon: <DashboardIcon /> },
+        { id: 'analysis', label: t('nav.analysis'), path: '/analysis', icon: <AnalyticsIcon /> }
+      ]
+    },
     {
       id: 'dashboard',
       label: t('nav.dashboard'),

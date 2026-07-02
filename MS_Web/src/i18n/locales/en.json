@@ -17,7 +17,100 @@
     "userManagement": "User Management",
     "roleManagement": "Role Management",
     "menuManagement": "Menu Management",
-    "departmentManagement": "Department Management"
+    "departmentManagement": "Department Management",
+    "home": "Home",
+    "workbench": "Workbench",
+    "analysis": "Analysis"
+  },
+  "workbench": {
+    "title": "Workbench",
+    "welcomeSubtitle": "Welcome back! Have a great day at work.",
+    "greeting": {
+      "night": "Good night",
+      "morning": "Good morning",
+      "afternoon": "Good afternoon",
+      "evening": "Good evening"
+    },
+    "stats": {
+      "todayVisits": "Today's Visits",
+      "newUsers": "New Users",
+      "pendingTasks": "Pending Tasks",
+      "messages": "Messages"
+    },
+    "notifications": {
+      "title": "Notifications",
+      "systemUpdate": "System Update",
+      "newTask": "New Task Received",
+      "meetingReminder": "Meeting Reminder",
+      "userRegistered": "New User Registered"
+    },
+    "activities": {
+      "title": "Recent Activities",
+      "createdProject": "created a project",
+      "updatedFile": "updated a file",
+      "completedTask": "completed a task",
+      "commented": "made a comment"
+    },
+    "quickActions": {
+      "title": "Quick Actions",
+      "createTask": "Create Task",
+      "inviteUser": "Invite User",
+      "startChat": "Start Chat",
+      "viewCalendar": "View Calendar"
+    }
+  },
+  "analysis": {
+    "title": "Data Analysis",
+    "timeRange": "Time Range",
+    "timeRanges": {
+      "today": "Today",
+      "last7Days": "Last 7 Days",
+      "last30Days": "Last 30 Days",
+      "last90Days": "Last 90 Days",
+      "thisYear": "This Year"
+    },
+    "metrics": {
+      "totalRevenue": "Total Revenue",
+      "visits": "Visits",
+      "payments": "Payments",
+      "conversionRate": "Conversion Rate",
+      "comparedYesterday": "vs yesterday"
+    },
+    "charts": {
+      "lineChart": "Line Chart",
+      "barChart": "Bar Chart",
+      "pieChart": "Pie Chart",
+      "salesTrend": "Sales Trend",
+      "categoryDistribution": "Category Distribution"
+    },
+    "months": {
+      "jan": "Jan",
+      "feb": "Feb",
+      "mar": "Mar",
+      "apr": "Apr",
+      "may": "May",
+      "jun": "Jun"
+    },
+    "categories": {
+      "electronics": "Electronics",
+      "clothing": "Clothing",
+      "food": "Food",
+      "other": "Other"
+    },
+    "topProducts": {
+      "title": "Top Products",
+      "rank": "Rank",
+      "name": "Product Name",
+      "sales": "Sales",
+      "revenue": "Revenue"
+    },
+    "products": {
+      "productA": "Product A",
+      "productB": "Product B",
+      "productC": "Product C",
+      "productD": "Product D",
+      "productE": "Product E"
+    }
   },
   "common": {
     "save": "Save",

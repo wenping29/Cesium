@@ -97,11 +97,14 @@ public class AppDbContext : DbContext
 
         // Seed menus
         modelBuilder.Entity<Menu>().HasData(
-            new Menu { Id = 1, Name = "权限管理", Path = null, Icon = "Settings", ParentId = null, SortOrder = 1, IsVisible = true, Permission = "permission" },
-            new Menu { Id = 2, Name = "用户管理", Path = "/users", Icon = "People", ParentId = 1, SortOrder = 1, IsVisible = true, Permission = "permission:users" },
-            new Menu { Id = 3, Name = "角色管理", Path = "/roles", Icon = "Shield", ParentId = 1, SortOrder = 2, IsVisible = true, Permission = "permission:roles" },
-            new Menu { Id = 4, Name = "菜单管理", Path = "/menus", Icon = "Menu", ParentId = 1, SortOrder = 3, IsVisible = true, Permission = "permission:menus" },
-            new Menu { Id = 5, Name = "部门管理", Path = "/departments", Icon = "Business", ParentId = 1, SortOrder = 4, IsVisible = true, Permission = "permission:departments" }
+            new Menu { Id = 1, Name = "首页", Path = null, Icon = "Home", ParentId = null, SortOrder = 0, IsVisible = true, Permission = "home" },
+            new Menu { Id = 2, Name = "工作台", Path = "/workbench", Icon = "Dashboard", ParentId = 1, SortOrder = 1, IsVisible = true, Permission = "home:workbench" },
+            new Menu { Id = 3, Name = "分析页", Path = "/analysis", Icon = "Analytics", ParentId = 1, SortOrder = 2, IsVisible = true, Permission = "home:analysis" },
+            new Menu { Id = 4, Name = "权限管理", Path = null, Icon = "Settings", ParentId = null, SortOrder = 1, IsVisible = true, Permission = "permission" },
+            new Menu { Id = 5, Name = "用户管理", Path = "/user-management", Icon = "People", ParentId = 4, SortOrder = 1, IsVisible = true, Permission = "permission:users" },
+            new Menu { Id = 6, Name = "角色管理", Path = "/role-management", Icon = "Shield", ParentId = 4, SortOrder = 2, IsVisible = true, Permission = "permission:roles" },
+            new Menu { Id = 7, Name = "菜单管理", Path = "/menu-management", Icon = "Menu", ParentId = 4, SortOrder = 3, IsVisible = true, Permission = "permission:menus" },
+            new Menu { Id = 8, Name = "部门管理", Path = "/department-management", Icon = "Business", ParentId = 4, SortOrder = 4, IsVisible = true, Permission = "permission:departments" }
         );
     }
 }

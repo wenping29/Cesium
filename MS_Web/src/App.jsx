@@ -21,6 +21,8 @@ import UserManagementPage from './pages/UserManagementPage'
 import RoleManagementPage from './pages/RoleManagementPage'
 import MenuManagementPage from './pages/MenuManagementPage'
 import DepartmentManagementPage from './pages/DepartmentManagementPage'
+import WorkbenchPage from './pages/WorkbenchPage'
+import AnalysisPage from './pages/AnalysisPage'
 
 function PrivateRoute({ children }) {
   const token = useAuthStore((s) => s.token)
@@ -46,6 +48,8 @@ export default function App() {
         <SideBar />
         <Box sx={{ flex: 1, overflow: 'hidden' }}>
           <Routes>
+            <Route path="/workbench" element={<PrivateRoute><WorkbenchPage /></PrivateRoute>} />
+            <Route path="/analysis" element={<PrivateRoute><AnalysisPage /></PrivateRoute>} />
             <Route path="/dashboard" element={<PrivateRoute><DashboardPage /></PrivateRoute>} />
             <Route path="/big-screen" element={<PrivateRoute><BigScreenPage /></PrivateRoute>} />
             <Route path="/earthquake-table" element={<PrivateRoute><EarthquakeTablePage /></PrivateRoute>} />
@@ -63,7 +67,7 @@ export default function App() {
             <Route path="/profile" element={<PrivateRoute><EditProfilePage /></PrivateRoute>} />
             <Route path="/change-password" element={<PrivateRoute><ChangePasswordPage /></PrivateRoute>} />
             <Route path="/image-to-bim" element={<PrivateRoute><ImageToBimPage /></PrivateRoute>} />
-            <Route path="*" element={<Navigate to="/dashboard" replace />} />
+            <Route path="*" element={<Navigate to="/workbench" replace />} />
           </Routes>
         </Box>
       </Box>

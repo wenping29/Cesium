@@ -17,7 +17,100 @@
     "userManagement": "用户管理",
     "roleManagement": "角色管理",
     "menuManagement": "菜单管理",
-    "departmentManagement": "部门管理"
+    "departmentManagement": "部门管理",
+    "home": "首页",
+    "workbench": "工作台",
+    "analysis": "分析页"
+  },
+  "workbench": {
+    "title": "工作台",
+    "welcomeSubtitle": "欢迎回来，开始你愉快的一天工作吧！",
+    "greeting": {
+      "night": "晚安",
+      "morning": "早上好",
+      "afternoon": "下午好",
+      "evening": "晚上好"
+    },
+    "stats": {
+      "todayVisits": "今日访问",
+      "newUsers": "新增用户",
+      "pendingTasks": "待办任务",
+      "messages": "消息数"
+    },
+    "notifications": {
+      "title": "通知",
+      "systemUpdate": "系统更新通知",
+      "newTask": "收到新任务",
+      "meetingReminder": "会议提醒",
+      "userRegistered": "新用户注册"
+    },
+    "activities": {
+      "title": "最近活动",
+      "createdProject": "创建了项目",
+      "updatedFile": "更新了文件",
+      "completedTask": "完成了任务",
+      "commented": "发表了评论"
+    },
+    "quickActions": {
+      "title": "快捷操作",
+      "createTask": "新建任务",
+      "inviteUser": "邀请用户",
+      "startChat": "发起聊天",
+      "viewCalendar": "查看日历"
+    }
+  },
+  "analysis": {
+    "title": "数据分析",
+    "timeRange": "时间范围",
+    "timeRanges": {
+      "today": "今日",
+      "last7Days": "最近7天",
+      "last30Days": "最近30天",
+      "last90Days": "最近90天",
+      "thisYear": "本年度"
+    },
+    "metrics": {
+      "totalRevenue": "总销售额",
+      "visits": "访问量",
+      "payments": "支付笔数",
+      "conversionRate": "转化率",
+      "comparedYesterday": "较昨日"
+    },
+    "charts": {
+      "lineChart": "折线图",
+      "barChart": "柱状图",
+      "pieChart": "饼图",
+      "salesTrend": "销售趋势",
+      "categoryDistribution": "类别分布"
+    },
+    "months": {
+      "jan": "一月",
+      "feb": "二月",
+      "mar": "三月",
+      "apr": "四月",
+      "may": "五月",
+      "jun": "六月"
+    },
+    "categories": {
+      "electronics": "电子产品",
+      "clothing": "服装",
+      "food": "食品",
+      "other": "其他"
+    },
+    "topProducts": {
+      "title": "热门商品",
+      "rank": "排名",
+      "name": "商品名称",
+      "sales": "销量",
+      "revenue": "收入"
+    },
+    "products": {
+      "productA": "商品A",
+      "productB": "商品B",
+      "productC": "商品C",
+      "productD": "商品D",
+      "productE": "商品E"
+    }
   },
   "common": {
     "save": "保存",
