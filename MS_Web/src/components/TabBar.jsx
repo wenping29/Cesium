@@ -61,7 +61,7 @@ export default function TabBar() {
             value={tab.path}
             icon={tab.icon}
             iconPosition="start"
-            sx={{ padding: 0,height:24,minHeight:24 }}
+            sx={{ padding: 2,height:24,minHeight:24 }}
             label={
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1,height:24 }}>
                 {tab.title}

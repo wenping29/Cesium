@@ -95,7 +95,7 @@ export default function UserManagementPage() {
   const allDepartments = flattenDepartments(departments)
 
   return (
-    <Box sx={{ p: 4 }}>
+    <Box sx={{ p: 2 }}>
       <Box sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', mb: 3 }}>
         <Button variant="contained" startIcon={<AddIcon />} onClick={handleOpenCreate}>
           {t('userManagement.addUser')}
@@ -105,7 +105,7 @@ export default function UserManagementPage() {
       {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
 
       {loading ? (
-        <Box sx={{ display: 'flex', justifyContent: 'center', p: 4 }}>
+        <Box sx={{ display: 'flex', justifyContent: 'center', p: 2 }}>
           <CircularProgress />
         </Box>
       ) : (

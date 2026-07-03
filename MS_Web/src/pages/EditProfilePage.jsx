@@ -35,9 +35,9 @@ export default function EditProfilePage() {
   }
 
   return (
-    <Box sx={{ display: 'flex', justifyContent: 'center', p: 4 }}>
+    <Box sx={{ display: 'flex', justifyContent: 'center', p: 2 }}>
       <Card sx={{ width: 520, boxShadow: 3 }}>
-        <CardContent sx={{ p: 4 }}>
+        <CardContent sx={{ p: 2 }}>
           <Typography variant="h5" fontWeight={600} mb={3}>{t('profile.title')}</Typography>
 
           {success && <Alert severity="success" sx={{ mb: 2 }}>{t('profile.success')}</Alert>}

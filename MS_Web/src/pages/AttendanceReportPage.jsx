@@ -90,7 +90,7 @@ export default function AttendanceReportPage() {
   const endIndex = Math.min(page * pageSize, total)
 
   return (
-    <Box sx={{ p: 4 }}>
+    <Box sx={{ p: 2 }}>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
         <Box sx={{ display: 'flex', gap: 2 }}>
           <TextField
@@ -101,23 +101,25 @@ export default function AttendanceReportPage() {
             sx={{ minWidth: 150 }}
             placeholder={t('attendanceReport.enterUserName')}
           />
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <LocalizationProvider dateAdapter={AdapterDayjs} sx={{ height: 48 }}>
             <DatePicker
               label={t('attendanceReport.startDate')}
               value={startDate}
+              sx={{ height: 48 }}
               onChange={(newValue) => setStartDate(newValue)}
               renderInput={(params) => <TextField {...params} size="small" />}
             />
           </LocalizationProvider>
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <LocalizationProvider dateAdapter={AdapterDayjs} sx={{ height: 48 }}>
             <DatePicker
               label={t('attendanceReport.endDate')}
               value={endDate}
+              sx={{ height: 48 }}
               onChange={(newValue) => setEndDate(newValue)}
               renderInput={(params) => <TextField {...params} size="small" />}
             />
           </LocalizationProvider>
-          <FormControl size="small" sx={{ minWidth: 100 }}>
+          <FormControl size="small" sx={{ minWidth: 100,height:48 }}>
             <InputLabel>{t('attendanceReport.status')}</InputLabel>
             <Select
               label={t('attendanceReport.status')}
@@ -135,14 +137,14 @@ export default function AttendanceReportPage() {
           <Button
             variant="contained"
             onClick={handleSearch}
-            sx={{ backgroundColor: '#1a73e8', color: 'white', height: 56 }}
+            sx={{ backgroundColor: '#1a73e8', color: 'white', height: 48 }}
           >
             查询
           </Button>
           <Button
             variant="contained"
             onClick={handleReset}
-            sx={{ backgroundColor: '#1a73e8', color: 'white', height: 56 }}
+            sx={{ backgroundColor: '#1a73e8', color: 'white', height: 48 }}
           >
             重置
           </Button>

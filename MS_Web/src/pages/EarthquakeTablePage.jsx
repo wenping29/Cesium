@@ -45,7 +45,7 @@ export default function EarthquakeTablePage() {
   const paged = earthquakes.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
 
   return (
-    <Box sx={{ p: 3 }}>
+    <Box sx={{ p: 2 }}>
       <Typography variant="h5" sx={{ mb: 3, fontWeight: 'bold' }}>
         {t('earthquakeTable.title')}
       </Typography>
