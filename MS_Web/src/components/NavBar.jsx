@@ -11,6 +11,7 @@ import { useTranslation } from 'react-i18next'
 import useAuthStore from '../store/authStore'
 import LanguageSwitcher from './LanguageSwitcher'
 import ThemeSwitcher from './ThemeSwitcher'
+import Breadcrumb from './Breadcrumb'
 
 export default function NavBar() {
   const { t } = useTranslation()
@@ -32,6 +33,9 @@ export default function NavBar() {
   return (
     <AppBar position="static" sx={{ zIndex: 1201, height: 48 }}>
       <Toolbar sx={{ minHeight: 48 }}>
+        <Box sx={{ flexGrow: 1 }}>
+          <Breadcrumb />
+        </Box>
         <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
           <ThemeSwitcher />
           <LanguageSwitcher />
