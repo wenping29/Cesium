@@ -20,7 +20,8 @@
     "departmentManagement": "部門管理",
     "logManagement": "ログ管理",
     "loginLogReport": "ログインログ",
-    "auditLogReport": "監査ログ"
+    "auditLogReport": "監査ログ",
+    "visitorLogReport": "ビジターログ"
   },
   "footer": {
     "allRightsReserved": "無断転載を禁じます"
@@ -34,6 +35,15 @@
     "browserInfo": "ブラウザ",
     "osInfo": "OS",
     "loginTime": "ログイン時間"
+  },
+  "visitorLogReport": {
+    "title": "ビジターログレポート",
+    "id": "ID",
+    "ipAddress": "IPアドレス",
+    "pageUrl": "ページURL",
+    "userAgent": "ユーザーエージェント",
+    "referrer": "リファラー",
+    "visitTime": "訪問時間"
   },
   "auditLogReport": {
     "title": "監査ログレポート",

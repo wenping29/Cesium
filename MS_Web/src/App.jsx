@@ -23,6 +23,7 @@ import LeafletMapPage from './pages/LeafletMapPage'
 import ImageToBimPage from './pages/ImageToBimPage'
 import LoginLogReportPage from './pages/LoginLogReportPage'
 import AuditLogReportPage from './pages/AuditLogReportPage'
+import VisitorLogReportPage from './pages/VisitorLogReportPage'
 import UserManagementPage from './pages/UserManagementPage'
 import RoleManagementPage from './pages/RoleManagementPage'
 import MenuManagementPage from './pages/MenuManagementPage'
@@ -65,6 +66,7 @@ export default function App() {
     '/image-to-bim': '影像转BIM',
     '/login-log-report': '登录日志',
     '/audit-log-report': '查询日志',
+    '/visitor-log-report': '访客日志',
     '/attendance-report': '打卡报表',
     '/workhour-report': '工时报表',
     '/leave-report': '休假报表',
@@ -126,6 +128,7 @@ export default function App() {
               <Route path="/annual-leave-report" element={<PrivateRoute><AnnualLeaveReportPage /></PrivateRoute>} />
               <Route path="/notifications" element={<PrivateRoute><NotificationsPage /></PrivateRoute>} />
               <Route path="/send-notification" element={<PrivateRoute><SendMessagePage /></PrivateRoute>} />
+              <Route path="/visitor-log-report" element={<PrivateRoute><VisitorLogReportPage /></PrivateRoute>} />
               <Route path="*" element={<Navigate to="/workbench" replace />} />
             </Routes>
           </Box>

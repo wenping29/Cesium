@@ -90,7 +90,7 @@ export default function WorkbenchPage() {
       {/* Header / Welcome */}
       <Box sx={{ mb: 4 }}>
         <Typography variant="h4" component="h1" gutterBottom>
-          {getGreeting()}！
+          {getGreeting()}！213123123
         </Typography>
         <Typography variant="body1" color="text.secondary">
           {t('workbench.welcomeSubtitle')}
@@ -156,7 +156,8 @@ export default function WorkbenchPage() {
               </List>
             </CardContent>
           </Card>
-
+        </Grid>
+        <Grid>
           {/* Recent Activities */}
           <Card sx={{ flex: 1 }}>
             <CardHeader title={t('workbench.activities.title')} />
@@ -183,14 +184,7 @@ export default function WorkbenchPage() {
             </CardContent>
           </Card>
         </Grid>
-      </Grid>
-
-      {/* Quick Actions */}
-      <Box sx={{ mt: 4 }}>
-        <Typography variant="h6" gutterBottom>
-          {t('workbench.quickActions.title')}
-        </Typography>
-        <Grid container spacing={2}>
+     
           <Grid xs={12} sm={6} md={3}>
             <Paper sx={{ p: 2, textAlign: 'center', cursor: 'pointer', '&:hover': { bgcolor: 'action.hover' } }}>
               <AssignmentIcon sx={{ fontSize: 40, mb: 1, color: 'primary.main' }} />
@@ -216,7 +210,6 @@ export default function WorkbenchPage() {
             </Paper>
           </Grid>
         </Grid>
-      </Box>
     </Box>
   )
 }

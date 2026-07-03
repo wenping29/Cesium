@@ -30,7 +30,8 @@
     "annualLeaveReport": "年假报表",
     "logManagement": "日志管理",
     "loginLogReport": "登录日志",
-    "auditLogReport": "查询日志"
+    "auditLogReport": "查询日志",
+    "visitorLogReport": "访客日志"
   },
   "footer": {
     "allRightsReserved": "保留所有权利"
@@ -44,6 +45,15 @@
     "browserInfo": "浏览器",
     "osInfo": "操作系统",
     "loginTime": "登录时间"
+  },
+  "visitorLogReport": {
+    "title": "访客日志报表",
+    "id": "ID",
+    "ipAddress": "IP地址",
+    "pageUrl": "页面地址",
+    "userAgent": "用户代理",
+    "referrer": "来源",
+    "visitTime": "访问时间"
   },
   "auditLogReport": {
     "title": "查询日志报表",

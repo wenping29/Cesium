@@ -21,6 +21,7 @@ public class AppDbContext : DbContext
     public DbSet<AnnualLeaveRecord> AnnualLeaveRecords { get; set; }
     public DbSet<LoginLog> LoginLogs { get; set; }
     public DbSet<Notification> Notifications { get; set; }
+    public DbSet<VisitorLog> VisitorLogs { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -115,6 +116,13 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<Notification>()
             .HasIndex(n => n.Date);
 
+        // VisitorLog configuration
+        modelBuilder.Entity<VisitorLog>()
+            .HasIndex(v => v.VisitTime);
+
+        modelBuilder.Entity<VisitorLog>()
+            .HasIndex(v => v.IpAddress);
+
         // Seed initial data
         SeedInitialData(modelBuilder);
     }
@@ -160,6 +168,14 @@ public class AppDbContext : DbContext
             new Menu { Id = 11, Name = "工时报表", Path = "/workhour-report", Icon = "Timer", ParentId = 9, SortOrder = 2, IsVisible = true, Permission = "attendance:workhour" },
             new Menu { Id = 12, Name = "休假报表", Path = "/leave-report", Icon = "HolidayVillage", ParentId = 9, SortOrder = 3, IsVisible = true, Permission = "attendance:leave" },
             new Menu { Id = 13, Name = "年假报表", Path = "/annual-leave-report", Icon = "BeachAccess", ParentId = 9, SortOrder = 4, IsVisible = true, Permission = "attendance:annual" }
+        );
+
+        // Seed log menus
+        modelBuilder.Entity<Menu>().HasData(
+            new Menu { Id = 14, Name = "日志管理", Path = null, Icon = "History", ParentId = null, SortOrder = 3, IsVisible = true, Permission = "log" },
+            new Menu { Id = 15, Name = "登录日志", Path = "/login-log-report", Icon = "History", ParentId = 14, SortOrder = 1, IsVisible = true, Permission = "log:login" },
+            new Menu { Id = 16, Name = "查询日志", Path = "/audit-log-report", Icon = "FindInPage", ParentId = 14, SortOrder = 2, IsVisible = true, Permission = "log:audit" },
+            new Menu { Id = 17, Name = "访客日志", Path = "/visitor-log-report", Icon = "Visibility", ParentId = 14, SortOrder = 3, IsVisible = true, Permission = "log:visitor" }
         );
     }
 }

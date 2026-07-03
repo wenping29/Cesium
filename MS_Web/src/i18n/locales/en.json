@@ -30,7 +30,8 @@
     "annualLeaveReport": "Annual Leave Report",
     "logManagement": "Log Management",
     "loginLogReport": "Login Log",
-    "auditLogReport": "Audit Log"
+    "auditLogReport": "Audit Log",
+    "visitorLogReport": "Visitor Log"
   },
   "footer": {
     "allRightsReserved": "All rights reserved"
@@ -44,6 +45,15 @@
     "browserInfo": "Browser",
     "osInfo": "OS",
     "loginTime": "Login Time"
+  },
+  "visitorLogReport": {
+    "title": "Visitor Log Report",
+    "id": "ID",
+    "ipAddress": "IP Address",
+    "pageUrl": "Page URL",
+    "userAgent": "User Agent",
+    "referrer": "Referrer",
+    "visitTime": "Visit Time"
   },
   "auditLogReport": {
     "title": "Audit Log Report",

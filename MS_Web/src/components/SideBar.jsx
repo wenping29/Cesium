@@ -43,6 +43,7 @@ import HolidayVillageIcon from '@mui/icons-material/HolidayVillage'
 import BeachAccessIcon from '@mui/icons-material/BeachAccess'
 import HistoryIcon from '@mui/icons-material/History'
 import FindInPageIcon from '@mui/icons-material/FindInPage'
+import VisibilityIcon from '@mui/icons-material/Visibility'
 import NotificationsIcon from '@mui/icons-material/Notifications'
 import SendIcon from '@mui/icons-material/Send'
 import { useTranslation } from 'react-i18next'
@@ -141,7 +142,8 @@ export default function SideBar() {
       icon: <HistoryIcon />,
       children: [
         { id: 'loginLogReport', label: t('nav.loginLogReport'), path: '/login-log-report', icon: <HistoryIcon /> },
-        { id: 'auditLogReport', label: t('nav.auditLogReport'), path: '/audit-log-report', icon: <FindInPageIcon /> }
+        { id: 'auditLogReport', label: t('nav.auditLogReport'), path: '/audit-log-report', icon: <FindInPageIcon /> },
+        { id: 'visitorLogReport', label: t('nav.visitorLogReport'), path: '/visitor-log-report', icon: <VisibilityIcon /> }
       ]
     },
     {
