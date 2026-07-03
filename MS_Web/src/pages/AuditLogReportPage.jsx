@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import {
   Box, Typography, Paper, Table, TableHead, TableBody, TableRow, TableCell,
   TableContainer, CircularProgress, Alert, TablePagination,
-  TextField, Button, MenuItem, Grid,
+  TextField, Button, Stack,
 } from '@mui/material'
 import { getLoginLogs } from '../api/loginLogs'
 
@@ -67,41 +67,33 @@ export default function AuditLogReportPage() {
   return (
     <Box sx={{ p: 2 }}>
       <Paper sx={{ p: 2, mb: 2 }}>
-        <Grid container spacing={2} alignItems="center">
-          <Grid item xs={12} sm={3}>
-            <TextField
-              fullWidth size="small" label={t('loginLogReport.username')}
-              value={filters.username}
-              onChange={(e) => setFilters({ ...filters, username: e.target.value })}
-            />
-          </Grid>
-          <Grid item xs={12} sm={3}>
-            <TextField
-              fullWidth size="small" label={t('auditLogReport.startDate')}
-              type="date" InputLabelProps={{ shrink: true }}
-              value={filters.startDate}
-              onChange={(e) => setFilters({ ...filters, startDate: e.target.value })}
-            />
-          </Grid>
-          <Grid item xs={12} sm={3}>
-            <TextField
-              fullWidth size="small" label={t('auditLogReport.endDate')}
-              type="date" InputLabelProps={{ shrink: true }}
-              value={filters.endDate}
-              onChange={(e) => setFilters({ ...filters, endDate: e.target.value })}
-            />
-          </Grid>
-          <Grid item xs={12} sm={3}>
-            <Box sx={{ display: 'flex', gap: 1 }}>
-              <Button variant="contained" onClick={handleSearch}>
-                {t('common.search')}
-              </Button>
-              <Button variant="outlined" onClick={handleReset}>
-                {t('common.reset')}
-              </Button>
-            </Box>
-          </Grid>
-        </Grid>
+        <Stack direction="row" spacing={2} alignItems="center" flexWrap="wrap" useFlexGap>
+          <TextField
+            sx={{ minWidth: 180 }} size="small" label={t('loginLogReport.username')}
+            value={filters.username}
+            onChange={(e) => setFilters({ ...filters, username: e.target.value })}
+          />
+          <TextField
+            sx={{ minWidth: 180 }} size="small" label={t('auditLogReport.startDate')}
+            type="date" InputLabelProps={{ shrink: true }}
+            value={filters.startDate}
+            onChange={(e) => setFilters({ ...filters, startDate: e.target.value })}
+          />
+          <TextField
+            sx={{ minWidth: 180 }} size="small" label={t('auditLogReport.endDate')}
+            type="date" InputLabelProps={{ shrink: true }}
+            value={filters.endDate}
+            onChange={(e) => setFilters({ ...filters, endDate: e.target.value })}
+          />
+          <Stack direction="row" spacing={1}>
+            <Button variant="contained" onClick={handleSearch}>
+              {t('common.search')}
+            </Button>
+            <Button variant="outlined" onClick={handleReset}>
+              {t('common.reset')}
+            </Button>
+          </Stack>
+        </Stack>
       </Paper>
 
       {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
