@@ -132,7 +132,13 @@
     "enterUserName": "请输入用户名称",
     "startDate": "开始日期",
     "endDate": "结束日期",
-    "status": "状态"
+    "status": "状态",
+    "date": "日期",
+    "dayOfWeek": "周几",
+    "user": "用户",
+    "checkInTime": "上班时间",
+    "checkOutTime": "下班时间",
+    "remark": "备注"
   },
   "workHourReport": {
     "title": "工时报表",

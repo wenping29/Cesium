@@ -131,7 +131,13 @@
     "enterUserName": "Enter username",
     "startDate": "Start Date",
     "endDate": "End Date",
-    "status": "Status"
+    "status": "Status",
+    "date": "Date",
+    "dayOfWeek": "Day",
+    "user": "User",
+    "checkInTime": "Check-in Time",
+    "checkOutTime": "Check-out Time",
+    "remark": "Remark"
   },
   "workHourReport": {
     "title": "Work Hour Report",

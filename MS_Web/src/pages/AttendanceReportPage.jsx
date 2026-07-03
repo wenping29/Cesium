@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Box, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, CircularProgress, Chip, Grid, Pagination, FormControl, InputLabel, Select, MenuItem, TextField, Button } from '@mui/material'
+import { Box, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, CircularProgress, Chip, Pagination, FormControl, InputLabel, Select, MenuItem, TextField, Button, Alert } from '@mui/material'
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { useTranslation } from 'react-i18next'
@@ -17,7 +17,7 @@ const PAGE_SIZES = [10, 20, 50, 100]
 
 export default function AttendanceReportPage() {
   const { t } = useTranslation()
-  const { attendances, total, loading, fetchAttendances } = useAttendanceStore()
+  const { attendances, total, loading, error, fetchAttendances } = useAttendanceStore()
   const [page, setPage] = useState(1)
   const [pageSize, setPageSize] = useState(20)
   const [stats, setStats] = useState({ normal: 0, late: 0, early: 0, absent: 0, weekend: 0 })
@@ -91,121 +91,95 @@ export default function AttendanceReportPage() {
 
   return (
     <Box sx={{ p: 4 }}>
-      <Typography variant="h5" gutterBottom>
-        {t('attendanceReport.title')}
-      </Typography>
-
-      <Paper sx={{ p: 2, mb: 3 }}>
-        <Grid container spacing={2} alignItems="flex-end">
-          <Grid item xs={12} sm={6} md={3}>
-            <TextField
-              label={t('attendanceReport.userName')}
-              value={searchName}
-              onChange={(e) => setSearchName(e.target.value)}
-              fullWidth
-              placeholder={t('attendanceReport.enterUserName')}
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
+        <Typography variant="h4">{t('attendanceReport.title')}</Typography>
+        <Box sx={{ display: 'flex', gap: 2 }}>
+          <TextField
+            label={t('attendanceReport.userName')}
+            value={searchName}
+            onChange={(e) => setSearchName(e.target.value)}
+            size="small"
+            sx={{ minWidth: 150 }}
+            placeholder={t('attendanceReport.enterUserName')}
+          />
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <DatePicker
+              label={t('attendanceReport.startDate')}
+              value={startDate}
+              onChange={(newValue) => setStartDate(newValue)}
+              renderInput={(params) => <TextField {...params} size="small" />}
             />
-          </Grid>
-          <Grid item xs={12} sm={6} md={3}>
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DatePicker
-                label={t('attendanceReport.startDate')}
-                value={startDate}
-                onChange={(newValue) => setStartDate(newValue)}
-                renderInput={(params) => <TextField {...params} fullWidth />}
-              />
-            </LocalizationProvider>
-          </Grid>
-          <Grid item xs={12} sm={6} md={3}>
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DatePicker
-                label={t('attendanceReport.endDate')}
-                value={endDate}
-                onChange={(newValue) => setEndDate(newValue)}
-                renderInput={(params) => <TextField {...params} fullWidth />}
-              />
-            </LocalizationProvider>
-          </Grid>
-          <Grid item xs={12} sm={6} md={3}>
-            <FormControl sx={{ width: 100 }}>
-              <InputLabel>{t('attendanceReport.status')}</InputLabel>
-              <Select
-                label={t('attendanceReport.status')}
-                value={searchStatus}
-                onChange={(e) => setSearchStatus(e.target.value)}
-              >
-                <MenuItem value="">{t('common.all')}</MenuItem>
-                <MenuItem value="normal">{statusConfig.normal.label}</MenuItem>
-                <MenuItem value="late">{statusConfig.late.label}</MenuItem>
-                <MenuItem value="early">{statusConfig.early.label}</MenuItem>
-                <MenuItem value="absent">{statusConfig.absent.label}</MenuItem>
-                <MenuItem value="weekend">{statusConfig.weekend.label}</MenuItem>
-              </Select>
-            </FormControl>
-          </Grid>
-          <Grid item xs={12} sm={6} md={2}>
-            <Box sx={{ display: 'flex', gap: 2 }}>
-              <Button
-                variant="contained"
-                onClick={handleSearch}
-                sx={{ backgroundColor: '#1a73e8', color: 'white' }}
-                fullWidth
-              >
-                查询
-              </Button>
-              <Button
-                variant="contained"
-                onClick={handleReset}
-                sx={{ backgroundColor: '#1a73e8', color: 'white' }}
-                fullWidth
-              >
-                重置
-              </Button>
-            </Box>
-          </Grid>
-        </Grid>
-      </Paper>
+          </LocalizationProvider>
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <DatePicker
+              label={t('attendanceReport.endDate')}
+              value={endDate}
+              onChange={(newValue) => setEndDate(newValue)}
+              renderInput={(params) => <TextField {...params} size="small" />}
+            />
+          </LocalizationProvider>
+          <FormControl size="small" sx={{ minWidth: 100 }}>
+            <InputLabel>{t('attendanceReport.status')}</InputLabel>
+            <Select
+              label={t('attendanceReport.status')}
+              value={searchStatus}
+              onChange={(e) => setSearchStatus(e.target.value)}
+            >
+              <MenuItem value="">{t('common.all')}</MenuItem>
+              <MenuItem value="normal">{statusConfig.normal.label}</MenuItem>
+              <MenuItem value="late">{statusConfig.late.label}</MenuItem>
+              <MenuItem value="early">{statusConfig.early.label}</MenuItem>
+              <MenuItem value="absent">{statusConfig.absent.label}</MenuItem>
+              <MenuItem value="weekend">{statusConfig.weekend.label}</MenuItem>
+            </Select>
+          </FormControl>
+          <Button
+            variant="contained"
+            onClick={handleSearch}
+            sx={{ backgroundColor: '#1a73e8', color: 'white', height: 56 }}
+          >
+            查询
+          </Button>
+          <Button
+            variant="contained"
+            onClick={handleReset}
+            sx={{ backgroundColor: '#1a73e8', color: 'white', height: 56 }}
+          >
+            重置
+          </Button>
+        </Box>
+      </Box>
 
-      <Grid container spacing={2} sx={{ mb: 3 }}>
-        <Grid item xs={12} sm={6} md={2}>
-          <Paper sx={{ p: 2, textAlign: 'center' }}>
-            <Typography variant="h6" sx={{ color: '#4caf50' }}>{stats.normal}</Typography>
-            <Typography variant="body2" color="text.secondary">正常</Typography>
-          </Paper>
-        </Grid>
-        <Grid item xs={12} sm={6} md={2}>
-          <Paper sx={{ p: 2, textAlign: 'center' }}>
-            <Typography variant="h6" sx={{ color: '#ff9800' }}>{stats.late}</Typography>
-            <Typography variant="body2" color="text.secondary">迟到</Typography>
-          </Paper>
-        </Grid>
-        <Grid item xs={12} sm={6} md={2}>
-          <Paper sx={{ p: 2, textAlign: 'center' }}>
-            <Typography variant="h6" sx={{ color: '#ff9800' }}>{stats.early}</Typography>
-            <Typography variant="body2" color="text.secondary">早退</Typography>
-          </Paper>
-        </Grid>
-        <Grid item xs={12} sm={6} md={2}>
-          <Paper sx={{ p: 2, textAlign: 'center' }}>
-            <Typography variant="h6" sx={{ color: '#f44336' }}>{stats.absent}</Typography>
-            <Typography variant="body2" color="text.secondary">旷工</Typography>
-          </Paper>
-        </Grid>
-        <Grid item xs={12} sm={6} md={2}>
-          <Paper sx={{ p: 2, textAlign: 'center' }}>
-            <Typography variant="h6" sx={{ color: '#2196f3' }}>{stats.weekend}</Typography>
-            <Typography variant="body2" color="text.secondary">周末加班</Typography>
-          </Paper>
-        </Grid>
-        <Grid item xs={12} sm={6} md={2}>
-          <Paper sx={{ p: 2, textAlign: 'center' }}>
-            <Typography variant="h6" sx={{ color: '#607d8b' }}>{total}</Typography>
-            <Typography variant="body2" color="text.secondary">总计</Typography>
-          </Paper>
-        </Grid>
-      </Grid>
+      {error && <Alert severity="error" sx={{ mb: 3 }}>{error}</Alert>}
 
-      <Box sx={{ mt: 4, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(6, 1fr)', gap: 2, mb: 3 }}>
+        <Paper sx={{ p: 2, textAlign: 'center' }}>
+          <Typography variant="body2" color="text.secondary">正常</Typography>
+          <Typography variant="h4" color="success.main">{stats.normal}</Typography>
+        </Paper>
+        <Paper sx={{ p: 2, textAlign: 'center' }}>
+          <Typography variant="body2" color="text.secondary">迟到</Typography>
+          <Typography variant="h4" color="warning.main">{stats.late}</Typography>
+        </Paper>
+        <Paper sx={{ p: 2, textAlign: 'center' }}>
+          <Typography variant="body2" color="text.secondary">早退</Typography>
+          <Typography variant="h4" color="warning.main">{stats.early}</Typography>
+        </Paper>
+        <Paper sx={{ p: 2, textAlign: 'center' }}>
+          <Typography variant="body2" color="text.secondary">旷工</Typography>
+          <Typography variant="h4" color="error.main">{stats.absent}</Typography>
+        </Paper>
+        <Paper sx={{ p: 2, textAlign: 'center' }}>
+          <Typography variant="body2" color="text.secondary">周末加班</Typography>
+          <Typography variant="h4" color="info.main">{stats.weekend}</Typography>
+        </Paper>
+        <Paper sx={{ p: 2, textAlign: 'center' }}>
+          <Typography variant="body2" color="text.secondary">总计</Typography>
+          <Typography variant="h4" color="primary">{total}</Typography>
+        </Paper>
+      </Box>
+
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
         <Typography variant="body1">
           {t('common.showing')} {startIndex}-{endIndex} {t('common.of')} {total} {t('common.records')}
         </Typography>
@@ -235,34 +209,26 @@ export default function AttendanceReportPage() {
         </Box>
       </Box>
 
-      <TableContainer component={Paper} sx={{ maxHeight: 500, overflowY: 'auto', mt: 4 }}>
-        <Table stickyHeader>
-          <TableHead>
-            <TableRow>
-              <TableCell>日期</TableCell>
-              <TableCell>周几</TableCell>
-              <TableCell>用户</TableCell>
-              <TableCell>上班时间</TableCell>
-              <TableCell>下班时间</TableCell>
-              <TableCell>状态</TableCell>
-              <TableCell>备注</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {loading ? (
+      {loading ? (
+        <Box sx={{ display: 'flex', justifyContent: 'center', p: 4 }}>
+          <CircularProgress />
+        </Box>
+      ) : (
+        <TableContainer component={Paper} sx={{ height: 750, overflowY: 'auto' }}>
+          <Table>
+            <TableHead>
               <TableRow>
-                <TableCell colSpan={7} align="center">
-                  <CircularProgress />
-                </TableCell>
+                <TableCell>{t('attendanceReport.date')}</TableCell>
+                <TableCell>{t('attendanceReport.dayOfWeek')}</TableCell>
+                <TableCell>{t('attendanceReport.user')}</TableCell>
+                <TableCell>{t('attendanceReport.checkInTime')}</TableCell>
+                <TableCell>{t('attendanceReport.checkOutTime')}</TableCell>
+                <TableCell>{t('attendanceReport.status')}</TableCell>
+                <TableCell>{t('attendanceReport.remark')}</TableCell>
               </TableRow>
-            ) : attendances.length === 0 ? (
-              <TableRow>
-                <TableCell colSpan={7} align="center">
-                  {t('common.noData')}
-                </TableCell>
-              </TableRow>
-            ) : (
-              attendances.map((attendance) => (
+            </TableHead>
+            <TableBody>
+              {attendances.map((attendance) => (
                 <TableRow key={attendance.id}>
                   <TableCell>{formatDate(attendance.date)}</TableCell>
                   <TableCell>{getDayOfWeek(attendance.date)}</TableCell>
@@ -278,13 +244,20 @@ export default function AttendanceReportPage() {
                   </TableCell>
                   <TableCell>{attendance.remark || '-'}</TableCell>
                 </TableRow>
-              ))
-            )}
-          </TableBody>
-        </Table>
-      </TableContainer>
+              ))}
+              {attendances.length === 0 && (
+                <TableRow>
+                  <TableCell colSpan={7} align="center">
+                    {t('common.noData')}
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      )}
 
-      <Paper sx={{ mt: 2, p: 2, display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: 1, borderColor: 'divider' }}>
+      <Paper sx={{ mt: 3, p: 2, display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: 1, borderColor: 'divider' }}>
         <Box sx={{ display: 'flex', gap: 4 }}>
           <Typography variant="body2" color="text.secondary">
             当前页：{page} / {totalPages}

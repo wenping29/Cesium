@@ -15,26 +15,35 @@ import {
   MenuItem,
   Chip,
   CircularProgress,
-  Alert
+  Alert,
+  Pagination
 } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 import useWorkHourStore from '../store/workhourStore'
 import useUserStore from '../store/userStore'
 
+const PAGE_SIZES = [10, 20, 50, 100]
+
 export default function WorkHourReportPage() {
   const { t } = useTranslation()
-  const { workhours, loading, error, fetchWorkHours } = useWorkHourStore()
+  const { workhours, total, loading, error, fetchWorkHours } = useWorkHourStore()
   const { users, fetchUsers } = useUserStore()
   const [selectedUser, setSelectedUser] = useState('')
   const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth() + 1)
+  const [page, setPage] = useState(1)
+  const [pageSize, setPageSize] = useState(20)
 
   useEffect(() => {
     fetchUsers()
-    fetchWorkHours()
-  }, [fetchUsers, fetchWorkHours])
+    const params = { page, pageSize, month: selectedMonth }
+    if (selectedUser) params.userId = selectedUser
+    fetchWorkHours(params)
+  }, [fetchUsers, fetchWorkHours, selectedUser, selectedMonth, page, pageSize])
 
   const formatDate = (dateStr) => {
-    return new Date(dateStr).toLocaleDateString()
+    if (!dateStr) return '-'
+    const d = new Date(dateStr)
+    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
   }
 
   const formatTime = (hours) => {
@@ -56,6 +65,19 @@ export default function WorkHourReportPage() {
     return 'error'
   }
 
+  const handlePageChange = (event, newPage) => {
+    setPage(newPage)
+  }
+
+  const handlePageSizeChange = (event) => {
+    setPageSize(event.target.value)
+    setPage(1)
+  }
+
+  const totalPages = Math.ceil(total / pageSize)
+  const startIndex = (page - 1) * pageSize + 1
+  const endIndex = Math.min(page * pageSize, total)
+
   return (
     <Box sx={{ p: 4 }}>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
@@ -66,7 +88,10 @@ export default function WorkHourReportPage() {
             <Select
               value={selectedUser}
               label={t('workHourReport.selectUser')}
-              onChange={(e) => setSelectedUser(e.target.value)}
+              onChange={(e) => {
+                setSelectedUser(e.target.value)
+                setPage(1)
+              }}
             >
               <MenuItem value="">{t('common.all')}</MenuItem>
               {users.map((user) => (
@@ -81,7 +106,10 @@ export default function WorkHourReportPage() {
             <Select
               value={selectedMonth}
               label={t('workHourReport.selectMonth')}
-              onChange={(e) => setSelectedMonth(e.target.value)}
+              onChange={(e) => {
+                setSelectedMonth(e.target.value)
+                setPage(1)
+              }}
             >
               {[...Array(12)].map((_, i) => (
                 <MenuItem key={i + 1} value={i + 1}>
@@ -93,7 +121,7 @@ export default function WorkHourReportPage() {
         </Box>
       </Box>
 
-      {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
+      {error && <Alert severity="error" sx={{ mb: 3 }}>{error}</Alert>}
 
       <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: 2, mb: 3 }}>
         <Paper sx={{ p: 2, textAlign: 'center' }}>
@@ -136,6 +164,36 @@ export default function WorkHourReportPage() {
             {totalStats.total.toFixed(1)}h
           </Typography>
         </Paper>
+      </Box>
+
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
+        <Typography variant="body1">
+          {t('common.showing')} {startIndex}-{endIndex} {t('common.of')} {total} {t('common.records')}
+        </Typography>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 3 }}>
+          <FormControl size="small" sx={{ minWidth: 100 }}>
+            <InputLabel>{t('common.pageSize')}</InputLabel>
+            <Select
+              label={t('common.pageSize')}
+              value={pageSize}
+              onChange={handlePageSizeChange}
+            >
+              {PAGE_SIZES.map(size => (
+                <MenuItem key={size} value={size}>{size}</MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          <Pagination
+            count={totalPages}
+            page={page}
+            pageSize={pageSize}
+            onChange={handlePageChange}
+            color="primary"
+            size="large"
+            showFirstButton
+            showLastButton
+          />
+        </Box>
       </Box>
 
       {loading ? (
@@ -189,6 +247,23 @@ export default function WorkHourReportPage() {
           </Table>
         </TableContainer>
       )}
+
+      <Paper sx={{ mt: 3, p: 2, display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: 1, borderColor: 'divider' }}>
+        <Box sx={{ display: 'flex', gap: 4 }}>
+          <Typography variant="body2" color="text.secondary">
+            当前页：{page} / {totalPages}
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            总记录数：{total} 条
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            每页显示：{pageSize} 条
+          </Typography>
+        </Box>
+        <Typography variant="body2" color="text.secondary">
+          {loading ? '加载中...' : '数据已加载完成'}
+        </Typography>
+      </Paper>
     </Box>
   )
 }

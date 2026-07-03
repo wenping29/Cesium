@@ -15,23 +15,30 @@ import {
   MenuItem,
   LinearProgress,
   CircularProgress,
-  Alert
+  Alert,
+  Pagination
 } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 import useAnnualLeaveStore from '../store/annualleaveStore'
 import useUserStore from '../store/userStore'
 
+const PAGE_SIZES = [10, 20, 50, 100]
+
 export default function AnnualLeaveReportPage() {
   const { t } = useTranslation()
-  const { annualleaves, loading, error, fetchAnnualLeaves } = useAnnualLeaveStore()
+  const { annualleaves, total, loading, error, fetchAnnualLeaves } = useAnnualLeaveStore()
   const { users, fetchUsers } = useUserStore()
   const [selectedUser, setSelectedUser] = useState('')
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear())
+  const [page, setPage] = useState(1)
+  const [pageSize, setPageSize] = useState(20)
 
   useEffect(() => {
     fetchUsers()
-    fetchAnnualLeaves({ year: selectedYear })
-  }, [fetchUsers, fetchAnnualLeaves, selectedYear])
+    const params = { page, pageSize, year: selectedYear }
+    if (selectedUser) params.userId = selectedUser
+    fetchAnnualLeaves(params)
+  }, [fetchUsers, fetchAnnualLeaves, selectedUser, selectedYear, page, pageSize])
 
   const getUsagePercent = (item) => {
     if (item.totalDays + item.carriedOverDays === 0) return 0
@@ -44,12 +51,25 @@ export default function AnnualLeaveReportPage() {
     return 'success'
   }
 
+  const handlePageChange = (event, newPage) => {
+    setPage(newPage)
+  }
+
+  const handlePageSizeChange = (event) => {
+    setPageSize(event.target.value)
+    setPage(1)
+  }
+
   const totalStats = annualleaves.reduce((acc, al) => {
     acc.total += al.totalDays + al.carriedOverDays
     acc.used += al.usedDays
     acc.remaining += al.remainingDays
     return acc
   }, { total: 0, used: 0, remaining: 0 })
+
+  const totalPages = Math.ceil(total / pageSize)
+  const startIndex = (page - 1) * pageSize + 1
+  const endIndex = Math.min(page * pageSize, total)
 
   return (
     <Box sx={{ p: 4 }}>
@@ -61,7 +81,10 @@ export default function AnnualLeaveReportPage() {
             <Select
               value={selectedUser}
               label={t('annualLeaveReport.selectUser')}
-              onChange={(e) => setSelectedUser(e.target.value)}
+              onChange={(e) => {
+                setSelectedUser(e.target.value)
+                setPage(1)
+              }}
             >
               <MenuItem value="">{t('common.all')}</MenuItem>
               {users.map((user) => (
@@ -76,7 +99,10 @@ export default function AnnualLeaveReportPage() {
             <Select
               value={selectedYear}
               label={t('annualLeaveReport.selectYear')}
-              onChange={(e) => setSelectedYear(e.target.value)}
+              onChange={(e) => {
+                setSelectedYear(e.target.value)
+                setPage(1)
+              }}
             >
               {[2024, 2025, 2026].map((year) => (
                 <MenuItem key={year} value={year}>
@@ -88,7 +114,7 @@ export default function AnnualLeaveReportPage() {
         </Box>
       </Box>
 
-      {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
+      {error && <Alert severity="error" sx={{ mb: 3 }}>{error}</Alert>}
 
       <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 2, mb: 3 }}>
         <Paper sx={{ p: 2, textAlign: 'center' }}>
@@ -115,6 +141,36 @@ export default function AnnualLeaveReportPage() {
             {totalStats.remaining.toFixed(1)} {t('common.day')}
           </Typography>
         </Paper>
+      </Box>
+
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
+        <Typography variant="body1">
+          {t('common.showing')} {startIndex}-{endIndex} {t('common.of')} {total} {t('common.records')}
+        </Typography>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 3 }}>
+          <FormControl size="small" sx={{ minWidth: 100 }}>
+            <InputLabel>{t('common.pageSize')}</InputLabel>
+            <Select
+              label={t('common.pageSize')}
+              value={pageSize}
+              onChange={handlePageSizeChange}
+            >
+              {PAGE_SIZES.map(size => (
+                <MenuItem key={size} value={size}>{size}</MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          <Pagination
+            count={totalPages}
+            page={page}
+            pageSize={pageSize}
+            onChange={handlePageChange}
+            color="primary"
+            size="large"
+            showFirstButton
+            showLastButton
+          />
+        </Box>
       </Box>
 
       {loading ? (
@@ -175,6 +231,23 @@ export default function AnnualLeaveReportPage() {
           </Table>
         </TableContainer>
       )}
+
+      <Paper sx={{ mt: 3, p: 2, display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: 1, borderColor: 'divider' }}>
+        <Box sx={{ display: 'flex', gap: 4 }}>
+          <Typography variant="body2" color="text.secondary">
+            当前页：{page} / {totalPages}
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            总记录数：{total} 条
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            每页显示：{pageSize} 条
+          </Typography>
+        </Box>
+        <Typography variant="body2" color="text.secondary">
+          {loading ? '加载中...' : '数据已加载完成'}
+        </Typography>
+      </Paper>
     </Box>
   )
 }
