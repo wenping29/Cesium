@@ -31,19 +31,27 @@ export default function TabBar() {
   if (tabs.length === 0) return null
 
   return (
-    <Box sx={{ borderBottom: 1, borderColor: 'divider', background: 'background.paper' }}>
+    <Box sx={{ borderBottom: 0, padding: 0,borderColor: 'divider', background: 'background.paper' }}>
       <Tabs
         value={currentValue}
         onChange={handleTabChange}
         variant="scrollable"
         scrollButtons="auto"
         sx={{
+          height: 32,
+          minHeight: 32,
+          paddingTop: "1px",
+          paddingBottom: "1px",
+          paddingLeft:"1px",
+          paddingRight: "1px",
           '& .MuiTabs-indicator': {
             backgroundColor: 'primary.main',
           },
           '& .MuiTab-root': {
-            minWidth: 120,
-            maxWidth: 200,
+            minWidth: 80,
+            maxWidth: 300,
+            height: 24,
+            minHeight: 32,
           },
         }}
       >
@@ -53,8 +61,9 @@ export default function TabBar() {
             value={tab.path}
             icon={tab.icon}
             iconPosition="start"
+            sx={{ padding: 0,height:24,minHeight:24 }}
             label={
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1,height:24 }}>
                 {tab.title}
                 <CloseIcon
                   fontSize="small"
