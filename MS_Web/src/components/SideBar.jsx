@@ -36,6 +36,11 @@ import ShieldIcon from '@mui/icons-material/Shield'
 import BusinessIcon from '@mui/icons-material/Business'
 import HomeIcon from '@mui/icons-material/Home'
 import AnalyticsIcon from '@mui/icons-material/Analytics'
+import ScheduleIcon from '@mui/icons-material/Schedule'
+import DescriptionIcon from '@mui/icons-material/Description'
+import TimerIcon from '@mui/icons-material/Timer'
+import HolidayVillageIcon from '@mui/icons-material/HolidayVillage'
+import BeachAccessIcon from '@mui/icons-material/BeachAccess'
 import { useTranslation } from 'react-i18next'
 
 const DRAWER_WIDTH = 240
@@ -46,7 +51,7 @@ export default function SideBar() {
   const navigate = useNavigate()
   const location = useLocation()
   const [open, setOpen] = useState(true)
-  const [expandedMenus, setExpandedMenus] = useState(['home', 'dataTables', 'permission'])
+  const [expandedMenus, setExpandedMenus] = useState(['home', 'dataTables', 'permission', 'attendance'])
 
   const toggleDrawer = () => setOpen(!open)
 
@@ -104,17 +109,28 @@ export default function SideBar() {
       ]
     },
     {
-      id: 'permission',
-      label: t('nav.permissionManagement'),
-      icon: <SettingsIcon />,
-      children: [
-        { id: 'userMgmt', label: t('nav.userManagement'), path: '/user-management', icon: <PeopleIcon /> },
-        { id: 'roleMgmt', label: t('nav.roleManagement'), path: '/role-management', icon: <ShieldIcon /> },
-        { id: 'menuMgmt', label: t('nav.menuManagement'), path: '/menu-management', icon: <MenuIcon /> },
-        { id: 'deptMgmt', label: t('nav.departmentManagement'), path: '/department-management', icon: <BusinessIcon /> }
-      ]
-    },
-    {
+          id: 'permission',
+          label: t('nav.permissionManagement'),
+          icon: <SettingsIcon />,
+          children: [
+            { id: 'userMgmt', label: t('nav.userManagement'), path: '/user-management', icon: <PeopleIcon /> },
+            { id: 'roleMgmt', label: t('nav.roleManagement'), path: '/role-management', icon: <ShieldIcon /> },
+            { id: 'menuMgmt', label: t('nav.menuManagement'), path: '/menu-management', icon: <MenuIcon /> },
+            { id: 'deptMgmt', label: t('nav.departmentManagement'), path: '/department-management', icon: <BusinessIcon /> }
+          ]
+        },
+        {
+          id: 'attendance',
+          label: t('nav.attendanceManagement'),
+          icon: <ScheduleIcon />,
+          children: [
+            { id: 'attendanceReport', label: t('nav.openReport'), path: '/attendance-report', icon: <DescriptionIcon /> },
+            { id: 'workHourReport', label: t('nav.workHourReport'), path: '/workhour-report', icon: <TimerIcon /> },
+            { id: 'leaveReport', label: t('nav.leaveReport'), path: '/leave-report', icon: <HolidayVillageIcon /> },
+            { id: 'annualLeaveReport', label: t('nav.annualLeaveReport'), path: '/annual-leave-report', icon: <BeachAccessIcon /> }
+          ]
+        },
+        {
       id: 'imageToBim',
       label: t('nav.imageToBim'),
       path: '/image-to-bim',

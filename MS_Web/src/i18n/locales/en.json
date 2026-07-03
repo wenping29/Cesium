@@ -20,7 +20,12 @@
     "departmentManagement": "Department Management",
     "home": "Home",
     "workbench": "Workbench",
-    "analysis": "Analysis"
+    "analysis": "Analysis",
+    "attendanceManagement": "Attendance",
+    "openReport": "Attendance Report",
+    "workHourReport": "Work Hour Report",
+    "leaveReport": "Leave Report",
+    "annualLeaveReport": "Annual Leave Report"
   },
   "workbench": {
     "title": "Workbench",
@@ -112,6 +117,68 @@
       "productE": "Product E"
     }
   },
+  "attendanceReport": {
+    "title": "Attendance Reports",
+    "openReport": "Attendance Report",
+    "openReportDesc": "View daily attendance records",
+    "workHourReport": "Work Hour Report",
+    "workHourReportDesc": "Statistics of employee work hours",
+    "leaveReport": "Leave Report",
+    "leaveReportDesc": "Manage employee leave requests",
+    "annualLeaveReport": "Annual Leave Report",
+    "annualLeaveReportDesc": "Manage employee annual leave balance"
+  },
+  "workHourReport": {
+    "title": "Work Hour Report",
+    "selectUser": "Select User",
+    "selectMonth": "Select Month",
+    "date": "Date",
+    "user": "User",
+    "regularHours": "Regular Hours",
+    "overtimeHours": "Overtime Hours",
+    "weekendHours": "Weekend Hours",
+    "holidayHours": "Holiday Hours",
+    "totalHours": "Total Hours",
+    "project": "Project",
+    "task": "Task",
+    "month": "Month"
+  },
+  "leaveReport": {
+    "title": "Leave Report",
+    "selectUser": "Select User",
+    "selectStatus": "Select Status",
+    "date": "Date",
+    "user": "User",
+    "leaveType": "Leave Type",
+    "startDate": "Start Date",
+    "endDate": "End Date",
+    "days": "Days",
+    "hours": "Hours",
+    "status": "Status",
+    "reason": "Reason",
+    "approver": "Approver",
+    "pending": "Pending",
+    "approved": "Approved",
+    "rejected": "Rejected",
+    "personal": "Personal",
+    "sick": "Sick",
+    "annual": "Annual",
+    "maternity": "Maternity",
+    "paternity": "Paternity",
+    "month": "Month"
+  },
+  "annualLeaveReport": {
+    "title": "Annual Leave Report",
+    "selectUser": "Select User",
+    "selectYear": "Select Year",
+    "user": "User",
+    "year": "Year",
+    "totalDays": "Total Days",
+    "usedDays": "Used Days",
+    "remainingDays": "Remaining Days",
+    "carriedOverDays": "Carried Over Days",
+    "month": "Month"
+  },
   "common": {
     "save": "Save",
     "cancel": "Cancel",
@@ -120,7 +187,10 @@
     "add": "Add",
     "none": "None",
     "active": "Active",
-    "inactive": "Inactive"
+    "inactive": "Inactive",
+    "all": "All",
+    "view": "View",
+    "noData": "No data"
   },
   "confirmDelete": "Are you sure you want to delete?",
   "userManagement": {

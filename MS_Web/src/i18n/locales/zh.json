@@ -20,7 +20,12 @@
     "departmentManagement": "部门管理",
     "home": "首页",
     "workbench": "工作台",
-    "analysis": "分析页"
+    "analysis": "分析页",
+    "attendanceManagement": "考勤管理",
+    "openReport": "打开报表",
+    "workHourReport": "工时报表",
+    "leaveReport": "休假报表",
+    "annualLeaveReport": "年假报表"
   },
   "workbench": {
     "title": "工作台",
@@ -110,7 +115,70 @@
       "productC": "商品C",
       "productD": "商品D",
       "productE": "商品E"
-    }
+    },
+    "clickToView": "点击查看详情"
+  },
+  "attendanceReport": {
+    "title": "考勤报表",
+    "openReport": "打开报表",
+    "openReportDesc": "查看员工日常考勤记录",
+    "workHourReport": "工时报表",
+    "workHourReportDesc": "统计员工工时数据",
+    "leaveReport": "休假报表",
+    "leaveReportDesc": "管理员工休假申请",
+    "annualLeaveReport": "年假报表",
+    "annualLeaveReportDesc": "管理员工年假余额"
+  },
+  "workHourReport": {
+    "title": "工时报表",
+    "selectUser": "选择用户",
+    "selectMonth": "选择月份",
+    "date": "日期",
+    "user": "用户",
+    "regularHours": "正常工时",
+    "overtimeHours": "加班工时",
+    "weekendHours": "周末工时",
+    "holidayHours": "节假日工时",
+    "totalHours": "总工时",
+    "project": "项目",
+    "task": "任务",
+    "month": "月"
+  },
+  "leaveReport": {
+    "title": "休假报表",
+    "selectUser": "选择用户",
+    "selectStatus": "选择状态",
+    "date": "日期",
+    "user": "用户",
+    "leaveType": "休假类型",
+    "startDate": "开始日期",
+    "endDate": "结束日期",
+    "days": "天数",
+    "hours": "小时",
+    "status": "状态",
+    "reason": "原因",
+    "approver": "审批人",
+    "pending": "待审批",
+    "approved": "已批准",
+    "rejected": "已拒绝",
+    "personal": "事假",
+    "sick": "病假",
+    "annual": "年假",
+    "maternity": "产假",
+    "paternity": "陪产假",
+    "month": "月"
+  },
+  "annualLeaveReport": {
+    "title": "年假报表",
+    "selectUser": "选择用户",
+    "selectYear": "选择年份",
+    "user": "用户",
+    "year": "年份",
+    "totalDays": "总天数",
+    "usedDays": "已用天数",
+    "remainingDays": "剩余天数",
+    "carriedOverDays": "结转天数",
+    "month": "月"
   },
   "common": {
     "save": "保存",
@@ -120,7 +188,10 @@
     "add": "添加",
     "none": "无",
     "active": "启用",
-    "inactive": "禁用"
+    "inactive": "禁用",
+    "all": "全部",
+    "view": "查看",
+    "noData": "暂无数据"
   },
   "confirmDelete": "确定要删除吗？",
   "userManagement": {

@@ -154,6 +154,167 @@ using (var scope = app.Services.CreateScope())
         }
     }
     await context.SaveChangesAsync();
+
+    // 初始化考勤菜单
+    var attendanceMenus = new (int Id, string Name, string? Path, string Icon, int? ParentId, int SortOrder, string Permission)[]
+    {
+        (9, "考勤管理", null, "Schedule", null, 2, "attendance"),
+        (10, "打开报表", "/attendance-report", "Description", 9, 1, "attendance:report"),
+        (11, "工时报表", "/workhour-report", "Timer", 9, 2, "attendance:workhour"),
+        (12, "休假报表", "/leave-report", "HolidayVillage", 9, 3, "attendance:leave"),
+        (13, "年假报表", "/annual-leave-report", "BeachAccess", 9, 4, "attendance:annual")
+    };
+
+    foreach (var menu in attendanceMenus)
+    {
+        var existing = await context.Menus.FindAsync(menu.Id);
+        if (existing == null)
+        {
+            context.Menus.Add(new Menu
+            {
+                Id = menu.Id,
+                Name = menu.Name,
+                Path = menu.Path,
+                Icon = menu.Icon,
+                ParentId = menu.ParentId,
+                SortOrder = menu.SortOrder,
+                IsVisible = true,
+                Permission = menu.Permission,
+                CreatedAt = DateTime.UtcNow
+            });
+        }
+    }
+    await context.SaveChangesAsync();
+
+    // 初始化考勤记录示例数据
+    if (!context.AttendanceRecords.Any())
+    {
+        var currentUser = await context.Users.FirstOrDefaultAsync(u => u.Username == "admin");
+        if (currentUser != null)
+        {
+            var now = DateTime.UtcNow;
+            // 添加最近7天的考勤记录
+            for (int i = 6; i >= 0; i--)
+            {
+                var date = now.Date.AddDays(-i);
+                bool isWeekend = date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday;
+                
+                context.AttendanceRecords.Add(new AttendanceRecord
+                {
+                    UserId = currentUser.Id,
+                    Date = date,
+                    CheckInTime = date.AddHours(isWeekend ? 9 : 8),
+                    CheckOutTime = date.AddHours(isWeekend ? 17 : 18),
+                    Status = isWeekend ? "weekend" : "normal",
+                    Remark = isWeekend ? "周末加班" : null,
+                    CreatedAt = DateTime.UtcNow
+                });
+            }
+            await context.SaveChangesAsync();
+        }
+    }
+
+    // 初始化工时记录示例数据
+    if (!context.WorkHourRecords.Any())
+    {
+        var currentUser = await context.Users.FirstOrDefaultAsync(u => u.Username == "admin");
+        if (currentUser != null)
+        {
+            var now = DateTime.UtcNow;
+            for (int i = 6; i >= 0; i--)
+            {
+                var date = now.Date.AddDays(-i);
+                bool isWeekend = date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday;
+                
+                context.WorkHourRecords.Add(new WorkHourRecord
+                {
+                    UserId = currentUser.Id,
+                    Date = date,
+                    RegularHours = isWeekend ? 0 : 8,
+                    OvertimeHours = isWeekend ? 0 : 1,
+                    WeekendHours = isWeekend ? 8 : 0,
+                    HolidayHours = 0,
+                    ProjectName = "Cesium项目",
+                    TaskDescription = "地图开发",
+                    CreatedAt = DateTime.UtcNow
+                });
+            }
+            await context.SaveChangesAsync();
+        }
+    }
+
+    // 初始化休假记录示例数据
+    if (!context.LeaveRecords.Any())
+    {
+        var currentUser = await context.Users.FirstOrDefaultAsync(u => u.Username == "admin");
+        if (currentUser != null)
+        {
+            context.LeaveRecords.AddRange(new[]
+            {
+                new LeaveRecord
+                {
+                    UserId = currentUser.Id,
+                    LeaveType = "personal",
+                    StartDate = DateTime.UtcNow.Date.AddDays(-10),
+                    EndDate = DateTime.UtcNow.Date.AddDays(-9),
+                    Days = 2,
+                    Hours = 0,
+                    Status = "approved",
+                    Reason = "个人事务",
+                    ApproverId = currentUser.Id,
+                    ApprovedAt = DateTime.UtcNow.Date.AddDays(-11),
+                    CreatedAt = DateTime.UtcNow.Date.AddDays(-12)
+                },
+                new LeaveRecord
+                {
+                    UserId = currentUser.Id,
+                    LeaveType = "sick",
+                    StartDate = DateTime.UtcNow.Date.AddDays(-5),
+                    EndDate = DateTime.UtcNow.Date.AddDays(-5),
+                    Days = 1,
+                    Hours = 0,
+                    Status = "approved",
+                    Reason = "感冒发烧",
+                    ApproverId = currentUser.Id,
+                    ApprovedAt = DateTime.UtcNow.Date.AddDays(-6),
+                    CreatedAt = DateTime.UtcNow.Date.AddDays(-6)
+                },
+                new LeaveRecord
+                {
+                    UserId = currentUser.Id,
+                    LeaveType = "annual",
+                    StartDate = DateTime.UtcNow.Date.AddDays(7),
+                    EndDate = DateTime.UtcNow.Date.AddDays(9),
+                    Days = 3,
+                    Hours = 0,
+                    Status = "pending",
+                    Reason = "年度休假",
+                    CreatedAt = DateTime.UtcNow.Date.AddDays(-1)
+                }
+            });
+            await context.SaveChangesAsync();
+        }
+    }
+
+    // 初始化年假记录示例数据
+    if (!context.AnnualLeaveRecords.Any())
+    {
+        var currentUser = await context.Users.FirstOrDefaultAsync(u => u.Username == "admin");
+        if (currentUser != null)
+        {
+            context.AnnualLeaveRecords.Add(new AnnualLeaveRecord
+            {
+                UserId = currentUser.Id,
+                Year = DateTime.UtcNow.Year,
+                TotalDays = 15,
+                UsedDays = 5,
+                RemainingDays = 10,
+                CarriedOverDays = 2,
+                CreatedAt = DateTime.UtcNow
+            });
+            await context.SaveChangesAsync();
+        }
+    }
 }
 
 app.UseSwagger();

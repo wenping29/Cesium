@@ -23,6 +23,10 @@ import MenuManagementPage from './pages/MenuManagementPage'
 import DepartmentManagementPage from './pages/DepartmentManagementPage'
 import WorkbenchPage from './pages/WorkbenchPage'
 import AnalysisPage from './pages/AnalysisPage'
+import AttendanceReportPage from './pages/AttendanceReportPage'
+import WorkHourReportPage from './pages/WorkHourReportPage'
+import LeaveReportPage from './pages/LeaveReportPage'
+import AnnualLeaveReportPage from './pages/AnnualLeaveReportPage'
 
 function PrivateRoute({ children }) {
   const token = useAuthStore((s) => s.token)
@@ -67,6 +71,10 @@ export default function App() {
             <Route path="/profile" element={<PrivateRoute><EditProfilePage /></PrivateRoute>} />
             <Route path="/change-password" element={<PrivateRoute><ChangePasswordPage /></PrivateRoute>} />
             <Route path="/image-to-bim" element={<PrivateRoute><ImageToBimPage /></PrivateRoute>} />
+            <Route path="/attendance-report" element={<PrivateRoute><AttendanceReportPage /></PrivateRoute>} />
+            <Route path="/workhour-report" element={<PrivateRoute><WorkHourReportPage /></PrivateRoute>} />
+            <Route path="/leave-report" element={<PrivateRoute><LeaveReportPage /></PrivateRoute>} />
+            <Route path="/annual-leave-report" element={<PrivateRoute><AnnualLeaveReportPage /></PrivateRoute>} />
             <Route path="*" element={<Navigate to="/workbench" replace />} />
           </Routes>
         </Box>
