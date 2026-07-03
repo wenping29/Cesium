@@ -31,7 +31,7 @@ export default function TabBar() {
   if (tabs.length === 0) return null
 
   return (
-    <Box sx={{ borderBottom: 0, padding: 0,borderColor: 'divider', background: 'background.paper' }}>
+    <Box sx={{ borderBottom: 0, padding: 1,borderColor: 'divider', background: 'background.paper' }}>
       <Tabs
         value={currentValue}
         onChange={handleTabChange}

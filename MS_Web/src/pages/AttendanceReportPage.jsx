@@ -101,22 +101,23 @@ export default function AttendanceReportPage() {
             sx={{ minWidth: 150 }}
             placeholder={t('attendanceReport.enterUserName')}
           />
-          <LocalizationProvider dateAdapter={AdapterDayjs} sx={{ height: 48 }}>
+          <LocalizationProvider dateAdapter={AdapterDayjs} sx={{ height: 40 }}>
             <DatePicker
               label={t('attendanceReport.startDate')}
               value={startDate}
-              sx={{ height: 48 }}
+              sx={{ height: 40 }}
               onChange={(newValue) => setStartDate(newValue)}
-              renderInput={(params) => <TextField {...params} size="small" />}
+              renderInput={(params) => <TextField {...params}  />}
             />
           </LocalizationProvider>
-          <LocalizationProvider dateAdapter={AdapterDayjs} sx={{ height: 48 }}>
+          <LocalizationProvider dateAdapter={AdapterDayjs} sx={{ height: 40 }}>
             <DatePicker
               label={t('attendanceReport.endDate')}
               value={endDate}
-              sx={{ height: 48 }}
+              sx={{ height: 40
+               }}
               onChange={(newValue) => setEndDate(newValue)}
-              renderInput={(params) => <TextField {...params} size="small" />}
+              renderInput={(params) => <TextField {...params} />}
             />
           </LocalizationProvider>
           <FormControl size="small" sx={{ minWidth: 100,height:48 }}>
