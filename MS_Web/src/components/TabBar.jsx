@@ -17,12 +17,13 @@ export default function TabBar() {
 
   const handleClose = (event, path) => {
     event.stopPropagation()
-    if (tabs.length === 1) return
     removeTab(path)
     if (location.pathname === path) {
       const remaining = tabs.filter((t) => t.path !== path)
       if (remaining.length > 0) {
         navigate(remaining[remaining.length - 1].path)
+      } else {
+        navigate('/workbench')
       }
     }
   }
@@ -36,6 +37,7 @@ export default function TabBar() {
         onChange={handleTabChange}
         variant="scrollable"
         scrollButtons="auto"
+        closable
         sx={{
           '& .MuiTabs-indicator': {
             backgroundColor: 'primary.main',
@@ -54,13 +56,11 @@ export default function TabBar() {
             icon={tab.icon}
             iconPosition="start"
             endIcon={
-              tabs.length > 1 && (
-                <CloseIcon
-                  fontSize="small"
-                  onClick={(e) => handleClose(e, tab.path)}
-                  sx={{ cursor: 'pointer', opacity: 0.5, '&:hover': { opacity: 1 } }}
-                />
-              )
+              <CloseIcon
+                fontSize="small"
+                onClick={(e) => handleClose(e, tab.path)}
+                sx={{ cursor: 'pointer', opacity: 0.4, '&:hover': { opacity: 1, color: 'error.main' } }}
+              />
             }
           />
         ))}

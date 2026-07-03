@@ -81,8 +81,7 @@ export default function RoleManagementPage() {
 
   return (
     <Box sx={{ p: 4 }}>
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
-        <Typography variant="h4">{t('roleManagement.title')}</Typography>
+      <Box sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', mb: 3 }}>
         <Button variant="contained" startIcon={<AddIcon />} onClick={handleOpenCreate}>
           {t('roleManagement.addRole')}
         </Button>
