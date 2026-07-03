@@ -74,7 +74,6 @@ export default function AnnualLeaveReportPage() {
   return (
     <Box sx={{ p: 4 }}>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
-        <Typography variant="h4">{t('annualLeaveReport.title')}</Typography>
         <Box sx={{ display: 'flex', gap: 2 }}>
           <FormControl size="small" sx={{ minWidth: 150 }}>
             <InputLabel>{t('annualLeaveReport.selectUser')}</InputLabel>
