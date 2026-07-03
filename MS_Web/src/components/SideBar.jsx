@@ -269,7 +269,7 @@ export default function SideBar() {
             justifyContent: 'center',
             px: 1,
             py: 1,
-            minHeight: 48,
+            minHeight: 64,
             bgcolor: 'primary.main',
             color: 'common.white'
           }}
