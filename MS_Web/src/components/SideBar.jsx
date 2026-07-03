@@ -41,6 +41,8 @@ import DescriptionIcon from '@mui/icons-material/Description'
 import TimerIcon from '@mui/icons-material/Timer'
 import HolidayVillageIcon from '@mui/icons-material/HolidayVillage'
 import BeachAccessIcon from '@mui/icons-material/BeachAccess'
+import HistoryIcon from '@mui/icons-material/History'
+import FindInPageIcon from '@mui/icons-material/FindInPage'
 import { useTranslation } from 'react-i18next'
 import sidebarStore from '../store/sidebarStore'
 
@@ -52,7 +54,7 @@ export default function SideBar() {
   const navigate = useNavigate()
   const location = useLocation()
   const { open } = sidebarStore()
-  const [expandedMenus, setExpandedMenus] = useState(['home', 'dataTables', 'permission', 'attendance'])
+  const [expandedMenus, setExpandedMenus] = useState(['home', 'dataTables', 'permission', 'attendance', 'log'])
 
   const toggleSubMenu = (menuId) => {
     setExpandedMenus(prev =>
@@ -130,6 +132,15 @@ export default function SideBar() {
           ]
         },
         {
+      id: 'log',
+      label: t('nav.logManagement'),
+      icon: <HistoryIcon />,
+      children: [
+        { id: 'loginLogReport', label: t('nav.loginLogReport'), path: '/login-log-report', icon: <HistoryIcon /> },
+        { id: 'auditLogReport', label: t('nav.auditLogReport'), path: '/audit-log-report', icon: <FindInPageIcon /> }
+      ]
+    },
+    {
       id: 'imageToBim',
       label: t('nav.imageToBim'),
       path: '/image-to-bim',

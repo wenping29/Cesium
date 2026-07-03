@@ -25,7 +25,25 @@
     "openReport": "Attendance Report",
     "workHourReport": "Work Hour Report",
     "leaveReport": "Leave Report",
-    "annualLeaveReport": "Annual Leave Report"
+    "annualLeaveReport": "Annual Leave Report",
+    "logManagement": "Log Management",
+    "loginLogReport": "Login Log",
+    "auditLogReport": "Audit Log"
+  },
+  "loginLogReport": {
+    "title": "Login Log Report",
+    "id": "ID",
+    "username": "Username",
+    "ipAddress": "IP Address",
+    "deviceInfo": "Device",
+    "browserInfo": "Browser",
+    "osInfo": "OS",
+    "loginTime": "Login Time"
+  },
+  "auditLogReport": {
+    "title": "Audit Log Report",
+    "startDate": "Start Date",
+    "endDate": "End Date"
   },
   "workbench": {
     "title": "Workbench",
@@ -205,7 +223,9 @@
     "showing": "Showing",
     "of": "of",
     "records": "records",
-    "pageSize": "Page size"
+    "pageSize": "Page size",
+    "search": "Search",
+    "reset": "Reset"
   },
   "confirmDelete": "Are you sure you want to delete?",
   "userManagement": {

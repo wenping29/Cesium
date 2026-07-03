@@ -20,6 +20,8 @@ import AirQualityTablePage from './pages/AirQualityTablePage'
 import OpenLayerMapPage from './pages/OpenLayerMapPage'
 import LeafletMapPage from './pages/LeafletMapPage'
 import ImageToBimPage from './pages/ImageToBimPage'
+import LoginLogReportPage from './pages/LoginLogReportPage'
+import AuditLogReportPage from './pages/AuditLogReportPage'
 import UserManagementPage from './pages/UserManagementPage'
 import RoleManagementPage from './pages/RoleManagementPage'
 import MenuManagementPage from './pages/MenuManagementPage'
@@ -58,6 +60,8 @@ export default function App() {
     '/openlayer-map': 'OpenLayer地图',
     '/leaflet-map': 'Leaflet地图',
     '/image-to-bim': '影像转BIM',
+    '/login-log-report': '登录日志',
+    '/audit-log-report': '查询日志',
     '/attendance-report': '打卡报表',
     '/workhour-report': '工时报表',
     '/leave-report': '休假报表',
@@ -109,6 +113,8 @@ export default function App() {
             <Route path="/profile" element={<PrivateRoute><EditProfilePage /></PrivateRoute>} />
             <Route path="/change-password" element={<PrivateRoute><ChangePasswordPage /></PrivateRoute>} />
             <Route path="/image-to-bim" element={<PrivateRoute><ImageToBimPage /></PrivateRoute>} />
+            <Route path="/login-log-report" element={<PrivateRoute><LoginLogReportPage /></PrivateRoute>} />
+            <Route path="/audit-log-report" element={<PrivateRoute><AuditLogReportPage /></PrivateRoute>} />
             <Route path="/attendance-report" element={<PrivateRoute><AttendanceReportPage /></PrivateRoute>} />
             <Route path="/workhour-report" element={<PrivateRoute><WorkHourReportPage /></PrivateRoute>} />
             <Route path="/leave-report" element={<PrivateRoute><LeaveReportPage /></PrivateRoute>} />

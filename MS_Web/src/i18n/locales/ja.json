@@ -17,7 +17,25 @@
     "userManagement": "ユーザー管理",
     "roleManagement": "ロール管理",
     "menuManagement": "メニュー管理",
-    "departmentManagement": "部門管理"
+    "departmentManagement": "部門管理",
+    "logManagement": "ログ管理",
+    "loginLogReport": "ログインログ",
+    "auditLogReport": "監査ログ"
+  },
+  "loginLogReport": {
+    "title": "ログインログレポート",
+    "id": "ID",
+    "username": "ユーザー名",
+    "ipAddress": "IPアドレス",
+    "deviceInfo": "デバイス情報",
+    "browserInfo": "ブラウザ",
+    "osInfo": "OS",
+    "loginTime": "ログイン時間"
+  },
+  "auditLogReport": {
+    "title": "監査ログレポート",
+    "startDate": "開始日",
+    "endDate": "終了日"
   },
   "common": {
     "save": "保存",
@@ -27,7 +45,16 @@
     "add": "追加",
     "none": "なし",
     "active": "有効",
-    "inactive": "無効"
+    "inactive": "無効",
+    "all": "すべて",
+    "view": "表示",
+    "noData": "データなし",
+    "showing": "表示中",
+    "of": "の",
+    "records": "件",
+    "pageSize": "表示件数",
+    "search": "検索",
+    "reset": "リセット"
   },
   "confirmDelete": "削除してもよろしいですか？",
   "userManagement": {
