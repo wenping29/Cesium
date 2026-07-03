@@ -1,5 +1,8 @@
 import { useState, useEffect } from 'react'
-import { Box, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, CircularProgress, Chip, Grid, Pagination, FormControl, InputLabel, Select, MenuItem } from '@mui/material'
+import { Box, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, CircularProgress, Chip, Grid, Pagination, FormControl, InputLabel, Select, MenuItem, TextField, Button } from '@mui/material'
+import { DatePicker } from '@mui/x-date-pickers/DatePicker'
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { useTranslation } from 'react-i18next'
 import useAttendanceStore from '../store/attendanceStore'
 
@@ -19,10 +22,20 @@ export default function AttendanceReportPage() {
   const [page, setPage] = useState(1)
   const [pageSize, setPageSize] = useState(20)
   const [stats, setStats] = useState({ normal: 0, late: 0, early: 0, absent: 0, weekend: 0 })
+  
+  const [searchName, setSearchName] = useState('')
+  const [startDate, setStartDate] = useState(null)
+  const [endDate, setEndDate] = useState(null)
+  const [searchStatus, setSearchStatus] = useState('')
 
   useEffect(() => {
-    fetchAttendances({ page, pageSize })
-  }, [fetchAttendances, page, pageSize])
+    const params = { page, pageSize }
+    if (searchName) params.userName = searchName
+    if (startDate) params.startDate = startDate.toISOString().split('T')[0]
+    if (endDate) params.endDate = endDate.toISOString().split('T')[0]
+    if (searchStatus) params.status = searchStatus
+    fetchAttendances(params)
+  }, [fetchAttendances, page, pageSize, searchName, startDate, endDate, searchStatus])
 
   useEffect(() => {
     const counts = { normal: 0, late: 0, early: 0, absent: 0, weekend: 0 }
@@ -40,6 +53,18 @@ export default function AttendanceReportPage() {
 
   const handlePageSizeChange = (event) => {
     setPageSize(event.target.value)
+    setPage(1)
+  }
+
+  const handleSearch = () => {
+    setPage(1)
+  }
+
+  const handleReset = () => {
+    setSearchName('')
+    setStartDate(null)
+    setEndDate(null)
+    setSearchStatus('')
     setPage(1)
   }
 
@@ -63,6 +88,76 @@ export default function AttendanceReportPage() {
       <Typography variant="h4" gutterBottom>
         {t('attendanceReport.title')}
       </Typography>
+
+      <Paper sx={{ p: 3, mb: 4 }}>
+        <Grid container spacing={3} alignItems="flex-end">
+          <Grid item xs={12} sm={6} md={3}>
+            <TextField
+              label={t('attendanceReport.userName')}
+              value={searchName}
+              onChange={(e) => setSearchName(e.target.value)}
+              fullWidth
+              placeholder={t('attendanceReport.enterUserName')}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6} md={3}>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DatePicker
+                label={t('attendanceReport.startDate')}
+                value={startDate}
+                onChange={(newValue) => setStartDate(newValue)}
+                renderInput={(params) => <TextField {...params} fullWidth />}
+              />
+            </LocalizationProvider>
+          </Grid>
+          <Grid item xs={12} sm={6} md={3}>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DatePicker
+                label={t('attendanceReport.endDate')}
+                value={endDate}
+                onChange={(newValue) => setEndDate(newValue)}
+                renderInput={(params) => <TextField {...params} fullWidth />}
+              />
+            </LocalizationProvider>
+          </Grid>
+          <Grid item xs={12} sm={6} md={3}>
+            <FormControl fullWidth>
+              <InputLabel>{t('attendanceReport.status')}</InputLabel>
+              <Select
+                label={t('attendanceReport.status')}
+                value={searchStatus}
+                onChange={(e) => setSearchStatus(e.target.value)}
+              >
+                <MenuItem value="">{t('common.all')}</MenuItem>
+                <MenuItem value="normal">{statusConfig.normal.label}</MenuItem>
+                <MenuItem value="late">{statusConfig.late.label}</MenuItem>
+                <MenuItem value="early">{statusConfig.early.label}</MenuItem>
+                <MenuItem value="absent">{statusConfig.absent.label}</MenuItem>
+                <MenuItem value="weekend">{statusConfig.weekend.label}</MenuItem>
+              </Select>
+            </FormControl>
+          </Grid>
+          <Grid item xs={12} sm={6} md={2}>
+            <Box sx={{ display: 'flex', gap: 2 }}>
+              <Button
+                variant="contained"
+                onClick={handleSearch}
+                color="primary"
+                fullWidth
+              >
+                {t('common.search')}
+              </Button>
+              <Button
+                variant="outlined"
+                onClick={handleReset}
+                fullWidth
+              >
+                {t('common.reset')}
+              </Button>
+            </Box>
+          </Grid>
+        </Grid>
+      </Paper>
 
       <Grid container spacing={3} sx={{ mb: 4 }}>
         <Grid item xs={12} sm={6} md={2}>
@@ -170,6 +265,7 @@ export default function AttendanceReportPage() {
           <Pagination
             count={totalPages}
             page={page}
+            pageSize={pageSize}
             onChange={handlePageChange}
             color="primary"
             size="large"

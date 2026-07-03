@@ -126,7 +126,12 @@
     "leaveReport": "Leave Report",
     "leaveReportDesc": "Manage employee leave requests",
     "annualLeaveReport": "Annual Leave Report",
-    "annualLeaveReportDesc": "Manage employee annual leave balance"
+    "annualLeaveReportDesc": "Manage employee annual leave balance",
+    "userName": "Username",
+    "enterUserName": "Enter username",
+    "startDate": "Start Date",
+    "endDate": "End Date",
+    "status": "Status"
   },
   "workHourReport": {
     "title": "Work Hour Report",

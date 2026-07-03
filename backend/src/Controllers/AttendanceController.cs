@@ -23,6 +23,7 @@ public class AttendanceController : ControllerBase
     [Authorize(Roles = "Admin")]
     public async Task<ActionResult<PagedResult<AttendanceRecordDto>>> GetAttendances(
         DateTime? startDate = null, DateTime? endDate = null, int? userId = null,
+        string? userName = null, string? status = null,
         int page = 1, int pageSize = 20)
     {
         var query = _context.AttendanceRecords
@@ -35,6 +36,10 @@ public class AttendanceController : ControllerBase
             query = query.Where(a => a.Date <= endDate.Value);
         if (userId.HasValue)
             query = query.Where(a => a.UserId == userId.Value);
+        if (!string.IsNullOrEmpty(userName))
+            query = query.Where(a => a.User != null && a.User.Username.Contains(userName));
+        if (!string.IsNullOrEmpty(status))
+            query = query.Where(a => a.Status == status);
 
         var total = await query.CountAsync();
 

@@ -127,7 +127,12 @@
     "leaveReport": "休假报表",
     "leaveReportDesc": "管理员工休假申请",
     "annualLeaveReport": "年假报表",
-    "annualLeaveReportDesc": "管理员工年假余额"
+    "annualLeaveReportDesc": "管理员工年假余额",
+    "userName": "用户名称",
+    "enterUserName": "请输入用户名称",
+    "startDate": "开始日期",
+    "endDate": "结束日期",
+    "status": "状态"
   },
   "workHourReport": {
     "title": "工时报表",
