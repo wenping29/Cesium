@@ -1,8 +1,11 @@
-import { Routes, Route, Navigate } from 'react-router-dom'
+import { useEffect } from 'react'
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import { Box } from '@mui/material'
 import useAuthStore from './store/authStore'
+import tabStore from './store/tabStore'
 import NavBar from './components/NavBar'
 import SideBar from './components/SideBar'
+import TabBar from './components/TabBar'
 import UsersPage from './pages/UsersPage'
 import MapPage from './pages/MapPage'
 import LoginPage from './pages/LoginPage'
@@ -35,6 +38,40 @@ function PrivateRoute({ children }) {
 
 export default function App() {
   const token = useAuthStore((s) => s.token)
+  const location = useLocation()
+  const addTab = tabStore((s) => s.addTab)
+
+  const pageTitles = {
+    '/workbench': '工作台',
+    '/analysis': '数据分析',
+    '/dashboard': '仪表盘',
+    '/big-screen': '大屏展示',
+    '/earthquake-table': '地震数据',
+    '/typhoon-table': '台风数据',
+    '/wind-table': '风力数据',
+    '/airquality-table': '空气质量',
+    '/user-management': '用户管理',
+    '/role-management': '角色管理',
+    '/menu-management': '菜单管理',
+    '/department-management': '部门管理',
+    '/map': '地图',
+    '/openlayer-map': 'OpenLayer地图',
+    '/leaflet-map': 'Leaflet地图',
+    '/image-to-bim': '影像转BIM',
+    '/attendance-report': '打卡报表',
+    '/workhour-report': '工时报表',
+    '/leave-report': '休假报表',
+    '/annual-leave-report': '年假报表',
+    '/profile': '个人资料',
+    '/change-password': '修改密码',
+  }
+
+  useEffect(() => {
+    const title = pageTitles[location.pathname]
+    if (title) {
+      addTab(location.pathname, title)
+    }
+  }, [location.pathname, addTab])
 
   if (!token) {
     return (
@@ -48,8 +85,9 @@ export default function App() {
   return (
     <Box sx={{ display: 'flex', flexDirection: 'row', height: '100vh' }}>
       <SideBar />
-      <Box sx={{ display: 'flex', flex: 1, overflow: 'hidden' }}>
+      <Box sx={{ display: 'flex', flex: 1, flexDirection: 'column', overflow: 'hidden' }}>
         <NavBar />
+        <TabBar />
         <Box sx={{ flex: 1, overflow: 'hidden' }}>
           <Routes>
             <Route path="/workbench" element={<PrivateRoute><WorkbenchPage /></PrivateRoute>} />
