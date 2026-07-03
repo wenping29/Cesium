@@ -182,38 +182,102 @@ using (var scope = app.Services.CreateScope())
     }
     await context.SaveChangesAsync();
 
-    if (!context.AttendanceRecords.Any())
+    if (context.AttendanceRecords.Any())
     {
-        var currentUser = await context.Users.FirstOrDefaultAsync(u => u.Username == "admin");
-        if (currentUser != null)
+        context.AttendanceRecords.RemoveRange(context.AttendanceRecords);
+        await context.SaveChangesAsync();
+    }
+    
+    var currentUser = await context.Users.FirstOrDefaultAsync(u => u.Username == "admin");
+    if (currentUser != null)
+    {
+        var now = DateTime.UtcNow;
+        var random = new Random();
+        
+        for (int i = 99; i >= 0; i--)
         {
-            var now = DateTime.UtcNow;
-            for (int i = 6; i >= 0; i--)
+            var date = now.Date.AddDays(-i);
+            bool isWeekend = date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday;
+            
+            int checkInHour = isWeekend ? 9 : 8;
+            int checkOutHour = isWeekend ? 17 : 18;
+            
+            var randomValue = random.Next(100);
+            string status;
+            int checkInMinute = 0;
+            int checkOutMinute = 0;
+            string? remark = null;
+            
+            if (isWeekend)
             {
-                var date = now.Date.AddDays(-i);
-                bool isWeekend = date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday;
-                var checkInHour = isWeekend ? 9 : 8;
-                var checkOutHour = isWeekend ? 17 : 18;
-                
-                context.AttendanceRecords.Add(new AttendanceRecord
+                if (randomValue < 30)
                 {
-                    UserId = currentUser.Id,
-                    Date = date,
-                    CheckInTime = new TimeSpan(checkInHour, 0, 0),
-                    CheckOutTime = new TimeSpan(checkOutHour, 0, 0),
-                    Status = isWeekend ? "weekend" : "normal",
-                    Remark = isWeekend ? "周末加班" : null,
-                    CreatedAt = DateTime.UtcNow
-                });
+                    status = "absent";
+                    checkInHour = 0;
+                    checkOutHour = 0;
+                    remark = "周末休息";
+                }
+                else
+                {
+                    status = "weekend";
+                    checkInMinute = random.Next(30);
+                    checkOutMinute = random.Next(30);
+                    remark = "周末加班";
+                }
             }
-            await context.SaveChangesAsync();
+            else
+            {
+                if (randomValue < 5)
+                {
+                    status = "absent";
+                    checkInHour = 0;
+                    checkOutHour = 0;
+                    remark = "旷工";
+                }
+                else if (randomValue < 15)
+                {
+                    status = "late";
+                    checkInMinute = random.Next(60) + 5;
+                    checkOutMinute = random.Next(30);
+                    remark = "迟到";
+                }
+                else if (randomValue < 25)
+                {
+                    status = "early";
+                    checkInMinute = random.Next(30);
+                    checkOutMinute = -random.Next(60) - 5;
+                    remark = "早退";
+                }
+                else
+                {
+                    status = "normal";
+                    checkInMinute = random.Next(15) - 5;
+                    if (checkInMinute < 0) checkInMinute = 0;
+                    checkOutMinute = random.Next(30);
+                }
+            }
+            
+            var checkInTime = checkInHour > 0 ? new TimeSpan(checkInHour, Math.Max(0, checkInMinute), 0) : (TimeSpan?)null;
+            var checkOutTime = checkOutHour > 0 ? new TimeSpan(checkOutHour, Math.Max(0, checkOutMinute), 0) : (TimeSpan?)null;
+            
+            context.AttendanceRecords.Add(new AttendanceRecord
+            {
+                UserId = currentUser.Id,
+                Date = date,
+                CheckInTime = checkInTime,
+                CheckOutTime = checkOutTime,
+                Status = status,
+                Remark = remark,
+                CreatedAt = DateTime.UtcNow
+            });
         }
+        await context.SaveChangesAsync();
     }
 
     if (!context.WorkHourRecords.Any())
     {
-        var currentUser = await context.Users.FirstOrDefaultAsync(u => u.Username == "admin");
-        if (currentUser != null)
+        var user = await context.Users.FirstOrDefaultAsync(u => u.Username == "admin");
+        if (user != null)
         {
             var now = DateTime.UtcNow;
             for (int i = 6; i >= 0; i--)
@@ -223,7 +287,7 @@ using (var scope = app.Services.CreateScope())
                 
                 context.WorkHourRecords.Add(new WorkHourRecord
                 {
-                    UserId = currentUser.Id,
+                    UserId = user.Id,
                     Date = date,
                     RegularHours = isWeekend ? 0 : 8,
                     OvertimeHours = isWeekend ? 0 : 1,
@@ -240,14 +304,14 @@ using (var scope = app.Services.CreateScope())
 
     if (!context.LeaveRecords.Any())
     {
-        var currentUser = await context.Users.FirstOrDefaultAsync(u => u.Username == "admin");
-        if (currentUser != null)
+        var user = await context.Users.FirstOrDefaultAsync(u => u.Username == "admin");
+        if (user != null)
         {
             context.LeaveRecords.AddRange(new[]
             {
                 new LeaveRecord
                 {
-                    UserId = currentUser.Id,
+                    UserId = user.Id,
                     LeaveType = "personal",
                     StartDate = DateTime.UtcNow.Date.AddDays(-10),
                     EndDate = DateTime.UtcNow.Date.AddDays(-9),
@@ -255,13 +319,13 @@ using (var scope = app.Services.CreateScope())
                     Hours = 0,
                     Status = "approved",
                     Reason = "个人事务",
-                    ApproverId = currentUser.Id,
+                    ApproverId = user.Id,
                     ApprovedAt = DateTime.UtcNow.Date.AddDays(-11),
                     CreatedAt = DateTime.UtcNow.Date.AddDays(-12)
                 },
                 new LeaveRecord
                 {
-                    UserId = currentUser.Id,
+                    UserId = user.Id,
                     LeaveType = "sick",
                     StartDate = DateTime.UtcNow.Date.AddDays(-5),
                     EndDate = DateTime.UtcNow.Date.AddDays(-5),
@@ -269,13 +333,13 @@ using (var scope = app.Services.CreateScope())
                     Hours = 0,
                     Status = "approved",
                     Reason = "感冒发烧",
-                    ApproverId = currentUser.Id,
+                    ApproverId = user.Id,
                     ApprovedAt = DateTime.UtcNow.Date.AddDays(-6),
                     CreatedAt = DateTime.UtcNow.Date.AddDays(-6)
                 },
                 new LeaveRecord
                 {
-                    UserId = currentUser.Id,
+                    UserId = user.Id,
                     LeaveType = "annual",
                     StartDate = DateTime.UtcNow.Date.AddDays(7),
                     EndDate = DateTime.UtcNow.Date.AddDays(9),
@@ -292,12 +356,12 @@ using (var scope = app.Services.CreateScope())
 
     if (!context.AnnualLeaveRecords.Any())
     {
-        var currentUser = await context.Users.FirstOrDefaultAsync(u => u.Username == "admin");
-        if (currentUser != null)
+        var user = await context.Users.FirstOrDefaultAsync(u => u.Username == "admin");
+        if (user != null)
         {
             context.AnnualLeaveRecords.Add(new AnnualLeaveRecord
             {
-                UserId = currentUser.Id,
+                UserId = user.Id,
                 Year = DateTime.UtcNow.Year,
                 TotalDays = 15,
                 UsedDays = 5,
