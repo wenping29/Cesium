@@ -1,5 +1,6 @@
 using CesiumApi.Data;
 using CesiumApi.DTOs;
+using CesiumApi.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -8,7 +9,6 @@ namespace CesiumApi.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-[Authorize]
 public class VisitorsController : ControllerBase
 {
     private readonly AppDbContext _context;
@@ -18,7 +18,33 @@ public class VisitorsController : ControllerBase
         _context = context;
     }
 
+    [HttpPost]
+    [AllowAnonymous]
+    public async Task<IActionResult> RecordVisit([FromBody] CreateVisitorLogDto dto)
+    {
+        var ip = HttpContext.Connection.RemoteIpAddress?.ToString();
+        if (ip == "::1") ip = "127.0.0.1";
+        if (string.IsNullOrWhiteSpace(ip))
+            ip = dto.IpAddress;
+
+        var log = new VisitorLog
+        {
+            IpAddress = ip,
+            UserAgent = dto.UserAgent,
+            PageUrl = dto.PageUrl,
+            Referrer = dto.Referrer,
+            VisitTime = DateTime.UtcNow,
+            CreatedAt = DateTime.UtcNow,
+        };
+
+        _context.VisitorLogs.Add(log);
+        await _context.SaveChangesAsync();
+
+        return Ok(new { id = log.Id });
+    }
+
     [HttpGet]
+    [Authorize]
     public async Task<ActionResult<PagedResult<VisitorLogDto>>> GetAll(
         [FromQuery] int page = 1,
         [FromQuery] int pageSize = 20,

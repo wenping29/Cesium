@@ -1,6 +1,7 @@
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import { Box } from '@mui/material'
+import { recordVisit } from './api/visitorLogs'
 import useAuthStore from './store/authStore'
 import tabStore from './store/tabStore'
 import NavBar from './components/NavBar'
@@ -77,12 +78,24 @@ export default function App() {
     '/change-password': '修改密码',
   }
 
+  const prevPath = useRef('')
+
   useEffect(() => {
     const title = pageTitles[location.pathname]
     if (title) {
       addTab(location.pathname, title)
     }
   }, [location.pathname, addTab])
+
+  useEffect(() => {
+    if (location.pathname === prevPath.current) return
+    prevPath.current = location.pathname
+    recordVisit({
+      pageUrl: location.pathname,
+      referrer: document.referrer || undefined,
+      userAgent: navigator.userAgent,
+    })
+  }, [location.pathname])
 
   if (!token) {
     return (
