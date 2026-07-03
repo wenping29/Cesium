@@ -118,7 +118,7 @@
     }
   },
   "attendanceReport": {
-    "title": "Attendance Reports",
+    "title": "Attendance Report",
     "openReport": "Attendance Report",
     "openReportDesc": "View daily attendance records",
     "workHourReport": "Work Hour Report",

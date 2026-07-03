@@ -1,46 +1,45 @@
-import { Box, Typography, Card, CardContent, Grid, Button } from '@mui/material'
-import { Link as RouterLink } from 'react-router-dom'
-import {
-  Description as DescriptionIcon,
-  Timer as TimerIcon,
-  HolidayVillage as HolidayIcon,
-  BeachAccess as BeachIcon
-} from '@mui/icons-material'
+import { useState, useEffect } from 'react'
+import { Box, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, CircularProgress, Chip, Grid } from '@mui/material'
 import { useTranslation } from 'react-i18next'
+import useAttendanceStore from '../store/attendanceStore'
 
-const menuItems = [
-  {
-    title: 'attendanceReport.openReport',
-    subtitle: 'attendanceReport.openReportDesc',
-    icon: <DescriptionIcon sx={{ fontSize: 40 }} />,
-    path: '/attendance-report',
-    color: '#1976d2'
-  },
-  {
-    title: 'attendanceReport.workHourReport',
-    subtitle: 'attendanceReport.workHourReportDesc',
-    icon: <TimerIcon sx={{ fontSize: 40 }} />,
-    path: '/workhour-report',
-    color: '#388e3c'
-  },
-  {
-    title: 'attendanceReport.leaveReport',
-    subtitle: 'attendanceReport.leaveReportDesc',
-    icon: <HolidayIcon sx={{ fontSize: 40 }} />,
-    path: '/leave-report',
-    color: '#f57c00'
-  },
-  {
-    title: 'attendanceReport.annualLeaveReport',
-    subtitle: 'attendanceReport.annualLeaveReportDesc',
-    icon: <BeachIcon sx={{ fontSize: 40 }} />,
-    path: '/annual-leave-report',
-    color: '#c2185b'
-  }
-]
+const statusConfig = {
+  normal: { label: '正常', color: 'success' },
+  late: { label: '迟到', color: 'warning' },
+  early: { label: '早退', color: 'warning' },
+  absent: { label: '旷工', color: 'error' },
+  weekend: { label: '周末', color: 'info' }
+}
 
 export default function AttendanceReportPage() {
   const { t } = useTranslation()
+  const { attendances, loading, fetchAttendances } = useAttendanceStore()
+  const [stats, setStats] = useState({ normal: 0, late: 0, early: 0, absent: 0, weekend: 0 })
+
+  useEffect(() => {
+    fetchAttendances()
+  }, [fetchAttendances])
+
+  useEffect(() => {
+    const counts = { normal: 0, late: 0, early: 0, absent: 0, weekend: 0 }
+    attendances.forEach(att => {
+      if (counts[att.status] !== undefined) {
+        counts[att.status]++
+      }
+    })
+    setStats(counts)
+  }, [attendances])
+
+  const formatTime = (time) => {
+    if (!time) return '-'
+    return time
+  }
+
+  const formatDate = (date) => {
+    if (!date) return '-'
+    const d = new Date(date)
+    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
+  }
 
   return (
     <Box sx={{ p: 4 }}>
@@ -48,52 +47,91 @@ export default function AttendanceReportPage() {
         {t('attendanceReport.title')}
       </Typography>
 
-      <Grid container spacing={3} sx={{ mt: 2 }}>
-        {menuItems.map((item, index) => (
-          <Grid item xs={12} sm={6} md={3} key={index}>
-            <Card
-              sx={{
-                height: '100%',
-                '&:hover': {
-                  transform: 'translateY(-4px)',
-                  boxShadow: 4,
-                  transition: 'all 0.3s ease'
-                }
-              }}
-            >
-              <CardContent>
-                <Box
-                  sx={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    textAlign: 'center',
-                    py: 2
-                  }}
-                >
-                  <Box sx={{ color: item.color, mb: 2 }}>
-                    {item.icon}
-                  </Box>
-                  <Typography variant="h6" gutterBottom>
-                    {t(item.title)}
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-                    {t(item.subtitle)}
-                  </Typography>
-                  <Button
-                    variant="contained"
-                    component={RouterLink}
-                    to={item.path}
-                    sx={{ bgcolor: item.color, '&:hover': { bgcolor: item.color } }}
-                  >
-                    {t('common.view')}
-                  </Button>
-                </Box>
-              </CardContent>
-            </Card>
-          </Grid>
-        ))}
+      <Grid container spacing={3} sx={{ mb: 4 }}>
+        <Grid item xs={12} sm={6} md={2}>
+          <Paper sx={{ p: 3, textAlign: 'center' }}>
+            <Typography variant="h5" sx={{ color: '#4caf50' }}>{stats.normal}</Typography>
+            <Typography variant="body2" color="text.secondary">正常</Typography>
+          </Paper>
+        </Grid>
+        <Grid item xs={12} sm={6} md={2}>
+          <Paper sx={{ p: 3, textAlign: 'center' }}>
+            <Typography variant="h5" sx={{ color: '#ff9800' }}>{stats.late}</Typography>
+            <Typography variant="body2" color="text.secondary">迟到</Typography>
+          </Paper>
+        </Grid>
+        <Grid item xs={12} sm={6} md={2}>
+          <Paper sx={{ p: 3, textAlign: 'center' }}>
+            <Typography variant="h5" sx={{ color: '#ff9800' }}>{stats.early}</Typography>
+            <Typography variant="body2" color="text.secondary">早退</Typography>
+          </Paper>
+        </Grid>
+        <Grid item xs={12} sm={6} md={2}>
+          <Paper sx={{ p: 3, textAlign: 'center' }}>
+            <Typography variant="h5" sx={{ color: '#f44336' }}>{stats.absent}</Typography>
+            <Typography variant="body2" color="text.secondary">旷工</Typography>
+          </Paper>
+        </Grid>
+        <Grid item xs={12} sm={6} md={2}>
+          <Paper sx={{ p: 3, textAlign: 'center' }}>
+            <Typography variant="h5" sx={{ color: '#2196f3' }}>{stats.weekend}</Typography>
+            <Typography variant="body2" color="text.secondary">周末加班</Typography>
+          </Paper>
+        </Grid>
+        <Grid item xs={12} sm={6} md={2}>
+          <Paper sx={{ p: 3, textAlign: 'center' }}>
+            <Typography variant="h5" sx={{ color: '#607d8b' }}>{attendances.length}</Typography>
+            <Typography variant="body2" color="text.secondary">总计</Typography>
+          </Paper>
+        </Grid>
       </Grid>
+
+      <TableContainer component={Paper}>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>日期</TableCell>
+              <TableCell>用户</TableCell>
+              <TableCell>上班时间</TableCell>
+              <TableCell>下班时间</TableCell>
+              <TableCell>状态</TableCell>
+              <TableCell>备注</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {loading ? (
+              <TableRow>
+                <TableCell colSpan={6} align="center">
+                  <CircularProgress />
+                </TableCell>
+              </TableRow>
+            ) : attendances.length === 0 ? (
+              <TableRow>
+                <TableCell colSpan={6} align="center">
+                  {t('common.noData')}
+                </TableCell>
+              </TableRow>
+            ) : (
+              attendances.map((attendance) => (
+                <TableRow key={attendance.id}>
+                  <TableCell>{formatDate(attendance.date)}</TableCell>
+                  <TableCell>{attendance.userName}</TableCell>
+                  <TableCell>{formatTime(attendance.checkInTime)}</TableCell>
+                  <TableCell>{formatTime(attendance.checkOutTime)}</TableCell>
+                  <TableCell>
+                    <Chip
+                      label={statusConfig[attendance.status]?.label || attendance.status}
+                      color={statusConfig[attendance.status]?.color || 'default'}
+                      size="small"
+                    />
+                  </TableCell>
+                  <TableCell>{attendance.remark || '-'}</TableCell>
+                </TableRow>
+              ))
+            )}
+          </TableBody>
+        </Table>
+      </TableContainer>
     </Box>
   )
 }

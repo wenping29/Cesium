@@ -119,9 +119,9 @@
     "clickToView": "点击查看详情"
   },
   "attendanceReport": {
-    "title": "考勤报表",
-    "openReport": "打开报表",
-    "openReportDesc": "查看员工日常考勤记录",
+    "title": "打卡报表",
+    "openReport": "打卡报表",
+    "openReportDesc": "查看员工日常打卡记录",
     "workHourReport": "工时报表",
     "workHourReportDesc": "统计员工工时数据",
     "leaveReport": "休假报表",
