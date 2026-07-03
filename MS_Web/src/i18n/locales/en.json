@@ -22,6 +22,7 @@
     "workbench": "Workbench",
     "analysis": "Analysis",
     "notifications": "Notifications",
+    "sendNotification": "Send Message",
     "attendanceManagement": "Attendance",
     "openReport": "Attendance Report",
     "workHourReport": "Work Hour Report",

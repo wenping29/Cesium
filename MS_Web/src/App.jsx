@@ -34,6 +34,7 @@ import WorkHourReportPage from './pages/WorkHourReportPage'
 import LeaveReportPage from './pages/LeaveReportPage'
 import AnnualLeaveReportPage from './pages/AnnualLeaveReportPage'
 import NotificationsPage from './pages/NotificationsPage'
+import SendMessagePage from './pages/SendMessagePage'
 
 function PrivateRoute({ children }) {
   const token = useAuthStore((s) => s.token)
@@ -69,6 +70,7 @@ export default function App() {
     '/leave-report': '休假报表',
     '/annual-leave-report': '年假报表',
     '/notifications': '通知中心',
+    '/send-notification': '发送消息',
     '/profile': '个人资料',
     '/change-password': '修改密码',
   }
@@ -123,6 +125,7 @@ export default function App() {
               <Route path="/leave-report" element={<PrivateRoute><LeaveReportPage /></PrivateRoute>} />
               <Route path="/annual-leave-report" element={<PrivateRoute><AnnualLeaveReportPage /></PrivateRoute>} />
               <Route path="/notifications" element={<PrivateRoute><NotificationsPage /></PrivateRoute>} />
+              <Route path="/send-notification" element={<PrivateRoute><SendMessagePage /></PrivateRoute>} />
               <Route path="*" element={<Navigate to="/workbench" replace />} />
             </Routes>
           </Box>

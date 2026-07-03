@@ -26,6 +26,8 @@ const breadcrumbMap = {
   '/annual-leave-report': { label: 'nav.annualLeaveReport', parent: '/attendance' },
   '/profile': { label: 'nav.editProfile', parent: '/' },
   '/change-password': { label: 'nav.changePassword', parent: '/' },
+  '/notifications': { label: 'nav.notifications', parent: '/' },
+  '/send-notification': { label: 'nav.sendNotification', parent: '/' },
 }
 
 const groupMap = {

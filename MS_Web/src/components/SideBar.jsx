@@ -44,6 +44,7 @@ import BeachAccessIcon from '@mui/icons-material/BeachAccess'
 import HistoryIcon from '@mui/icons-material/History'
 import FindInPageIcon from '@mui/icons-material/FindInPage'
 import NotificationsIcon from '@mui/icons-material/Notifications'
+import SendIcon from '@mui/icons-material/Send'
 import { useTranslation } from 'react-i18next'
 import sidebarStore from '../store/sidebarStore'
 
@@ -75,7 +76,8 @@ export default function SideBar() {
       children: [
         { id: 'workbench', label: t('nav.workbench'), path: '/workbench', icon: <DashboardIcon /> },
         { id: 'analysis', label: t('nav.analysis'), path: '/analysis', icon: <AnalyticsIcon /> },
-        { id: 'notifications', label: t('nav.notifications'), path: '/notifications', icon: <NotificationsIcon /> }
+        { id: 'notifications', label: t('nav.notifications'), path: '/notifications', icon: <NotificationsIcon /> },
+        { id: 'sendNotification', label: t('nav.sendNotification'), path: '/send-notification', icon: <SendIcon /> }
       ]
     },
     {

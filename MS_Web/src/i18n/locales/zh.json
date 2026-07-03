@@ -22,6 +22,7 @@
     "workbench": "工作台",
     "analysis": "分析页",
     "notifications": "通知中心",
+    "sendNotification": "发送消息",
     "attendanceManagement": "考勤管理",
     "openReport": "打开报表",
     "workHourReport": "工时报表",

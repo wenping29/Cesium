@@ -42,6 +42,7 @@ import './airquality'
 import './typhoon'
 import './wind'
 import './imageToBim'
+import './notification'
 
 const { Random } = Mock
 
