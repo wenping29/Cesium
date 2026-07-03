@@ -50,6 +50,25 @@ INSERT OR IGNORE INTO Roles (Name, Description) VALUES
   ('User', 'Standard user');
 
 -- ========================================================
+-- LoginLogs 表 - 登录日志表
+-- ========================================================
+CREATE TABLE IF NOT EXISTS LoginLogs (
+  Id INTEGER PRIMARY KEY AUTOINCREMENT,
+  UserId INTEGER NOT NULL,
+  Username TEXT NOT NULL,
+  IpAddress TEXT,
+  DeviceInfo TEXT,
+  BrowserInfo TEXT,
+  OsInfo TEXT,
+  LoginTime TEXT NOT NULL,
+  CreatedAt TEXT NOT NULL,
+  FOREIGN KEY (UserId) REFERENCES Users(Id) ON DELETE CASCADE
+);
+
+CREATE INDEX IF NOT EXISTS IX_LoginLogs_UserId ON LoginLogs(UserId);
+CREATE INDEX IF NOT EXISTS IX_LoginLogs_LoginTime ON LoginLogs(LoginTime);
+
+-- ========================================================
 -- 使用说明
 -- ========================================================
 -- 执行此文件:

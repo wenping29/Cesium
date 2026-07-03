@@ -19,6 +19,7 @@ public class AppDbContext : DbContext
     public DbSet<WorkHourRecord> WorkHourRecords { get; set; }
     public DbSet<LeaveRecord> LeaveRecords { get; set; }
     public DbSet<AnnualLeaveRecord> AnnualLeaveRecords { get; set; }
+    public DbSet<LoginLog> LoginLogs { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -86,6 +87,19 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<Department>()
             .HasIndex(d => d.Code)
             .IsUnique();
+
+        // LoginLog configuration
+        modelBuilder.Entity<LoginLog>()
+            .HasOne(ll => ll.User)
+            .WithMany()
+            .HasForeignKey(ll => ll.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<LoginLog>()
+            .HasIndex(ll => ll.UserId);
+
+        modelBuilder.Entity<LoginLog>()
+            .HasIndex(ll => ll.LoginTime);
 
         // Seed initial data
         SeedInitialData(modelBuilder);
