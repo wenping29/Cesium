@@ -18,7 +18,13 @@ import {
   Tabs,
   Tab,
   Paper,
-  Button
+  Button,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  CircularProgress,
+  Alert
 } from '@mui/material'
 import {
   Notifications as NotificationsIcon,
@@ -28,9 +34,18 @@ import {
   Assignment as AssignmentIcon,
   Event as EventIcon,
   PersonAdd as PersonAddIcon,
-  Chat as ChatIcon
+  Chat as ChatIcon,
+  Close as CloseIcon,
+  Person as PersonIcon,
+  CalendarToday as CalendarTodayIcon
 } from '@mui/icons-material'
 import { useTranslation } from 'react-i18next'
+import {
+  getNotifications,
+  markAsRead,
+  markAllAsRead,
+  deleteNotification
+} from '../api/notification'
 
 const notificationTypes = {
   all: 'all',
@@ -40,94 +55,56 @@ const notificationTypes = {
   message: 'message'
 }
 
-const mockNotifications = [
-  {
-    id: 1,
-    type: 'system',
-    title: '系统更新通知',
-    content: '系统将于今晚22:00进行维护升级，请提前保存工作内容。',
-    time: '10分钟前',
-    read: false,
-    icon: <SystemUpdateIcon />,
-    color: 'primary'
-  },
-  {
-    id: 2,
-    type: 'task',
-    title: '收到新任务',
-    content: '张三给您分配了一个新任务：完成Q4财务报表。',
-    time: '30分钟前',
-    read: false,
-    icon: <AssignmentIcon />,
-    color: 'success'
-  },
-  {
-    id: 3,
-    type: 'task',
-    title: '任务提醒',
-    content: '您的任务"项目规划"将在明天截止，请尽快完成。',
-    time: '1小时前',
-    read: false,
-    icon: <AssignmentIcon />,
-    color: 'warning'
-  },
-  {
-    id: 4,
-    type: 'system',
-    title: '会议提醒',
-    content: '下午14:00的周会即将开始，请准时参加。',
-    time: '2小时前',
-    read: true,
-    icon: <EventIcon />,
-    color: 'info'
-  },
-  {
-    id: 5,
-    type: 'message',
-    title: '新消息',
-    content: '李四给您发送了一条消息：请问项目进度如何？',
-    time: '3小时前',
-    read: true,
-    icon: <ChatIcon />,
-    color: 'secondary'
-  },
-  {
-    id: 6,
-    type: 'system',
-    title: '新用户注册',
-    content: '新用户王五已完成注册，等待审核。',
-    time: '4小时前',
-    read: true,
-    icon: <PersonAddIcon />,
-    color: 'info'
-  },
-  {
-    id: 7,
-    type: 'task',
-    title: '任务已完成',
-    content: '您分配给张三的任务已标记为完成，请查看。',
-    time: '昨天',
-    read: true,
-    icon: <AssignmentIcon />,
-    color: 'success'
-  },
-  {
-    id: 8,
-    type: 'system',
-    title: '安全提醒',
-    content: '您的账号在新设备上登录，如非本人操作请及时修改密码。',
-    time: '2天前',
-    read: true,
-    icon: <SystemUpdateIcon />,
-    color: 'error'
-  }
-]
+const iconMap = {
+  SystemUpdate: <SystemUpdateIcon />,
+  Assignment: <AssignmentIcon />,
+  Event: <EventIcon />,
+  PersonAdd: <PersonAddIcon />,
+  Chat: <ChatIcon />
+}
+
+// 计算相对时间
+const getRelativeTime = (dateStr) => {
+  const date = new Date(dateStr.replace(' ', 'T'))
+  const now = new Date()
+  const diff = now - date
+  const minutes = Math.floor(diff / 60000)
+  const hours = Math.floor(diff / 3600000)
+  const days = Math.floor(diff / 86400000)
+
+  if (minutes < 60) return `${minutes}分钟前`
+  if (hours < 24) return `${hours}小时前`
+  if (days < 7) return `${days}天前`
+  return dateStr
+}
 
 export default function NotificationsPage() {
   const { t } = useTranslation()
-  const [tabValue, setTabValue] = useState(0)
-  const [notifications, setNotifications] = useState(mockNotifications)
+  const [notifications, setNotifications] = useState([])
   const [activeFilter, setActiveFilter] = useState(notificationTypes.all)
+  const [openDialog, setOpenDialog] = useState(false)
+  const [selectedNotification, setSelectedNotification] = useState(null)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
+
+  // 从API加载通知
+  const fetchNotifications = async () => {
+    try {
+      setLoading(true)
+      setError(null)
+      const data = await getNotifications()
+      setNotifications(data)
+    } catch (err) {
+      console.error('Failed to fetch notifications:', err)
+      setError('加载通知失败')
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    fetchNotifications()
+  }, [])
 
   const unreadCount = notifications.filter(n => !n.read).length
 
@@ -137,18 +114,49 @@ export default function NotificationsPage() {
     return n.type === activeFilter
   })
 
-  const markAsRead = (id) => {
-    setNotifications(notifications.map(n =>
-      n.id === id ? { ...n, read: true } : n
-    ))
+  const handleMarkAsRead = async (id) => {
+    try {
+      await markAsRead(id)
+      setNotifications(notifications.map(n =>
+        n.id === id ? { ...n, read: true } : n
+      ))
+    } catch (err) {
+      console.error('Failed to mark as read:', err)
+    }
   }
 
-  const markAllAsRead = () => {
-    setNotifications(notifications.map(n => ({ ...n, read: true })))
+  const handleMarkAllAsRead = async () => {
+    try {
+      await markAllAsRead()
+      setNotifications(notifications.map(n => ({ ...n, read: true })))
+    } catch (err) {
+      console.error('Failed to mark all as read:', err)
+    }
   }
 
-  const deleteNotification = (id) => {
-    setNotifications(notifications.filter(n => n.id !== id))
+  const handleDeleteNotification = async (id) => {
+    try {
+      await deleteNotification(id)
+      setNotifications(notifications.filter(n => n.id !== id))
+      if (selectedNotification?.id === id) {
+        handleCloseDialog()
+      }
+    } catch (err) {
+      console.error('Failed to delete notification:', err)
+    }
+  }
+
+  const handleNotificationClick = (notification) => {
+    setSelectedNotification(notification)
+    setOpenDialog(true)
+    if (!notification.read) {
+      handleMarkAsRead(notification.id)
+    }
+  }
+
+  const handleCloseDialog = () => {
+    setOpenDialog(false)
+    setSelectedNotification(null)
   }
 
   const getFilterOptions = () => [
@@ -164,9 +172,6 @@ export default function NotificationsPage() {
       {/* Header */}
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-          <Typography variant="h4" component="h1">
-            {t('notifications.title')}
-          </Typography>
           {unreadCount > 0 && (
             <Chip
               label={`${unreadCount} ${t('notifications.unread')}`}
@@ -178,13 +183,23 @@ export default function NotificationsPage() {
         {unreadCount > 0 && (
           <Button
             startIcon={<MarkReadIcon />}
-            onClick={markAllAsRead}
+            onClick={handleMarkAllAsRead}
             size="small"
           >
             {t('notifications.markAllRead')}
           </Button>
         )}
       </Box>
+
+      {/* Error Alert */}
+      {error && (
+        <Alert severity="error" sx={{ mb: 2 }}>
+          {error}
+          <Button size="small" onClick={fetchNotifications} sx={{ ml: 1 }}>
+            重试
+          </Button>
+        </Alert>
+      )}
 
       {/* Filter Tabs */}
       <Paper sx={{ mb: 2 }}>
@@ -211,7 +226,11 @@ export default function NotificationsPage() {
       {/* Notifications List */}
       <Card>
         <CardContent sx={{ p: 0 }}>
-          {filteredNotifications.length === 0 ? (
+          {loading ? (
+            <Box sx={{ p: 4, textAlign: 'center' }}>
+              <CircularProgress />
+            </Box>
+          ) : filteredNotifications.length === 0 ? (
             <Box sx={{ p: 4, textAlign: 'center' }}>
               <NotificationsIcon sx={{ fontSize: 64, color: 'text.disabled', mb: 2 }} />
               <Typography variant="h6" color="text.secondary">
@@ -230,12 +249,12 @@ export default function NotificationsPage() {
                     }}
                   >
                     <ListItemButton
-                      onClick={() => !notification.read && markAsRead(notification.id)}
+                      onClick={() => handleNotificationClick(notification)}
                       sx={{ py: 2 }}
                     >
                       <ListItemAvatar>
                         <Avatar sx={{ bgcolor: `${notification.color}.main` }}>
-                          {notification.icon}
+                          {iconMap[notification.icon] || <NotificationsIcon />}
                         </Avatar>
                       </ListItemAvatar>
                       <ListItemText
@@ -262,7 +281,7 @@ export default function NotificationsPage() {
                               {notification.content}
                             </Typography>
                             <Typography variant="caption" color="text.disabled" sx={{ mt: 1, display: 'block' }}>
-                              {notification.time}
+                              {getRelativeTime(notification.date)}
                             </Typography>
                           </Box>
                         }
@@ -272,7 +291,7 @@ export default function NotificationsPage() {
                           <IconButton
                             edge="end"
                             size="small"
-                            onClick={(e) => { e.stopPropagation(); markAsRead(notification.id); }}
+                            onClick={(e) => { e.stopPropagation(); handleMarkAsRead(notification.id); }}
                             title={t('notifications.markRead')}
                           >
                             <MarkReadIcon fontSize="small" />
@@ -281,7 +300,7 @@ export default function NotificationsPage() {
                         <IconButton
                           edge="end"
                           size="small"
-                          onClick={(e) => { e.stopPropagation(); deleteNotification(notification.id); }}
+                          onClick={(e) => { e.stopPropagation(); handleDeleteNotification(notification.id); }}
                           title={t('notifications.delete')}
                         >
                           <DeleteIcon fontSize="small" />
@@ -295,6 +314,68 @@ export default function NotificationsPage() {
           )}
         </CardContent>
       </Card>
+
+      {/* Notification Detail Dialog */}
+      <Dialog
+        open={openDialog}
+        onClose={handleCloseDialog}
+        maxWidth="sm"
+        fullWidth
+      >
+        {selectedNotification && (
+          <>
+            <DialogTitle sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <Typography variant="h6">{selectedNotification.title}</Typography>
+              <IconButton onClick={handleCloseDialog} size="small">
+                <CloseIcon />
+              </IconButton>
+            </DialogTitle>
+            <Divider />
+            <DialogContent sx={{ pt: 2 }}>
+              <Box sx={{ mb: 3 }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
+                  <Avatar sx={{ bgcolor: `${selectedNotification.color}.main` }}>
+                    {iconMap[selectedNotification.icon] || <NotificationsIcon />}
+                  </Avatar>
+                  <Box>
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                      <PersonIcon sx={{ fontSize: 16, color: 'text.secondary' }} />
+                      <Typography variant="body2" color="text.secondary">
+                        {selectedNotification.sender}
+                      </Typography>
+                    </Box>
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mt: 0.5 }}>
+                      <CalendarTodayIcon sx={{ fontSize: 16, color: 'text.secondary' }} />
+                      <Typography variant="caption" color="text.disabled">
+                        {selectedNotification.date}
+                      </Typography>
+                    </Box>
+                  </Box>
+                </Box>
+              </Box>
+              <Typography variant="body1" sx={{ whiteSpace: 'pre-wrap' }}>
+                {selectedNotification.detail}
+              </Typography>
+            </DialogContent>
+            <DialogActions sx={{ px: 3, pb: 3 }}>
+              <Button onClick={handleCloseDialog}>
+                关闭
+              </Button>
+              {!selectedNotification.read && (
+                <Button
+                  variant="contained"
+                  onClick={() => {
+                    handleMarkAsRead(selectedNotification.id);
+                    handleCloseDialog();
+                  }}
+                >
+                  标记为已读
+                </Button>
+              )}
+            </DialogActions>
+          </>
+        )}
+      </Dialog>
     </Box>
   )
 }

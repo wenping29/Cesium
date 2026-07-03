@@ -20,6 +20,7 @@ public class AppDbContext : DbContext
     public DbSet<LeaveRecord> LeaveRecords { get; set; }
     public DbSet<AnnualLeaveRecord> AnnualLeaveRecords { get; set; }
     public DbSet<LoginLog> LoginLogs { get; set; }
+    public DbSet<Notification> Notifications { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -100,6 +101,19 @@ public class AppDbContext : DbContext
 
         modelBuilder.Entity<LoginLog>()
             .HasIndex(ll => ll.LoginTime);
+
+        // Notification configuration
+        modelBuilder.Entity<Notification>()
+            .HasIndex(n => n.UserId);
+
+        modelBuilder.Entity<Notification>()
+            .HasIndex(n => n.Type);
+
+        modelBuilder.Entity<Notification>()
+            .HasIndex(n => n.Read);
+
+        modelBuilder.Entity<Notification>()
+            .HasIndex(n => n.Date);
 
         // Seed initial data
         SeedInitialData(modelBuilder);

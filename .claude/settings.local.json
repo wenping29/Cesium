@@ -5,7 +5,9 @@
       "Bash(rm:*)",
       "Bash(cd:*)",
       "Bash(dir:*)",
-      "Bash(sqlite3 cesium.db \"SELECT COUNT\\(*\\) FROM Users;\")"
+      "Bash(sqlite3 cesium.db \"SELECT COUNT\\(*\\) FROM Users;\")",
+      "Bash(sqlite3 cesium.db)",
+      "Bash(sqlite3 cesium.db \"PRAGMA table_info\\(Notifications\\);\")"
     ]
   }
 }
