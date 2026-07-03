@@ -37,7 +37,6 @@ export default function TabBar() {
         onChange={handleTabChange}
         variant="scrollable"
         scrollButtons="auto"
-        closable
         sx={{
           '& .MuiTabs-indicator': {
             backgroundColor: 'primary.main',

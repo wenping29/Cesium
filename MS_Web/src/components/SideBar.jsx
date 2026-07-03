@@ -270,8 +270,8 @@ export default function SideBar() {
             px: 1,
             py: 1,
             minHeight: 64,
-            bgcolor: 'primary.main',
-            color: 'common.white'
+            backgroundColor: (theme) => theme.palette.background.contrastText,
+            color: (theme) => theme.palette.text.contrastText
           }}
         >
           {open && (

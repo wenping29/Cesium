@@ -37,7 +37,7 @@ export default function NavBar() {
 
   return (
     <AppBar position="static" sx={{ zIndex: 1201, height: 64 }}>
-      <Toolbar sx={{ minHeight: 24,height:48 }}>
+      <Toolbar sx={{ minHeight: 48 }}>
         <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center', gap: 0 }}>
           <IconButton onClick={toggleSidebar} color="inherit" size="small">
             {sidebarOpen ? <ChevronLeftIcon /> : <ChevronRightIcon />}
