@@ -79,6 +79,13 @@ export default function AttendanceReportPage() {
     return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
   }
 
+  const getDayOfWeek = (date) => {
+    if (!date) return '-'
+    const d = new Date(date)
+    const days = ['周日', '周一', '周二', '周三', '周四', '周五', '周六']
+    return days[d.getDay()]
+  }
+
   const totalPages = Math.ceil(total / pageSize)
   const startIndex = (page - 1) * pageSize + 1
   const endIndex = Math.min(page * pageSize, total)
@@ -203,6 +210,7 @@ export default function AttendanceReportPage() {
           <TableHead>
             <TableRow>
               <TableCell>日期</TableCell>
+              <TableCell>周几</TableCell>
               <TableCell>用户</TableCell>
               <TableCell>上班时间</TableCell>
               <TableCell>下班时间</TableCell>
@@ -213,13 +221,13 @@ export default function AttendanceReportPage() {
           <TableBody>
             {loading ? (
               <TableRow>
-                <TableCell colSpan={6} align="center">
+                <TableCell colSpan={7} align="center">
                   <CircularProgress />
                 </TableCell>
               </TableRow>
             ) : attendances.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={6} align="center">
+                <TableCell colSpan={7} align="center">
                   {t('common.noData')}
                 </TableCell>
               </TableRow>
@@ -227,6 +235,7 @@ export default function AttendanceReportPage() {
               attendances.map((attendance) => (
                 <TableRow key={attendance.id}>
                   <TableCell>{formatDate(attendance.date)}</TableCell>
+                  <TableCell>{getDayOfWeek(attendance.date)}</TableCell>
                   <TableCell>{attendance.userName}</TableCell>
                   <TableCell>{formatTime(attendance.checkInTime)}</TableCell>
                   <TableCell>{formatTime(attendance.checkOutTime)}</TableCell>
