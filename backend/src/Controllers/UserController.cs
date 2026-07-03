@@ -151,9 +151,13 @@ public class UserController : ControllerBase
 
         if (user == null) return NotFound();
 
-        var exists = await _context.Users.AnyAsync(u => u.Email == dto.Email && u.Id != id);
-        if (exists) return BadRequest("Email already exists");
+        var emailExists = await _context.Users.AnyAsync(u => u.Email == dto.Email && u.Id != id);
+        if (emailExists) return BadRequest("Email already exists");
 
+        var usernameExists = await _context.Users.AnyAsync(u => u.Username == dto.Username && u.Id != id);
+        if (usernameExists) return BadRequest("Username already exists");
+
+        user.Username = dto.Username;
         user.Email = dto.Email;
         user.Phone = dto.Phone;
         user.DepartmentId = dto.DepartmentId;

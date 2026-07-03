@@ -172,7 +172,6 @@ export default function UserManagementPage() {
               label={t('userManagement.username')}
               value={formData.username}
               onChange={(e) => setFormData({ ...formData, username: e.target.value })}
-              disabled={!!editingUser}
               fullWidth
             />
             <TextField

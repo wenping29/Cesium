@@ -15,6 +15,10 @@ public class AppDbContext : DbContext
     public DbSet<Menu> Menus { get; set; }
     public DbSet<Department> Departments { get; set; }
     public DbSet<RoleMenu> RoleMenus { get; set; }
+    public DbSet<AttendanceRecord> AttendanceRecords { get; set; }
+    public DbSet<WorkHourRecord> WorkHourRecords { get; set; }
+    public DbSet<LeaveRecord> LeaveRecords { get; set; }
+    public DbSet<AnnualLeaveRecord> AnnualLeaveRecords { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -119,6 +123,15 @@ public class AppDbContext : DbContext
             new Department { Id = 8, Name = "研发一组", Code = "DEV1", ParentId = 2, SortOrder = 1, Leader = "郑组长", Phone = "010-88888011", Email = "dev1@company.com", Address = "北京市朝阳区建国路88号A座301室", IsActive = true },
             new Department { Id = 9, Name = "研发二组", Code = "DEV2", ParentId = 2, SortOrder = 2, Leader = "陈组长", Phone = "010-88888012", Email = "dev2@company.com", Address = "北京市朝阳区建国路88号A座302室", IsActive = true },
             new Department { Id = 10, Name = "运维部", Code = "OPS", ParentId = 2, SortOrder = 3, Leader = "刘组长", Phone = "010-88888013", Email = "ops@company.com", Address = "北京市朝阳区建国路88号A座4层", IsActive = true }
+        );
+
+        // Seed attendance menus (考勤菜单)
+        modelBuilder.Entity<Menu>().HasData(
+            new Menu { Id = 9, Name = "考勤管理", Path = null, Icon = "Schedule", ParentId = null, SortOrder = 2, IsVisible = true, Permission = "attendance" },
+            new Menu { Id = 10, Name = "打开报表", Path = "/attendance-report", Icon = "Description", ParentId = 9, SortOrder = 1, IsVisible = true, Permission = "attendance:report" },
+            new Menu { Id = 11, Name = "工时报表", Path = "/workhour-report", Icon = "Timer", ParentId = 9, SortOrder = 2, IsVisible = true, Permission = "attendance:workhour" },
+            new Menu { Id = 12, Name = "休假报表", Path = "/leave-report", Icon = "HolidayVillage", ParentId = 9, SortOrder = 3, IsVisible = true, Permission = "attendance:leave" },
+            new Menu { Id = 13, Name = "年假报表", Path = "/annual-leave-report", Icon = "BeachAccess", ParentId = 9, SortOrder = 4, IsVisible = true, Permission = "attendance:annual" }
         );
     }
 }
