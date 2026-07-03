@@ -43,4 +43,31 @@ public class DashboardController : ControllerBase
             annualLeaveRecords = annualLeaveCount,
         });
     }
+
+    [HttpGet("workbench")]
+    public async Task<ActionResult<object>> GetWorkbenchData()
+    {
+        var today = DateTime.UtcNow.Date;
+        var tomorrow = today.AddDays(1);
+
+        var todayVisits = await _context.VisitorLogs
+            .CountAsync(v => v.VisitTime >= today && v.VisitTime < tomorrow);
+
+        var todayNewUsers = await _context.Users
+            .CountAsync(u => u.CreatedAt >= today && u.CreatedAt < tomorrow);
+
+        var pendingTasks = await _context.LeaveRecords
+            .CountAsync(l => l.Status == "Pending");
+
+        var unreadMessages = await _context.Notifications
+            .CountAsync(n => !n.Read);
+
+        return Ok(new
+        {
+            todayVisits,
+            todayNewUsers,
+            pendingTasks,
+            unreadMessages,
+        });
+    }
 }

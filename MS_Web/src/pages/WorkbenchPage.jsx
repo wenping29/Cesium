@@ -26,14 +26,20 @@ import {
 } from '@mui/icons-material'
 import { useTranslation } from 'react-i18next'
 import AttendanceCalendar from '../components/AttendanceCalendar'
+import { getWorkbenchData } from '../api/dashboard'
 
 export default function WorkbenchPage() {
   const { t } = useTranslation()
   const [currentTime, setCurrentTime] = useState(new Date())
+  const [workbenchData, setWorkbenchData] = useState(null)
 
   useEffect(() => {
     const timer = setInterval(() => setCurrentTime(new Date()), 60000)
     return () => clearInterval(timer)
+  }, [])
+
+  useEffect(() => {
+    getWorkbenchData().then(res => setWorkbenchData(res.data))
   }, [])
 
   const getGreeting = () => {
@@ -47,25 +53,25 @@ export default function WorkbenchPage() {
   const quickStats = [
     {
       title: t('workbench.stats.todayVisits'),
-      value: '1,234',
+      value: workbenchData?.todayVisits?.toLocaleString() ?? '0',
       icon: <DashboardIcon sx={{ color: 'primary.main' }} />,
       trend: '+12%'
     },
     {
       title: t('workbench.stats.newUsers'),
-      value: '56',
+      value: workbenchData?.todayNewUsers?.toLocaleString() ?? '0',
       icon: <PeopleIcon sx={{ color: 'success.main' }} />,
       trend: '+8%'
     },
     {
       title: t('workbench.stats.pendingTasks'),
-      value: '12',
+      value: workbenchData?.pendingTasks?.toLocaleString() ?? '0',
       icon: <AssignmentIcon sx={{ color: 'warning.main' }} />,
       trend: '-3%'
     },
     {
       title: t('workbench.stats.messages'),
-      value: '28',
+      value: workbenchData?.unreadMessages?.toLocaleString() ?? '0',
       icon: <ChatIcon sx={{ color: 'info.main' }} />,
       trend: '+5%'
     }
