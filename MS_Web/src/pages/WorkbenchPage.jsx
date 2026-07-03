@@ -99,7 +99,7 @@ export default function WorkbenchPage() {
       {/* Quick Stats */}
       <Grid container spacing={3} sx={{ mb: 4 }}>
         {quickStats.map((stat, index) => (
-          <Grid item xs={12} sm={6} md={3} key={index}>
+          <Grid xs={12} sm={6} md={3} key={index}>
             <Card>
               <CardContent sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
                 <Avatar sx={{ bgcolor: 'background.paper', width: 56, height: 56 }}>
@@ -126,7 +126,7 @@ export default function WorkbenchPage() {
       {/* Main Content Grid */}
       <Grid container spacing={3}>
         {/* Notifications */}
-        <Grid item xs={12} md={6}>
+        <Grid xs={12} md={6}>
           <Card>
             <CardHeader title={t('workbench.notifications.title')} />
             <Divider />
@@ -147,7 +147,7 @@ export default function WorkbenchPage() {
         </Grid>
 
         {/* Recent Activities */}
-        <Grid item xs={12} md={6}>
+        <Grid xs={12} md={6}>
           <Card>
             <CardHeader title={t('workbench.activities.title')} />
             <Divider />
@@ -181,25 +181,25 @@ export default function WorkbenchPage() {
           {t('workbench.quickActions.title')}
         </Typography>
         <Grid container spacing={2}>
-          <Grid item xs={12} sm={6} md={3}>
+          <Grid xs={12} sm={6} md={3}>
             <Paper sx={{ p: 2, textAlign: 'center', cursor: 'pointer', '&:hover': { bgcolor: 'action.hover' } }}>
               <AssignmentIcon sx={{ fontSize: 40, mb: 1, color: 'primary.main' }} />
               <Typography variant="body2">{t('workbench.quickActions.createTask')}</Typography>
             </Paper>
           </Grid>
-          <Grid item xs={12} sm={6} md={3}>
+          <Grid xs={12} sm={6} md={3}>
             <Paper sx={{ p: 2, textAlign: 'center', cursor: 'pointer', '&:hover': { bgcolor: 'action.hover' } }}>
               <PeopleIcon sx={{ fontSize: 40, mb: 1, color: 'success.main' }} />
               <Typography variant="body2">{t('workbench.quickActions.inviteUser')}</Typography>
             </Paper>
           </Grid>
-          <Grid item xs={12} sm={6} md={3}>
+          <Grid xs={12} sm={6} md={3}>
             <Paper sx={{ p: 2, textAlign: 'center', cursor: 'pointer', '&:hover': { bgcolor: 'action.hover' } }}>
               <ChatIcon sx={{ fontSize: 40, mb: 1, color: 'info.main' }} />
               <Typography variant="body2">{t('workbench.quickActions.startChat')}</Typography>
             </Paper>
           </Grid>
-          <Grid item xs={12} sm={6} md={3}>
+          <Grid xs={12} sm={6} md={3}>
             <Paper sx={{ p: 2, textAlign: 'center', cursor: 'pointer', '&:hover': { bgcolor: 'action.hover' } }}>
               <CalendarIcon sx={{ fontSize: 40, mb: 1, color: 'warning.main' }} />
               <Typography variant="body2">{t('workbench.quickActions.viewCalendar')}</Typography>

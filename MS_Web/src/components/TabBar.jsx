@@ -51,15 +51,17 @@ export default function TabBar() {
           <Tab
             key={tab.path}
             value={tab.path}
-            label={tab.title}
             icon={tab.icon}
             iconPosition="start"
-            endIcon={
-              <CloseIcon
-                fontSize="small"
-                onClick={(e) => handleClose(e, tab.path)}
-                sx={{ cursor: 'pointer', opacity: 0.4, '&:hover': { opacity: 1, color: 'error.main' } }}
-              />
+            label={
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                {tab.title}
+                <CloseIcon
+                  fontSize="small"
+                  onClick={(e) => handleClose(e, tab.path)}
+                  sx={{ cursor: 'pointer', opacity: 0.4, '&:hover': { opacity: 1, color: 'error.main' } }}
+                />
+              </Box>
             }
           />
         ))}
