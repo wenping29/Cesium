@@ -63,7 +63,7 @@ export default function LoginLogReportPage() {
   return (
     <Box sx={{ p: 2 }}>
       <Paper sx={{ p: 2, mb: 2 }}>
-        <Stack direction="row" spacing={2} alignItems="center" flexWrap="wrap" useFlexGap>
+        <Stack direction="row" spacing={2} sx={{ alignItems: 'center', flexWrap: 'wrap', gap: 2 }}>
           <TextField
             sx={{ minWidth: 180 }} size="small" label={t('loginLogReport.username')}
             value={filters.username}
@@ -71,13 +71,13 @@ export default function LoginLogReportPage() {
           />
           <TextField
             sx={{ minWidth: 180 }} size="small" label={t('auditLogReport.startDate')}
-            type="date" InputLabelProps={{ shrink: true }}
+            type="date" slotProps={{ inputLabel: { shrink: true } }}
             value={filters.startDate}
             onChange={(e) => setFilters({ ...filters, startDate: e.target.value })}
           />
           <TextField
             sx={{ minWidth: 180 }} size="small" label={t('auditLogReport.endDate')}
-            type="date" InputLabelProps={{ shrink: true }}
+            type="date" slotProps={{ inputLabel: { shrink: true } }}
             value={filters.endDate}
             onChange={(e) => setFilters({ ...filters, endDate: e.target.value })}
           />
