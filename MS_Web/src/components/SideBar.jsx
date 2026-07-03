@@ -42,6 +42,7 @@ import TimerIcon from '@mui/icons-material/Timer'
 import HolidayVillageIcon from '@mui/icons-material/HolidayVillage'
 import BeachAccessIcon from '@mui/icons-material/BeachAccess'
 import { useTranslation } from 'react-i18next'
+import sidebarStore from '../store/sidebarStore'
 
 const DRAWER_WIDTH = 240
 const DRAWER_COLLAPSED_WIDTH = 64
@@ -50,10 +51,8 @@ export default function SideBar() {
   const { t } = useTranslation()
   const navigate = useNavigate()
   const location = useLocation()
-  const [open, setOpen] = useState(true)
+  const { open } = sidebarStore()
   const [expandedMenus, setExpandedMenus] = useState(['home', 'dataTables', 'permission', 'attendance'])
-
-  const toggleDrawer = () => setOpen(!open)
 
   const toggleSubMenu = (menuId) => {
     setExpandedMenus(prev =>
@@ -258,7 +257,7 @@ export default function SideBar() {
             height: 'calc(100% - 48px)',
             boxSizing: 'border-box',
             transition: 'width 0.3s ease',
-            overflowX: 'hidden'
+            overflow: 'hidden'
           }
         }}
         open={open}
@@ -267,10 +266,12 @@ export default function SideBar() {
           sx={{
             display: 'flex',
             alignItems: 'center',
-            justifyContent: open ? 'space-between' : 'center',
+            justifyContent: 'center',
             px: 1,
             py: 1,
-            minHeight: 64
+            minHeight: 48,
+            bgcolor: 'primary.main',
+            color: 'common.white'
           }}
         >
           {open && (
@@ -278,12 +279,9 @@ export default function SideBar() {
               {t('nav.appTitle')}
             </Typography>
           )}
-          <IconButton onClick={toggleDrawer}>
-            {open ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-          </IconButton>
         </Box>
         <Divider />
-        <List sx={{ flexGrow: 1, pt: 1 }}>
+        <List sx={{ flexGrow: 1, pt: 1, overflowY: 'auto', overflowX: 'hidden' }}>
           {menuItems.map(renderMenuItem)}
         </List>
       </Drawer>

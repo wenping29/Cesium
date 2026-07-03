@@ -3,12 +3,16 @@ import { useNavigate } from 'react-router-dom'
 import {
   AppBar, Toolbar, Typography, Button, Box, Avatar,
   Popper, Paper, Grow, MenuList, MenuItem, ListItemIcon, ListItemText, Divider,
+  IconButton
 } from '@mui/material'
 import LogoutIcon from '@mui/icons-material/Logout'
 import PersonIcon from '@mui/icons-material/Person'
 import LockIcon from '@mui/icons-material/Lock'
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
+import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 import { useTranslation } from 'react-i18next'
 import useAuthStore from '../store/authStore'
+import sidebarStore from '../store/sidebarStore'
 import LanguageSwitcher from './LanguageSwitcher'
 import ThemeSwitcher from './ThemeSwitcher'
 import Breadcrumb from './Breadcrumb'
@@ -17,6 +21,7 @@ export default function NavBar() {
   const { t } = useTranslation()
   const navigate = useNavigate()
   const { user, logout } = useAuthStore()
+  const { open: sidebarOpen, toggle: toggleSidebar } = sidebarStore()
   const [open, setOpen] = useState(false)
   const timerRef = useRef(null)
   const containerRef = useRef(null)
@@ -33,7 +38,10 @@ export default function NavBar() {
   return (
     <AppBar position="static" sx={{ zIndex: 1201, height: 48 }}>
       <Toolbar sx={{ minHeight: 48 }}>
-        <Box sx={{ flexGrow: 1 }}>
+        <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center', gap: 2 }}>
+          <IconButton onClick={toggleSidebar} color="inherit" size="small">
+            {sidebarOpen ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+          </IconButton>
           <Breadcrumb />
         </Box>
         <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
