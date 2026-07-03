@@ -46,10 +46,10 @@ export default function App() {
   }
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
-      <NavBar />
+    <Box sx={{ display: 'flex', flexDirection: 'row', height: '100vh' }}>
+      <SideBar />
       <Box sx={{ display: 'flex', flex: 1, overflow: 'hidden' }}>
-        <SideBar />
+        <NavBar />
         <Box sx={{ flex: 1, overflow: 'hidden' }}>
           <Routes>
             <Route path="/workbench" element={<PrivateRoute><WorkbenchPage /></PrivateRoute>} />

@@ -255,6 +255,7 @@ export default function SideBar() {
           boxSizing: 'border-box',
           '& .MuiDrawer-paper': {
             width: open ? DRAWER_WIDTH : DRAWER_COLLAPSED_WIDTH,
+            height: 'calc(100% - 48px)',
             boxSizing: 'border-box',
             transition: 'width 0.3s ease',
             overflowX: 'hidden'
@@ -266,12 +267,17 @@ export default function SideBar() {
           sx={{
             display: 'flex',
             alignItems: 'center',
-            justifyContent: open ? 'flex-end' : 'center',
+            justifyContent: open ? 'space-between' : 'center',
             px: 1,
             py: 1,
             minHeight: 64
           }}
         >
+          {open && (
+            <Typography variant="h6" sx={{ cursor: 'pointer', flexGrow: 1, pl: 2 }} onClick={() => navigate('/dashboard')}>
+              {t('nav.appTitle')}
+            </Typography>
+          )}
           <IconButton onClick={toggleDrawer}>
             {open ? <ChevronLeftIcon /> : <ChevronRightIcon />}
           </IconButton>

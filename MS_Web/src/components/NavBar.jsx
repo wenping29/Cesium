@@ -30,12 +30,8 @@ export default function NavBar() {
   }
 
   return (
-    <AppBar position="static" sx={{ zIndex: 1201 }}>
-      <Toolbar>
-        <Typography variant="h6" sx={{ flexGrow: 1, cursor: 'pointer' }} onClick={() => navigate('/dashboard')}>
-          {t('nav.appTitle')}
-        </Typography>
-
+    <AppBar position="static" sx={{ zIndex: 1201, height: 48 }}>
+      <Toolbar sx={{ minHeight: 48 }}>
         <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
           <ThemeSwitcher />
           <LanguageSwitcher />
