@@ -401,11 +401,16 @@
     "gust": "阵风"
   },
   "dashboard": {
-    "title": "数据仪表盘",
-    "earthquakes": "地震记录",
-    "airQuality": "空气质量站点",
-    "typhoon": "台风记录",
-    "wind": "风区数量"
+    "title": "仪表盘",
+    "users": "用户数",
+    "roles": "角色数",
+    "departments": "部门数",
+    "menus": "菜单数",
+    "loginLogs": "登录日志",
+    "attendanceRecords": "打卡记录",
+    "workHourRecords": "工时记录",
+    "leaveRecords": "休假记录",
+    "annualLeaveRecords": "年假记录"
   },
   "bigScreen": {
     "title": "实时数据监控大屏",

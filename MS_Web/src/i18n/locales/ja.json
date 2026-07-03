@@ -224,10 +224,15 @@
   },
   "dashboard": {
     "title": "ダッシュボード",
-    "earthquakes": "地震記録",
-    "airQuality": "大気質観測所",
-    "typhoon": "台風記録",
-    "wind": "風域数"
+    "users": "ユーザー数",
+    "roles": "ロール数",
+    "departments": "部門数",
+    "menus": "メニュー数",
+    "loginLogs": "ログインログ",
+    "attendanceRecords": "勤怠記録",
+    "workHourRecords": "労働時間記録",
+    "leaveRecords": "休暇記録",
+    "annualLeaveRecords": "年休記録"
   },
   "bigScreen": {
     "title": "リアルタイムデータモニター",

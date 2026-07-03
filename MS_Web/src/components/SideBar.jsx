@@ -54,7 +54,7 @@ export default function SideBar() {
   const navigate = useNavigate()
   const location = useLocation()
   const { open } = sidebarStore()
-  const [expandedMenus, setExpandedMenus] = useState(['home', 'dataTables', 'permission', 'attendance', 'log'])
+  const [expandedMenus, setExpandedMenus] = useState([])
 
   const toggleSubMenu = (menuId) => {
     setExpandedMenus(prev =>

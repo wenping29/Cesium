@@ -401,10 +401,15 @@
   },
   "dashboard": {
     "title": "Dashboard",
-    "earthquakes": "Earthquake Records",
-    "airQuality": "Air Quality Stations",
-    "typhoon": "Typhoon Records",
-    "wind": "Wind Regions"
+    "users": "Users",
+    "roles": "Roles",
+    "departments": "Departments",
+    "menus": "Menus",
+    "loginLogs": "Login Logs",
+    "attendanceRecords": "Attendance Records",
+    "workHourRecords": "Work Hour Records",
+    "leaveRecords": "Leave Records",
+    "annualLeaveRecords": "Annual Leave Records"
   },
   "bigScreen": {
     "title": "Real-time Data Monitor",
