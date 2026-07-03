@@ -106,5 +106,19 @@ public class AppDbContext : DbContext
             new Menu { Id = 7, Name = "菜单管理", Path = "/menu-management", Icon = "Menu", ParentId = 4, SortOrder = 3, IsVisible = true, Permission = "permission:menus" },
             new Menu { Id = 8, Name = "部门管理", Path = "/department-management", Icon = "Business", ParentId = 4, SortOrder = 4, IsVisible = true, Permission = "permission:departments" }
         );
+
+        // Seed departments (10个部门)
+        modelBuilder.Entity<Department>().HasData(
+            new Department { Id = 1, Name = "总公司", Code = "HQ", ParentId = null, SortOrder = 1, Leader = "张总", Phone = "010-88888888", Email = "zhangzong@company.com", Address = "北京市朝阳区建国路88号", IsActive = true },
+            new Department { Id = 2, Name = "技术部", Code = "TECH", ParentId = 1, SortOrder = 1, Leader = "李经理", Phone = "010-88888801", Email = "tech@company.com", Address = "北京市朝阳区建国路88号A座3层", IsActive = true },
+            new Department { Id = 3, Name = "产品部", Code = "PROD", ParentId = 1, SortOrder = 2, Leader = "王经理", Phone = "010-88888802", Email = "product@company.com", Address = "北京市朝阳区建国路88号A座5层", IsActive = true },
+            new Department { Id = 4, Name = "市场部", Code = "MKT", ParentId = 1, SortOrder = 3, Leader = "赵经理", Phone = "010-88888803", Email = "marketing@company.com", Address = "北京市朝阳区建国路88号B座2层", IsActive = true },
+            new Department { Id = 5, Name = "销售部", Code = "SALES", ParentId = 1, SortOrder = 4, Leader = "孙经理", Phone = "010-88888804", Email = "sales@company.com", Address = "北京市朝阳区建国路88号B座3层", IsActive = true },
+            new Department { Id = 6, Name = "人事部", Code = "HR", ParentId = 1, SortOrder = 5, Leader = "周经理", Phone = "010-88888805", Email = "hr@company.com", Address = "北京市朝阳区建国路88号A座8层", IsActive = true },
+            new Department { Id = 7, Name = "财务部", Code = "FIN", ParentId = 1, SortOrder = 6, Leader = "吴经理", Phone = "010-88888806", Email = "finance@company.com", Address = "北京市朝阳区建国路88号A座9层", IsActive = true },
+            new Department { Id = 8, Name = "研发一组", Code = "DEV1", ParentId = 2, SortOrder = 1, Leader = "郑组长", Phone = "010-88888011", Email = "dev1@company.com", Address = "北京市朝阳区建国路88号A座301室", IsActive = true },
+            new Department { Id = 9, Name = "研发二组", Code = "DEV2", ParentId = 2, SortOrder = 2, Leader = "陈组长", Phone = "010-88888012", Email = "dev2@company.com", Address = "北京市朝阳区建国路88号A座302室", IsActive = true },
+            new Department { Id = 10, Name = "运维部", Code = "OPS", ParentId = 2, SortOrder = 3, Leader = "刘组长", Phone = "010-88888013", Email = "ops@company.com", Address = "北京市朝阳区建国路88号A座4层", IsActive = true }
+        );
     }
 }

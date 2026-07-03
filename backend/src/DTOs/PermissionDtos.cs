@@ -135,3 +135,8 @@ public class UpdateUserDto
     public bool IsActive { get; set; }
     public List<string>? Roles { get; set; }
 }
+
+public class ResetPasswordDto
+{
+    public string NewPassword { get; set; } = "123456"; // 默认密码
+}

@@ -240,4 +240,19 @@ public class UserController : ControllerBase
 
         return Ok();
     }
+
+    [HttpPost("{id}/reset-password")]
+    [Authorize(Roles = "Admin")]
+    public async Task<IActionResult> ResetPassword(int id, ResetPasswordDto? dto = null)
+    {
+        var user = await _context.Users.FindAsync(id);
+        if (user == null) return NotFound("User not found");
+
+        var newPassword = dto?.NewPassword ?? "123456";
+        user.PasswordHash = PasswordHelper.HashPassword(newPassword);
+        user.UpdatedAt = DateTime.UtcNow;
+
+        await _context.SaveChangesAsync();
+        return Ok(new { Message = "Password reset successfully", DefaultPassword = newPassword });
+    }
 }
