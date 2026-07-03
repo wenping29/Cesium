@@ -258,6 +258,7 @@ export default function NotificationsPage() {
                         </Avatar>
                       </ListItemAvatar>
                       <ListItemText
+                        disableTypography
                         primary={
                           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                             <Typography variant="body1" fontWeight={notification.read ? 'normal' : 'bold'}>

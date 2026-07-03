@@ -39,6 +39,19 @@ public class NotificationController : ControllerBase
         return notification;
     }
 
+    // 创建通知
+    [HttpPost]
+    public async Task<ActionResult<Notification>> CreateNotification(Notification notification)
+    {
+        notification.CreatedAt = DateTime.UtcNow;
+        notification.Date = notification.Date == default ? DateTime.UtcNow : notification.Date;
+
+        _context.Notifications.Add(notification);
+        await _context.SaveChangesAsync();
+
+        return CreatedAtAction(nameof(GetNotification), new { id = notification.Id }, notification);
+    }
+
     // 获取未读通知数量
     [HttpGet("unread/count")]
     public async Task<ActionResult<int>> GetUnreadCount()
