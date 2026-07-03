@@ -30,6 +30,9 @@
     "loginLogReport": "登录日志",
     "auditLogReport": "查询日志"
   },
+  "footer": {
+    "allRightsReserved": "保留所有权利"
+  },
   "loginLogReport": {
     "title": "登录日志报表",
     "id": "ID",

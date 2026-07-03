@@ -22,6 +22,9 @@
     "loginLogReport": "ログインログ",
     "auditLogReport": "監査ログ"
   },
+  "footer": {
+    "allRightsReserved": "無断転載を禁じます"
+  },
   "loginLogReport": {
     "title": "ログインログレポート",
     "id": "ID",

@@ -30,6 +30,9 @@
     "loginLogReport": "Login Log",
     "auditLogReport": "Audit Log"
   },
+  "footer": {
+    "allRightsReserved": "All rights reserved"
+  },
   "loginLogReport": {
     "title": "Login Log Report",
     "id": "ID",
