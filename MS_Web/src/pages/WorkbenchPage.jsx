@@ -25,6 +25,7 @@ import {
   CalendarToday as CalendarIcon
 } from '@mui/icons-material'
 import { useTranslation } from 'react-i18next'
+import AttendanceCalendar from '../components/AttendanceCalendar'
 
 export default function WorkbenchPage() {
   const { t } = useTranslation()
@@ -123,15 +124,26 @@ export default function WorkbenchPage() {
         ))}
       </Grid>
 
-      {/* Main Content Grid */}
-      <Grid container spacing={3}>
-        {/* Notifications */}
-        <Grid xs={12} md={6}>
+      {/* Main Content Grid - Calendar, Notifications, Activities in one row */}
+      <Grid container spacing={3} sx={{ mb: 4 }}>
+        {/* Attendance Calendar */}
+        <Grid xs={12} lg={6}>
           <Card>
+            <CardHeader title={t('workbench.attendanceCalendar.title')} />
+            <CardContent sx={{ p: 0, pt: 1 }}>
+              <AttendanceCalendar />
+            </CardContent>
+          </Card>
+        </Grid>
+
+        {/* Notifications and Recent Activities Column */}
+        <Grid xs={12} lg={6} sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+          {/* Notifications */}
+          <Card sx={{ flex: 1 }}>
             <CardHeader title={t('workbench.notifications.title')} />
             <Divider />
             <CardContent sx={{ p: 0 }}>
-              <List>
+              <List dense>
                 {notifications.map((notif) => (
                   <ListItem key={notif.id} divider>
                     <ListItemIcon>{notif.icon}</ListItemIcon>
@@ -144,15 +156,13 @@ export default function WorkbenchPage() {
               </List>
             </CardContent>
           </Card>
-        </Grid>
 
-        {/* Recent Activities */}
-        <Grid xs={12} md={6}>
-          <Card>
+          {/* Recent Activities */}
+          <Card sx={{ flex: 1 }}>
             <CardHeader title={t('workbench.activities.title')} />
             <Divider />
             <CardContent sx={{ p: 0 }}>
-              <List>
+              <List dense>
                 {recentActivities.map((activity) => (
                   <ListItem key={activity.id} divider>
                     <ListItemIcon>

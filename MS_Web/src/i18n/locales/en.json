@@ -21,6 +21,7 @@
     "home": "Home",
     "workbench": "Workbench",
     "analysis": "Analysis",
+    "notifications": "Notifications",
     "attendanceManagement": "Attendance",
     "openReport": "Attendance Report",
     "workHourReport": "Work Hour Report",
@@ -83,6 +84,42 @@
       "inviteUser": "Invite User",
       "startChat": "Start Chat",
       "viewCalendar": "View Calendar"
+    },
+    "attendanceCalendar": {
+      "title": "Attendance Calendar"
+    }
+  },
+  "calendar": {
+    "sunday": "Sun",
+    "monday": "Mon",
+    "tuesday": "Tue",
+    "wednesday": "Wed",
+    "thursday": "Thu",
+    "friday": "Fri",
+    "saturday": "Sat",
+    "today": "Today",
+    "fullAttendance": "Full Attendance",
+    "partialAttendance": "Partial Attendance",
+    "noAttendance": "No Attendance",
+    "holiday": "Holiday",
+    "weekend": "Weekend",
+    "checkIn": "Check In",
+    "checkOut": "Check Out",
+    "noData": "No Data"
+  },
+  "notifications": {
+    "title": "Notifications",
+    "unread": "unread",
+    "markAllRead": "Mark all as read",
+    "markRead": "Mark as read",
+    "delete": "Delete",
+    "noNotifications": "No notifications",
+    "filters": {
+      "all": "All",
+      "unread": "Unread",
+      "system": "System",
+      "task": "Task",
+      "message": "Message"
     }
   },
   "analysis": {

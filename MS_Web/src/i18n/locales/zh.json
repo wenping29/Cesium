@@ -21,6 +21,7 @@
     "home": "首页",
     "workbench": "工作台",
     "analysis": "分析页",
+    "notifications": "通知中心",
     "attendanceManagement": "考勤管理",
     "openReport": "打开报表",
     "workHourReport": "工时报表",
@@ -83,6 +84,42 @@
       "inviteUser": "邀请用户",
       "startChat": "发起聊天",
       "viewCalendar": "查看日历"
+    },
+    "attendanceCalendar": {
+      "title": "考勤日历"
+    }
+  },
+  "calendar": {
+    "sunday": "周日",
+    "monday": "周一",
+    "tuesday": "周二",
+    "wednesday": "周三",
+    "thursday": "周四",
+    "friday": "周五",
+    "saturday": "周六",
+    "today": "今天",
+    "fullAttendance": "已打卡",
+    "partialAttendance": "部分打卡",
+    "noAttendance": "未打卡",
+    "holiday": "假期",
+    "weekend": "周末",
+    "checkIn": "上班",
+    "checkOut": "下班",
+    "noData": "暂无数据"
+  },
+  "notifications": {
+    "title": "通知中心",
+    "unread": "未读",
+    "markAllRead": "全部标为已读",
+    "markRead": "标为已读",
+    "delete": "删除",
+    "noNotifications": "暂无通知",
+    "filters": {
+      "all": "全部",
+      "unread": "未读",
+      "system": "系统",
+      "task": "任务",
+      "message": "消息"
     }
   },
   "analysis": {

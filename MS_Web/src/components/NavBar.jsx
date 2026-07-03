@@ -3,13 +3,14 @@ import { useNavigate } from 'react-router-dom'
 import {
   AppBar, Toolbar, Typography, Button, Box, Avatar,
   Popper, Paper, Grow, MenuList, MenuItem, ListItemIcon, ListItemText, Divider,
-  IconButton
+  IconButton, Badge
 } from '@mui/material'
 import LogoutIcon from '@mui/icons-material/Logout'
 import PersonIcon from '@mui/icons-material/Person'
 import LockIcon from '@mui/icons-material/Lock'
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight'
+import NotificationsIcon from '@mui/icons-material/Notifications'
 import { useTranslation } from 'react-i18next'
 import useAuthStore from '../store/authStore'
 import sidebarStore from '../store/sidebarStore'
@@ -26,6 +27,9 @@ export default function NavBar() {
   const timerRef = useRef(null)
   const containerRef = useRef(null)
 
+  // Mock notification count - in real app this would come from a store/API
+  const [notificationCount, setNotificationCount] = useState(3)
+
   const show = useCallback(() => { clearTimeout(timerRef.current); setOpen(true) }, [])
   const hide = useCallback(() => { timerRef.current = setTimeout(() => setOpen(false), 200) }, [])
 
@@ -33,6 +37,10 @@ export default function NavBar() {
     setOpen(false)
     await logout()
     navigate('/login', { replace: true })
+  }
+
+  const handleNotificationsClick = () => {
+    navigate('/notifications')
   }
 
   return (
@@ -45,6 +53,15 @@ export default function NavBar() {
           <Breadcrumb />
         </Box>
         <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
+          <IconButton
+            color="inherit"
+            onClick={handleNotificationsClick}
+            sx={{ position: 'relative' }}
+          >
+            <Badge badgeContent={notificationCount} color="error">
+              <NotificationsIcon />
+            </Badge>
+          </IconButton>
           <ThemeSwitcher />
           <LanguageSwitcher />
 

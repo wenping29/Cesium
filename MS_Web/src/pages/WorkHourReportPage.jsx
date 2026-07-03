@@ -200,7 +200,7 @@ export default function WorkHourReportPage() {
           <CircularProgress />
         </Box>
       ) : (
-        <TableContainer component={Paper}>
+        <TableContainer component={Paper} sx={{ height: 400 }}>
           <Table>
             <TableHead>
               <TableRow>

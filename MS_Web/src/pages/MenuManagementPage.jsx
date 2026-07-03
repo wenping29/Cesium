@@ -113,7 +113,7 @@ export default function MenuManagementPage() {
           <CircularProgress />
         </Box>
       ) : (
-        <TableContainer component={Paper}>
+        <TableContainer component={Paper} sx={{ height: 600 }}>
           <Table>
             <TableHead>
               <TableRow>

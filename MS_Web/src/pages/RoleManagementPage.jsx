@@ -94,7 +94,7 @@ export default function RoleManagementPage() {
           <CircularProgress />
         </Box>
       ) : (
-        <TableContainer component={Paper}>
+        <TableContainer component={Paper} sx={{ height: 650 }}>
           <Table>
             <TableHead>
               <TableRow>

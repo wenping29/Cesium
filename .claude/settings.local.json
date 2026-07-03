@@ -4,7 +4,8 @@
       "Bash(dotnet:*)",
       "Bash(rm:*)",
       "Bash(cd:*)",
-      "Bash(dir:*)"
+      "Bash(dir:*)",
+      "Bash(sqlite3 cesium.db \"SELECT COUNT\\(*\\) FROM Users;\")"
     ]
   }
 }

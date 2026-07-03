@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
-  Box, Typography, Paper, Table, TableHead, TableBody, TableRow, TableCell,
+  Box, Paper, Table, TableHead, TableBody, TableRow, TableCell,
   TableContainer, CircularProgress, Alert, TablePagination, Button, TextField, Stack,
 } from '@mui/material'
 import { getLoginLogs } from '../api/loginLogs'
@@ -16,13 +16,14 @@ export default function LoginLogReportPage() {
   const [error, setError] = useState(null)
 
   const [filters, setFilters] = useState({ username: '', startDate: '', endDate: '' })
+  const [searchParams, setSearchParams] = useState({})
 
-  const buildParams = () => {
-    const params = { page: page + 1, pageSize }
-    if (filters.username) params.username = filters.username
-    if (filters.startDate) params.startDate = new Date(filters.startDate).toISOString()
-    if (filters.endDate) params.endDate = new Date(filters.endDate + 'T23:59:59').toISOString()
-    return params
+  const buildParams = (pageNum, size, params) => {
+    const result = { page: pageNum + 1, pageSize: size }
+    if (params.username) result.username = params.username
+    if (params.startDate) result.startDate = new Date(params.startDate).toISOString()
+    if (params.endDate) result.endDate = new Date(params.endDate + 'T23:59:59').toISOString()
+    return result
   }
 
   useEffect(() => {
@@ -31,7 +32,7 @@ export default function LoginLogReportPage() {
       setLoading(true)
       setError(null)
       try {
-        const params = buildParams()
+        const params = buildParams(page, pageSize, searchParams)
         const res = await getLoginLogs(params)
         if (!cancelled) {
           setLogs(res.data || [])
@@ -45,12 +46,16 @@ export default function LoginLogReportPage() {
     }
     fetchLogs()
     return () => { cancelled = true }
-  }, [page, pageSize, filters.username, filters.startDate, filters.endDate])
+  }, [page, pageSize, searchParams])
 
-  const handleSearch = () => setPage(0)
+  const handleSearch = () => {
+    setSearchParams({ ...filters })
+    setPage(0)
+  }
 
   const handleReset = () => {
     setFilters({ username: '', startDate: '', endDate: '' })
+    setSearchParams({})
     setPage(0)
   }
 
@@ -100,7 +105,7 @@ export default function LoginLogReportPage() {
         </Box>
       ) : (
         <Paper>
-          <TableContainer>
+          <TableContainer sx={{ height: 600 }}>
             <Table size="small">
               <TableHead>
                 <TableRow>
@@ -113,7 +118,7 @@ export default function LoginLogReportPage() {
                   <TableCell>{t('loginLogReport.loginTime')}</TableCell>
                 </TableRow>
               </TableHead>
-              <TableBody>
+              <TableBody sx={{ height: 550 }}>
                 {logs.length === 0 ? (
                   <TableRow>
                     <TableCell colSpan={7} align="center">

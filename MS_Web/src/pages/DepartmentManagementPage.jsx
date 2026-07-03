@@ -119,7 +119,7 @@ export default function DepartmentManagementPage() {
           <CircularProgress />
         </Box>
       ) : (
-        <TableContainer component={Paper}>
+        <TableContainer component={Paper} sx={{ height: 600 }}>
           <Table>
             <TableHead>
               <TableRow>

@@ -1,7 +1,7 @@
-import { useEffect, useState, useCallback } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
-  Box, Typography, Paper, Table, TableHead, TableBody, TableRow, TableCell,
+  Box, Paper, Table, TableHead, TableBody, TableRow, TableCell,
   TableContainer, CircularProgress, Alert, TablePagination,
   TextField, Button, Stack,
 } from '@mui/material'
@@ -16,45 +16,47 @@ export default function AuditLogReportPage() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
-  const [filters, setFilters] = useState({
-    username: '',
-    startDate: '',
-    endDate: '',
-  })
+  const [filters, setFilters] = useState({ username: '', startDate: '', endDate: '' })
+  const [searchParams, setSearchParams] = useState({})
 
-  const buildParams = useCallback(() => {
-    const params = { page: page + 1, pageSize }
-    if (filters.username) params.username = filters.username
-    if (filters.startDate) params.startDate = new Date(filters.startDate).toISOString()
-    if (filters.endDate) params.endDate = new Date(filters.endDate + 'T23:59:59').toISOString()
-    return params
-  }, [page, pageSize, filters])
-
-  const fetchLogs = useCallback(async () => {
-    setLoading(true)
-    setError(null)
-    try {
-      const params = buildParams()
-      const res = await getLoginLogs(params)
-      setLogs(res.data || [])
-      setTotal(res.total || 0)
-    } catch (err) {
-      setError(err?.response?.data || err.message)
-    } finally {
-      setLoading(false)
-    }
-  }, [buildParams])
+  const buildParams = (pageNum, size, params) => {
+    const result = { page: pageNum + 1, pageSize: size }
+    if (params.username) result.username = params.username
+    if (params.startDate) result.startDate = new Date(params.startDate).toISOString()
+    if (params.endDate) result.endDate = new Date(params.endDate + 'T23:59:59').toISOString()
+    return result
+  }
 
   useEffect(() => {
+    let cancelled = false
+    const fetchLogs = async () => {
+      setLoading(true)
+      setError(null)
+      try {
+        const params = buildParams(page, pageSize, searchParams)
+        const res = await getLoginLogs(params)
+        if (!cancelled) {
+          setLogs(res.data || [])
+          setTotal(res.total || 0)
+        }
+      } catch (err) {
+        if (!cancelled) setError(err?.response?.data || err.message)
+      } finally {
+        if (!cancelled) setLoading(false)
+      }
+    }
     fetchLogs()
-  }, [fetchLogs])
+    return () => { cancelled = true }
+  }, [page, pageSize, searchParams])
 
   const handleSearch = () => {
+    setSearchParams({ ...filters })
     setPage(0)
   }
 
   const handleReset = () => {
     setFilters({ username: '', startDate: '', endDate: '' })
+    setSearchParams({})
     setPage(0)
   }
 
@@ -104,8 +106,8 @@ export default function AuditLogReportPage() {
         </Box>
       ) : (
         <Paper>
-          <TableContainer>
-            <Table size="small">
+          <TableContainer sx={{ height: 600 }}>
+            <Table size="small"  sx={{ height: 650 }}>
               <TableHead>
                 <TableRow>
                   <TableCell>{t('loginLogReport.id')}</TableCell>
