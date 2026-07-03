@@ -21,8 +21,9 @@ public class AttendanceController : ControllerBase
 
     [HttpGet]
     [Authorize(Roles = "Admin")]
-    public async Task<ActionResult<List<AttendanceRecordDto>>> GetAttendances(
-        DateTime? startDate = null, DateTime? endDate = null, int? userId = null)
+    public async Task<ActionResult<PagedResult<AttendanceRecordDto>>> GetAttendances(
+        DateTime? startDate = null, DateTime? endDate = null, int? userId = null,
+        int page = 1, int pageSize = 20)
     {
         var query = _context.AttendanceRecords
             .Include(a => a.User)
@@ -35,22 +36,32 @@ public class AttendanceController : ControllerBase
         if (userId.HasValue)
             query = query.Where(a => a.UserId == userId.Value);
 
+        var total = await query.CountAsync();
+
         var records = await query
             .OrderByDescending(a => a.Date)
+            .Skip((page - 1) * pageSize)
+            .Take(pageSize)
             .ToListAsync();
 
-        return records.Select(a => new AttendanceRecordDto
+        return new PagedResult<AttendanceRecordDto>
         {
-            Id = a.Id,
-            UserId = a.UserId,
-            UserName = a.User?.Username ?? string.Empty,
-            Date = a.Date,
-            CheckInTime = a.CheckInTime,
-            CheckOutTime = a.CheckOutTime,
-            Status = a.Status,
-            Remark = a.Remark,
-            CreatedAt = a.CreatedAt
-        }).ToList();
+            Total = total,
+            Page = page,
+            PageSize = pageSize,
+            Data = records.Select(a => new AttendanceRecordDto
+            {
+                Id = a.Id,
+                UserId = a.UserId,
+                UserName = a.User?.Username ?? string.Empty,
+                Date = a.Date,
+                CheckInTime = a.CheckInTime,
+                CheckOutTime = a.CheckOutTime,
+                Status = a.Status,
+                Remark = a.Remark,
+                CreatedAt = a.CreatedAt
+            }).ToList()
+        };
     }
 
     [HttpGet("{id}")]

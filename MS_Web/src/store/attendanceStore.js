@@ -3,6 +3,9 @@ import { getAttendances, getMyAttendances, createAttendance, updateAttendance, d
 
 const useAttendanceStore = create((set) => ({
   attendances: [],
+  total: 0,
+  page: 1,
+  pageSize: 20,
   loading: false,
   error: null,
 
@@ -10,7 +13,13 @@ const useAttendanceStore = create((set) => ({
     set({ loading: true, error: null })
     try {
       const res = await getAttendances(params)
-      set({ attendances: res, loading: false })
+      set({ 
+        attendances: res.data || res, 
+        total: res.total || res.length || 0,
+        page: res.page || params?.page || 1,
+        pageSize: res.pageSize || params?.pageSize || 20,
+        loading: false 
+      })
     } catch (err) {
       set({ error: err?.response?.data || err?.message, loading: false })
     }
@@ -20,7 +29,13 @@ const useAttendanceStore = create((set) => ({
     set({ loading: true, error: null })
     try {
       const res = await getMyAttendances(params)
-      set({ attendances: res, loading: false })
+      set({ 
+        attendances: res.data || res, 
+        total: res.total || res.length || 0,
+        page: res.page || params?.page || 1,
+        pageSize: res.pageSize || params?.pageSize || 20,
+        loading: false 
+      })
     } catch (err) {
       set({ error: err?.response?.data || err?.message, loading: false })
     }

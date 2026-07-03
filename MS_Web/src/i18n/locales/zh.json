@@ -191,7 +191,11 @@
     "inactive": "禁用",
     "all": "全部",
     "view": "查看",
-    "noData": "暂无数据"
+    "noData": "暂无数据",
+    "showing": "显示",
+    "of": "共",
+    "records": "条记录",
+    "pageSize": "每页条数"
   },
   "confirmDelete": "确定要删除吗？",
   "userManagement": {

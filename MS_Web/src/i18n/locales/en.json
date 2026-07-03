@@ -190,7 +190,11 @@
     "inactive": "Inactive",
     "all": "All",
     "view": "View",
-    "noData": "No data"
+    "noData": "No data",
+    "showing": "Showing",
+    "of": "of",
+    "records": "records",
+    "pageSize": "Page size"
   },
   "confirmDelete": "Are you sure you want to delete?",
   "userManagement": {

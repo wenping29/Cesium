@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Box, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, CircularProgress, Chip, Grid } from '@mui/material'
+import { Box, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, CircularProgress, Chip, Grid, Pagination, FormControl, InputLabel, Select, MenuItem } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 import useAttendanceStore from '../store/attendanceStore'
 
@@ -11,14 +11,18 @@ const statusConfig = {
   weekend: { label: '周末', color: 'info' }
 }
 
+const PAGE_SIZES = [10, 20, 50, 100]
+
 export default function AttendanceReportPage() {
   const { t } = useTranslation()
-  const { attendances, loading, fetchAttendances } = useAttendanceStore()
+  const { attendances, total, loading, fetchAttendances } = useAttendanceStore()
+  const [page, setPage] = useState(1)
+  const [pageSize, setPageSize] = useState(20)
   const [stats, setStats] = useState({ normal: 0, late: 0, early: 0, absent: 0, weekend: 0 })
 
   useEffect(() => {
-    fetchAttendances()
-  }, [fetchAttendances])
+    fetchAttendances({ page, pageSize })
+  }, [fetchAttendances, page, pageSize])
 
   useEffect(() => {
     const counts = { normal: 0, late: 0, early: 0, absent: 0, weekend: 0 }
@@ -30,6 +34,15 @@ export default function AttendanceReportPage() {
     setStats(counts)
   }, [attendances])
 
+  const handlePageChange = (event, newPage) => {
+    setPage(newPage)
+  }
+
+  const handlePageSizeChange = (event) => {
+    setPageSize(event.target.value)
+    setPage(1)
+  }
+
   const formatTime = (time) => {
     if (!time) return '-'
     return time
@@ -40,6 +53,10 @@ export default function AttendanceReportPage() {
     const d = new Date(date)
     return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
   }
+
+  const totalPages = Math.ceil(total / pageSize)
+  const startIndex = (page - 1) * pageSize + 1
+  const endIndex = Math.min(page * pageSize, total)
 
   return (
     <Box sx={{ p: 4 }}>
@@ -80,7 +97,7 @@ export default function AttendanceReportPage() {
         </Grid>
         <Grid item xs={12} sm={6} md={2}>
           <Paper sx={{ p: 3, textAlign: 'center' }}>
-            <Typography variant="h5" sx={{ color: '#607d8b' }}>{attendances.length}</Typography>
+            <Typography variant="h5" sx={{ color: '#607d8b' }}>{total}</Typography>
             <Typography variant="body2" color="text.secondary">总计</Typography>
           </Paper>
         </Grid>
@@ -132,6 +149,35 @@ export default function AttendanceReportPage() {
           </TableBody>
         </Table>
       </TableContainer>
+
+      <Box sx={{ mt: 4, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <Typography variant="body1">
+          {t('common.showing')} {startIndex}-{endIndex} {t('common.of')} {total} {t('common.records')}
+        </Typography>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 3 }}>
+          <FormControl size="small" sx={{ minWidth: 100 }}>
+            <InputLabel>{t('common.pageSize')}</InputLabel>
+            <Select
+              label={t('common.pageSize')}
+              value={pageSize}
+              onChange={handlePageSizeChange}
+            >
+              {PAGE_SIZES.map(size => (
+                <MenuItem key={size} value={size}>{size}</MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          <Pagination
+            count={totalPages}
+            page={page}
+            onChange={handlePageChange}
+            color="primary"
+            size="large"
+            showFirstButton
+            showLastButton
+          />
+        </Box>
+      </Box>
     </Box>
   )
 }
