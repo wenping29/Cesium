@@ -91,12 +91,12 @@ export default function AttendanceReportPage() {
 
   return (
     <Box sx={{ p: 4 }}>
-      <Typography variant="h4" gutterBottom>
+      <Typography variant="h5" gutterBottom>
         {t('attendanceReport.title')}
       </Typography>
 
-      <Paper sx={{ p: 3, mb: 4 }}>
-        <Grid container spacing={3} alignItems="flex-end">
+      <Paper sx={{ p: 2, mb: 3 }}>
+        <Grid container spacing={2} alignItems="flex-end">
           <Grid item xs={12} sm={6} md={3}>
             <TextField
               label={t('attendanceReport.userName')}
@@ -166,40 +166,40 @@ export default function AttendanceReportPage() {
         </Grid>
       </Paper>
 
-      <Grid container spacing={3} sx={{ mb: 4 }}>
+      <Grid container spacing={2} sx={{ mb: 3 }}>
         <Grid item xs={12} sm={6} md={2}>
-          <Paper sx={{ p: 3, textAlign: 'center' }}>
-            <Typography variant="h5" sx={{ color: '#4caf50' }}>{stats.normal}</Typography>
+          <Paper sx={{ p: 2, textAlign: 'center' }}>
+            <Typography variant="h6" sx={{ color: '#4caf50' }}>{stats.normal}</Typography>
             <Typography variant="body2" color="text.secondary">正常</Typography>
           </Paper>
         </Grid>
         <Grid item xs={12} sm={6} md={2}>
-          <Paper sx={{ p: 3, textAlign: 'center' }}>
-            <Typography variant="h5" sx={{ color: '#ff9800' }}>{stats.late}</Typography>
+          <Paper sx={{ p: 2, textAlign: 'center' }}>
+            <Typography variant="h6" sx={{ color: '#ff9800' }}>{stats.late}</Typography>
             <Typography variant="body2" color="text.secondary">迟到</Typography>
           </Paper>
         </Grid>
         <Grid item xs={12} sm={6} md={2}>
-          <Paper sx={{ p: 3, textAlign: 'center' }}>
-            <Typography variant="h5" sx={{ color: '#ff9800' }}>{stats.early}</Typography>
+          <Paper sx={{ p: 2, textAlign: 'center' }}>
+            <Typography variant="h6" sx={{ color: '#ff9800' }}>{stats.early}</Typography>
             <Typography variant="body2" color="text.secondary">早退</Typography>
           </Paper>
         </Grid>
         <Grid item xs={12} sm={6} md={2}>
-          <Paper sx={{ p: 3, textAlign: 'center' }}>
-            <Typography variant="h5" sx={{ color: '#f44336' }}>{stats.absent}</Typography>
+          <Paper sx={{ p: 2, textAlign: 'center' }}>
+            <Typography variant="h6" sx={{ color: '#f44336' }}>{stats.absent}</Typography>
             <Typography variant="body2" color="text.secondary">旷工</Typography>
           </Paper>
         </Grid>
         <Grid item xs={12} sm={6} md={2}>
-          <Paper sx={{ p: 3, textAlign: 'center' }}>
-            <Typography variant="h5" sx={{ color: '#2196f3' }}>{stats.weekend}</Typography>
+          <Paper sx={{ p: 2, textAlign: 'center' }}>
+            <Typography variant="h6" sx={{ color: '#2196f3' }}>{stats.weekend}</Typography>
             <Typography variant="body2" color="text.secondary">周末加班</Typography>
           </Paper>
         </Grid>
         <Grid item xs={12} sm={6} md={2}>
-          <Paper sx={{ p: 3, textAlign: 'center' }}>
-            <Typography variant="h5" sx={{ color: '#607d8b' }}>{total}</Typography>
+          <Paper sx={{ p: 2, textAlign: 'center' }}>
+            <Typography variant="h6" sx={{ color: '#607d8b' }}>{total}</Typography>
             <Typography variant="body2" color="text.secondary">总计</Typography>
           </Paper>
         </Grid>
