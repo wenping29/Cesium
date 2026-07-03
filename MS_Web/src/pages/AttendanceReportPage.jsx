@@ -127,7 +127,7 @@ export default function AttendanceReportPage() {
             </LocalizationProvider>
           </Grid>
           <Grid item xs={12} sm={6} md={3}>
-            <FormControl fullWidth>
+            <FormControl sx={{ width: 100 }}>
               <InputLabel>{t('attendanceReport.status')}</InputLabel>
               <Select
                 label={t('attendanceReport.status')}
@@ -148,17 +148,18 @@ export default function AttendanceReportPage() {
               <Button
                 variant="contained"
                 onClick={handleSearch}
-                color="primary"
+                sx={{ backgroundColor: '#1a73e8', color: 'white' }}
                 fullWidth
               >
-                {t('common.search')}
+                查询
               </Button>
               <Button
-                variant="outlined"
+                variant="contained"
                 onClick={handleReset}
+                sx={{ backgroundColor: '#1a73e8', color: 'white' }}
                 fullWidth
               >
-                {t('common.reset')}
+                重置
               </Button>
             </Box>
           </Grid>
@@ -204,8 +205,38 @@ export default function AttendanceReportPage() {
         </Grid>
       </Grid>
 
-      <TableContainer component={Paper}>
-        <Table>
+      <Box sx={{ mt: 4, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <Typography variant="body1">
+          {t('common.showing')} {startIndex}-{endIndex} {t('common.of')} {total} {t('common.records')}
+        </Typography>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 3 }}>
+          <FormControl size="small" sx={{ minWidth: 100 }}>
+            <InputLabel>{t('common.pageSize')}</InputLabel>
+            <Select
+              label={t('common.pageSize')}
+              value={pageSize}
+              onChange={handlePageSizeChange}
+            >
+              {PAGE_SIZES.map(size => (
+                <MenuItem key={size} value={size}>{size}</MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          <Pagination
+            count={totalPages}
+            page={page}
+            pageSize={pageSize}
+            onChange={handlePageChange}
+            color="primary"
+            size="large"
+            showFirstButton
+            showLastButton
+          />
+        </Box>
+      </Box>
+
+      <TableContainer component={Paper} sx={{ maxHeight: 500, overflowY: 'auto', mt: 4 }}>
+        <Table stickyHeader>
           <TableHead>
             <TableRow>
               <TableCell>日期</TableCell>
@@ -253,35 +284,22 @@ export default function AttendanceReportPage() {
         </Table>
       </TableContainer>
 
-      <Box sx={{ mt: 4, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <Typography variant="body1">
-          {t('common.showing')} {startIndex}-{endIndex} {t('common.of')} {total} {t('common.records')}
-        </Typography>
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 3 }}>
-          <FormControl size="small" sx={{ minWidth: 100 }}>
-            <InputLabel>{t('common.pageSize')}</InputLabel>
-            <Select
-              label={t('common.pageSize')}
-              value={pageSize}
-              onChange={handlePageSizeChange}
-            >
-              {PAGE_SIZES.map(size => (
-                <MenuItem key={size} value={size}>{size}</MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-          <Pagination
-            count={totalPages}
-            page={page}
-            pageSize={pageSize}
-            onChange={handlePageChange}
-            color="primary"
-            size="large"
-            showFirstButton
-            showLastButton
-          />
+      <Paper sx={{ mt: 2, p: 2, display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: 1, borderColor: 'divider' }}>
+        <Box sx={{ display: 'flex', gap: 4 }}>
+          <Typography variant="body2" color="text.secondary">
+            当前页：{page} / {totalPages}
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            总记录数：{total} 条
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            每页显示：{pageSize} 条
+          </Typography>
         </Box>
-      </Box>
+        <Typography variant="body2" color="text.secondary">
+          {loading ? '加载中...' : '数据已加载完成'}
+        </Typography>
+      </Paper>
     </Box>
   )
 }
