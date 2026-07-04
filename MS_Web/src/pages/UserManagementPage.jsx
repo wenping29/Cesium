@@ -30,6 +30,13 @@ export default function UserManagementPage() {
     roles: []
   })
 
+  const [searchQuery, setSearchQuery] = useState('')
+  const [filterDepartmentId, setFilterDepartmentId] = useState('')
+  const [filterStatus, setFilterStatus] = useState('')
+  const [appliedSearchQuery, setAppliedSearchQuery] = useState('')
+  const [appliedFilterDepartmentId, setAppliedFilterDepartmentId] = useState('')
+  const [appliedFilterStatus, setAppliedFilterStatus] = useState('')
+
   useEffect(() => {
     fetchUsers()
     fetchRoles()
@@ -94,9 +101,76 @@ export default function UserManagementPage() {
 
   const allDepartments = flattenDepartments(departments)
 
+  const handleSearch = () => {
+    setAppliedSearchQuery(searchQuery)
+    setAppliedFilterDepartmentId(filterDepartmentId)
+    setAppliedFilterStatus(filterStatus)
+  }
+
+  const handleReset = () => {
+    setSearchQuery('')
+    setFilterDepartmentId('')
+    setFilterStatus('')
+    setAppliedSearchQuery('')
+    setAppliedFilterDepartmentId('')
+    setAppliedFilterStatus('')
+  }
+
+  const filteredUsers = users.filter(user => {
+    const matchesSearch = !appliedSearchQuery ||
+      user.username?.toLowerCase().includes(appliedSearchQuery.toLowerCase()) ||
+      user.email?.toLowerCase().includes(appliedSearchQuery.toLowerCase())
+    const matchesDepartment = !appliedFilterDepartmentId || user.departmentId === appliedFilterDepartmentId
+    const matchesStatus = appliedFilterStatus === '' ||
+      (appliedFilterStatus === 'active' && user.isActive) ||
+      (appliedFilterStatus === 'inactive' && !user.isActive)
+    return matchesSearch && matchesDepartment && matchesStatus
+  })
+
   return (
     <Box sx={{ p: 2 }}>
-      <Box sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', mb: 3 }}>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3, gap: 2, flexWrap: 'wrap' }}>
+        <Box sx={{ display: 'flex', gap: 2, alignItems: 'center', flexWrap: 'wrap' }}>
+          <TextField
+            label={t('common.search')}
+            size="small"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder={t('userManagement.username')}
+            sx={{ minWidth: 200 }}
+          />
+          <FormControl size="small" sx={{ minWidth: 150 }}>
+            <InputLabel>{t('userManagement.department')}</InputLabel>
+            <Select
+              value={filterDepartmentId}
+              onChange={(e) => setFilterDepartmentId(e.target.value)}
+              label={t('userManagement.department')}
+            >
+              <MenuItem value="">{t('common.all')}</MenuItem>
+              {allDepartments.map(d => (
+                <MenuItem key={d.id} value={d.id}>{d.name}</MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          <FormControl size="small" sx={{ minWidth: 120 }}>
+            <InputLabel>{t('userManagement.status')}</InputLabel>
+            <Select
+              value={filterStatus}
+              onChange={(e) => setFilterStatus(e.target.value)}
+              label={t('userManagement.status')}
+            >
+              <MenuItem value="">{t('common.all')}</MenuItem>
+              <MenuItem value="active">{t('common.active')}</MenuItem>
+              <MenuItem value="inactive">{t('common.inactive')}</MenuItem>
+            </Select>
+          </FormControl>
+          <Button variant="contained" onClick={handleSearch}>
+            {t('common.search')}
+          </Button>
+          <Button onClick={handleReset}>
+            {t('common.reset')}
+          </Button>
+        </Box>
         <Button variant="contained" startIcon={<AddIcon />} onClick={handleOpenCreate}>
           {t('userManagement.addUser')}
         </Button>
@@ -125,7 +199,7 @@ export default function UserManagementPage() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {users.map((user) => (
+              {filteredUsers.map((user) => (
                 <TableRow key={user.id}>
                   <TableCell>{user.id}</TableCell>
                   <TableCell>{user.username}</TableCell>

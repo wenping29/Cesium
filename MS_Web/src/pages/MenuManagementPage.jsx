@@ -34,6 +34,11 @@ export default function MenuManagementPage() {
     permission: ''
   })
 
+  const [searchQuery, setSearchQuery] = useState('')
+  const [filterVisible, setFilterVisible] = useState('')
+  const [appliedSearchQuery, setAppliedSearchQuery] = useState('')
+  const [appliedFilterVisible, setAppliedFilterVisible] = useState('')
+
   useEffect(() => {
     fetchAllMenus()
   }, [fetchAllMenus])
@@ -98,9 +103,60 @@ export default function MenuManagementPage() {
     return indent
   }
 
+  const handleSearch = () => {
+    setAppliedSearchQuery(searchQuery)
+    setAppliedFilterVisible(filterVisible)
+  }
+
+  const handleReset = () => {
+    setSearchQuery('')
+    setFilterVisible('')
+    setAppliedSearchQuery('')
+    setAppliedFilterVisible('')
+  }
+
+  const filteredMenuItems = allMenuItems.filter(menu => {
+    const matchesSearch = !appliedSearchQuery ||
+      menu.name?.toLowerCase().includes(appliedSearchQuery.toLowerCase()) ||
+      menu.path?.toLowerCase().includes(appliedSearchQuery.toLowerCase()) ||
+      menu.permission?.toLowerCase().includes(appliedSearchQuery.toLowerCase())
+    const matchesVisible = appliedFilterVisible === '' ||
+      (appliedFilterVisible === 'visible' && menu.isVisible) ||
+      (appliedFilterVisible === 'hidden' && !menu.isVisible)
+    return matchesSearch && matchesVisible
+  })
+
   return (
     <Box sx={{ p: 2 }}>
-      <Box sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', mb: 3 }}>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3, gap: 2, flexWrap: 'wrap' }}>
+        <Box sx={{ display: 'flex', gap: 2, alignItems: 'center', flexWrap: 'wrap' }}>
+          <TextField
+            label={t('common.search')}
+            size="small"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder={t('menuManagement.name')}
+            sx={{ minWidth: 200 }}
+          />
+          <FormControl size="small" sx={{ minWidth: 120 }}>
+            <InputLabel>{t('menuManagement.isVisible')}</InputLabel>
+            <Select
+              value={filterVisible}
+              onChange={(e) => setFilterVisible(e.target.value)}
+              label={t('menuManagement.isVisible')}
+            >
+              <MenuItem value="">{t('common.all')}</MenuItem>
+              <MenuItem value="visible">{t('common.active')}</MenuItem>
+              <MenuItem value="hidden">{t('common.inactive')}</MenuItem>
+            </Select>
+          </FormControl>
+          <Button variant="contained" onClick={handleSearch}>
+            {t('common.search')}
+          </Button>
+          <Button onClick={handleReset}>
+            {t('common.reset')}
+          </Button>
+        </Box>
         <Button variant="contained" startIcon={<AddIcon />} onClick={handleOpenCreate}>
           {t('menuManagement.addMenu')}
         </Button>
@@ -128,7 +184,7 @@ export default function MenuManagementPage() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {allMenuItems.map((menu) => {
+              {filteredMenuItems.map((menu) => {
                 const indent = getIndent(menu)
                 return (
                   <TableRow key={menu.id}>
