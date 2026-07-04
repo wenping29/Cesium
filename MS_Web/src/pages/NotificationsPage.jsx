@@ -2,29 +2,30 @@ import { useState, useEffect } from 'react'
 import {
   Box,
   Typography,
-  Card,
-  CardContent,
-  CardHeader,
-  Avatar,
-  IconButton,
-  Chip,
-  Divider,
-  List,
-  ListItem,
-  ListItemAvatar,
-  ListItemText,
-  ListItemButton,
-  Badge,
-  Tabs,
-  Tab,
-  Paper,
+  Table,
+  TableHead,
+  TableBody,
+  TableRow,
+  TableCell,
   Button,
+  CircularProgress,
+  Alert,
+  Paper,
+  TableContainer,
+  Chip,
   Dialog,
   DialogTitle,
   DialogContent,
   DialogActions,
-  CircularProgress,
-  Alert
+  IconButton,
+  Tooltip,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  TextField,
+  Divider,
+  Avatar
 } from '@mui/material'
 import {
   Notifications as NotificationsIcon,
@@ -63,7 +64,18 @@ const iconMap = {
   Chat: <ChatIcon />
 }
 
-// 计算相对时间
+const typeConfig = {
+  system: { icon: <SystemUpdateIcon />, color: 'info' },
+  task: { icon: <AssignmentIcon />, color: 'warning' },
+  message: { icon: <ChatIcon />, color: 'success' }
+}
+
+const typeOptions = [
+  { value: 'system', label: '系统通知' },
+  { value: 'task', label: '任务通知' },
+  { value: 'message', label: '普通消息' }
+]
+
 const getRelativeTime = (dateStr) => {
   const date = new Date(dateStr.replace(' ', 'T'))
   const now = new Date()
@@ -81,13 +93,18 @@ const getRelativeTime = (dateStr) => {
 export default function NotificationsPage() {
   const { t } = useTranslation()
   const [notifications, setNotifications] = useState([])
-  const [activeFilter, setActiveFilter] = useState(notificationTypes.all)
   const [openDialog, setOpenDialog] = useState(false)
   const [selectedNotification, setSelectedNotification] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
-  // 从API加载通知
+  const [searchQuery, setSearchQuery] = useState('')
+  const [filterType, setFilterType] = useState('')
+  const [filterReadStatus, setFilterReadStatus] = useState('')
+  const [appliedSearchQuery, setAppliedSearchQuery] = useState('')
+  const [appliedFilterType, setAppliedFilterType] = useState('')
+  const [appliedFilterReadStatus, setAppliedFilterReadStatus] = useState('')
+
   const fetchNotifications = async () => {
     try {
       setLoading(true)
@@ -108,10 +125,30 @@ export default function NotificationsPage() {
 
   const unreadCount = notifications.filter(n => !n.read).length
 
+  const handleSearch = () => {
+    setAppliedSearchQuery(searchQuery)
+    setAppliedFilterType(filterType)
+    setAppliedFilterReadStatus(filterReadStatus)
+  }
+
+  const handleReset = () => {
+    setSearchQuery('')
+    setFilterType('')
+    setFilterReadStatus('')
+    setAppliedSearchQuery('')
+    setAppliedFilterType('')
+    setAppliedFilterReadStatus('')
+  }
+
   const filteredNotifications = notifications.filter(n => {
-    if (activeFilter === notificationTypes.all) return true
-    if (activeFilter === notificationTypes.unread) return !n.read
-    return n.type === activeFilter
+    const matchesSearch = !appliedSearchQuery ||
+      n.title?.toLowerCase().includes(appliedSearchQuery.toLowerCase()) ||
+      n.content?.toLowerCase().includes(appliedSearchQuery.toLowerCase())
+    const matchesType = !appliedFilterType || n.type === appliedFilterType
+    const matchesReadStatus = appliedFilterReadStatus === '' ||
+      (appliedFilterReadStatus === 'read' && n.read) ||
+      (appliedFilterReadStatus === 'unread' && !n.read)
+    return matchesSearch && matchesType && matchesReadStatus
   })
 
   const handleMarkAsRead = async (id) => {
@@ -135,14 +172,16 @@ export default function NotificationsPage() {
   }
 
   const handleDeleteNotification = async (id) => {
-    try {
-      await deleteNotification(id)
-      setNotifications(notifications.filter(n => n.id !== id))
-      if (selectedNotification?.id === id) {
-        handleCloseDialog()
+    if (window.confirm(t('confirmDelete'))) {
+      try {
+        await deleteNotification(id)
+        setNotifications(notifications.filter(n => n.id !== id))
+        if (selectedNotification?.id === id) {
+          handleCloseDialog()
+        }
+      } catch (err) {
+        console.error('Failed to delete notification:', err)
       }
-    } catch (err) {
-      console.error('Failed to delete notification:', err)
     }
   }
 
@@ -159,39 +198,67 @@ export default function NotificationsPage() {
     setSelectedNotification(null)
   }
 
-  const getFilterOptions = () => [
-    { value: notificationTypes.all, label: t('notifications.filters.all') },
-    { value: notificationTypes.unread, label: t('notifications.filters.unread') },
-    { value: notificationTypes.system, label: t('notifications.filters.system') },
-    { value: notificationTypes.task, label: t('notifications.filters.task') },
-    { value: notificationTypes.message, label: t('notifications.filters.message') }
-  ]
-
   return (
     <Box sx={{ p: 2 }}>
-      {/* Header */}
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3, gap: 2, flexWrap: 'wrap' }}>
+        <Box sx={{ display: 'flex', gap: 2, alignItems: 'center', flexWrap: 'wrap' }}>
           {unreadCount > 0 && (
             <Chip
-              label={`${unreadCount} ${t('notifications.unread')}`}
+              label={`${unreadCount} 未读`}
               color="primary"
               size="small"
             />
           )}
+          <TextField
+            label={t('common.search')}
+            size="small"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder="通知标题"
+            sx={{ minWidth: 200 }}
+          />
+          <FormControl size="small" sx={{ minWidth: 150 }}>
+            <InputLabel>通知类型</InputLabel>
+            <Select
+              value={filterType}
+              onChange={(e) => setFilterType(e.target.value)}
+              label="通知类型"
+            >
+              <MenuItem value="">{t('common.all')}</MenuItem>
+              {typeOptions.map((opt) => (
+                <MenuItem key={opt.value} value={opt.value}>{opt.label}</MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          <FormControl size="small" sx={{ minWidth: 120 }}>
+            <InputLabel>阅读状态</InputLabel>
+            <Select
+              value={filterReadStatus}
+              onChange={(e) => setFilterReadStatus(e.target.value)}
+              label="阅读状态"
+            >
+              <MenuItem value="">{t('common.all')}</MenuItem>
+              <MenuItem value="read">已读</MenuItem>
+              <MenuItem value="unread">未读</MenuItem>
+            </Select>
+          </FormControl>
+          <Button variant="contained" onClick={handleSearch}>
+            {t('common.search')}
+          </Button>
+          <Button onClick={handleReset}>
+            {t('common.reset')}
+          </Button>
         </Box>
         {unreadCount > 0 && (
           <Button
             startIcon={<MarkReadIcon />}
             onClick={handleMarkAllAsRead}
-            size="small"
           >
-            {t('notifications.markAllRead')}
+            全部标为已读
           </Button>
         )}
       </Box>
 
-      {/* Error Alert */}
       {error && (
         <Alert severity="error" sx={{ mb: 2 }}>
           {error}
@@ -201,128 +268,110 @@ export default function NotificationsPage() {
         </Alert>
       )}
 
-      {/* Filter Tabs */}
-      <Paper sx={{ mb: 2 }}>
-        <Tabs
-          value={activeFilter}
-          onChange={(_, newValue) => setActiveFilter(newValue)}
-          variant="scrollable"
-          scrollButtons="auto"
-        >
-          {getFilterOptions().map(option => (
-            <Tab
-              key={option.value}
-              value={option.value}
-              label={
-                option.value === notificationTypes.unread
-                  ? `${option.label} (${unreadCount})`
-                  : option.label
-              }
-            />
-          ))}
-        </Tabs>
-      </Paper>
-
-      {/* Notifications List */}
-      <Card>
-        <CardContent sx={{ p: 0 }}>
-          {loading ? (
-            <Box sx={{ p: 4, textAlign: 'center' }}>
-              <CircularProgress />
-            </Box>
-          ) : filteredNotifications.length === 0 ? (
-            <Box sx={{ p: 4, textAlign: 'center' }}>
-              <NotificationsIcon sx={{ fontSize: 64, color: 'text.disabled', mb: 2 }} />
-              <Typography variant="h6" color="text.secondary">
-                {t('notifications.noNotifications')}
-              </Typography>
-            </Box>
-          ) : (
-            <List>
-              {filteredNotifications.map((notification, index) => (
-                <div key={notification.id}>
-                  {index > 0 && <Divider />}
-                  <ListItem
-                    disablePadding
-                    sx={{
-                      bgcolor: notification.read ? 'transparent' : 'action.hover'
-                    }}
-                  >
-                    <ListItemButton
-                      onClick={() => handleNotificationClick(notification)}
-                      sx={{ py: 2 }}
-                    >
-                      <ListItemAvatar>
-                        <Avatar sx={{ bgcolor: `${notification.color}.main` }}>
-                          {iconMap[notification.icon] || <NotificationsIcon />}
-                        </Avatar>
-                      </ListItemAvatar>
-                      <ListItemText
-                        disableTypography
-                        primary={
-                          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                            <Typography variant="body1" fontWeight={notification.read ? 'normal' : 'bold'}>
-                              {notification.title}
-                            </Typography>
-                            {!notification.read && (
-                              <Box
-                                sx={{
-                                  width: 8,
-                                  height: 8,
-                                  borderRadius: '50%',
-                                  bgcolor: 'primary.main'
-                                }}
-                              />
-                            )}
-                          </Box>
-                        }
-                        secondary={
-                          <Box>
-                            <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>
-                              {notification.content}
-                            </Typography>
-                            <Typography variant="caption" color="text.disabled" sx={{ mt: 1, display: 'block' }}>
-                              {getRelativeTime(notification.date)}
-                            </Typography>
-                          </Box>
-                        }
-                      />
-                      <Box sx={{ display: 'flex', gap: 0.5 }}>
-                        {!notification.read && (
-                          <IconButton
-                            edge="end"
-                            size="small"
-                            onClick={(e) => { e.stopPropagation(); handleMarkAsRead(notification.id); }}
-                            title={t('notifications.markRead')}
-                          >
-                            <MarkReadIcon fontSize="small" />
-                          </IconButton>
-                        )}
-                        <IconButton
-                          edge="end"
+      {loading ? (
+        <Box sx={{ display: 'flex', justifyContent: 'center', p: 2 }}>
+          <CircularProgress />
+        </Box>
+      ) : (
+        <TableContainer component={Paper} sx={{ height: 600 }}>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>ID</TableCell>
+                <TableCell>类型</TableCell>
+                <TableCell>标题</TableCell>
+                <TableCell>内容</TableCell>
+                <TableCell>发送人</TableCell>
+                <TableCell>时间</TableCell>
+                <TableCell>状态</TableCell>
+                <TableCell align="center">{t('userManagement.actions')}</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {filteredNotifications.length === 0 ? (
+                <TableRow>
+                  <TableCell colSpan={8} align="center">
+                    <Box sx={{ p: 4, textAlign: 'center' }}>
+                      <NotificationsIcon sx={{ fontSize: 64, color: 'text.disabled', mb: 2 }} />
+                      <Typography variant="h6" color="text.secondary">
+                        暂无通知消息
+                      </Typography>
+                    </Box>
+                  </TableCell>
+                </TableRow>
+              ) : (
+                filteredNotifications.map((notification) => {
+                  const typeInfo = typeConfig[notification.type] || typeConfig.system
+                  return (
+                    <TableRow key={notification.id} hover sx={{ cursor: 'pointer', bgcolor: notification.read ? 'transparent' : 'action.hover' }}>
+                      <TableCell onClick={() => handleNotificationClick(notification)}>{notification.id}</TableCell>
+                      <TableCell onClick={() => handleNotificationClick(notification)}>
+                        <Chip
+                          icon={typeInfo.icon}
+                          label={typeOptions.find(o => o.value === notification.type)?.label || notification.type}
                           size="small"
-                          onClick={(e) => { e.stopPropagation(); handleDeleteNotification(notification.id); }}
-                          title={t('notifications.delete')}
+                          color={typeInfo.color}
+                          variant="outlined"
+                        />
+                      </TableCell>
+                      <TableCell onClick={() => handleNotificationClick(notification)} sx={{ fontWeight: notification.read ? 'normal' : 'bold' }}>
+                        {notification.title}
+                      </TableCell>
+                      <TableCell onClick={() => handleNotificationClick(notification)}>
+                        <Typography
+                          variant="body2"
+                          sx={{
+                            maxWidth: 300,
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis',
+                            whiteSpace: 'nowrap'
+                          }}
                         >
-                          <DeleteIcon fontSize="small" />
-                        </IconButton>
-                      </Box>
-                    </ListItemButton>
-                  </ListItem>
-                </div>
-              ))}
-            </List>
-          )}
-        </CardContent>
-      </Card>
+                          {notification.content}
+                        </Typography>
+                      </TableCell>
+                      <TableCell onClick={() => handleNotificationClick(notification)}>{notification.sender}</TableCell>
+                      <TableCell onClick={() => handleNotificationClick(notification)}>{getRelativeTime(notification.date)}</TableCell>
+                      <TableCell onClick={() => handleNotificationClick(notification)}>
+                        <Chip
+                          label={notification.read ? '已读' : '未读'}
+                          size="small"
+                          color={notification.read ? 'default' : 'primary'}
+                        />
+                      </TableCell>
+                      <TableCell align="center">
+                        <Box sx={{ display: 'flex', gap: 0.5, justifyContent: 'center' }}>
+                          {!notification.read && (
+                            <Tooltip title="标记为已读">
+                              <IconButton
+                                size="small"
+                                onClick={(e) => { e.stopPropagation(); handleMarkAsRead(notification.id); }}
+                              >
+                                <MarkReadIcon fontSize="small" />
+                              </IconButton>
+                            </Tooltip>
+                          )}
+                          <Tooltip title={t('common.delete')}>
+                            <IconButton
+                              size="small"
+                              color="error"
+                              onClick={(e) => { e.stopPropagation(); handleDeleteNotification(notification.id); }}
+                            >
+                              <DeleteIcon fontSize="small" />
+                            </IconButton>
+                          </Tooltip>
+                        </Box>
+                      </TableCell>
+                    </TableRow>
+                  )
+                })
+              )}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      )}
 
-      {/* Notification Detail Dialog */}
-      <Dialog
-        open={openDialog}
-        onClose={handleCloseDialog}
-        maxWidth="sm"
-        fullWidth
-      >
+      <Dialog open={openDialog} onClose={handleCloseDialog} maxWidth="sm" fullWidth>
         {selectedNotification && (
           <>
             <DialogTitle sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -335,17 +384,17 @@ export default function NotificationsPage() {
             <DialogContent sx={{ pt: 2 }}>
               <Box sx={{ mb: 3 }}>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
-                  <Avatar sx={{ bgcolor: `${selectedNotification.color}.main` }}>
+                  <Avatar sx={{ bgcolor: `${selectedNotification.color || 'primary'}.main` }}>
                     {iconMap[selectedNotification.icon] || <NotificationsIcon />}
                   </Avatar>
                   <Box>
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 0.5 }}>
                       <PersonIcon sx={{ fontSize: 16, color: 'text.secondary' }} />
                       <Typography variant="body2" color="text.secondary">
                         {selectedNotification.sender}
                       </Typography>
                     </Box>
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mt: 0.5 }}>
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                       <CalendarTodayIcon sx={{ fontSize: 16, color: 'text.secondary' }} />
                       <Typography variant="caption" color="text.disabled">
                         {selectedNotification.date}
@@ -355,10 +404,10 @@ export default function NotificationsPage() {
                 </Box>
               </Box>
               <Typography variant="body1" sx={{ whiteSpace: 'pre-wrap' }}>
-                {selectedNotification.detail}
+                {selectedNotification.detail || selectedNotification.content}
               </Typography>
             </DialogContent>
-            <DialogActions sx={{ px: 3, pb: 3 }}>
+            <DialogActions>
               <Button onClick={handleCloseDialog}>
                 关闭
               </Button>

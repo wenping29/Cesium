@@ -3,7 +3,8 @@ import {
   Box, Typography, Button, Dialog, DialogTitle, DialogContent,
   DialogActions, TextField, MenuItem, Table, TableBody, TableCell,
   TableContainer, TableHead, TableRow, Paper, Chip, IconButton,
-  CircularProgress, TablePagination, Alert, Snackbar, Divider
+  CircularProgress, TablePagination, Alert, Snackbar, Divider,
+  FormControl, InputLabel, Select
 } from '@mui/material'
 import {
   Add as AddIcon,
@@ -12,8 +13,10 @@ import {
   Notifications as NotificationsIcon,
   SystemUpdate as SystemUpdateIcon,
   Assignment as AssignmentIcon,
-  Chat as ChatIcon
+  Chat as ChatIcon,
+  Edit as EditIcon
 } from '@mui/icons-material'
+import { useTranslation } from 'react-i18next'
 import {
   getAllNotifications,
   createNotification,
@@ -41,6 +44,7 @@ const getRelativeTime = (dateStr) => {
 }
 
 export default function SendMessagePage() {
+  const { t } = useTranslation()
   const [notifications, setNotifications] = useState([])
   const [total, setTotal] = useState(0)
   const [loading, setLoading] = useState(true)
@@ -55,6 +59,13 @@ export default function SendMessagePage() {
     sendTime: ''
   })
   const [submitting, setSubmitting] = useState(false)
+
+  const [searchQuery, setSearchQuery] = useState('')
+  const [filterType, setFilterType] = useState('')
+  const [filterReadStatus, setFilterReadStatus] = useState('')
+  const [appliedSearchQuery, setAppliedSearchQuery] = useState('')
+  const [appliedFilterType, setAppliedFilterType] = useState('')
+  const [appliedFilterReadStatus, setAppliedFilterReadStatus] = useState('')
 
   const fetchNotifications = async () => {
     try {
@@ -132,12 +143,76 @@ export default function SendMessagePage() {
     { value: 'message', label: '普通消息' }
   ]
 
+  const handleSearch = () => {
+    setAppliedSearchQuery(searchQuery)
+    setAppliedFilterType(filterType)
+    setAppliedFilterReadStatus(filterReadStatus)
+  }
+
+  const handleReset = () => {
+    setSearchQuery('')
+    setFilterType('')
+    setFilterReadStatus('')
+    setAppliedSearchQuery('')
+    setAppliedFilterType('')
+    setAppliedFilterReadStatus('')
+  }
+
+  const filteredNotifications = notifications.filter(item => {
+    const matchesSearch = !appliedSearchQuery ||
+      item.title?.toLowerCase().includes(appliedSearchQuery.toLowerCase()) ||
+      item.content?.toLowerCase().includes(appliedSearchQuery.toLowerCase())
+    const matchesType = !appliedFilterType || item.type === appliedFilterType
+    const matchesReadStatus = appliedFilterReadStatus === '' ||
+      (appliedFilterReadStatus === 'read' && item.read) ||
+      (appliedFilterReadStatus === 'unread' && !item.read)
+    return matchesSearch && matchesType && matchesReadStatus
+  })
+
   return (
     <Box sx={{ p: 2 }}>
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
-        <Typography variant="h5" sx={{ fontWeight: 'bold' }}>
-          消息管理
-        </Typography>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3, gap: 2, flexWrap: 'wrap' }}>
+        <Box sx={{ display: 'flex', gap: 2, alignItems: 'center', flexWrap: 'wrap' }}>
+          <TextField
+            label={t('common.search')}
+            size="small"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder="消息标题"
+            sx={{ minWidth: 200 }}
+          />
+          <FormControl size="small" sx={{ minWidth: 150 }}>
+            <InputLabel>消息类型</InputLabel>
+            <Select
+              value={filterType}
+              onChange={(e) => setFilterType(e.target.value)}
+              label="消息类型"
+            >
+              <MenuItem value="">{t('common.all')}</MenuItem>
+              {typeOptions.map((opt) => (
+                <MenuItem key={opt.value} value={opt.value}>{opt.label}</MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          <FormControl size="small" sx={{ minWidth: 120 }}>
+            <InputLabel>阅读状态</InputLabel>
+            <Select
+              value={filterReadStatus}
+              onChange={(e) => setFilterReadStatus(e.target.value)}
+              label="阅读状态"
+            >
+              <MenuItem value="">{t('common.all')}</MenuItem>
+              <MenuItem value="read">已读</MenuItem>
+              <MenuItem value="unread">未读</MenuItem>
+            </Select>
+          </FormControl>
+          <Button variant="contained" onClick={handleSearch}>
+            {t('common.search')}
+          </Button>
+          <Button onClick={handleReset}>
+            {t('common.reset')}
+          </Button>
+        </Box>
         <Button
           variant="contained"
           startIcon={<AddIcon />}
@@ -147,38 +222,46 @@ export default function SendMessagePage() {
         </Button>
       </Box>
 
-      <TableContainer component={Paper} sx={{ height: 500 }}>
-        <Table size="small" sx={{ height: 400 }}>
+      <TableContainer component={Paper} sx={{ height: 600 }}>
+        <Table>
           <TableHead>
             <TableRow>
+              <TableCell>ID</TableCell>
               <TableCell>类型</TableCell>
               <TableCell>标题</TableCell>
               <TableCell>内容</TableCell>
               <TableCell>发送人</TableCell>
               <TableCell>时间</TableCell>
               <TableCell>状态</TableCell>
-              <TableCell align="center">操作</TableCell>
+              <TableCell align="center">{t('userManagement.actions')}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {loading ? (
               <TableRow>
-                <TableCell colSpan={7} align="center" sx={{ py: 4 }}>
-                  <CircularProgress />
+                <TableCell colSpan={8} align="center">
+                  <Box sx={{ display: 'flex', justifyContent: 'center', p: 2 }}>
+                    <CircularProgress />
+                  </Box>
                 </TableCell>
               </TableRow>
-            ) : notifications.length === 0 ? (
+            ) : filteredNotifications.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={7} align="center" sx={{ py: 4 }}>
-                  <NotificationsIcon sx={{ fontSize: 48, color: 'text.disabled', mb: 1 }} />
-                  <Typography color="text.secondary">暂无通知消息</Typography>
+                <TableCell colSpan={8} align="center">
+                  <Box sx={{ p: 4, textAlign: 'center' }}>
+                    <NotificationsIcon sx={{ fontSize: 64, color: 'text.disabled', mb: 2 }} />
+                    <Typography variant="h6" color="text.secondary">
+                      暂无通知消息
+                    </Typography>
+                  </Box>
                 </TableCell>
               </TableRow>
             ) : (
-              notifications.map((item) => {
+              filteredNotifications.map((item) => {
                 const typeInfo = typeConfig[item.type] || typeConfig.system
                 return (
                   <TableRow key={item.id} hover>
+                    <TableCell>{item.id}</TableCell>
                     <TableCell>
                       <Chip
                         icon={typeInfo.icon}
@@ -218,6 +301,7 @@ export default function SendMessagePage() {
                         size="small"
                         color="error"
                         onClick={() => handleDelete(item.id)}
+                        title={t('common.delete')}
                       >
                         <DeleteIcon fontSize="small" />
                       </IconButton>
@@ -241,19 +325,20 @@ export default function SendMessagePage() {
       <Dialog open={openDialog} onClose={handleCloseDialog} maxWidth="sm" fullWidth>
         <DialogTitle>发送新消息</DialogTitle>
         <Divider />
-        <DialogContent sx={{ pt: 2 }}>
-          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, mt: 1 }}>
-            <TextField
-              select
-              label="消息类型"
-              value={formData.type}
-              onChange={handleInputChange('type')}
-              fullWidth
-            >
-              {typeOptions.map((opt) => (
-                <MenuItem key={opt.value} value={opt.value}>{opt.label}</MenuItem>
-              ))}
-            </TextField>
+        <DialogContent>
+          <Box sx={{ pt: 2, display: 'flex', flexDirection: 'column', gap: 2 }}>
+            <FormControl fullWidth>
+              <InputLabel>消息类型</InputLabel>
+              <Select
+                value={formData.type}
+                onChange={handleInputChange('type')}
+                label="消息类型"
+              >
+                {typeOptions.map((opt) => (
+                  <MenuItem key={opt.value} value={opt.value}>{opt.label}</MenuItem>
+                ))}
+              </Select>
+            </FormControl>
             <TextField
               label="计划发送时间"
               type="datetime-local"
@@ -280,8 +365,8 @@ export default function SendMessagePage() {
             />
           </Box>
         </DialogContent>
-        <DialogActions sx={{ px: 3, pb: 3 }}>
-          <Button onClick={handleCloseDialog}>取消</Button>
+        <DialogActions>
+          <Button onClick={handleCloseDialog}>{t('common.cancel')}</Button>
           <Button
             variant="contained"
             startIcon={<SendIcon />}
