@@ -220,36 +220,36 @@ export default function AttendanceReportPage() {
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell>{t('attendanceReport.date')}</TableCell>
-                <TableCell>{t('attendanceReport.dayOfWeek')}</TableCell>
-                <TableCell>{t('attendanceReport.user')}</TableCell>
-                <TableCell>{t('attendanceReport.checkInTime')}</TableCell>
-                <TableCell>{t('attendanceReport.checkOutTime')}</TableCell>
-                <TableCell>{t('attendanceReport.status')}</TableCell>
-                <TableCell>{t('attendanceReport.remark')}</TableCell>
+                <TableCell sx={{ height: 48, py: 0 }}>{t('attendanceReport.date')}</TableCell>
+                <TableCell sx={{ height: 48, py: 0 }}>{t('attendanceReport.dayOfWeek')}</TableCell>
+                <TableCell sx={{ height: 48, py: 0 }}>{t('attendanceReport.user')}</TableCell>
+                <TableCell sx={{ height: 48, py: 0 }}>{t('attendanceReport.checkInTime')}</TableCell>
+                <TableCell sx={{ height: 48, py: 0 }}>{t('attendanceReport.checkOutTime')}</TableCell>
+                <TableCell sx={{ height: 48, py: 0 }}>{t('attendanceReport.status')}</TableCell>
+                <TableCell sx={{ height: 48, py: 0 }}>{t('attendanceReport.remark')}</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {attendances.map((attendance) => (
-                <TableRow key={attendance.id}>
-                  <TableCell>{formatDate(attendance.date)}</TableCell>
-                  <TableCell>{getDayOfWeek(attendance.date)}</TableCell>
-                  <TableCell>{attendance.userName}</TableCell>
-                  <TableCell>{formatTime(attendance.checkInTime)}</TableCell>
-                  <TableCell>{formatTime(attendance.checkOutTime)}</TableCell>
-                  <TableCell>
+                <TableRow key={attendance.id} sx={{ height: 48 }}>
+                  <TableCell sx={{ height: 48, py: 0 }}>{formatDate(attendance.date)}</TableCell>
+                  <TableCell sx={{ height: 48, py: 0 }}>{getDayOfWeek(attendance.date)}</TableCell>
+                  <TableCell sx={{ height: 48, py: 0 }}>{attendance.userName}</TableCell>
+                  <TableCell sx={{ height: 48, py: 0 }}>{formatTime(attendance.checkInTime)}</TableCell>
+                  <TableCell sx={{ height: 48, py: 0 }}>{formatTime(attendance.checkOutTime)}</TableCell>
+                  <TableCell sx={{ height: 48, py: 0 }}>
                     <Chip
                       label={statusConfig[attendance.status]?.label || attendance.status}
                       color={statusConfig[attendance.status]?.color || 'default'}
                       size="small"
                     />
                   </TableCell>
-                  <TableCell>{attendance.remark || '-'}</TableCell>
+                  <TableCell sx={{ height: 48, py: 0 }}>{attendance.remark || '-'}</TableCell>
                 </TableRow>
               ))}
               {attendances.length === 0 && (
-                <TableRow>
-                  <TableCell colSpan={7} align="center">
+                <TableRow sx={{ height: 48 }}>
+                  <TableCell sx={{ height: 48, py: 0 }} colSpan={7} align="center">
                     {t('common.noData')}
                   </TableCell>
                 </TableRow>

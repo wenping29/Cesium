@@ -53,27 +53,27 @@ export default function EarthquakeTablePage() {
         <Table size="small">
           <TableHead>
             <TableRow>
-              <TableCell>{t('earthquakeTable.magnitude')}</TableCell>
-              <TableCell>{t('earthquakeTable.depth')}</TableCell>
-              <TableCell>{t('earthquakeTable.region')}</TableCell>
-              <TableCell>{t('earthquakeTable.time')}</TableCell>
-              <TableCell>{t('earthquakeTable.location')}</TableCell>
+              <TableCell sx={{ height: 48, py: 0 }}>{t('earthquakeTable.magnitude')}</TableCell>
+              <TableCell sx={{ height: 48, py: 0 }}>{t('earthquakeTable.depth')}</TableCell>
+              <TableCell sx={{ height: 48, py: 0 }}>{t('earthquakeTable.region')}</TableCell>
+              <TableCell sx={{ height: 48, py: 0 }}>{t('earthquakeTable.time')}</TableCell>
+              <TableCell sx={{ height: 48, py: 0 }}>{t('earthquakeTable.location')}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {paged.map((eq) => (
-              <TableRow key={eq.id} hover>
-                <TableCell>
+              <TableRow key={eq.id} hover sx={{ height: 48 }}>
+                <TableCell sx={{ height: 48, py: 0 }}>
                   <Chip
                     label={`M${eq.magnitude.toFixed(1)}`}
                     size="small"
                     sx={{ color: '#fff', bgcolor: getMagnitudeColor(eq.magnitude), fontWeight: 'bold' }}
                   />
                 </TableCell>
-                <TableCell>{eq.depth} km</TableCell>
-                <TableCell>{eq.region}</TableCell>
-                <TableCell>{new Date(eq.time).toLocaleString()}</TableCell>
-                <TableCell>({eq.lat}, {eq.lng})</TableCell>
+                <TableCell sx={{ height: 48, py: 0 }}>{eq.depth} km</TableCell>
+                <TableCell sx={{ height: 48, py: 0 }}>{eq.region}</TableCell>
+                <TableCell sx={{ height: 48, py: 0 }}>{new Date(eq.time).toLocaleString()}</TableCell>
+                <TableCell sx={{ height: 48, py: 0 }}>({eq.lat}, {eq.lng})</TableCell>
               </TableRow>
             ))}
           </TableBody>

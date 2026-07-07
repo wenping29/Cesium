@@ -173,33 +173,33 @@ export default function MenuManagementPage() {
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell>ID</TableCell>
-                <TableCell>{t('menuManagement.name')}</TableCell>
-                <TableCell>{t('menuManagement.path')}</TableCell>
-                <TableCell>{t('menuManagement.icon')}</TableCell>
-                <TableCell>{t('menuManagement.sortOrder')}</TableCell>
-                <TableCell>{t('menuManagement.isVisible')}</TableCell>
-                <TableCell>{t('menuManagement.permission')}</TableCell>
-                <TableCell>{t('menuManagement.actions')}</TableCell>
+                <TableCell sx={{ height: 48, py: 0 }}>ID</TableCell>
+                <TableCell sx={{ height: 48, py: 0 }}>{t('menuManagement.name')}</TableCell>
+                <TableCell sx={{ height: 48, py: 0 }}>{t('menuManagement.path')}</TableCell>
+                <TableCell sx={{ height: 48, py: 0 }}>{t('menuManagement.icon')}</TableCell>
+                <TableCell sx={{ height: 48, py: 0 }}>{t('menuManagement.sortOrder')}</TableCell>
+                <TableCell sx={{ height: 48, py: 0 }}>{t('menuManagement.isVisible')}</TableCell>
+                <TableCell sx={{ height: 48, py: 0 }}>{t('menuManagement.permission')}</TableCell>
+                <TableCell sx={{ height: 48, py: 0 }}>{t('menuManagement.actions')}</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {filteredMenuItems.map((menu) => {
                 const indent = getIndent(menu)
                 return (
-                  <TableRow key={menu.id}>
-                    <TableCell>{menu.id}</TableCell>
-                    <TableCell sx={{ pl: indent * 3 + 2 }}>
+                  <TableRow key={menu.id} sx={{ height: 48 }}>
+                    <TableCell sx={{ height: 48, py: 0 }}>{menu.id}</TableCell>
+                    <TableCell sx={{ height: 48, py: 0, pl: indent * 3 + 2 }}>
                       {indent > 0 && '└ '}{menu.name}
                     </TableCell>
-                    <TableCell>{menu.path || '-'}</TableCell>
-                    <TableCell>{menu.icon || '-'}</TableCell>
-                    <TableCell>{menu.sortOrder}</TableCell>
-                    <TableCell>
+                    <TableCell sx={{ height: 48, py: 0 }}>{menu.path || '-'}</TableCell>
+                    <TableCell sx={{ height: 48, py: 0 }}>{menu.icon || '-'}</TableCell>
+                    <TableCell sx={{ height: 48, py: 0 }}>{menu.sortOrder}</TableCell>
+                    <TableCell sx={{ height: 48, py: 0 }}>
                       <Switch checked={menu.isVisible} disabled size="small" />
                     </TableCell>
-                    <TableCell>{menu.permission || '-'}</TableCell>
-                    <TableCell>
+                    <TableCell sx={{ height: 48, py: 0 }}>{menu.permission || '-'}</TableCell>
+                    <TableCell sx={{ height: 48, py: 0 }}>
                       <Tooltip title={t('common.edit')}>
                         <IconButton size="small" onClick={() => handleOpenEdit(menu)}>
                           <EditIcon fontSize="small" />

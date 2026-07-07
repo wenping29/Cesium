@@ -303,9 +303,9 @@ export default function NotificationsPage() {
                 filteredNotifications.map((notification) => {
                   const typeInfo = typeConfig[notification.type] || typeConfig.system
                   return (
-                    <TableRow key={notification.id} hover sx={{ cursor: 'pointer', bgcolor: notification.read ? 'transparent' : 'action.hover' }}>
-                      <TableCell onClick={() => handleNotificationClick(notification)}>{notification.id}</TableCell>
-                      <TableCell onClick={() => handleNotificationClick(notification)}>
+                    <TableRow key={notification.id} hover sx={{ cursor: 'pointer', bgcolor: notification.read ? 'transparent' : 'action.hover', height: 48 }}>
+                      <TableCell onClick={() => handleNotificationClick(notification)} sx={{ height: 48, py: 0 }}>{notification.id}</TableCell>
+                      <TableCell onClick={() => handleNotificationClick(notification)} sx={{ height: 48, py: 0 }}>
                         <Chip
                           icon={typeInfo.icon}
                           label={typeOptions.find(o => o.value === notification.type)?.label || notification.type}
@@ -314,10 +314,10 @@ export default function NotificationsPage() {
                           variant="outlined"
                         />
                       </TableCell>
-                      <TableCell onClick={() => handleNotificationClick(notification)} sx={{ fontWeight: notification.read ? 'normal' : 'bold' }}>
+                      <TableCell onClick={() => handleNotificationClick(notification)} sx={{ height: 48, py: 0, fontWeight: notification.read ? 'normal' : 'bold' }}>
                         {notification.title}
                       </TableCell>
-                      <TableCell onClick={() => handleNotificationClick(notification)}>
+                      <TableCell onClick={() => handleNotificationClick(notification)} sx={{ height: 48, py: 0 }}>
                         <Typography
                           variant="body2"
                           sx={{
@@ -330,16 +330,16 @@ export default function NotificationsPage() {
                           {notification.content}
                         </Typography>
                       </TableCell>
-                      <TableCell onClick={() => handleNotificationClick(notification)}>{notification.sender}</TableCell>
-                      <TableCell onClick={() => handleNotificationClick(notification)}>{getRelativeTime(notification.date)}</TableCell>
-                      <TableCell onClick={() => handleNotificationClick(notification)}>
+                      <TableCell onClick={() => handleNotificationClick(notification)} sx={{ height: 48, py: 0 }}>{notification.sender}</TableCell>
+                      <TableCell onClick={() => handleNotificationClick(notification)} sx={{ height: 48, py: 0 }}>{getRelativeTime(notification.date)}</TableCell>
+                      <TableCell onClick={() => handleNotificationClick(notification)} sx={{ height: 48, py: 0 }}>
                         <Chip
                           label={notification.read ? '已读' : '未读'}
                           size="small"
                           color={notification.read ? 'default' : 'primary'}
                         />
                       </TableCell>
-                      <TableCell align="center">
+                      <TableCell align="center" sx={{ height: 48, py: 0 }}>
                         <Box sx={{ display: 'flex', gap: 0.5, justifyContent: 'center' }}>
                           {!notification.read && (
                             <Tooltip title="标记为已读">

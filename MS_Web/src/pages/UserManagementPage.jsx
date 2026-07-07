@@ -187,36 +187,36 @@ export default function UserManagementPage() {
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell>ID</TableCell>
-                <TableCell>{t('userManagement.username')}</TableCell>
-                <TableCell>{t('userManagement.email')}</TableCell>
-                <TableCell>{t('userManagement.phone')}</TableCell>
-                <TableCell>{t('userManagement.department')}</TableCell>
-                <TableCell>{t('userManagement.roles')}</TableCell>
-                <TableCell>{t('userManagement.status')}</TableCell>
-                <TableCell>{t('userManagement.createdAt')}</TableCell>
-                <TableCell>{t('userManagement.actions')}</TableCell>
+                <TableCell sx={{ height: 48, py: 0 }}>ID</TableCell>
+                <TableCell sx={{ height: 48, py: 0 }}>{t('userManagement.username')}</TableCell>
+                <TableCell sx={{ height: 48, py: 0 }}>{t('userManagement.email')}</TableCell>
+                <TableCell sx={{ height: 48, py: 0 }}>{t('userManagement.phone')}</TableCell>
+                <TableCell sx={{ height: 48, py: 0 }}>{t('userManagement.department')}</TableCell>
+                <TableCell sx={{ height: 48, py: 0 }}>{t('userManagement.roles')}</TableCell>
+                <TableCell sx={{ height: 48, py: 0 }}>{t('userManagement.status')}</TableCell>
+                <TableCell sx={{ height: 48, py: 0 }}>{t('userManagement.createdAt')}</TableCell>
+                <TableCell sx={{ height: 48, py: 0 }}>{t('userManagement.actions')}</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {filteredUsers.map((user) => (
-                <TableRow key={user.id}>
-                  <TableCell>{user.id}</TableCell>
-                  <TableCell>{user.username}</TableCell>
-                  <TableCell>{user.email}</TableCell>
-                  <TableCell>{user.phone || '-'}</TableCell>
-                  <TableCell>{user.departmentName || '-'}</TableCell>
-                  <TableCell>
+                <TableRow key={user.id} sx={{ height: 48 }}>
+                  <TableCell sx={{ height: 48, py: 0 }}>{user.id}</TableCell>
+                  <TableCell sx={{ height: 48, py: 0 }}>{user.username}</TableCell>
+                  <TableCell sx={{ height: 48, py: 0 }}>{user.email}</TableCell>
+                  <TableCell sx={{ height: 48, py: 0 }}>{user.phone || '-'}</TableCell>
+                  <TableCell sx={{ height: 48, py: 0 }}>{user.departmentName || '-'}</TableCell>
+                  <TableCell sx={{ height: 48, py: 0 }}>
                     {user.roles?.map((role) => (
                       <Chip key={role} label={role} size="small" sx={{ mr: 0.5, mb: 0.5 }} />
                     ))}
                   </TableCell>
-                  <TableCell>
+                  <TableCell sx={{ height: 48, py: 0 }}>
                     <Chip label={user.isActive ? t('common.active') : t('common.inactive')}
                       color={user.isActive ? 'success' : 'default'} size="small" />
                   </TableCell>
-                  <TableCell>{user.createdAt ? new Date(user.createdAt).toLocaleDateString() : '-'}</TableCell>
-                  <TableCell>
+                  <TableCell sx={{ height: 48, py: 0 }}>{user.createdAt ? new Date(user.createdAt).toLocaleDateString() : '-'}</TableCell>
+                  <TableCell sx={{ height: 48, py: 0 }}>
                     <Tooltip title={t('common.edit')}>
                       <IconButton size="small" onClick={() => handleOpenEdit(user)}>
                         <EditIcon fontSize="small" />

@@ -53,23 +53,23 @@ export default function TyphoonTablePage() {
         <Table size="small">
           <TableHead>
             <TableRow>
-              <TableCell>{t('typhoonTable.name')}</TableCell>
-              <TableCell>{t('typhoonTable.strength')}</TableCell>
-              <TableCell>{t('typhoonTable.windSpeed')}</TableCell>
-              <TableCell>{t('typhoonTable.pressure')}</TableCell>
-              <TableCell>{t('typhoonTable.time')}</TableCell>
-              <TableCell>{t('typhoonTable.status')}</TableCell>
+              <TableCell sx={{ height: 48, py: 0 }}>{t('typhoonTable.name')}</TableCell>
+              <TableCell sx={{ height: 48, py: 0 }}>{t('typhoonTable.strength')}</TableCell>
+              <TableCell sx={{ height: 48, py: 0 }}>{t('typhoonTable.windSpeed')}</TableCell>
+              <TableCell sx={{ height: 48, py: 0 }}>{t('typhoonTable.pressure')}</TableCell>
+              <TableCell sx={{ height: 48, py: 0 }}>{t('typhoonTable.time')}</TableCell>
+              <TableCell sx={{ height: 48, py: 0 }}>{t('typhoonTable.status')}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {paged.map((ty) => (
-              <TableRow key={ty.id} hover>
-                <TableCell sx={{ fontWeight: 'medium' }}>{ty.name}</TableCell>
-                <TableCell>{ty.strength}</TableCell>
-                <TableCell>{ty.windSpeed} m/s</TableCell>
-                <TableCell>{ty.pressure} hPa</TableCell>
-                <TableCell>{new Date(ty.time).toLocaleString()}</TableCell>
-                <TableCell>
+              <TableRow key={ty.id} hover sx={{ height: 48 }}>
+                <TableCell sx={{ height: 48, py: 0, fontWeight: 'medium' }}>{ty.name}</TableCell>
+                <TableCell sx={{ height: 48, py: 0 }}>{ty.strength}</TableCell>
+                <TableCell sx={{ height: 48, py: 0 }}>{ty.windSpeed} m/s</TableCell>
+                <TableCell sx={{ height: 48, py: 0 }}>{ty.pressure} hPa</TableCell>
+                <TableCell sx={{ height: 48, py: 0 }}>{new Date(ty.time).toLocaleString()}</TableCell>
+                <TableCell sx={{ height: 48, py: 0 }}>
                   <Chip
                     label={ty.isCurrent ? t('typhoonTable.active') : t('typhoonTable.historical')}
                     size="small"

@@ -181,27 +181,27 @@ export default function AnnualLeaveReportPage() {
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell>{t('annualLeaveReport.user')}</TableCell>
-                <TableCell>{t('annualLeaveReport.year')}</TableCell>
-                <TableCell>{t('annualLeaveReport.totalDays')}</TableCell>
-                <TableCell>{t('annualLeaveReport.carriedOverDays')}</TableCell>
-                <TableCell>{t('annualLeaveReport.usedDays')}</TableCell>
-                <TableCell>{t('annualLeaveReport.remainingDays')}</TableCell>
-                <TableCell>{t('annualLeaveReport.usage')}</TableCell>
+                <TableCell sx={{ height: 48, py: 0 }}>{t('annualLeaveReport.user')}</TableCell>
+                <TableCell sx={{ height: 48, py: 0 }}>{t('annualLeaveReport.year')}</TableCell>
+                <TableCell sx={{ height: 48, py: 0 }}>{t('annualLeaveReport.totalDays')}</TableCell>
+                <TableCell sx={{ height: 48, py: 0 }}>{t('annualLeaveReport.carriedOverDays')}</TableCell>
+                <TableCell sx={{ height: 48, py: 0 }}>{t('annualLeaveReport.usedDays')}</TableCell>
+                <TableCell sx={{ height: 48, py: 0 }}>{t('annualLeaveReport.remainingDays')}</TableCell>
+                <TableCell sx={{ height: 48, py: 0 }}>{t('annualLeaveReport.usage')}</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {annualleaves.map((al) => {
                 const percent = getUsagePercent(al)
                 return (
-                  <TableRow key={al.id}>
-                    <TableCell>{al.userName}</TableCell>
-                    <TableCell>{al.year}</TableCell>
-                    <TableCell>{al.totalDays.toFixed(1)}天</TableCell>
-                    <TableCell>{al.carriedOverDays.toFixed(1)}天</TableCell>
-                    <TableCell>{al.usedDays.toFixed(1)}天</TableCell>
-                    <TableCell>{al.remainingDays.toFixed(1)}天</TableCell>
-                    <TableCell sx={{ minWidth: 200 }}>
+                  <TableRow key={al.id} sx={{ height: 48 }}>
+                    <TableCell sx={{ height: 48, py: 0 }}>{al.userName}</TableCell>
+                    <TableCell sx={{ height: 48, py: 0 }}>{al.year}</TableCell>
+                    <TableCell sx={{ height: 48, py: 0 }}>{al.totalDays.toFixed(1)}天</TableCell>
+                    <TableCell sx={{ height: 48, py: 0 }}>{al.carriedOverDays.toFixed(1)}天</TableCell>
+                    <TableCell sx={{ height: 48, py: 0 }}>{al.usedDays.toFixed(1)}天</TableCell>
+                    <TableCell sx={{ height: 48, py: 0 }}>{al.remainingDays.toFixed(1)}天</TableCell>
+                    <TableCell sx={{ height: 48, py: 0, minWidth: 200 }}>
                       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                         <Box sx={{ flex: 1 }}>
                           <LinearProgress
@@ -220,8 +220,8 @@ export default function AnnualLeaveReportPage() {
                 )
               })}
               {annualleaves.length === 0 && (
-                <TableRow>
-                  <TableCell colSpan={7} align="center">
+                <TableRow sx={{ height: 48 }}>
+                  <TableCell sx={{ height: 48, py: 0 }} colSpan={7} align="center">
                     {t('common.noData')}
                   </TableCell>
                 </TableRow>

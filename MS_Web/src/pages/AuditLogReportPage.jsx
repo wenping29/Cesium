@@ -107,7 +107,7 @@ export default function AuditLogReportPage() {
       ) : (
         <Paper>
           <TableContainer sx={{ height: 600 }}>
-            <Table size="small"  sx={{ height: 650 }}>
+            <Table size="small" stickyHeader>
               <TableHead>
                 <TableRow>
                   <TableCell>{t('loginLogReport.id')}</TableCell>
@@ -121,21 +121,21 @@ export default function AuditLogReportPage() {
               </TableHead>
               <TableBody>
                 {logs.length === 0 ? (
-                  <TableRow>
-                    <TableCell colSpan={7} align="center">
+                  <TableRow sx={{ height: 48 }}>
+                    <TableCell colSpan={7} align="center" sx={{ height: 48, py: 0 }}>
                       {t('common.noData')}
                     </TableCell>
                   </TableRow>
                 ) : (
                   logs.map((log) => (
-                    <TableRow key={log.id} hover>
-                      <TableCell>{log.id}</TableCell>
-                      <TableCell>{log.username}</TableCell>
-                      <TableCell>{log.ipAddress || '-'}</TableCell>
-                      <TableCell>{log.deviceInfo || '-'}</TableCell>
-                      <TableCell>{log.browserInfo || '-'}</TableCell>
-                      <TableCell>{log.osInfo || '-'}</TableCell>
-                      <TableCell>{new Date(log.loginTime).toLocaleString()}</TableCell>
+                    <TableRow key={log.id} hover sx={{ height: 48 }}>
+                      <TableCell sx={{ height: 48, py: 0 }}>{log.id}</TableCell>
+                      <TableCell sx={{ height: 48, py: 0 }}>{log.username}</TableCell>
+                      <TableCell sx={{ height: 48, py: 0 }}>{log.ipAddress || '-'}</TableCell>
+                      <TableCell sx={{ height: 48, py: 0 }}>{log.deviceInfo || '-'}</TableCell>
+                      <TableCell sx={{ height: 48, py: 0 }}>{log.browserInfo || '-'}</TableCell>
+                      <TableCell sx={{ height: 48, py: 0 }}>{log.osInfo || '-'}</TableCell>
+                      <TableCell sx={{ height: 48, py: 0 }}>{new Date(log.loginTime).toLocaleString()}</TableCell>
                     </TableRow>
                   ))
                 )}

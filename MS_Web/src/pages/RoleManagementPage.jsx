@@ -133,25 +133,25 @@ export default function RoleManagementPage() {
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell>ID</TableCell>
-                <TableCell>{t('roleManagement.name')}</TableCell>
-                <TableCell>{t('roleManagement.description')}</TableCell>
-                <TableCell>{t('roleManagement.menus')}</TableCell>
-                <TableCell>{t('roleManagement.actions')}</TableCell>
+                <TableCell sx={{ height: 48, py: 0 }}>ID</TableCell>
+                <TableCell sx={{ height: 48, py: 0 }}>{t('roleManagement.name')}</TableCell>
+                <TableCell sx={{ height: 48, py: 0 }}>{t('roleManagement.description')}</TableCell>
+                <TableCell sx={{ height: 48, py: 0 }}>{t('roleManagement.menus')}</TableCell>
+                <TableCell sx={{ height: 48, py: 0 }}>{t('roleManagement.actions')}</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {filteredRoles.map((role) => (
-                <TableRow key={role.id}>
-                  <TableCell>{role.id}</TableCell>
-                  <TableCell>{role.name}</TableCell>
-                  <TableCell>{role.description || '-'}</TableCell>
-                  <TableCell>
+                <TableRow key={role.id} sx={{ height: 48 }}>
+                  <TableCell sx={{ height: 48, py: 0 }}>{role.id}</TableCell>
+                  <TableCell sx={{ height: 48, py: 0 }}>{role.name}</TableCell>
+                  <TableCell sx={{ height: 48, py: 0 }}>{role.description || '-'}</TableCell>
+                  <TableCell sx={{ height: 48, py: 0 }}>
                     {getMenuNames(role.menuIds).map(name => (
                       <Chip key={name} label={name} size="small" sx={{ mr: 0.5, mb: 0.5 }} />
                     ))}
                   </TableCell>
-                  <TableCell>
+                  <TableCell sx={{ height: 48, py: 0 }}>
                     <Tooltip title={t('common.edit')}>
                       <IconButton size="small" onClick={() => handleOpenEdit(role)}>
                         <EditIcon fontSize="small" />

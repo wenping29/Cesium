@@ -48,19 +48,19 @@ export default function WindTablePage() {
         <Table size="small">
           <TableHead>
             <TableRow>
-              <TableCell>{t('windTable.region')}</TableCell>
-              <TableCell>{t('windTable.direction')}</TableCell>
-              <TableCell>{t('windTable.speed')}</TableCell>
-              <TableCell>{t('windTable.gust')}</TableCell>
-              <TableCell>{t('windTable.location')}</TableCell>
-              <TableCell>{t('windTable.time')}</TableCell>
+              <TableCell sx={{ height: 48, py: 0 }}>{t('windTable.region')}</TableCell>
+              <TableCell sx={{ height: 48, py: 0 }}>{t('windTable.direction')}</TableCell>
+              <TableCell sx={{ height: 48, py: 0 }}>{t('windTable.speed')}</TableCell>
+              <TableCell sx={{ height: 48, py: 0 }}>{t('windTable.gust')}</TableCell>
+              <TableCell sx={{ height: 48, py: 0 }}>{t('windTable.location')}</TableCell>
+              <TableCell sx={{ height: 48, py: 0 }}>{t('windTable.time')}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {windData.map((w) => (
-              <TableRow key={w.id} hover>
-                <TableCell sx={{ fontWeight: 'medium' }}>{w.region}</TableCell>
-                <TableCell>
+              <TableRow key={w.id} hover sx={{ height: 48 }}>
+                <TableCell sx={{ height: 48, py: 0, fontWeight: 'medium' }}>{w.region}</TableCell>
+                <TableCell sx={{ height: 48, py: 0 }}>
                   <Chip
                     label={`${w.direction}° ${getWindDirectionLabel(w.direction)}`}
                     size="small"
@@ -68,10 +68,10 @@ export default function WindTablePage() {
                     variant="outlined"
                   />
                 </TableCell>
-                <TableCell>{w.speed} m/s</TableCell>
-                <TableCell>{w.gust} m/s</TableCell>
-                <TableCell>({w.lat}, {w.lng})</TableCell>
-                <TableCell>{w.time}</TableCell>
+                <TableCell sx={{ height: 48, py: 0 }}>{w.speed} m/s</TableCell>
+                <TableCell sx={{ height: 48, py: 0 }}>{w.gust} m/s</TableCell>
+                <TableCell sx={{ height: 48, py: 0 }}>({w.lat}, {w.lng})</TableCell>
+                <TableCell sx={{ height: 48, py: 0 }}>{w.time}</TableCell>
               </TableRow>
             ))}
           </TableBody>

@@ -234,21 +234,21 @@ export default function ImageToBimPage() {
                 </TableHead>
                 <TableBody>
                   {currentConversion.models?.map((model) => (
-                    <TableRow key={model.id} hover>
-                      <TableCell>{model.name}</TableCell>
-                      <TableCell>
+                    <TableRow key={model.id} hover sx={{ height: 48 }}>
+                      <TableCell sx={{ height: 48, py: 0 }}>{model.name}</TableCell>
+                      <TableCell sx={{ height: 48, py: 0 }}>
                         <Chip label={model.type} size="small" color={getTypeColor(model.type)} variant="outlined" />
                       </TableCell>
-                      <TableCell>{model.height.toFixed(1)} m</TableCell>
-                      <TableCell>{model.area} m²</TableCell>
-                      <TableCell>
+                      <TableCell sx={{ height: 48, py: 0 }}>{model.height.toFixed(1)} m</TableCell>
+                      <TableCell sx={{ height: 48, py: 0 }}>{model.area} m²</TableCell>
+                      <TableCell sx={{ height: 48, py: 0 }}>
                         <Chip
                           label={formatConfidence(model.confidence)}
                           size="small"
                           color={getConfidenceColor(model.confidence)}
                         />
                       </TableCell>
-                      <TableCell>
+                      <TableCell sx={{ height: 48, py: 0 }}>
                         <Typography variant="caption" sx={{ fontFamily: 'monospace' }}>
                           ({model.position.lng.toFixed(4)}, {model.position.lat.toFixed(4)})
                         </Typography>
@@ -307,20 +307,20 @@ export default function ImageToBimPage() {
                   <TableRow
                     key={record.id}
                     hover
-                    sx={{ cursor: 'pointer' }}
+                    sx={{ cursor: 'pointer', height: 48 }}
                     onClick={() => handleViewDetail(record)}
                   >
-                    <TableCell>{record.imageName}</TableCell>
-                    <TableCell>
+                    <TableCell sx={{ height: 48, py: 0 }}>{record.imageName}</TableCell>
+                    <TableCell sx={{ height: 48, py: 0 }}>
                       <Chip
                         label={record.status === 'completed' ? t('imageToBim.completed') : record.status}
                         size="small"
                         color={record.status === 'completed' ? 'success' : 'warning'}
                       />
                     </TableCell>
-                    <TableCell>{record.modelCount || record.detectedCount}</TableCell>
-                    <TableCell>{(record.processingTime / 1000).toFixed(1)}s</TableCell>
-                    <TableCell>{record.createdAt}</TableCell>
+                    <TableCell sx={{ height: 48, py: 0 }}>{record.modelCount || record.detectedCount}</TableCell>
+                    <TableCell sx={{ height: 48, py: 0 }}>{(record.processingTime / 1000).toFixed(1)}s</TableCell>
+                    <TableCell sx={{ height: 48, py: 0 }}>{record.createdAt}</TableCell>
                   </TableRow>
                   {expandedResult === record.id && (
                     <TableRow>

@@ -226,28 +226,28 @@ export default function SendMessagePage() {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>ID</TableCell>
-              <TableCell>类型</TableCell>
-              <TableCell>标题</TableCell>
-              <TableCell>内容</TableCell>
-              <TableCell>发送人</TableCell>
-              <TableCell>时间</TableCell>
-              <TableCell>状态</TableCell>
-              <TableCell align="center">{t('userManagement.actions')}</TableCell>
+              <TableCell sx={{ height: 48, py: 0 }}>ID</TableCell>
+              <TableCell sx={{ height: 48, py: 0 }}>类型</TableCell>
+              <TableCell sx={{ height: 48, py: 0 }}>标题</TableCell>
+              <TableCell sx={{ height: 48, py: 0 }}>内容</TableCell>
+              <TableCell sx={{ height: 48, py: 0 }}>发送人</TableCell>
+              <TableCell sx={{ height: 48, py: 0 }}>时间</TableCell>
+              <TableCell sx={{ height: 48, py: 0 }}>状态</TableCell>
+              <TableCell sx={{ height: 48, py: 0 }} align="center">{t('userManagement.actions')}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {loading ? (
-              <TableRow>
-                <TableCell colSpan={8} align="center">
+              <TableRow sx={{ height: 48 }}>
+                <TableCell sx={{ height: 48, py: 0 }} colSpan={8} align="center">
                   <Box sx={{ display: 'flex', justifyContent: 'center', p: 2 }}>
                     <CircularProgress />
                   </Box>
                 </TableCell>
               </TableRow>
             ) : filteredNotifications.length === 0 ? (
-              <TableRow>
-                <TableCell colSpan={8} align="center">
+              <TableRow sx={{ height: 48 }}>
+                <TableCell sx={{ height: 48, py: 0 }} colSpan={8} align="center">
                   <Box sx={{ p: 4, textAlign: 'center' }}>
                     <NotificationsIcon sx={{ fontSize: 64, color: 'text.disabled', mb: 2 }} />
                     <Typography variant="h6" color="text.secondary">
@@ -260,9 +260,9 @@ export default function SendMessagePage() {
               filteredNotifications.map((item) => {
                 const typeInfo = typeConfig[item.type] || typeConfig.system
                 return (
-                  <TableRow key={item.id} hover>
-                    <TableCell>{item.id}</TableCell>
-                    <TableCell>
+                  <TableRow key={item.id} hover sx={{ height: 48 }}>
+                    <TableCell sx={{ height: 48, py: 0 }}>{item.id}</TableCell>
+                    <TableCell sx={{ height: 48, py: 0 }}>
                       <Chip
                         icon={typeInfo.icon}
                         label={typeOptions.find(o => o.value === item.type)?.label || item.type}
@@ -271,10 +271,10 @@ export default function SendMessagePage() {
                         variant="outlined"
                       />
                     </TableCell>
-                    <TableCell sx={{ fontWeight: item.read ? 'normal' : 'bold' }}>
+                    <TableCell sx={{ height: 48, py: 0, fontWeight: item.read ? 'normal' : 'bold' }}>
                       {item.title}
                     </TableCell>
-                    <TableCell>
+                    <TableCell sx={{ height: 48, py: 0 }}>
                       <Typography
                         variant="body2"
                         sx={{
@@ -287,16 +287,16 @@ export default function SendMessagePage() {
                         {item.content}
                       </Typography>
                     </TableCell>
-                    <TableCell>{item.sender}</TableCell>
-                    <TableCell>{getRelativeTime(item.date)}</TableCell>
-                    <TableCell>
+                    <TableCell sx={{ height: 48, py: 0 }}>{item.sender}</TableCell>
+                    <TableCell sx={{ height: 48, py: 0 }}>{getRelativeTime(item.date)}</TableCell>
+                    <TableCell sx={{ height: 48, py: 0 }}>
                       <Chip
                         label={item.read ? '已读' : '未读'}
                         size="small"
                         color={item.read ? 'default' : 'primary'}
                       />
                     </TableCell>
-                    <TableCell align="center">
+                    <TableCell sx={{ height: 48, py: 0 }} align="center">
                       <IconButton
                         size="small"
                         color="error"

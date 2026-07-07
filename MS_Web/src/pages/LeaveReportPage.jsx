@@ -211,27 +211,27 @@ export default function LeaveReportPage() {
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell>{t('leaveReport.user')}</TableCell>
-                <TableCell>{t('leaveReport.type')}</TableCell>
-                <TableCell>{t('leaveReport.startDate')}</TableCell>
-                <TableCell>{t('leaveReport.endDate')}</TableCell>
-                <TableCell>{t('leaveReport.days')}</TableCell>
-                <TableCell>{t('leaveReport.reason')}</TableCell>
-                <TableCell>{t('leaveReport.status')}</TableCell>
-                <TableCell>{t('leaveReport.approver')}</TableCell>
-                <TableCell>{t('common.actions')}</TableCell>
+                <TableCell sx={{ height: 48, py: 0 }}>{t('leaveReport.user')}</TableCell>
+                <TableCell sx={{ height: 48, py: 0 }}>{t('leaveReport.type')}</TableCell>
+                <TableCell sx={{ height: 48, py: 0 }}>{t('leaveReport.startDate')}</TableCell>
+                <TableCell sx={{ height: 48, py: 0 }}>{t('leaveReport.endDate')}</TableCell>
+                <TableCell sx={{ height: 48, py: 0 }}>{t('leaveReport.days')}</TableCell>
+                <TableCell sx={{ height: 48, py: 0 }}>{t('leaveReport.reason')}</TableCell>
+                <TableCell sx={{ height: 48, py: 0 }}>{t('leaveReport.status')}</TableCell>
+                <TableCell sx={{ height: 48, py: 0 }}>{t('leaveReport.approver')}</TableCell>
+                <TableCell sx={{ height: 48, py: 0 }}>{t('common.actions')}</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {leaves.map((l) => (
-                <TableRow key={l.id}>
-                  <TableCell>{l.userName}</TableCell>
-                  <TableCell>{leaveTypes[l.leaveType] || l.leaveType}</TableCell>
-                  <TableCell>{formatDate(l.startDate)}</TableCell>
-                  <TableCell>{formatDate(l.endDate)}</TableCell>
-                  <TableCell>{l.days}天 {l.hours}小时</TableCell>
-                  <TableCell>{l.reason || '-'}</TableCell>
-                  <TableCell>
+                <TableRow key={l.id} sx={{ height: 48 }}>
+                  <TableCell sx={{ height: 48, py: 0 }}>{l.userName}</TableCell>
+                  <TableCell sx={{ height: 48, py: 0 }}>{leaveTypes[l.leaveType] || l.leaveType}</TableCell>
+                  <TableCell sx={{ height: 48, py: 0 }}>{formatDate(l.startDate)}</TableCell>
+                  <TableCell sx={{ height: 48, py: 0 }}>{formatDate(l.endDate)}</TableCell>
+                  <TableCell sx={{ height: 48, py: 0 }}>{l.days}天 {l.hours}小时</TableCell>
+                  <TableCell sx={{ height: 48, py: 0 }}>{l.reason || '-'}</TableCell>
+                  <TableCell sx={{ height: 48, py: 0 }}>
                     <Chip
                       label={l.status === 'pending' ? t('leaveReport.pending') :
                              l.status === 'approved' ? t('leaveReport.approved') :
@@ -240,8 +240,8 @@ export default function LeaveReportPage() {
                       size="small"
                     />
                   </TableCell>
-                  <TableCell>{l.approverName || '-'}</TableCell>
-                  <TableCell>
+                  <TableCell sx={{ height: 48, py: 0 }}>{l.approverName || '-'}</TableCell>
+                  <TableCell sx={{ height: 48, py: 0 }}>
                     {l.status === 'pending' && (
                       <Box sx={{ display: 'flex', gap: 1 }}>
                         <Button
@@ -266,8 +266,8 @@ export default function LeaveReportPage() {
                 </TableRow>
               ))}
               {leaves.length === 0 && (
-                <TableRow>
-                  <TableCell colSpan={9} align="center">
+                <TableRow sx={{ height: 48 }}>
+                  <TableCell sx={{ height: 48, py: 0 }} colSpan={9} align="center">
                     {t('common.noData')}
                   </TableCell>
                 </TableRow>

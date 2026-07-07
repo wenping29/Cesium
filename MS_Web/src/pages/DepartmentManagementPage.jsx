@@ -179,36 +179,36 @@ export default function DepartmentManagementPage() {
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell>ID</TableCell>
-                <TableCell>{t('departmentManagement.name')}</TableCell>
-                <TableCell>{t('departmentManagement.code')}</TableCell>
-                <TableCell>{t('departmentManagement.leader')}</TableCell>
-                <TableCell>{t('departmentManagement.phone')}</TableCell>
-                <TableCell>{t('departmentManagement.userCount')}</TableCell>
-                <TableCell>{t('departmentManagement.isActive')}</TableCell>
-                <TableCell>{t('departmentManagement.actions')}</TableCell>
+                <TableCell sx={{ height: 48, py: 0 }}>ID</TableCell>
+                <TableCell sx={{ height: 48, py: 0 }}>{t('departmentManagement.name')}</TableCell>
+                <TableCell sx={{ height: 48, py: 0 }}>{t('departmentManagement.code')}</TableCell>
+                <TableCell sx={{ height: 48, py: 0 }}>{t('departmentManagement.leader')}</TableCell>
+                <TableCell sx={{ height: 48, py: 0 }}>{t('departmentManagement.phone')}</TableCell>
+                <TableCell sx={{ height: 48, py: 0 }}>{t('departmentManagement.userCount')}</TableCell>
+                <TableCell sx={{ height: 48, py: 0 }}>{t('departmentManagement.isActive')}</TableCell>
+                <TableCell sx={{ height: 48, py: 0 }}>{t('departmentManagement.actions')}</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {filteredDeptItems.map((dept) => {
                 const indent = getIndent(dept)
                 return (
-                  <TableRow key={dept.id}>
-                    <TableCell>{dept.id}</TableCell>
-                    <TableCell sx={{ pl: indent * 3 + 2 }}>
+                  <TableRow key={dept.id} sx={{ height: 48 }}>
+                    <TableCell sx={{ height: 48, py: 0 }}>{dept.id}</TableCell>
+                    <TableCell sx={{ height: 48, py: 0, pl: indent * 3 + 2 }}>
                       {indent > 0 && '└ '}{dept.name}
                     </TableCell>
-                    <TableCell>{dept.code || '-'}</TableCell>
-                    <TableCell>{dept.leader || '-'}</TableCell>
-                    <TableCell>{dept.phone || '-'}</TableCell>
-                    <TableCell>
+                    <TableCell sx={{ height: 48, py: 0 }}>{dept.code || '-'}</TableCell>
+                    <TableCell sx={{ height: 48, py: 0 }}>{dept.leader || '-'}</TableCell>
+                    <TableCell sx={{ height: 48, py: 0 }}>{dept.phone || '-'}</TableCell>
+                    <TableCell sx={{ height: 48, py: 0 }}>
                       <Chip label={dept.userCount || 0} size="small" />
                     </TableCell>
-                    <TableCell>
+                    <TableCell sx={{ height: 48, py: 0 }}>
                       <Chip label={dept.isActive ? t('common.active') : t('common.inactive')}
                         color={dept.isActive ? 'success' : 'default'} size="small" />
                     </TableCell>
-                    <TableCell>
+                    <TableCell sx={{ height: 48, py: 0 }}>
                       <Tooltip title={t('common.edit')}>
                         <IconButton size="small" onClick={() => handleOpenEdit(dept)}>
                           <EditIcon fontSize="small" />

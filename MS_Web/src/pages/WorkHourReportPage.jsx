@@ -204,40 +204,40 @@ export default function WorkHourReportPage() {
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell>{t('workHourReport.date')}</TableCell>
-                <TableCell>{t('workHourReport.user')}</TableCell>
-                <TableCell>{t('workHourReport.regularHours')}</TableCell>
-                <TableCell>{t('workHourReport.overtimeHours')}</TableCell>
-                <TableCell>{t('workHourReport.weekendHours')}</TableCell>
-                <TableCell>{t('workHourReport.holidayHours')}</TableCell>
-                <TableCell>{t('workHourReport.totalHours')}</TableCell>
-                <TableCell>{t('workHourReport.project')}</TableCell>
-                <TableCell>{t('workHourReport.task')}</TableCell>
+                <TableCell sx={{ height: 48, py: 0 }}>{t('workHourReport.date')}</TableCell>
+                <TableCell sx={{ height: 48, py: 0 }}>{t('workHourReport.user')}</TableCell>
+                <TableCell sx={{ height: 48, py: 0 }}>{t('workHourReport.regularHours')}</TableCell>
+                <TableCell sx={{ height: 48, py: 0 }}>{t('workHourReport.overtimeHours')}</TableCell>
+                <TableCell sx={{ height: 48, py: 0 }}>{t('workHourReport.weekendHours')}</TableCell>
+                <TableCell sx={{ height: 48, py: 0 }}>{t('workHourReport.holidayHours')}</TableCell>
+                <TableCell sx={{ height: 48, py: 0 }}>{t('workHourReport.totalHours')}</TableCell>
+                <TableCell sx={{ height: 48, py: 0 }}>{t('workHourReport.project')}</TableCell>
+                <TableCell sx={{ height: 48, py: 0 }}>{t('workHourReport.task')}</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {workhours.map((wh) => (
-                <TableRow key={wh.id}>
-                  <TableCell>{formatDate(wh.date)}</TableCell>
-                  <TableCell>{wh.userName}</TableCell>
-                  <TableCell>{formatTime(wh.regularHours)}</TableCell>
-                  <TableCell>{formatTime(wh.overtimeHours)}</TableCell>
-                  <TableCell>{formatTime(wh.weekendHours)}</TableCell>
-                  <TableCell>{formatTime(wh.holidayHours)}</TableCell>
-                  <TableCell>
+                <TableRow key={wh.id} sx={{ height: 48 }}>
+                  <TableCell sx={{ height: 48, py: 0 }}>{formatDate(wh.date)}</TableCell>
+                  <TableCell sx={{ height: 48, py: 0 }}>{wh.userName}</TableCell>
+                  <TableCell sx={{ height: 48, py: 0 }}>{formatTime(wh.regularHours)}</TableCell>
+                  <TableCell sx={{ height: 48, py: 0 }}>{formatTime(wh.overtimeHours)}</TableCell>
+                  <TableCell sx={{ height: 48, py: 0 }}>{formatTime(wh.weekendHours)}</TableCell>
+                  <TableCell sx={{ height: 48, py: 0 }}>{formatTime(wh.holidayHours)}</TableCell>
+                  <TableCell sx={{ height: 48, py: 0 }}>
                     <Chip
                       label={formatTime(wh.regularHours + wh.overtimeHours + wh.weekendHours + wh.holidayHours)}
                       color={getStatusColor(wh.regularHours + wh.overtimeHours + wh.weekendHours + wh.holidayHours)}
                       size="small"
                     />
                   </TableCell>
-                  <TableCell>{wh.projectName || '-'}</TableCell>
-                  <TableCell>{wh.taskDescription || '-'}</TableCell>
+                  <TableCell sx={{ height: 48, py: 0 }}>{wh.projectName || '-'}</TableCell>
+                  <TableCell sx={{ height: 48, py: 0 }}>{wh.taskDescription || '-'}</TableCell>
                 </TableRow>
               ))}
               {workhours.length === 0 && (
-                <TableRow>
-                  <TableCell colSpan={9} align="center">
+                <TableRow sx={{ height: 48 }}>
+                  <TableCell sx={{ height: 48, py: 0 }} colSpan={9} align="center">
                     {t('common.noData')}
                   </TableCell>
                 </TableRow>

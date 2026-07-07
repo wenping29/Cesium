@@ -112,7 +112,7 @@ export default function VisitorLogReportPage() {
       ) : (
         <Paper>
           <TableContainer sx={{ height: 600 }}>
-            <Table size="small">
+            <Table size="small" stickyHeader>
               <TableHead>
                 <TableRow>
                   <TableCell>{t('visitorLogReport.id')}</TableCell>
@@ -123,26 +123,26 @@ export default function VisitorLogReportPage() {
                   <TableCell>{t('visitorLogReport.visitTime')}</TableCell>
                 </TableRow>
               </TableHead>
-              <TableBody sx={{ height: 550 }}>
+              <TableBody>
                 {logs.length === 0 ? (
-                  <TableRow>
-                    <TableCell colSpan={6} align="center">
+                  <TableRow sx={{ height: 48 }}>
+                    <TableCell colSpan={6} align="center" sx={{ height: 48, py: 0 }}>
                       {t('common.noData')}
                     </TableCell>
                   </TableRow>
                 ) : (
                   logs.map((log) => (
-                    <TableRow key={log.id} hover>
-                      <TableCell>{log.id}</TableCell>
-                      <TableCell>{log.ipAddress || '-'}</TableCell>
-                      <TableCell>{log.pageUrl || '-'}</TableCell>
-                      <TableCell sx={{ maxWidth: 300, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                    <TableRow key={log.id} hover sx={{ height: 48 }}>
+                      <TableCell sx={{ height: 48, py: 0 }}>{log.id}</TableCell>
+                      <TableCell sx={{ height: 48, py: 0 }}>{log.ipAddress || '-'}</TableCell>
+                      <TableCell sx={{ height: 48, py: 0 }}>{log.pageUrl || '-'}</TableCell>
+                      <TableCell sx={{ height: 48, py: 0, maxWidth: 300, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                         {log.userAgent || '-'}
                       </TableCell>
-                      <TableCell sx={{ maxWidth: 200, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                      <TableCell sx={{ height: 48, py: 0, maxWidth: 200, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                         {log.referrer || '-'}
                       </TableCell>
-                      <TableCell>{new Date(log.visitTime).toLocaleString()}</TableCell>
+                      <TableCell sx={{ height: 48, py: 0 }}>{new Date(log.visitTime).toLocaleString()}</TableCell>
                     </TableRow>
                   ))
                 )}

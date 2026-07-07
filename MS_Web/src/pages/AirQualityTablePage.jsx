@@ -51,33 +51,33 @@ export default function AirQualityTablePage() {
         <Table size="small">
           <TableHead>
             <TableRow>
-              <TableCell>{t('airQualityTable.station')}</TableCell>
-              <TableCell>{t('airQualityTable.aqi')}</TableCell>
-              <TableCell>{t('airQualityTable.level')}</TableCell>
-              <TableCell>PM2.5</TableCell>
-              <TableCell>PM10</TableCell>
-              <TableCell>O₃</TableCell>
-              <TableCell>NO₂</TableCell>
-              <TableCell>{t('airQualityTable.time')}</TableCell>
+              <TableCell sx={{ height: 48, py: 0 }}>{t('airQualityTable.station')}</TableCell>
+              <TableCell sx={{ height: 48, py: 0 }}>{t('airQualityTable.aqi')}</TableCell>
+              <TableCell sx={{ height: 48, py: 0 }}>{t('airQualityTable.level')}</TableCell>
+              <TableCell sx={{ height: 48, py: 0 }}>PM2.5</TableCell>
+              <TableCell sx={{ height: 48, py: 0 }}>PM10</TableCell>
+              <TableCell sx={{ height: 48, py: 0 }}>O₃</TableCell>
+              <TableCell sx={{ height: 48, py: 0 }}>NO₂</TableCell>
+              <TableCell sx={{ height: 48, py: 0 }}>{t('airQualityTable.time')}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {stations.map((s) => (
-              <TableRow key={s.id} hover>
-                <TableCell sx={{ fontWeight: 'medium' }}>{s.station}</TableCell>
-                <TableCell>
+              <TableRow key={s.id} hover sx={{ height: 48 }}>
+                <TableCell sx={{ height: 48, py: 0, fontWeight: 'medium' }}>{s.station}</TableCell>
+                <TableCell sx={{ height: 48, py: 0 }}>
                   <Chip
                     label={s.aqi}
                     size="small"
                     sx={{ color: '#fff', bgcolor: getAqiColor(s.aqi), fontWeight: 'bold', minWidth: 40 }}
                   />
                 </TableCell>
-                <TableCell>{s.level}</TableCell>
-                <TableCell>{s.pm25}</TableCell>
-                <TableCell>{s.pm10}</TableCell>
-                <TableCell>{s.o3}</TableCell>
-                <TableCell>{s.no2}</TableCell>
-                <TableCell>{s.time}</TableCell>
+                <TableCell sx={{ height: 48, py: 0 }}>{s.level}</TableCell>
+                <TableCell sx={{ height: 48, py: 0 }}>{s.pm25}</TableCell>
+                <TableCell sx={{ height: 48, py: 0 }}>{s.pm10}</TableCell>
+                <TableCell sx={{ height: 48, py: 0 }}>{s.o3}</TableCell>
+                <TableCell sx={{ height: 48, py: 0 }}>{s.no2}</TableCell>
+                <TableCell sx={{ height: 48, py: 0 }}>{s.time}</TableCell>
               </TableRow>
             ))}
           </TableBody>
