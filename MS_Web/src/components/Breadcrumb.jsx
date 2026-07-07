@@ -64,8 +64,6 @@ export default function Breadcrumb() {
       }
     }
 
-    breadcrumbs.unshift({ path: '/workbench', label: t('nav.home'), icon: <HomeIcon fontSize="small" /> })
-    
     return breadcrumbs
   }
 
