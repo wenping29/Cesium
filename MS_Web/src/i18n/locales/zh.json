@@ -448,6 +448,24 @@
     "direction": "风向",
     "gust": "阵风"
   },
+  "circle": {
+    "title": "画圆工具",
+    "name": "名称",
+    "center": "圆心",
+    "longitude": "经度",
+    "latitude": "纬度",
+    "radius": "半径",
+    "meters": "米",
+    "color": "颜色",
+    "opacity": "透明度",
+    "add": "添加",
+    "delete": "删除",
+    "clearAll": "清除全部",
+    "drawingMode": "绘制模式",
+    "drawingHint": "点击地图选择圆心",
+    "list": "圆形列表",
+    "noCircles": "暂无圆形，点击添加或启用绘制模式"
+  },
   "dashboard": {
     "title": "仪表盘",
     "users": "用户数",

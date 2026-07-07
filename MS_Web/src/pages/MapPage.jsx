@@ -8,6 +8,7 @@ import EarthquakeControl from '../components/EarthquakeControl'
 import AirQualityControl from '../components/AirQualityControl'
 import TyphoonControl from '../components/TyphoonControl'
 import WindControl from '../components/WindControl'
+import CircleControl from '../components/CircleControl'
 import { getBIMModels } from '../api/bim'
 import useLayerStore from '../store/layerStore'
 import useHexGridStore from '../store/hexGridStore'
@@ -15,6 +16,7 @@ import useEarthquakeStore from '../store/earthquakeStore'
 import useAirQualityStore from '../store/airQualityStore'
 import useTyphoonStore from '../store/typhoonStore'
 import useWindStore from '../store/windStore'
+import useCircleStore from '../store/circleStore'
 
 export default function MapPage() {
   const { t } = useTranslation()
@@ -80,6 +82,20 @@ export default function MapPage() {
     visible: windVisible,
     setVisible: setWindVisible,
   } = useWindStore()
+
+  const {
+    circles,
+    visible: circleVisible,
+    setVisible: setCircleVisible,
+    drawingMode: circleDrawingMode,
+    setDrawingMode: setCircleDrawingMode,
+    selectedCircleId,
+    setSelectedCircleId,
+    addCircle,
+    deleteCircle,
+    clearAllCircles,
+    toggleCircleVisibility,
+  } = useCircleStore()
 
   const [selectedEarthquake, setSelectedEarthquake] = useState(null)
   const [selectedStation, setSelectedStation] = useState(null)
@@ -147,6 +163,22 @@ export default function MapPage() {
   const activeBimModels = bimData?.models?.filter((model) =>
     selectedBimModels.includes(model.id)
   ) || []
+
+  const handleMapClick = useCallback(({ lng, lat }) => {
+    addCircle({
+      name: `Circle ${Date.now() % 1000}`,
+      center: { lng, lat },
+      radius: 1000,
+      color: '#2196f3',
+      opacity: 0.5,
+      visible: true,
+    })
+    setCircleDrawingMode(false)
+  }, [addCircle, setCircleDrawingMode])
+
+  const handleCircleClick = useCallback((circleId) => {
+    setSelectedCircleId(circleId)
+  }, [setSelectedCircleId])
 
   const moduleControlProps = [
     earthquakeVisible && {
@@ -253,6 +285,34 @@ export default function MapPage() {
         </Tooltip>
       )}
 
+      {!circleVisible && (
+        <Tooltip title={t('circle.title') || 'Circle'} placement="right">
+          <Fab
+            size="small"
+            color="secondary"
+            sx={{ position: 'absolute', top: 128, left: 16, zIndex: 1000 }}
+            onClick={() => setCircleVisible(true)}
+          >
+            ⭕
+          </Fab>
+        </Tooltip>
+      )}
+
+      {circleVisible && (
+        <CircleControl
+          circles={circles}
+          selectedCircleId={selectedCircleId}
+          drawingMode={circleDrawingMode}
+          onAddCircle={addCircle}
+          onDeleteCircle={deleteCircle}
+          onClearAll={clearAllCircles}
+          onSetDrawingMode={setCircleDrawingMode}
+          onSelectCircle={setSelectedCircleId}
+          onToggleVisibility={toggleCircleVisibility}
+          onClose={() => setCircleVisible(false)}
+        />
+      )}
+
       {moduleControlProps.map((m, i) => (
         <Box key={m.key} sx={{ position: 'absolute', top: 80 + i * 380, right: 340, zIndex: 1000 }}>
           <m.Component {...m.props} />
@@ -279,6 +339,10 @@ export default function MapPage() {
         windData={windData}
         windVisible={windVisible}
         selectedWind={selectedWind}
+        circles={circles}
+        drawingMode={circleDrawingMode}
+        onMapClick={handleMapClick}
+        onCircleClick={handleCircleClick}
       />
     </Box>
   )

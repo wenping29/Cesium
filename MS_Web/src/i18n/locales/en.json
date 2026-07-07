@@ -447,6 +447,24 @@
     "direction": "Direction",
     "gust": "Gust"
   },
+  "circle": {
+    "title": "Draw Circle",
+    "name": "Name",
+    "center": "Center",
+    "longitude": "Longitude",
+    "latitude": "Latitude",
+    "radius": "Radius",
+    "meters": "meters",
+    "color": "Color",
+    "opacity": "Opacity",
+    "add": "Add",
+    "delete": "Delete",
+    "clearAll": "Clear All",
+    "drawingMode": "Drawing Mode",
+    "drawingHint": "Click on map to select center",
+    "list": "Circle List",
+    "noCircles": "No circles yet, click add or enable drawing mode"
+  },
   "dashboard": {
     "title": "Dashboard",
     "users": "Users",
