@@ -87,7 +87,7 @@ export default function MapPage() {
   const [selectedWind, setSelectedWind] = useState(null)
 
   useEffect(() => {
-    //fetchLayers()
+    fetchLayers()
     //fetchCells()
   }, [fetchLayers, fetchCells])
 

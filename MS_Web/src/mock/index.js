@@ -32,6 +32,7 @@ import Mock from 'mockjs'
   }
 })()
 
+console.log('[Mock] Initializing mocks...')
 import './cesium'
 import './auth'
 import './bim'
@@ -43,6 +44,7 @@ import './typhoon'
 import './wind'
 import './imageToBim'
 import './notification'
+console.log('[Mock] All mocks loaded')
 
 const { Random } = Mock
 
