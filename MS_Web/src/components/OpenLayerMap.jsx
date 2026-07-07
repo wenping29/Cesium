@@ -305,33 +305,33 @@ export default function OpenLayerMap({
     }
 
     try {
-      const res = await getCities()
-      const data = res.data
-      if (data) {
-        const features = data.map((city) => {
-          const feature = new Feature({
-            geometry: new Point(fromLonLat([city.lng, city.lat])),
-            name: city.name,
-            popupContent: `<div style="padding:8px"><strong>${city.name}</strong></div>`,
-          })
-          feature.setStyle(new Style({
-            image: new CircleStyle({
-              radius: 6,
-              fill: new Fill({ color: '#1e90ff' }),
-              stroke: new Stroke({ color: '#fff', width: 2 }),
-            }),
-            text: new Text({
-              text: city.name,
-              font: '14px sans-serif',
-              fill: new Fill({ color: '#fff' }),
-              backgroundFill: new Fill({ color: 'rgba(0,0,0,0.6)' }),
-              offsetY: -18,
-            }),
-          }))
-          return feature
-        })
-        source.addFeatures(features)
-      }
+      // const res = await getCities()
+      // const data = res.data
+      // if (data) {
+      //   const features = data.map((city) => {
+      //     const feature = new Feature({
+      //       geometry: new Point(fromLonLat([city.lng, city.lat])),
+      //       name: city.name,
+      //       popupContent: `<div style="padding:8px"><strong>${city.name}</strong></div>`,
+      //     })
+      //     feature.setStyle(new Style({
+      //       image: new CircleStyle({
+      //         radius: 6,
+      //         fill: new Fill({ color: '#1e90ff' }),
+      //         stroke: new Stroke({ color: '#fff', width: 2 }),
+      //       }),
+      //       text: new Text({
+      //         text: city.name,
+      //         font: '14px sans-serif',
+      //         fill: new Fill({ color: '#fff' }),
+      //         backgroundFill: new Fill({ color: 'rgba(0,0,0,0.6)' }),
+      //         offsetY: -18,
+      //       }),
+      //     }))
+      //     return feature
+      //   })
+      //   source.addFeatures(features)
+      // }
     } catch (err) {
       console.error('Failed to load cities:', err)
     }

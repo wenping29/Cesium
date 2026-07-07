@@ -229,22 +229,22 @@ export default function LeafletMap({
 
     const group = L.layerGroup()
     try {
-      const res = await getCities()
-      const data = res.data
-      if (data) {
-        data.forEach((city) => {
-          const marker = L.circleMarker([city.lat, city.lng], {
-            radius: 6,
-            fillColor: '#1e90ff',
-            fillOpacity: 1,
-            color: '#fff',
-            weight: 2,
-          })
-          marker.bindPopup(`<div style="padding:8px"><strong>${city.name}</strong></div>`)
-          marker.bindTooltip(city.name, { offset: [0, -18], direction: 'top' })
-          group.addLayer(marker)
-        })
-      }
+      // const res = await getCities()
+      // const data = res.data
+      // if (data) {
+      //   data.forEach((city) => {
+      //     const marker = L.circleMarker([city.lat, city.lng], {
+      //       radius: 6,
+      //       fillColor: '#1e90ff',
+      //       fillOpacity: 1,
+      //       color: '#fff',
+      //       weight: 2,
+      //     })
+      //     marker.bindPopup(`<div style="padding:8px"><strong>${city.name}</strong></div>`)
+      //     marker.bindTooltip(city.name, { offset: [0, -18], direction: 'top' })
+      //     group.addLayer(marker)
+      //   })
+      // }
     } catch (err) {
       console.error('Failed to load cities:', err)
     }

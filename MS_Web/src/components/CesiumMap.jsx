@@ -208,6 +208,7 @@ export default function CesiumMap({
         // viewer.scene.setTerrain(Cesium.Terrain.fromWorldTerrain({
         //     requestVertexNormals: true,
         //   }));
+        return;
 
         const res = await getCities()
         if (cancelled || !viewer || viewer.isDestroyed()) return

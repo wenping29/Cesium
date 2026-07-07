@@ -67,7 +67,7 @@ export default function LeafletMapPage() {
   const [selectedWind, setSelectedWind] = useState(null)
 
   useEffect(() => {
-    fetchLayers()
+    //fetchLayers()
   }, [fetchLayers])
 
   useEffect(() => {

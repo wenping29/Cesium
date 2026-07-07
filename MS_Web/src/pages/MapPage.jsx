@@ -87,8 +87,8 @@ export default function MapPage() {
   const [selectedWind, setSelectedWind] = useState(null)
 
   useEffect(() => {
-    fetchLayers()
-    fetchCells()
+    //fetchLayers()
+    //fetchCells()
   }, [fetchLayers, fetchCells])
 
   useEffect(() => {
@@ -112,13 +112,13 @@ export default function MapPage() {
 
   const loadBimData = useCallback(async () => {
     try {
-      setLoadingBim(true)
-      const res = await getBIMModels()
-      setBimData(res.data)
-      const activeModels = res.data.models
-        .filter((model) => model.status === 'active')
-        .map((model) => model.id)
-      setSelectedBimModels(activeModels)
+      // setLoadingBim(true)
+      // const res = await getBIMModels()
+      // setBimData(res.data)
+      // const activeModels = res.data.models
+      //   .filter((model) => model.status === 'active')
+      //   .map((model) => model.id)
+      // setSelectedBimModels(activeModels)
     } catch (error) {
       console.error('Failed to load BIM data:', error)
     } finally {
