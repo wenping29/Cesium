@@ -13,6 +13,6 @@ public static class PasswordHelper
 
     public static bool VerifyPassword(string password, string storedHash)
     {
-        return _passwordHasher.VerifyHashedPassword(new object(), storedHash, password) 
+        return _passwordHasher.VerifyHashedPassword(new object(), storedHash, password) != PasswordVerificationResult.Failed;
     }
 }
