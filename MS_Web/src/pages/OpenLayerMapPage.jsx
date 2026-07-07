@@ -67,7 +67,7 @@ export default function OpenLayerMapPage() {
   const [selectedWind, setSelectedWind] = useState(null)
 
   useEffect(() => {
-    fetchLayers()
+    //fetchLayers()
   }, [fetchLayers])
 
   useEffect(() => {

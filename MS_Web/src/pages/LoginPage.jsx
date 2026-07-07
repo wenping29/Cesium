@@ -1,10 +1,33 @@
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
   Box, Card, TextField, Typography, Button, Alert,
 } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 import useAuthStore from '../store/authStore'
+
+function getDeviceInfo() {
+  const ua = navigator.userAgent
+  let browserInfo = 'Unknown'
+  if (ua.includes('Chrome')) browserInfo = 'Chrome'
+  else if (ua.includes('Firefox')) browserInfo = 'Firefox'
+  else if (ua.includes('Safari')) browserInfo = 'Safari'
+  else if (ua.includes('Edge')) browserInfo = 'Edge'
+  else if (ua.includes('MSIE') || ua.includes('Trident')) browserInfo = 'Internet Explorer'
+
+  let osInfo = 'Unknown'
+  if (ua.includes('Windows')) osInfo = 'Windows'
+  else if (ua.includes('Mac OS')) osInfo = 'macOS'
+  else if (ua.includes('Linux')) osInfo = 'Linux'
+  else if (ua.includes('Android')) osInfo = 'Android'
+  else if (ua.includes('iPhone') || ua.includes('iPad')) osInfo = 'iOS'
+
+  return {
+    deviceInfo: window.screen ? `${window.screen.width}x${window.screen.height}` : 'Unknown',
+    browserInfo,
+    osInfo,
+  }
+}
 
 export default function LoginPage() {
   const { t } = useTranslation()
@@ -14,6 +37,7 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false)
   const login = useAuthStore((s) => s.login)
   const navigate = useNavigate()
+  const deviceInfo = useMemo(() => getDeviceInfo(), [])
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -21,7 +45,7 @@ export default function LoginPage() {
     setLoading(true)
     setError('')
     try {
-      await login({ username, password })
+      await login({ username, password, ...deviceInfo })
       navigate('/users', { replace: true })
     } catch (err) {
       const errorMessage = err?.response?.data || err?.message || t('login.failed')

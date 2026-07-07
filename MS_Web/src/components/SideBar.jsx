@@ -36,7 +36,18 @@ import ShieldIcon from '@mui/icons-material/Shield'
 import BusinessIcon from '@mui/icons-material/Business'
 import HomeIcon from '@mui/icons-material/Home'
 import AnalyticsIcon from '@mui/icons-material/Analytics'
+import ScheduleIcon from '@mui/icons-material/Schedule'
+import DescriptionIcon from '@mui/icons-material/Description'
+import TimerIcon from '@mui/icons-material/Timer'
+import HolidayVillageIcon from '@mui/icons-material/HolidayVillage'
+import BeachAccessIcon from '@mui/icons-material/BeachAccess'
+import HistoryIcon from '@mui/icons-material/History'
+import FindInPageIcon from '@mui/icons-material/FindInPage'
+import VisibilityIcon from '@mui/icons-material/Visibility'
+import NotificationsIcon from '@mui/icons-material/Notifications'
+import SendIcon from '@mui/icons-material/Send'
 import { useTranslation } from 'react-i18next'
+import sidebarStore from '../store/sidebarStore'
 
 const DRAWER_WIDTH = 240
 const DRAWER_COLLAPSED_WIDTH = 64
@@ -45,10 +56,8 @@ export default function SideBar() {
   const { t } = useTranslation()
   const navigate = useNavigate()
   const location = useLocation()
-  const [open, setOpen] = useState(true)
-  const [expandedMenus, setExpandedMenus] = useState(['home', 'dataTables', 'permission'])
-
-  const toggleDrawer = () => setOpen(!open)
+  const { open } = sidebarStore()
+  const [expandedMenus, setExpandedMenus] = useState([])
 
   const toggleSubMenu = (menuId) => {
     setExpandedMenus(prev =>
@@ -67,7 +76,9 @@ export default function SideBar() {
       icon: <HomeIcon />,
       children: [
         { id: 'workbench', label: t('nav.workbench'), path: '/workbench', icon: <DashboardIcon /> },
-        { id: 'analysis', label: t('nav.analysis'), path: '/analysis', icon: <AnalyticsIcon /> }
+        { id: 'analysis', label: t('nav.analysis'), path: '/analysis', icon: <AnalyticsIcon /> },
+        { id: 'notifications', label: t('nav.notifications'), path: '/notifications', icon: <NotificationsIcon /> },
+        { id: 'sendNotification', label: t('nav.sendNotification'), path: '/send-notification', icon: <SendIcon /> }
       ]
     },
     {
@@ -104,14 +115,35 @@ export default function SideBar() {
       ]
     },
     {
-      id: 'permission',
-      label: t('nav.permissionManagement'),
-      icon: <SettingsIcon />,
+          id: 'permission',
+          label: t('nav.permissionManagement'),
+          icon: <SettingsIcon />,
+          children: [
+            { id: 'userMgmt', label: t('nav.userManagement'), path: '/user-management', icon: <PeopleIcon /> },
+            { id: 'roleMgmt', label: t('nav.roleManagement'), path: '/role-management', icon: <ShieldIcon /> },
+            { id: 'menuMgmt', label: t('nav.menuManagement'), path: '/menu-management', icon: <MenuIcon /> },
+            { id: 'deptMgmt', label: t('nav.departmentManagement'), path: '/department-management', icon: <BusinessIcon /> }
+          ]
+        },
+        {
+          id: 'attendance',
+          label: t('nav.attendanceManagement'),
+          icon: <ScheduleIcon />,
+          children: [
+            { id: 'attendanceReport', label: t('nav.openReport'), path: '/attendance-report', icon: <DescriptionIcon /> },
+            { id: 'workHourReport', label: t('nav.workHourReport'), path: '/workhour-report', icon: <TimerIcon /> },
+            { id: 'leaveReport', label: t('nav.leaveReport'), path: '/leave-report', icon: <HolidayVillageIcon /> },
+            { id: 'annualLeaveReport', label: t('nav.annualLeaveReport'), path: '/annual-leave-report', icon: <BeachAccessIcon /> }
+          ]
+        },
+        {
+      id: 'log',
+      label: t('nav.logManagement'),
+      icon: <HistoryIcon />,
       children: [
-        { id: 'userMgmt', label: t('nav.userManagement'), path: '/user-management', icon: <PeopleIcon /> },
-        { id: 'roleMgmt', label: t('nav.roleManagement'), path: '/role-management', icon: <ShieldIcon /> },
-        { id: 'menuMgmt', label: t('nav.menuManagement'), path: '/menu-management', icon: <MenuIcon /> },
-        { id: 'deptMgmt', label: t('nav.departmentManagement'), path: '/department-management', icon: <BusinessIcon /> }
+        { id: 'loginLogReport', label: t('nav.loginLogReport'), path: '/login-log-report', icon: <HistoryIcon /> },
+        { id: 'auditLogReport', label: t('nav.auditLogReport'), path: '/audit-log-report', icon: <FindInPageIcon /> },
+        { id: 'visitorLogReport', label: t('nav.visitorLogReport'), path: '/visitor-log-report', icon: <VisibilityIcon /> }
       ]
     },
     {
@@ -239,9 +271,10 @@ export default function SideBar() {
           boxSizing: 'border-box',
           '& .MuiDrawer-paper': {
             width: open ? DRAWER_WIDTH : DRAWER_COLLAPSED_WIDTH,
+            height: 'calc(100% - 48px)',
             boxSizing: 'border-box',
             transition: 'width 0.3s ease',
-            overflowX: 'hidden'
+            overflow: 'hidden'
           }
         }}
         open={open}
@@ -250,18 +283,22 @@ export default function SideBar() {
           sx={{
             display: 'flex',
             alignItems: 'center',
-            justifyContent: open ? 'flex-end' : 'center',
+            justifyContent: 'center',
             px: 1,
             py: 1,
-            minHeight: 64
+            minHeight: 64,
+            backgroundColor: (theme) => theme.palette.background.contrastText,
+            color: (theme) => theme.palette.text.contrastText
           }}
         >
-          <IconButton onClick={toggleDrawer}>
-            {open ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-          </IconButton>
+          {open && (
+            <Typography variant="h6" sx={{ cursor: 'pointer', flexGrow: 1, pl: 2 }} onClick={() => navigate('/dashboard')}>
+              {t('nav.appTitle')}
+            </Typography>
+          )}
         </Box>
         <Divider />
-        <List sx={{ flexGrow: 1, pt: 1 }}>
+        <List sx={{ flexGrow: 1, pt: 1, overflowY: 'auto', overflowX: 'hidden' }}>
           {menuItems.map(renderMenuItem)}
         </List>
       </Drawer>

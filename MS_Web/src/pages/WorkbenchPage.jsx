@@ -25,14 +25,21 @@ import {
   CalendarToday as CalendarIcon
 } from '@mui/icons-material'
 import { useTranslation } from 'react-i18next'
+import AttendanceCalendar from '../components/AttendanceCalendar'
+import { getWorkbenchData } from '../api/dashboard'
 
 export default function WorkbenchPage() {
   const { t } = useTranslation()
   const [currentTime, setCurrentTime] = useState(new Date())
+  const [workbenchData, setWorkbenchData] = useState(null)
 
   useEffect(() => {
     const timer = setInterval(() => setCurrentTime(new Date()), 60000)
     return () => clearInterval(timer)
+  }, [])
+
+  useEffect(() => {
+    getWorkbenchData().then(res => setWorkbenchData(res.data))
   }, [])
 
   const getGreeting = () => {
@@ -46,25 +53,25 @@ export default function WorkbenchPage() {
   const quickStats = [
     {
       title: t('workbench.stats.todayVisits'),
-      value: '1,234',
+      value: workbenchData?.todayVisits?.toLocaleString() ?? '0',
       icon: <DashboardIcon sx={{ color: 'primary.main' }} />,
       trend: '+12%'
     },
     {
       title: t('workbench.stats.newUsers'),
-      value: '56',
+      value: workbenchData?.todayNewUsers?.toLocaleString() ?? '0',
       icon: <PeopleIcon sx={{ color: 'success.main' }} />,
       trend: '+8%'
     },
     {
       title: t('workbench.stats.pendingTasks'),
-      value: '12',
+      value: workbenchData?.pendingTasks?.toLocaleString() ?? '0',
       icon: <AssignmentIcon sx={{ color: 'warning.main' }} />,
       trend: '-3%'
     },
     {
       title: t('workbench.stats.messages'),
-      value: '28',
+      value: workbenchData?.unreadMessages?.toLocaleString() ?? '0',
       icon: <ChatIcon sx={{ color: 'info.main' }} />,
       trend: '+5%'
     }
@@ -85,11 +92,11 @@ export default function WorkbenchPage() {
   ]
 
   return (
-    <Box sx={{ p: 4 }}>
+    <Box sx={{ p: 2 }}>
       {/* Header / Welcome */}
       <Box sx={{ mb: 4 }}>
         <Typography variant="h4" component="h1" gutterBottom>
-          {getGreeting()}！
+          {getGreeting()}！213123123
         </Typography>
         <Typography variant="body1" color="text.secondary">
           {t('workbench.welcomeSubtitle')}
@@ -99,7 +106,7 @@ export default function WorkbenchPage() {
       {/* Quick Stats */}
       <Grid container spacing={3} sx={{ mb: 4 }}>
         {quickStats.map((stat, index) => (
-          <Grid item xs={12} sm={6} md={3} key={index}>
+          <Grid xs={12} sm={6} md={3} key={index}>
             <Card>
               <CardContent sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
                 <Avatar sx={{ bgcolor: 'background.paper', width: 56, height: 56 }}>
@@ -123,15 +130,26 @@ export default function WorkbenchPage() {
         ))}
       </Grid>
 
-      {/* Main Content Grid */}
-      <Grid container spacing={3}>
-        {/* Notifications */}
-        <Grid item xs={12} md={6}>
+      {/* Main Content Grid - Calendar, Notifications, Activities in one row */}
+      <Grid container spacing={3} sx={{ mb: 4 }}>
+        {/* Attendance Calendar */}
+        <Grid xs={12} lg={6}>
           <Card>
+            <CardHeader title={t('workbench.attendanceCalendar.title')} />
+            <CardContent sx={{ p: 0, pt: 1 }}>
+              <AttendanceCalendar />
+            </CardContent>
+          </Card>
+        </Grid>
+
+        {/* Notifications and Recent Activities Column */}
+        <Grid xs={12} lg={6} sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+          {/* Notifications */}
+          <Card sx={{ flex: 1 }}>
             <CardHeader title={t('workbench.notifications.title')} />
             <Divider />
             <CardContent sx={{ p: 0 }}>
-              <List>
+              <List dense>
                 {notifications.map((notif) => (
                   <ListItem key={notif.id} divider>
                     <ListItemIcon>{notif.icon}</ListItemIcon>
@@ -145,14 +163,13 @@ export default function WorkbenchPage() {
             </CardContent>
           </Card>
         </Grid>
-
-        {/* Recent Activities */}
-        <Grid item xs={12} md={6}>
-          <Card>
+        <Grid>
+          {/* Recent Activities */}
+          <Card sx={{ flex: 1 }}>
             <CardHeader title={t('workbench.activities.title')} />
             <Divider />
             <CardContent sx={{ p: 0 }}>
-              <List>
+              <List dense>
                 {recentActivities.map((activity) => (
                   <ListItem key={activity.id} divider>
                     <ListItemIcon>
@@ -173,40 +190,32 @@ export default function WorkbenchPage() {
             </CardContent>
           </Card>
         </Grid>
-      </Grid>
-
-      {/* Quick Actions */}
-      <Box sx={{ mt: 4 }}>
-        <Typography variant="h6" gutterBottom>
-          {t('workbench.quickActions.title')}
-        </Typography>
-        <Grid container spacing={2}>
-          <Grid item xs={12} sm={6} md={3}>
+     
+          <Grid xs={12} sm={6} md={3}>
             <Paper sx={{ p: 2, textAlign: 'center', cursor: 'pointer', '&:hover': { bgcolor: 'action.hover' } }}>
               <AssignmentIcon sx={{ fontSize: 40, mb: 1, color: 'primary.main' }} />
               <Typography variant="body2">{t('workbench.quickActions.createTask')}</Typography>
             </Paper>
           </Grid>
-          <Grid item xs={12} sm={6} md={3}>
+          <Grid xs={12} sm={6} md={3}>
             <Paper sx={{ p: 2, textAlign: 'center', cursor: 'pointer', '&:hover': { bgcolor: 'action.hover' } }}>
               <PeopleIcon sx={{ fontSize: 40, mb: 1, color: 'success.main' }} />
               <Typography variant="body2">{t('workbench.quickActions.inviteUser')}</Typography>
             </Paper>
           </Grid>
-          <Grid item xs={12} sm={6} md={3}>
+          <Grid xs={12} sm={6} md={3}>
             <Paper sx={{ p: 2, textAlign: 'center', cursor: 'pointer', '&:hover': { bgcolor: 'action.hover' } }}>
               <ChatIcon sx={{ fontSize: 40, mb: 1, color: 'info.main' }} />
               <Typography variant="body2">{t('workbench.quickActions.startChat')}</Typography>
             </Paper>
           </Grid>
-          <Grid item xs={12} sm={6} md={3}>
+          <Grid xs={12} sm={6} md={3}>
             <Paper sx={{ p: 2, textAlign: 'center', cursor: 'pointer', '&:hover': { bgcolor: 'action.hover' } }}>
               <CalendarIcon sx={{ fontSize: 40, mb: 1, color: 'warning.main' }} />
               <Typography variant="body2">{t('workbench.quickActions.viewCalendar')}</Typography>
             </Paper>
           </Grid>
         </Grid>
-      </Box>
     </Box>
   )
 }

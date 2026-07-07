@@ -20,7 +20,45 @@
     "departmentManagement": "Department Management",
     "home": "Home",
     "workbench": "Workbench",
-    "analysis": "Analysis"
+    "analysis": "Analysis",
+    "notifications": "Notifications",
+    "sendNotification": "Send Message",
+    "attendanceManagement": "Attendance",
+    "openReport": "Attendance Report",
+    "workHourReport": "Work Hour Report",
+    "leaveReport": "Leave Report",
+    "annualLeaveReport": "Annual Leave Report",
+    "logManagement": "Log Management",
+    "loginLogReport": "Login Log",
+    "auditLogReport": "Audit Log",
+    "visitorLogReport": "Visitor Log"
+  },
+  "footer": {
+    "allRightsReserved": "All rights reserved"
+  },
+  "loginLogReport": {
+    "title": "Login Log Report",
+    "id": "ID",
+    "username": "Username",
+    "ipAddress": "IP Address",
+    "deviceInfo": "Device",
+    "browserInfo": "Browser",
+    "osInfo": "OS",
+    "loginTime": "Login Time"
+  },
+  "visitorLogReport": {
+    "title": "Visitor Log Report",
+    "id": "ID",
+    "ipAddress": "IP Address",
+    "pageUrl": "Page URL",
+    "userAgent": "User Agent",
+    "referrer": "Referrer",
+    "visitTime": "Visit Time"
+  },
+  "auditLogReport": {
+    "title": "Audit Log Report",
+    "startDate": "Start Date",
+    "endDate": "End Date"
   },
   "workbench": {
     "title": "Workbench",
@@ -57,6 +95,42 @@
       "inviteUser": "Invite User",
       "startChat": "Start Chat",
       "viewCalendar": "View Calendar"
+    },
+    "attendanceCalendar": {
+      "title": "Attendance Calendar"
+    }
+  },
+  "calendar": {
+    "sunday": "Sun",
+    "monday": "Mon",
+    "tuesday": "Tue",
+    "wednesday": "Wed",
+    "thursday": "Thu",
+    "friday": "Fri",
+    "saturday": "Sat",
+    "today": "Today",
+    "fullAttendance": "Full Attendance",
+    "partialAttendance": "Partial Attendance",
+    "noAttendance": "No Attendance",
+    "holiday": "Holiday",
+    "weekend": "Weekend",
+    "checkIn": "Check In",
+    "checkOut": "Check Out",
+    "noData": "No Data"
+  },
+  "notifications": {
+    "title": "Notifications",
+    "unread": "unread",
+    "markAllRead": "Mark all as read",
+    "markRead": "Mark as read",
+    "delete": "Delete",
+    "noNotifications": "No notifications",
+    "filters": {
+      "all": "All",
+      "unread": "Unread",
+      "system": "System",
+      "task": "Task",
+      "message": "Message"
     }
   },
   "analysis": {
@@ -112,6 +186,79 @@
       "productE": "Product E"
     }
   },
+  "attendanceReport": {
+    "title": "Attendance Report",
+    "openReport": "Attendance Report",
+    "openReportDesc": "View daily attendance records",
+    "workHourReport": "Work Hour Report",
+    "workHourReportDesc": "Statistics of employee work hours",
+    "leaveReport": "Leave Report",
+    "leaveReportDesc": "Manage employee leave requests",
+    "annualLeaveReport": "Annual Leave Report",
+    "annualLeaveReportDesc": "Manage employee annual leave balance",
+    "userName": "Username",
+    "enterUserName": "Enter username",
+    "startDate": "Start Date",
+    "endDate": "End Date",
+    "status": "Status",
+    "date": "Date",
+    "dayOfWeek": "Day",
+    "user": "User",
+    "checkInTime": "Check-in Time",
+    "checkOutTime": "Check-out Time",
+    "remark": "Remark"
+  },
+  "workHourReport": {
+    "title": "Work Hour Report",
+    "selectUser": "Select User",
+    "selectMonth": "Select Month",
+    "date": "Date",
+    "user": "User",
+    "regularHours": "Regular Hours",
+    "overtimeHours": "Overtime Hours",
+    "weekendHours": "Weekend Hours",
+    "holidayHours": "Holiday Hours",
+    "totalHours": "Total Hours",
+    "project": "Project",
+    "task": "Task",
+    "month": "Month"
+  },
+  "leaveReport": {
+    "title": "Leave Report",
+    "selectUser": "Select User",
+    "selectStatus": "Select Status",
+    "date": "Date",
+    "user": "User",
+    "leaveType": "Leave Type",
+    "startDate": "Start Date",
+    "endDate": "End Date",
+    "days": "Days",
+    "hours": "Hours",
+    "status": "Status",
+    "reason": "Reason",
+    "approver": "Approver",
+    "pending": "Pending",
+    "approved": "Approved",
+    "rejected": "Rejected",
+    "personal": "Personal",
+    "sick": "Sick",
+    "annual": "Annual",
+    "maternity": "Maternity",
+    "paternity": "Paternity",
+    "month": "Month"
+  },
+  "annualLeaveReport": {
+    "title": "Annual Leave Report",
+    "selectUser": "Select User",
+    "selectYear": "Select Year",
+    "user": "User",
+    "year": "Year",
+    "totalDays": "Total Days",
+    "usedDays": "Used Days",
+    "remainingDays": "Remaining Days",
+    "carriedOverDays": "Carried Over Days",
+    "month": "Month"
+  },
   "common": {
     "save": "Save",
     "cancel": "Cancel",
@@ -120,7 +267,16 @@
     "add": "Add",
     "none": "None",
     "active": "Active",
-    "inactive": "Inactive"
+    "inactive": "Inactive",
+    "all": "All",
+    "view": "View",
+    "noData": "No data",
+    "showing": "Showing",
+    "of": "of",
+    "records": "records",
+    "pageSize": "Page size",
+    "search": "Search",
+    "reset": "Reset"
   },
   "confirmDelete": "Are you sure you want to delete?",
   "userManagement": {
@@ -291,12 +447,35 @@
     "direction": "Direction",
     "gust": "Gust"
   },
+  "circle": {
+    "title": "Draw Circle",
+    "name": "Name",
+    "center": "Center",
+    "longitude": "Longitude",
+    "latitude": "Latitude",
+    "radius": "Radius",
+    "meters": "meters",
+    "color": "Color",
+    "opacity": "Opacity",
+    "add": "Add",
+    "delete": "Delete",
+    "clearAll": "Clear All",
+    "drawingMode": "Drawing Mode",
+    "drawingHint": "Click on map to select center",
+    "list": "Circle List",
+    "noCircles": "No circles yet, click add or enable drawing mode"
+  },
   "dashboard": {
     "title": "Dashboard",
-    "earthquakes": "Earthquake Records",
-    "airQuality": "Air Quality Stations",
-    "typhoon": "Typhoon Records",
-    "wind": "Wind Regions"
+    "users": "Users",
+    "roles": "Roles",
+    "departments": "Departments",
+    "menus": "Menus",
+    "loginLogs": "Login Logs",
+    "attendanceRecords": "Attendance Records",
+    "workHourRecords": "Work Hour Records",
+    "leaveRecords": "Leave Records",
+    "annualLeaveRecords": "Annual Leave Records"
   },
   "bigScreen": {
     "title": "Real-time Data Monitor",

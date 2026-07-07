@@ -36,6 +36,11 @@ export default function DepartmentManagementPage() {
     isActive: true
   })
 
+  const [searchQuery, setSearchQuery] = useState('')
+  const [filterStatus, setFilterStatus] = useState('')
+  const [appliedSearchQuery, setAppliedSearchQuery] = useState('')
+  const [appliedFilterStatus, setAppliedFilterStatus] = useState('')
+
   useEffect(() => {
     fetchAllDepartments()
   }, [fetchAllDepartments])
@@ -104,10 +109,60 @@ export default function DepartmentManagementPage() {
     return indent
   }
 
+  const handleSearch = () => {
+    setAppliedSearchQuery(searchQuery)
+    setAppliedFilterStatus(filterStatus)
+  }
+
+  const handleReset = () => {
+    setSearchQuery('')
+    setFilterStatus('')
+    setAppliedSearchQuery('')
+    setAppliedFilterStatus('')
+  }
+
+  const filteredDeptItems = allDeptItems.filter(dept => {
+    const matchesSearch = !appliedSearchQuery ||
+      dept.name?.toLowerCase().includes(appliedSearchQuery.toLowerCase()) ||
+      dept.code?.toLowerCase().includes(appliedSearchQuery.toLowerCase()) ||
+      dept.leader?.toLowerCase().includes(appliedSearchQuery.toLowerCase())
+    const matchesStatus = appliedFilterStatus === '' ||
+      (appliedFilterStatus === 'active' && dept.isActive) ||
+      (appliedFilterStatus === 'inactive' && !dept.isActive)
+    return matchesSearch && matchesStatus
+  })
+
   return (
-    <Box sx={{ p: 4 }}>
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
-        <Typography variant="h4">{t('departmentManagement.title')}</Typography>
+    <Box sx={{ p: 2 }}>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3, gap: 2, flexWrap: 'wrap' }}>
+        <Box sx={{ display: 'flex', gap: 2, alignItems: 'center', flexWrap: 'wrap' }}>
+          <TextField
+            label={t('common.search')}
+            size="small"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder={t('departmentManagement.name')}
+            sx={{ minWidth: 200 }}
+          />
+          <FormControl size="small" sx={{ minWidth: 120 }}>
+            <InputLabel>{t('userManagement.status')}</InputLabel>
+            <Select
+              value={filterStatus}
+              onChange={(e) => setFilterStatus(e.target.value)}
+              label={t('userManagement.status')}
+            >
+              <MenuItem value="">{t('common.all')}</MenuItem>
+              <MenuItem value="active">{t('common.active')}</MenuItem>
+              <MenuItem value="inactive">{t('common.inactive')}</MenuItem>
+            </Select>
+          </FormControl>
+          <Button variant="contained" onClick={handleSearch}>
+            {t('common.search')}
+          </Button>
+          <Button onClick={handleReset}>
+            {t('common.reset')}
+          </Button>
+        </Box>
         <Button variant="contained" startIcon={<AddIcon />} onClick={handleOpenCreate}>
           {t('departmentManagement.addDepartment')}
         </Button>
@@ -116,11 +171,11 @@ export default function DepartmentManagementPage() {
       {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
 
       {loading ? (
-        <Box sx={{ display: 'flex', justifyContent: 'center', p: 4 }}>
+        <Box sx={{ display: 'flex', justifyContent: 'center', p: 2 }}>
           <CircularProgress />
         </Box>
       ) : (
-        <TableContainer component={Paper}>
+        <TableContainer component={Paper} sx={{ height: 600 }}>
           <Table>
             <TableHead>
               <TableRow>
@@ -135,7 +190,7 @@ export default function DepartmentManagementPage() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {allDeptItems.map((dept) => {
+              {filteredDeptItems.map((dept) => {
                 const indent = getIndent(dept)
                 return (
                   <TableRow key={dept.id}>

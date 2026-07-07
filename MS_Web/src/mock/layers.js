@@ -60,13 +60,17 @@ const DEFAULT_LAYERS = [
   },
 ]
 
-Mock.mock('/api/layers', 'get', () => ({
-  code: 200,
-  message: 'success',
-  data: DEFAULT_LAYERS,
-}))
+Mock.mock(/.+\/api\/layers(\?.*)?$/, 'get', (options) => {
+  console.log('[Mock] GET /api/layers called', options)
+  return {
+    code: 200,
+    message: 'success',
+    data: DEFAULT_LAYERS,
+  }
+})
 
-Mock.mock('/api/layers', 'post', (options) => {
+Mock.mock(/.+\/api\/layers$/, 'post', (options) => {
+  console.log('[Mock] POST /api/layers called', options)
   const body = JSON.parse(options.body)
   const newLayer = {
     id: Random.guid(),
@@ -82,7 +86,8 @@ Mock.mock('/api/layers', 'post', (options) => {
   }
 })
 
-Mock.mock(/\/api\/layers\/\w+/, 'put', (options) => {
+Mock.mock(/.+\/api\/layers\/\w+$/, 'put', (options) => {
+  console.log('[Mock] PUT /api/layers/:id called', options)
   const body = JSON.parse(options.body)
   return {
     code: 200,
@@ -91,9 +96,12 @@ Mock.mock(/\/api\/layers\/\w+/, 'put', (options) => {
   }
 })
 
-Mock.mock(/\/api\/layers\/\w+/, 'delete', () => ({
-  code: 200,
-  message: '图层删除成功',
-}))
+Mock.mock(/.+\/api\/layers\/\w+$/, 'delete', (options) => {
+  console.log('[Mock] DELETE /api/layers/:id called', options)
+  return {
+    code: 200,
+    message: '图层删除成功',
+  }
+})
 
 export { DEFAULT_LAYERS }

@@ -6,12 +6,14 @@ const useLayerStore = create((set, get) => ({
   loading: false,
 
   fetchLayers: async () => {
+    console.log('[Store] fetchLayers called')
     set({ loading: true })
     try {
       const res = await apiGetLayers()
+      console.log('[Store] fetchLayers response:', res)
       set({ layers: res.data, loading: false })
     } catch (err) {
-      console.error('Failed to fetch layers:', err)
+      console.error('[Store] Failed to fetch layers:', err)
       set({ loading: false })
     }
   },

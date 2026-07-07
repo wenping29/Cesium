@@ -123,6 +123,10 @@ export default function CesiumMap({
   windData = [],
   windVisible = false,
   selectedWind = null,
+  circles = [],
+  drawingMode = false,
+  onMapClick = null,
+  onCircleClick = null,
 }) {
   const { t } = useTranslation()
   const containerRef = useRef(null)
@@ -136,6 +140,7 @@ export default function CesiumMap({
   const earthquakeHeatmapLayerRef = useRef(null)
   const typhoonEntitiesRef = useRef([])
   const windEntitiesRef = useRef([])
+  const circleEntitiesRef = useRef([])
 
   const addBasemapLayer = (viewer, basemapId) => {
     const provider = BASEMAP_PROVIDERS[basemapId]
@@ -208,6 +213,7 @@ export default function CesiumMap({
         // viewer.scene.setTerrain(Cesium.Terrain.fromWorldTerrain({
         //     requestVertexNormals: true,
         //   }));
+        return;
 
         const res = await getCities()
         if (cancelled || !viewer || viewer.isDestroyed()) return
@@ -672,6 +678,44 @@ export default function CesiumMap({
     })
   }, [selectedWind])
 
+  useEffect(() => {
+    const viewer = viewerRef.current
+    if (!viewer || viewer.isDestroyed()) return
+
+    circleEntitiesRef.current.forEach((e) => viewer.entities.remove(e))
+    circleEntitiesRef.current = []
+
+    circles.forEach((circle) => {
+      if (!circle.visible) return
+
+      const color = Cesium.Color.fromCssColorString(circle.color).withAlpha(circle.opacity)
+      const outlineColor = Cesium.Color.fromCssColorString(circle.color).withAlpha(1)
+
+      const entity = viewer.entities.add({
+        id: `circle-${circle.id}`,
+        name: circle.name,
+        position: Cesium.Cartesian3.fromDegrees(circle.center.lng, circle.center.lat),
+        ellipse: {
+          semiMinorAxis: circle.radius,
+          semiMajorAxis: circle.radius,
+          material: color,
+          outline: true,
+          outlineColor: outlineColor,
+          outlineWidth: 2,
+          heightReference: Cesium.HeightReference.CLAMP_TO_GROUND,
+        },
+        point: {
+          pixelSize: 8,
+          color: outlineColor,
+          outlineColor: Cesium.Color.WHITE,
+          outlineWidth: 2,
+          heightReference: Cesium.HeightReference.CLAMP_TO_GROUND,
+        },
+      })
+      circleEntitiesRef.current.push(entity)
+    })
+  }, [circles])
+
   const loadBIMModel = async (viewer, bimModel) => {
     try {
       const position = Cesium.Cartesian3.fromDegrees(
@@ -750,6 +794,18 @@ export default function CesiumMap({
 
     const handler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas)
     handler.setInputAction((click) => {
+      if (drawingMode) {
+        const ray = viewer.camera.getPickRay(click.position)
+        const position = viewer.scene.globe.pick(ray, viewer.scene)
+        if (Cesium.defined(position)) {
+          const cartographic = Cesium.Cartographic.fromCartesian(position)
+          const lng = Cesium.Math.toDegrees(cartographic.longitude)
+          const lat = Cesium.Math.toDegrees(cartographic.latitude)
+          onMapClick?.({ lng, lat })
+        }
+        return
+      }
+
       const pickedObject = viewer.scene.pick(click.position)
       if (Cesium.defined(pickedObject) && pickedObject.id instanceof Cesium.Entity) {
         const entity = pickedObject.id
@@ -773,12 +829,19 @@ export default function CesiumMap({
             duration: 2,
             offset: new Cesium.HeadingPitchRange(0, Cesium.Math.toRadians(-30), 500000),
           })
+        } else if (String(entity.id).startsWith('circle-')) {
+          const circleId = entity.id.replace('circle-', '')
+          onCircleClick?.(circleId)
+          viewer.flyTo(entity, {
+            duration: 1,
+            offset: new Cesium.HeadingPitchRange(0, Cesium.Math.toRadians(-45), 10000),
+          })
         }
       }
     }, Cesium.ScreenSpaceEventType.LEFT_CLICK)
 
     return () => handler.destroy()
-  }, [])
+  }, [drawingMode, onMapClick, onCircleClick])
 
   return (
     <Box sx={{ width: '100%', height: '100%', position: 'relative' }}>

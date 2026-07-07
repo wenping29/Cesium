@@ -79,6 +79,22 @@ public class AuthController : ControllerBase
         var roles = user.UserRoles.Select(ur => ur.Role.Name).ToList();
         var token = _tokenService.GenerateToken(user, roles);
 
+        var ipAddress = HttpContext.Connection.RemoteIpAddress?.ToString();
+        if (!string.IsNullOrEmpty(ipAddress) && ipAddress == "::1")
+            ipAddress = "127.0.0.1";
+
+        _context.LoginLogs.Add(new LoginLog
+        {
+            UserId = user.Id,
+            Username = user.Username,
+            IpAddress = ipAddress,
+            DeviceInfo = dto.DeviceInfo,
+            BrowserInfo = dto.BrowserInfo,
+            OsInfo = dto.OsInfo,
+            LoginTime = DateTime.UtcNow,
+        });
+        await _context.SaveChangesAsync();
+
         return new AuthResponseDto
         {
             Token = token,

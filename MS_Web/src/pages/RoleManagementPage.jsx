@@ -32,6 +32,9 @@ export default function RoleManagementPage() {
     menuIds: []
   })
 
+  const [searchQuery, setSearchQuery] = useState('')
+  const [appliedSearchQuery, setAppliedSearchQuery] = useState('')
+
   useEffect(() => {
     fetchRoles()
     fetchAllMenus()
@@ -79,10 +82,41 @@ export default function RoleManagementPage() {
     return menuIds?.map(id => allMenuItems.find(m => m.id === id)?.name).filter(Boolean) || []
   }
 
+  const handleSearch = () => {
+    setAppliedSearchQuery(searchQuery)
+  }
+
+  const handleReset = () => {
+    setSearchQuery('')
+    setAppliedSearchQuery('')
+  }
+
+  const filteredRoles = roles.filter(role => {
+    const matchesSearch = !appliedSearchQuery ||
+      role.name?.toLowerCase().includes(appliedSearchQuery.toLowerCase()) ||
+      role.description?.toLowerCase().includes(appliedSearchQuery.toLowerCase())
+    return matchesSearch
+  })
+
   return (
-    <Box sx={{ p: 4 }}>
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
-        <Typography variant="h4">{t('roleManagement.title')}</Typography>
+    <Box sx={{ p: 2 }}>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3, gap: 2, flexWrap: 'wrap' }}>
+        <Box sx={{ display: 'flex', gap: 2, alignItems: 'center', flexWrap: 'wrap' }}>
+          <TextField
+            label={t('common.search')}
+            size="small"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder={t('roleManagement.name')}
+            sx={{ minWidth: 200 }}
+          />
+          <Button variant="contained" onClick={handleSearch}>
+            {t('common.search')}
+          </Button>
+          <Button onClick={handleReset}>
+            {t('common.reset')}
+          </Button>
+        </Box>
         <Button variant="contained" startIcon={<AddIcon />} onClick={handleOpenCreate}>
           {t('roleManagement.addRole')}
         </Button>
@@ -91,11 +125,11 @@ export default function RoleManagementPage() {
       {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
 
       {loading ? (
-        <Box sx={{ display: 'flex', justifyContent: 'center', p: 4 }}>
+        <Box sx={{ display: 'flex', justifyContent: 'center', p: 2 }}>
           <CircularProgress />
         </Box>
       ) : (
-        <TableContainer component={Paper}>
+        <TableContainer component={Paper} sx={{ height: 650 }}>
           <Table>
             <TableHead>
               <TableRow>
@@ -107,7 +141,7 @@ export default function RoleManagementPage() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {roles.map((role) => (
+              {filteredRoles.map((role) => (
                 <TableRow key={role.id}>
                   <TableCell>{role.id}</TableCell>
                   <TableCell>{role.name}</TableCell>

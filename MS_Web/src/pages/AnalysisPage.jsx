@@ -87,10 +87,9 @@ export default function AnalysisPage() {
   ]
 
   return (
-    <Box sx={{ p: 4 }}>
+    <Box sx={{ p: 2 }}>
       {/* Header */}
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 4 }}>
-        <Typography variant="h4">{t('analysis.title')}</Typography>
+      <Box sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', mb: 4 }}>
         <FormControl size="small" sx={{ minWidth: 150 }}>
           <InputLabel>{t('analysis.timeRange')}</InputLabel>
           <Select

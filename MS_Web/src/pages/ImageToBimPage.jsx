@@ -120,7 +120,7 @@ export default function ImageToBimPage() {
   const formatConfidence = (val) => `${(val * 100).toFixed(0)}%`
 
   return (
-    <Box sx={{ p: 3, maxWidth: 1200, mx: 'auto' }}>
+    <Box sx={{ p: 2, maxWidth: 1200, mx: 'auto' }}>
       <Typography variant="h5" sx={{ mb: 3, fontWeight: 'bold', display: 'flex', alignItems: 'center', gap: 1 }}>
         <InsightsIcon /> {t('imageToBim.title')}
       </Typography>
@@ -128,7 +128,7 @@ export default function ImageToBimPage() {
       {/* Upload Area */}
       <Paper
         sx={{
-          p: 4, mb: 3, textAlign: 'center',
+          p: 2, mb: 3, textAlign: 'center',
           border: '2px dashed',
           borderColor: dragging ? 'primary.main' : error ? 'error.main' : 'grey.300',
           bgcolor: dragging ? 'action.hover' : 'background.paper',
