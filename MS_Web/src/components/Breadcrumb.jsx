@@ -1,6 +1,5 @@
 import { useLocation, useNavigate } from 'react-router-dom'
 import { Breadcrumbs, Link, Typography } from '@mui/material'
-import HomeIcon from '@mui/icons-material/Home'
 import { useTranslation } from 'react-i18next'
 
 const breadcrumbMap = {
@@ -28,6 +27,16 @@ const breadcrumbMap = {
   '/change-password': { label: 'nav.changePassword', parent: '/' },
   '/notifications': { label: 'nav.notifications', parent: '/' },
   '/send-notification': { label: 'nav.sendNotification', parent: '/' },
+  '/settings/introduction': { label: '简介', parent: '/settingsGroup' },
+  '/settings': { label: '设置', parent: '/settingsGroup' },
+  '/settings/background': { label: '背景设置', parent: '/settingsGroup' },
+  '/settings/dashboard': { label: '看板', parent: '/settingsGroup' },
+  '/settings/projects': { label: '项目', parent: '/settingsGroup' },
+  '/settings/faq': { label: '常见问题', parent: '/settingsGroup' },
+  '/settings/users': { label: '用户', parent: '/settingsGroup' },
+  '/settings/auth': { label: '认证', parent: '/settingsGroup' },
+  '/settings/files': { label: '文件管理', parent: '/settingsGroup' },
+  '/settings/chat': { label: '聊天', parent: '/settingsGroup' },
 }
 
 const groupMap = {
@@ -36,6 +45,7 @@ const groupMap = {
   '/permission': { label: 'nav.permissionManagement', path: '/user-management' },
   '/maps': { label: 'nav.mapCategory', path: '/map' },
   '/attendance': { label: 'nav.attendanceManagement', path: '/attendance-report' },
+  '/settingsGroup': { label: '设置', path: '/settings/introduction' },
 }
 
 export default function Breadcrumb() {
@@ -50,12 +60,12 @@ export default function Breadcrumb() {
     while (currentPath) {
       const item = breadcrumbMap[currentPath]
       if (item) {
-        breadcrumbs.unshift({ path: currentPath, label: t(item.label) })
-        
+        breadcrumbs.unshift({ path: currentPath, label: typeof item.label === 'string' ? item.label : t(item.label) })
+
         if (item.parent && groupMap[item.parent]) {
           const group = groupMap[item.parent]
-          breadcrumbs.unshift({ path: group.path, label: t(group.label) })
-          currentPath = groupMap[group.parent]?.path || null
+          breadcrumbs.unshift({ path: group.path, label: typeof group.label === 'string' ? group.label : t(group.label) })
+          currentPath = null
         } else {
           currentPath = null
         }
@@ -75,7 +85,6 @@ export default function Breadcrumb() {
         const isLast = index === breadcrumbs.length - 1
         return isLast ? (
           <Typography key={crumb.path} sx={{ color: 'white', fontWeight: 'bold' }}>
-            {crumb.icon}
             {crumb.label}
           </Typography>
         ) : (
@@ -86,7 +95,6 @@ export default function Breadcrumb() {
             onClick={() => navigate(crumb.path)}
             sx={{ cursor: 'pointer' }}
           >
-            {crumb.icon}
             {crumb.label}
           </Link>
         )

@@ -46,6 +46,14 @@ import FindInPageIcon from '@mui/icons-material/FindInPage'
 import VisibilityIcon from '@mui/icons-material/Visibility'
 import NotificationsIcon from '@mui/icons-material/Notifications'
 import SendIcon from '@mui/icons-material/Send'
+import InfoIcon from '@mui/icons-material/Info'
+import WallpaperIcon from '@mui/icons-material/Wallpaper'
+import DashboardOutlined from '@mui/icons-material/DashboardOutlined'
+import FolderIcon from '@mui/icons-material/Folder'
+import HelpIcon from '@mui/icons-material/Help'
+import SecurityIcon from '@mui/icons-material/Security'
+import StorageIcon from '@mui/icons-material/Storage'
+import ChatBubbleOutline from '@mui/icons-material/ChatBubbleOutline'
 import { useTranslation } from 'react-i18next'
 import sidebarStore from '../store/sidebarStore'
 
@@ -151,6 +159,23 @@ export default function SideBar() {
       label: t('nav.imageToBim'),
       path: '/image-to-bim',
       icon: <InsightsIcon />
+    },
+    {
+      id: 'settings',
+      label: '设置',
+      icon: <SettingsIcon />,
+      children: [
+        { id: 'settings-intro', label: '简介', path: '/settings/introduction', icon: <InfoIcon /> },
+        { id: 'settings-main', label: '设置', path: '/settings', icon: <SettingsIcon /> },
+        { id: 'settings-background', label: '背景设置', path: '/settings/background', icon: <WallpaperIcon /> },
+        { id: 'settings-dashboard', label: '看板', path: '/settings/dashboard', icon: <DashboardOutlined /> },
+        { id: 'settings-projects', label: '项目', path: '/settings/projects', icon: <FolderIcon /> },
+        { id: 'settings-faq', label: '常见问题', path: '/settings/faq', icon: <HelpIcon /> },
+        { id: 'settings-users', label: '用户', path: '/settings/users', icon: <PeopleIcon /> },
+        { id: 'settings-auth', label: '认证', path: '/settings/auth', icon: <SecurityIcon /> },
+        { id: 'settings-files', label: '文件管理', path: '/settings/files', icon: <StorageIcon /> },
+        { id: 'settings-chat', label: '聊天', path: '/settings/chat', icon: <ChatBubbleOutline /> },
+      ]
     }
   ]
 

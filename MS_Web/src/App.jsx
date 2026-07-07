@@ -37,6 +37,16 @@ import LeaveReportPage from './pages/LeaveReportPage'
 import AnnualLeaveReportPage from './pages/AnnualLeaveReportPage'
 import NotificationsPage from './pages/NotificationsPage'
 import SendMessagePage from './pages/SendMessagePage'
+import SettingsIntroductionPage from './pages/SettingsIntroductionPage'
+import SettingsPage from './pages/SettingsPage'
+import BackgroundSettingsPage from './pages/BackgroundSettingsPage'
+import DashboardSettingsPage from './pages/DashboardSettingsPage'
+import ProjectsSettingsPage from './pages/ProjectsSettingsPage'
+import FAQPage from './pages/FAQPage'
+import UsersSettingsPage from './pages/UsersSettingsPage'
+import AuthSettingsPage from './pages/AuthSettingsPage'
+import FileManagementPage from './pages/FileManagementPage'
+import ChatPage from './pages/ChatPage'
 
 function PrivateRoute({ children }) {
   const token = useAuthStore((s) => s.token)
@@ -76,6 +86,16 @@ export default function App() {
     '/send-notification': '发送消息',
     '/profile': '个人资料',
     '/change-password': '修改密码',
+    '/settings/introduction': '简介',
+    '/settings': '设置',
+    '/settings/background': '背景设置',
+    '/settings/dashboard': '看板',
+    '/settings/projects': '项目',
+    '/settings/faq': '常见问题',
+    '/settings/users': '用户',
+    '/settings/auth': '认证',
+    '/settings/files': '文件管理',
+    '/settings/chat': '聊天',
   }
 
   const prevPath = useRef('')
@@ -142,6 +162,16 @@ export default function App() {
               <Route path="/notifications" element={<PrivateRoute><NotificationsPage /></PrivateRoute>} />
               <Route path="/send-notification" element={<PrivateRoute><SendMessagePage /></PrivateRoute>} />
               <Route path="/visitor-log-report" element={<PrivateRoute><VisitorLogReportPage /></PrivateRoute>} />
+              <Route path="/settings/introduction" element={<PrivateRoute><SettingsIntroductionPage /></PrivateRoute>} />
+              <Route path="/settings" element={<PrivateRoute><SettingsPage /></PrivateRoute>} />
+              <Route path="/settings/background" element={<PrivateRoute><BackgroundSettingsPage /></PrivateRoute>} />
+              <Route path="/settings/dashboard" element={<PrivateRoute><DashboardSettingsPage /></PrivateRoute>} />
+              <Route path="/settings/projects" element={<PrivateRoute><ProjectsSettingsPage /></PrivateRoute>} />
+              <Route path="/settings/faq" element={<PrivateRoute><FAQPage /></PrivateRoute>} />
+              <Route path="/settings/users" element={<PrivateRoute><UsersSettingsPage /></PrivateRoute>} />
+              <Route path="/settings/auth" element={<PrivateRoute><AuthSettingsPage /></PrivateRoute>} />
+              <Route path="/settings/files" element={<PrivateRoute><FileManagementPage /></PrivateRoute>} />
+              <Route path="/settings/chat" element={<PrivateRoute><ChatPage /></PrivateRoute>} />
               <Route path="*" element={<Navigate to="/workbench" replace />} />
             </Routes>
           </Box>
