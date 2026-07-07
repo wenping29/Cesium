@@ -3,6 +3,7 @@ import { getAnnualLeaves, getMyAnnualLeaves, createAnnualLeave, updateAnnualLeav
 
 const useAnnualLeaveStore = create((set) => ({
   annualleaves: [],
+  total: 0,
   loading: false,
   error: null,
 
@@ -10,7 +11,11 @@ const useAnnualLeaveStore = create((set) => ({
     set({ loading: true, error: null })
     try {
       const res = await getAnnualLeaves(params)
-      set({ annualleaves: res, loading: false })
+      set({
+        annualleaves: res.data || res,
+        total: res.total || res.length || 0,
+        loading: false
+      })
     } catch (err) {
       set({ error: err?.response?.data || err?.message, loading: false })
     }
@@ -20,7 +25,11 @@ const useAnnualLeaveStore = create((set) => ({
     set({ loading: true, error: null })
     try {
       const res = await getMyAnnualLeaves(params)
-      set({ annualleaves: res, loading: false })
+      set({
+        annualleaves: res.data || res,
+        total: res.total || res.length || 0,
+        loading: false
+      })
     } catch (err) {
       set({ error: err?.response?.data || err?.message, loading: false })
     }

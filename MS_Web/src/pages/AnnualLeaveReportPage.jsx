@@ -67,9 +67,10 @@ export default function AnnualLeaveReportPage() {
     return acc
   }, { total: 0, used: 0, remaining: 0 })
 
-  const totalPages = Math.ceil(total / pageSize)
-  const startIndex = (page - 1) * pageSize + 1
-  const endIndex = Math.min(page * pageSize, total)
+  const safeTotal = total || 0
+  const totalPages = Math.ceil(safeTotal / pageSize) || 1
+  const startIndex = Math.max(1, (page - 1) * pageSize + 1)
+  const endIndex = Math.min(page * pageSize, safeTotal)
 
   return (
     <Box sx={{ p: 2 }}>

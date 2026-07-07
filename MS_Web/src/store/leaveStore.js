@@ -3,6 +3,7 @@ import { getLeaves, getMyLeaves, createLeave, updateLeave, approveLeave, rejectL
 
 const useLeaveStore = create((set) => ({
   leaves: [],
+  total: 0,
   loading: false,
   error: null,
 
@@ -10,7 +11,11 @@ const useLeaveStore = create((set) => ({
     set({ loading: true, error: null })
     try {
       const res = await getLeaves(params)
-      set({ leaves: res, loading: false })
+      set({
+        leaves: res.data || res,
+        total: res.total || res.length || 0,
+        loading: false
+      })
     } catch (err) {
       set({ error: err?.response?.data || err?.message, loading: false })
     }
@@ -20,7 +25,11 @@ const useLeaveStore = create((set) => ({
     set({ loading: true, error: null })
     try {
       const res = await getMyLeaves(params)
-      set({ leaves: res, loading: false })
+      set({
+        leaves: res.data || res,
+        total: res.total || res.length || 0,
+        loading: false
+      })
     } catch (err) {
       set({ error: err?.response?.data || err?.message, loading: false })
     }

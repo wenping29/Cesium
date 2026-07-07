@@ -144,7 +144,7 @@ export default function AuditLogReportPage() {
           </TableContainer>
           <TablePagination
             component="div"
-            count={total}
+            count={total || 0}
             page={page}
             onPageChange={handleChangePage}
             rowsPerPage={pageSize}

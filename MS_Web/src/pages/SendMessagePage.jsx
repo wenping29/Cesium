@@ -314,7 +314,7 @@ export default function SendMessagePage() {
         </Table>
         <TablePagination
           component="div"
-          count={total}
+          count={total || 0}
           page={page}
           onPageChange={handleChangePage}
           rowsPerPage={rowsPerPage}
