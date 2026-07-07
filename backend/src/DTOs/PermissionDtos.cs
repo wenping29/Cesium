@@ -142,6 +142,16 @@ public class ResetPasswordDto
     public string NewPassword { get; set; } = "123456"; // 默认密码
 }
 
+public class UpdateProfileDto
+{
+    public string? Name { get; set; }
+    public string? Email { get; set; }
+    public string? Phone { get; set; }
+    public string? Avatar { get; set; }
+    public string? Gender { get; set; }
+    public string? Address { get; set; }
+}
+
 // 考勤DTOs
 public class AttendanceRecordDto
 {

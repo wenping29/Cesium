@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { login as apiLogin, logout as apiLogout, getMe as apiGetMe, changePassword as apiChangePassword } from '../api/auth'
+import { login as apiLogin, logout as apiLogout, getMe as apiGetMe, changePassword as apiChangePassword, updateProfile as apiUpdateProfile } from '../api/auth'
 
 const useAuthStore = create((set, get) => ({
   user: JSON.parse(localStorage.getItem('user') || 'null'),
@@ -23,6 +23,14 @@ const useAuthStore = create((set, get) => ({
 
   getProfile: async () => {
     const res = await apiGetMe()
+    const user = res
+    localStorage.setItem('user', JSON.stringify(user))
+    set({ user })
+    return res
+  },
+
+  updateProfile: async (data) => {
+    const res = await apiUpdateProfile(data)
     const user = res
     localStorage.setItem('user', JSON.stringify(user))
     set({ user })

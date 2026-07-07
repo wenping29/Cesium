@@ -37,7 +37,49 @@ public class UserController : ControllerBase
         {
             Id = user.Id,
             Username = user.Username,
+            Name = user.Name,
             Email = user.Email,
+            Phone = user.Phone,
+            Avatar = user.Avatar,
+            Gender = user.Gender,
+            Address = user.Address,
+            Roles = user.UserRoles.Select(ur => ur.Role.Name).ToList()
+        };
+    }
+
+    [HttpPut("profile")]
+    public async Task<ActionResult<UserDto>> UpdateProfile([FromBody] UpdateProfileDto dto)
+    {
+        var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+        if (userId == null) return Unauthorized();
+
+        var user = await _context.Users
+            .Include(u => u.UserRoles)
+            .ThenInclude(ur => ur.Role)
+            .FirstOrDefaultAsync(u => u.Id == int.Parse(userId));
+
+        if (user == null) return NotFound();
+
+        if (!string.IsNullOrEmpty(dto.Name)) user.Name = dto.Name;
+        if (!string.IsNullOrEmpty(dto.Email)) user.Email = dto.Email;
+        if (dto.Phone != null) user.Phone = dto.Phone;
+        if (dto.Avatar != null) user.Avatar = dto.Avatar;
+        if (dto.Gender != null) user.Gender = dto.Gender;
+        if (dto.Address != null) user.Address = dto.Address;
+        user.UpdatedAt = DateTime.UtcNow;
+
+        await _context.SaveChangesAsync();
+
+        return new UserDto
+        {
+            Id = user.Id,
+            Username = user.Username,
+            Name = user.Name,
+            Email = user.Email,
+            Phone = user.Phone,
+            Avatar = user.Avatar,
+            Gender = user.Gender,
+            Address = user.Address,
             Roles = user.UserRoles.Select(ur => ur.Role.Name).ToList()
         };
     }

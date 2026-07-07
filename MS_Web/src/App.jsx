@@ -92,7 +92,7 @@ export default function App() {
     '/settings/dashboard': '看板',
     '/settings/projects': '项目',
     '/settings/faq': '常见问题',
-    '/settings/users': '用户',
+    '/settings/users': '个人资料',
     '/settings/auth': '认证',
     '/settings/files': '文件管理',
     '/settings/chat': '聊天',
@@ -168,7 +168,7 @@ export default function App() {
               <Route path="/settings/dashboard" element={<PrivateRoute><DashboardSettingsPage /></PrivateRoute>} />
               <Route path="/settings/projects" element={<PrivateRoute><ProjectsSettingsPage /></PrivateRoute>} />
               <Route path="/settings/faq" element={<PrivateRoute><FAQPage /></PrivateRoute>} />
-              <Route path="/settings/users" element={<PrivateRoute><UsersSettingsPage /></PrivateRoute>} />
+              <Route path="/settings/users" element={<PrivateRoute><EditProfilePage /></PrivateRoute>} />
               <Route path="/settings/auth" element={<PrivateRoute><AuthSettingsPage /></PrivateRoute>} />
               <Route path="/settings/files" element={<PrivateRoute><FileManagementPage /></PrivateRoute>} />
               <Route path="/settings/chat" element={<PrivateRoute><ChatPage /></PrivateRoute>} />

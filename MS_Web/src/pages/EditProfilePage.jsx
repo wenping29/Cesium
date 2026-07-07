@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import {
-  Box, Card, CardContent, Typography, TextField, Button, Avatar, Alert, CircularProgress,
+  Box, Card, CardContent, Typography, TextField, Button, Avatar, Alert, CircularProgress, Select, MenuItem, FormControl, InputLabel, Divider, Grid, Paper,
 } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 import useAuthStore from '../store/authStore'
@@ -9,10 +9,12 @@ export default function EditProfilePage() {
   const { t } = useTranslation()
   const { user, updateProfile } = useAuthStore()
   const [form, setForm] = useState({
-    name: user?.name || '',
+    username: user?.username || '',
+    name: user?.name || user?.username || '',
     phone: user?.phone || '',
     email: user?.email || '',
-    bio: user?.bio || '',
+    address: user?.address || '',
+    gender: user?.gender || '',
     avatar: user?.avatar || '',
   })
   const [saving, setSaving] = useState(false)
@@ -35,30 +37,114 @@ export default function EditProfilePage() {
   }
 
   return (
-    <Box sx={{ display: 'flex', justifyContent: 'center', p: 2 }}>
-      <Card sx={{ width: 520, boxShadow: 3 }}>
-        <CardContent sx={{ p: 2 }}>
-          <Typography variant="h5" fontWeight={600} mb={3}>{t('profile.title')}</Typography>
-
-          {success && <Alert severity="success" sx={{ mb: 2 }}>{t('profile.success')}</Alert>}
-
-          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mb: 3 }}>
-            <Avatar src={form.avatar} sx={{ width: 80, height: 80, mb: 1 }} />
-            <Typography variant="body2" color="text.secondary">{t('profile.avatarUrl')}</Typography>
+    <Box sx={{ display: 'flex', justifyContent: 'center', p: 4 }}>
+      <Paper sx={{ width: 650, boxShadow: 3 }}>
+        <CardContent sx={{ p: 0 }}>
+          <Box sx={{ backgroundColor: '#1976d2', color: 'white', p: 4, textAlign: 'center' }}>
+            <Typography variant="h5" fontWeight={700}>{t('profile.title')}</Typography>
+            <Typography variant="body2" sx={{ mt: 1, opacity: 0.9 }}>{t('profile.titleDesc')}</Typography>
           </Box>
 
-          <Box component="form" onSubmit={handleSubmit}>
-            <TextField fullWidth label={t('profile.avatarUrl')} size="small" value={form.avatar} onChange={handleChange('avatar')} sx={{ mb: 2 }} />
-            <TextField fullWidth label={t('profile.name')} size="small" value={form.name} onChange={handleChange('name')} sx={{ mb: 2 }} />
-            <TextField fullWidth label={t('profile.phone')} size="small" value={form.phone} onChange={handleChange('phone')} sx={{ mb: 2 }} />
-            <TextField fullWidth label={t('profile.email')} size="small" value={form.email} onChange={handleChange('email')} sx={{ mb: 2 }} />
-            <TextField fullWidth label={t('profile.bio')} size="small" multiline rows={3} value={form.bio} onChange={handleChange('bio')} sx={{ mb: 3 }} />
-            <Button fullWidth type="submit" variant="contained" disabled={saving} sx={{ py: 1.2 }}>
-              {saving ? <CircularProgress size={20} color="inherit" /> : t('profile.save')}
-            </Button>
+          <Box sx={{ p: 4 }}>
+            {success && <Alert severity="success" sx={{ mb: 4 }}>{t('profile.success')}</Alert>}
+
+            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mb: 5 }}>
+              <Avatar src={form.avatar} sx={{ width: 100, height: 100, border: '3px solid #e0e0e0' }} />
+              <Typography variant="body1" fontWeight={600} sx={{ mt: 2 }}>{form.name || form.username}</Typography>
+              <Typography variant="body2" color="text.secondary">{form.username}</Typography>
+            </Box>
+
+            <Box component="form" onSubmit={handleSubmit}>
+              <Box sx={{ mb: 4 }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
+                  <Box sx={{ width: 8, height: 8, borderRadius: '50%', backgroundColor: '#1976d2', mr: 2 }} />
+                  <Typography variant="subtitle1" fontWeight={600}>{t('profile.basicInfo')}</Typography>
+                </Box>
+                <Divider sx={{ mb: 3 }} />
+                <Grid container spacing={3}>
+                  <Grid item xs={4}>
+                    <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>{t('profile.username')}</Typography>
+                    <TextField fullWidth size="small" value={form.username} disabled sx={{ bgcolor: '#f5f5f5' }} />
+                  </Grid>
+                  <Grid item xs={4}>
+                    <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>{t('profile.name')}</Typography>
+                    <TextField fullWidth size="small" value={form.name} onChange={handleChange('name')} />
+                  </Grid>
+                  <Grid item xs={4}>
+                    <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>{t('profile.gender')}</Typography>
+                    <FormControl fullWidth size="small">
+                      <Select value={form.gender} onChange={handleChange('gender')}>
+                        <MenuItem value="">{t('profile.genderSelect')}</MenuItem>
+                        <MenuItem value="male">{t('profile.genderMale')}</MenuItem>
+                        <MenuItem value="female">{t('profile.genderFemale')}</MenuItem>
+                      </Select>
+                    </FormControl>
+                  </Grid>
+                </Grid>
+              </Box>
+
+              <Box sx={{ mb: 4 }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
+                  <Box sx={{ width: 8, height: 8, borderRadius: '50%', backgroundColor: '#43a047', mr: 2 }} />
+                  <Typography variant="subtitle1" fontWeight={600}>{t('profile.contactInfo')}</Typography>
+                </Box>
+                <Divider sx={{ mb: 3 }} />
+                <Grid container spacing={3}>
+                  <Grid item xs={6}>
+                    <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>{t('profile.email')}</Typography>
+                    <TextField fullWidth size="small" value={form.email} onChange={handleChange('email')} />
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>{t('profile.phone')}</Typography>
+                    <TextField fullWidth size="small" value={form.phone} onChange={handleChange('phone')} />
+                  </Grid>
+                </Grid>
+              </Box>
+
+              <Box sx={{ mb: 4 }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
+                  <Box sx={{ width: 8, height: 8, borderRadius: '50%', backgroundColor: '#fb8c00', mr: 2 }} />
+                  <Typography variant="subtitle1" fontWeight={600}>{t('profile.addressInfo')}</Typography>
+                </Box>
+                <Divider sx={{ mb: 3 }} />
+                <Grid container spacing={3}>
+                  <Grid item xs={12}>
+                    <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>{t('profile.address')}</Typography>
+                    <TextField fullWidth size="small" value={form.address} onChange={handleChange('address')} />
+                  </Grid>
+                </Grid>
+              </Box>
+
+              <Box sx={{ mb: 4 }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
+                  <Box sx={{ width: 8, height: 8, borderRadius: '50%', backgroundColor: '#7e57c2', mr: 2 }} />
+                  <Typography variant="subtitle1" fontWeight={600}>{t('profile.avatarInfo')}</Typography>
+                </Box>
+                <Divider sx={{ mb: 3 }} />
+                <Grid container spacing={3}>
+                  <Grid item xs={12}>
+                    <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>{t('profile.avatarUrl')}</Typography>
+                    <TextField fullWidth size="small" value={form.avatar} onChange={handleChange('avatar')} placeholder={t('profile.avatarPlaceholder')} />
+                  </Grid>
+                </Grid>
+              </Box>
+
+              <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 2, mt: 5 }}>
+                <Button variant="outlined" onClick={() => window.location.reload()}>{t('common.cancel')}</Button>
+                <Button type="submit" variant="contained" disabled={saving}>
+                  {saving ? <CircularProgress size={20} color="inherit" /> : t('profile.save')}
+                </Button>
+              </Box>
+            </Box>
+          </Box>
+
+          <Box sx={{ backgroundColor: '#f5f5f5', p: 3, textAlign: 'center', borderTop: '1px solid #e0e0e0' }}>
+            <Typography variant="body2" color="text.secondary">
+              {t('profile.footer')}
+            </Typography>
           </Box>
         </CardContent>
-      </Card>
+      </Paper>
     </Box>
   )
 }

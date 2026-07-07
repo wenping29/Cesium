@@ -59,7 +59,12 @@ public class AuthController : ControllerBase
             {
                 Id = user.Id,
                 Username = user.Username,
+                Name = user.Name,
                 Email = user.Email,
+                Phone = user.Phone,
+                Avatar = user.Avatar,
+                Gender = user.Gender,
+                Address = user.Address,
                 Roles = roles
             }
         };
@@ -102,7 +107,12 @@ public class AuthController : ControllerBase
             {
                 Id = user.Id,
                 Username = user.Username,
+                Name = user.Name,
                 Email = user.Email,
+                Phone = user.Phone,
+                Avatar = user.Avatar,
+                Gender = user.Gender,
+                Address = user.Address,
                 Roles = roles
             }
         };

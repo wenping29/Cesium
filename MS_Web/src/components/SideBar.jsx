@@ -53,7 +53,6 @@ import FolderIcon from '@mui/icons-material/Folder'
 import HelpIcon from '@mui/icons-material/Help'
 import SecurityIcon from '@mui/icons-material/Security'
 import StorageIcon from '@mui/icons-material/Storage'
-import ChatBubbleOutline from '@mui/icons-material/ChatBubbleOutline'
 import { useTranslation } from 'react-i18next'
 import sidebarStore from '../store/sidebarStore'
 
@@ -174,7 +173,7 @@ export default function SideBar() {
         { id: 'settings-users', label: '用户', path: '/settings/users', icon: <PeopleIcon /> },
         { id: 'settings-auth', label: '认证', path: '/settings/auth', icon: <SecurityIcon /> },
         { id: 'settings-files', label: '文件管理', path: '/settings/files', icon: <StorageIcon /> },
-        { id: 'settings-chat', label: '聊天', path: '/settings/chat', icon: <ChatBubbleOutline /> },
+        { id: 'settings-chat', label: '聊天', path: '/settings/chat', icon: <SendIcon /> },
       ]
     }
   ]

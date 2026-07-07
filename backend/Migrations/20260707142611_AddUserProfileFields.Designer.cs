@@ -3,6 +3,7 @@ using System;
 using CesiumApi.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CesiumApi.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260707142611_AddUserProfileFields")]
+    partial class AddUserProfileFields
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.0");
@@ -150,7 +153,7 @@ namespace CesiumApi.Migrations
                             Id = 1,
                             Address = "北京市朝阳区建国路88号",
                             Code = "HQ",
-                            CreatedAt = new DateTime(2026, 7, 7, 14, 35, 5, 835, DateTimeKind.Utc).AddTicks(5044),
+                            CreatedAt = new DateTime(2026, 7, 7, 14, 26, 10, 272, DateTimeKind.Utc).AddTicks(9145),
                             Email = "zhangzong@company.com",
                             IsActive = true,
                             Leader = "张总",
@@ -163,7 +166,7 @@ namespace CesiumApi.Migrations
                             Id = 2,
                             Address = "北京市朝阳区建国路88号A座3层",
                             Code = "TECH",
-                            CreatedAt = new DateTime(2026, 7, 7, 14, 35, 5, 835, DateTimeKind.Utc).AddTicks(5050),
+                            CreatedAt = new DateTime(2026, 7, 7, 14, 26, 10, 272, DateTimeKind.Utc).AddTicks(9152),
                             Email = "tech@company.com",
                             IsActive = true,
                             Leader = "李经理",
@@ -177,7 +180,7 @@ namespace CesiumApi.Migrations
                             Id = 3,
                             Address = "北京市朝阳区建国路88号A座5层",
                             Code = "PROD",
-                            CreatedAt = new DateTime(2026, 7, 7, 14, 35, 5, 835, DateTimeKind.Utc).AddTicks(5052),
+                            CreatedAt = new DateTime(2026, 7, 7, 14, 26, 10, 272, DateTimeKind.Utc).AddTicks(9154),
                             Email = "product@company.com",
                             IsActive = true,
                             Leader = "王经理",
@@ -191,7 +194,7 @@ namespace CesiumApi.Migrations
                             Id = 4,
                             Address = "北京市朝阳区建国路88号B座2层",
                             Code = "MKT",
-                            CreatedAt = new DateTime(2026, 7, 7, 14, 35, 5, 835, DateTimeKind.Utc).AddTicks(5054),
+                            CreatedAt = new DateTime(2026, 7, 7, 14, 26, 10, 272, DateTimeKind.Utc).AddTicks(9157),
                             Email = "marketing@company.com",
                             IsActive = true,
                             Leader = "赵经理",
@@ -205,7 +208,7 @@ namespace CesiumApi.Migrations
                             Id = 5,
                             Address = "北京市朝阳区建国路88号B座3层",
                             Code = "SALES",
-                            CreatedAt = new DateTime(2026, 7, 7, 14, 35, 5, 835, DateTimeKind.Utc).AddTicks(5057),
+                            CreatedAt = new DateTime(2026, 7, 7, 14, 26, 10, 272, DateTimeKind.Utc).AddTicks(9158),
                             Email = "sales@company.com",
                             IsActive = true,
                             Leader = "孙经理",
@@ -219,7 +222,7 @@ namespace CesiumApi.Migrations
                             Id = 6,
                             Address = "北京市朝阳区建国路88号A座8层",
                             Code = "HR",
-                            CreatedAt = new DateTime(2026, 7, 7, 14, 35, 5, 835, DateTimeKind.Utc).AddTicks(5059),
+                            CreatedAt = new DateTime(2026, 7, 7, 14, 26, 10, 272, DateTimeKind.Utc).AddTicks(9161),
                             Email = "hr@company.com",
                             IsActive = true,
                             Leader = "周经理",
@@ -233,7 +236,7 @@ namespace CesiumApi.Migrations
                             Id = 7,
                             Address = "北京市朝阳区建国路88号A座9层",
                             Code = "FIN",
-                            CreatedAt = new DateTime(2026, 7, 7, 14, 35, 5, 835, DateTimeKind.Utc).AddTicks(5061),
+                            CreatedAt = new DateTime(2026, 7, 7, 14, 26, 10, 272, DateTimeKind.Utc).AddTicks(9163),
                             Email = "finance@company.com",
                             IsActive = true,
                             Leader = "吴经理",
@@ -247,7 +250,7 @@ namespace CesiumApi.Migrations
                             Id = 8,
                             Address = "北京市朝阳区建国路88号A座301室",
                             Code = "DEV1",
-                            CreatedAt = new DateTime(2026, 7, 7, 14, 35, 5, 835, DateTimeKind.Utc).AddTicks(5063),
+                            CreatedAt = new DateTime(2026, 7, 7, 14, 26, 10, 272, DateTimeKind.Utc).AddTicks(9164),
                             Email = "dev1@company.com",
                             IsActive = true,
                             Leader = "郑组长",
@@ -261,7 +264,7 @@ namespace CesiumApi.Migrations
                             Id = 9,
                             Address = "北京市朝阳区建国路88号A座302室",
                             Code = "DEV2",
-                            CreatedAt = new DateTime(2026, 7, 7, 14, 35, 5, 835, DateTimeKind.Utc).AddTicks(5065),
+                            CreatedAt = new DateTime(2026, 7, 7, 14, 26, 10, 272, DateTimeKind.Utc).AddTicks(9167),
                             Email = "dev2@company.com",
                             IsActive = true,
                             Leader = "陈组长",
@@ -275,7 +278,7 @@ namespace CesiumApi.Migrations
                             Id = 10,
                             Address = "北京市朝阳区建国路88号A座4层",
                             Code = "OPS",
-                            CreatedAt = new DateTime(2026, 7, 7, 14, 35, 5, 835, DateTimeKind.Utc).AddTicks(5067),
+                            CreatedAt = new DateTime(2026, 7, 7, 14, 26, 10, 272, DateTimeKind.Utc).AddTicks(9169),
                             Email = "ops@company.com",
                             IsActive = true,
                             Leader = "刘组长",
@@ -426,7 +429,7 @@ namespace CesiumApi.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2026, 7, 7, 14, 35, 5, 835, DateTimeKind.Utc).AddTicks(4863),
+                            CreatedAt = new DateTime(2026, 7, 7, 14, 26, 10, 272, DateTimeKind.Utc).AddTicks(9099),
                             Icon = "Home",
                             IsVisible = true,
                             Name = "首页",
@@ -436,7 +439,7 @@ namespace CesiumApi.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2026, 7, 7, 14, 35, 5, 835, DateTimeKind.Utc).AddTicks(4869),
+                            CreatedAt = new DateTime(2026, 7, 7, 14, 26, 10, 272, DateTimeKind.Utc).AddTicks(9105),
                             Icon = "Dashboard",
                             IsVisible = true,
                             Name = "工作台",
@@ -448,7 +451,7 @@ namespace CesiumApi.Migrations
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(2026, 7, 7, 14, 35, 5, 835, DateTimeKind.Utc).AddTicks(4871),
+                            CreatedAt = new DateTime(2026, 7, 7, 14, 26, 10, 272, DateTimeKind.Utc).AddTicks(9107),
                             Icon = "Analytics",
                             IsVisible = true,
                             Name = "分析页",
@@ -460,455 +463,164 @@ namespace CesiumApi.Migrations
                         new
                         {
                             Id = 4,
-                            CreatedAt = new DateTime(2026, 7, 7, 14, 35, 5, 835, DateTimeKind.Utc).AddTicks(4873),
-                            Icon = "Notifications",
-                            IsVisible = true,
-                            Name = "通知中心",
-                            ParentId = 1,
-                            Path = "/notifications",
-                            Permission = "home:notifications",
-                            SortOrder = 3
-                        },
-                        new
-                        {
-                            Id = 5,
-                            CreatedAt = new DateTime(2026, 7, 7, 14, 35, 5, 835, DateTimeKind.Utc).AddTicks(4875),
-                            Icon = "Send",
-                            IsVisible = true,
-                            Name = "发送消息",
-                            ParentId = 1,
-                            Path = "/send-notification",
-                            Permission = "home:sendNotification",
-                            SortOrder = 4
-                        },
-                        new
-                        {
-                            Id = 6,
-                            CreatedAt = new DateTime(2026, 7, 7, 14, 35, 5, 835, DateTimeKind.Utc).AddTicks(4877),
-                            Icon = "Map",
-                            IsVisible = true,
-                            Name = "地图管理",
-                            Permission = "map",
-                            SortOrder = 1
-                        },
-                        new
-                        {
-                            Id = 7,
-                            CreatedAt = new DateTime(2026, 7, 7, 14, 35, 5, 835, DateTimeKind.Utc).AddTicks(4879),
-                            Icon = "Map",
-                            IsVisible = true,
-                            Name = "Cesium地图",
-                            ParentId = 6,
-                            Path = "/map",
-                            Permission = "map:cesium",
-                            SortOrder = 1
-                        },
-                        new
-                        {
-                            Id = 8,
-                            CreatedAt = new DateTime(2026, 7, 7, 14, 35, 5, 835, DateTimeKind.Utc).AddTicks(4880),
-                            Icon = "Layers",
-                            IsVisible = true,
-                            Name = "OL地图",
-                            ParentId = 6,
-                            Path = "/openlayer-map",
-                            Permission = "map:openlayer",
-                            SortOrder = 2
-                        },
-                        new
-                        {
-                            Id = 9,
-                            CreatedAt = new DateTime(2026, 7, 7, 14, 35, 5, 835, DateTimeKind.Utc).AddTicks(4882),
-                            Icon = "MapOutlined",
-                            IsVisible = true,
-                            Name = "Leaflet地图",
-                            ParentId = 6,
-                            Path = "/leaflet-map",
-                            Permission = "map:leaflet",
-                            SortOrder = 3
-                        },
-                        new
-                        {
-                            Id = 10,
-                            CreatedAt = new DateTime(2026, 7, 7, 14, 35, 5, 835, DateTimeKind.Utc).AddTicks(4884),
-                            Icon = "BarChart",
-                            IsVisible = true,
-                            Name = "专题数据",
-                            Permission = "data",
-                            SortOrder = 2
-                        },
-                        new
-                        {
-                            Id = 11,
-                            CreatedAt = new DateTime(2026, 7, 7, 14, 35, 5, 835, DateTimeKind.Utc).AddTicks(4885),
-                            Icon = "Volcano",
-                            IsVisible = true,
-                            Name = "地震数据表格",
-                            ParentId = 10,
-                            Path = "/earthquake-table",
-                            Permission = "data:earthquake",
-                            SortOrder = 1
-                        },
-                        new
-                        {
-                            Id = 12,
-                            CreatedAt = new DateTime(2026, 7, 7, 14, 35, 5, 835, DateTimeKind.Utc).AddTicks(4887),
-                            Icon = "Storm",
-                            IsVisible = true,
-                            Name = "台风数据表格",
-                            ParentId = 10,
-                            Path = "/typhoon-table",
-                            Permission = "data:typhoon",
-                            SortOrder = 2
-                        },
-                        new
-                        {
-                            Id = 13,
-                            CreatedAt = new DateTime(2026, 7, 7, 14, 35, 5, 835, DateTimeKind.Utc).AddTicks(4889),
-                            Icon = "Waves",
-                            IsVisible = true,
-                            Name = "风向数据表格",
-                            ParentId = 10,
-                            Path = "/wind-table",
-                            Permission = "data:wind",
-                            SortOrder = 3
-                        },
-                        new
-                        {
-                            Id = 14,
-                            CreatedAt = new DateTime(2026, 7, 7, 14, 35, 5, 835, DateTimeKind.Utc).AddTicks(4890),
-                            Icon = "Air",
-                            IsVisible = true,
-                            Name = "空气质量数据表格",
-                            ParentId = 10,
-                            Path = "/airquality-table",
-                            Permission = "data:airquality",
-                            SortOrder = 4
-                        },
-                        new
-                        {
-                            Id = 15,
-                            CreatedAt = new DateTime(2026, 7, 7, 14, 35, 5, 835, DateTimeKind.Utc).AddTicks(4892),
-                            Icon = "Monitor",
-                            IsVisible = true,
-                            Name = "大屏",
-                            Path = "/big-screen",
-                            Permission = "bigScreen",
-                            SortOrder = 3
-                        },
-                        new
-                        {
-                            Id = 16,
-                            CreatedAt = new DateTime(2026, 7, 7, 14, 35, 5, 835, DateTimeKind.Utc).AddTicks(4893),
-                            Icon = "Table",
-                            IsVisible = true,
-                            Name = "数据表格",
-                            Path = "/dataTables",
-                            Permission = "dataTables",
-                            SortOrder = 4
-                        },
-                        new
-                        {
-                            Id = 17,
-                            CreatedAt = new DateTime(2026, 7, 7, 14, 35, 5, 835, DateTimeKind.Utc).AddTicks(4895),
+                            CreatedAt = new DateTime(2026, 7, 7, 14, 26, 10, 272, DateTimeKind.Utc).AddTicks(9109),
                             Icon = "Settings",
                             IsVisible = true,
                             Name = "权限管理",
                             Permission = "permission",
-                            SortOrder = 5
+                            SortOrder = 1
                         },
                         new
                         {
-                            Id = 18,
-                            CreatedAt = new DateTime(2026, 7, 7, 14, 35, 5, 835, DateTimeKind.Utc).AddTicks(4896),
+                            Id = 5,
+                            CreatedAt = new DateTime(2026, 7, 7, 14, 26, 10, 272, DateTimeKind.Utc).AddTicks(9111),
                             Icon = "People",
                             IsVisible = true,
                             Name = "用户管理",
-                            ParentId = 17,
+                            ParentId = 4,
                             Path = "/user-management",
                             Permission = "permission:users",
                             SortOrder = 1
                         },
                         new
                         {
-                            Id = 19,
-                            CreatedAt = new DateTime(2026, 7, 7, 14, 35, 5, 835, DateTimeKind.Utc).AddTicks(4898),
+                            Id = 6,
+                            CreatedAt = new DateTime(2026, 7, 7, 14, 26, 10, 272, DateTimeKind.Utc).AddTicks(9112),
                             Icon = "Shield",
                             IsVisible = true,
                             Name = "角色管理",
-                            ParentId = 17,
+                            ParentId = 4,
                             Path = "/role-management",
                             Permission = "permission:roles",
                             SortOrder = 2
                         },
                         new
                         {
-                            Id = 20,
-                            CreatedAt = new DateTime(2026, 7, 7, 14, 35, 5, 835, DateTimeKind.Utc).AddTicks(4901),
+                            Id = 7,
+                            CreatedAt = new DateTime(2026, 7, 7, 14, 26, 10, 272, DateTimeKind.Utc).AddTicks(9114),
                             Icon = "Menu",
                             IsVisible = true,
                             Name = "菜单管理",
-                            ParentId = 17,
+                            ParentId = 4,
                             Path = "/menu-management",
                             Permission = "permission:menus",
                             SortOrder = 3
                         },
                         new
                         {
-                            Id = 21,
-                            CreatedAt = new DateTime(2026, 7, 7, 14, 35, 5, 835, DateTimeKind.Utc).AddTicks(4902),
+                            Id = 8,
+                            CreatedAt = new DateTime(2026, 7, 7, 14, 26, 10, 272, DateTimeKind.Utc).AddTicks(9117),
                             Icon = "Business",
                             IsVisible = true,
                             Name = "部门管理",
-                            ParentId = 17,
+                            ParentId = 4,
                             Path = "/department-management",
                             Permission = "permission:departments",
                             SortOrder = 4
                         },
                         new
                         {
-                            Id = 22,
-                            CreatedAt = new DateTime(2026, 7, 7, 14, 35, 5, 835, DateTimeKind.Utc).AddTicks(4904),
+                            Id = 9,
+                            CreatedAt = new DateTime(2026, 7, 7, 14, 26, 10, 272, DateTimeKind.Utc).AddTicks(9193),
                             Icon = "Schedule",
                             IsVisible = true,
                             Name = "考勤管理",
                             Permission = "attendance",
-                            SortOrder = 6
+                            SortOrder = 2
                         },
                         new
                         {
-                            Id = 23,
-                            CreatedAt = new DateTime(2026, 7, 7, 14, 35, 5, 835, DateTimeKind.Utc).AddTicks(4960),
+                            Id = 10,
+                            CreatedAt = new DateTime(2026, 7, 7, 14, 26, 10, 272, DateTimeKind.Utc).AddTicks(9195),
                             Icon = "Description",
                             IsVisible = true,
-                            Name = "打卡报表",
-                            ParentId = 22,
+                            Name = "打开报表",
+                            ParentId = 9,
                             Path = "/attendance-report",
                             Permission = "attendance:report",
                             SortOrder = 1
                         },
                         new
                         {
-                            Id = 24,
-                            CreatedAt = new DateTime(2026, 7, 7, 14, 35, 5, 835, DateTimeKind.Utc).AddTicks(4962),
+                            Id = 11,
+                            CreatedAt = new DateTime(2026, 7, 7, 14, 26, 10, 272, DateTimeKind.Utc).AddTicks(9197),
                             Icon = "Timer",
                             IsVisible = true,
                             Name = "工时报表",
-                            ParentId = 22,
+                            ParentId = 9,
                             Path = "/workhour-report",
                             Permission = "attendance:workhour",
                             SortOrder = 2
                         },
                         new
                         {
-                            Id = 25,
-                            CreatedAt = new DateTime(2026, 7, 7, 14, 35, 5, 835, DateTimeKind.Utc).AddTicks(4963),
+                            Id = 12,
+                            CreatedAt = new DateTime(2026, 7, 7, 14, 26, 10, 272, DateTimeKind.Utc).AddTicks(9199),
                             Icon = "HolidayVillage",
                             IsVisible = true,
                             Name = "休假报表",
-                            ParentId = 22,
+                            ParentId = 9,
                             Path = "/leave-report",
                             Permission = "attendance:leave",
                             SortOrder = 3
                         },
                         new
                         {
-                            Id = 26,
-                            CreatedAt = new DateTime(2026, 7, 7, 14, 35, 5, 835, DateTimeKind.Utc).AddTicks(4965),
+                            Id = 13,
+                            CreatedAt = new DateTime(2026, 7, 7, 14, 26, 10, 272, DateTimeKind.Utc).AddTicks(9200),
                             Icon = "BeachAccess",
                             IsVisible = true,
                             Name = "年假报表",
-                            ParentId = 22,
+                            ParentId = 9,
                             Path = "/annual-leave-report",
                             Permission = "attendance:annual",
                             SortOrder = 4
                         },
                         new
                         {
-                            Id = 27,
-                            CreatedAt = new DateTime(2026, 7, 7, 14, 35, 5, 835, DateTimeKind.Utc).AddTicks(4966),
+                            Id = 14,
+                            CreatedAt = new DateTime(2026, 7, 7, 14, 26, 10, 272, DateTimeKind.Utc).AddTicks(9218),
                             Icon = "History",
                             IsVisible = true,
                             Name = "日志管理",
                             Permission = "log",
-                            SortOrder = 7
+                            SortOrder = 3
                         },
                         new
                         {
-                            Id = 28,
-                            CreatedAt = new DateTime(2026, 7, 7, 14, 35, 5, 835, DateTimeKind.Utc).AddTicks(4968),
+                            Id = 15,
+                            CreatedAt = new DateTime(2026, 7, 7, 14, 26, 10, 272, DateTimeKind.Utc).AddTicks(9221),
                             Icon = "History",
                             IsVisible = true,
                             Name = "登录日志",
-                            ParentId = 27,
+                            ParentId = 14,
                             Path = "/login-log-report",
                             Permission = "log:login",
                             SortOrder = 1
                         },
                         new
                         {
-                            Id = 29,
-                            CreatedAt = new DateTime(2026, 7, 7, 14, 35, 5, 835, DateTimeKind.Utc).AddTicks(4969),
+                            Id = 16,
+                            CreatedAt = new DateTime(2026, 7, 7, 14, 26, 10, 272, DateTimeKind.Utc).AddTicks(9275),
                             Icon = "FindInPage",
                             IsVisible = true,
                             Name = "查询日志",
-                            ParentId = 27,
+                            ParentId = 14,
                             Path = "/audit-log-report",
                             Permission = "log:audit",
                             SortOrder = 2
                         },
                         new
                         {
-                            Id = 30,
-                            CreatedAt = new DateTime(2026, 7, 7, 14, 35, 5, 835, DateTimeKind.Utc).AddTicks(4971),
+                            Id = 17,
+                            CreatedAt = new DateTime(2026, 7, 7, 14, 26, 10, 272, DateTimeKind.Utc).AddTicks(9276),
                             Icon = "Visibility",
                             IsVisible = true,
                             Name = "访客日志",
-                            ParentId = 27,
+                            ParentId = 14,
                             Path = "/visitor-log-report",
                             Permission = "log:visitor",
                             SortOrder = 3
-                        },
-                        new
-                        {
-                            Id = 31,
-                            CreatedAt = new DateTime(2026, 7, 7, 14, 35, 5, 835, DateTimeKind.Utc).AddTicks(4973),
-                            Icon = "Image",
-                            IsVisible = true,
-                            Name = "图片转BIM",
-                            Path = "/image-to-bim",
-                            Permission = "imageToBim",
-                            SortOrder = 8
-                        },
-                        new
-                        {
-                            Id = 32,
-                            CreatedAt = new DateTime(2026, 7, 7, 14, 35, 5, 835, DateTimeKind.Utc).AddTicks(4974),
-                            Icon = "Settings",
-                            IsVisible = true,
-                            Name = "设置",
-                            Permission = "settings",
-                            SortOrder = 9
-                        },
-                        new
-                        {
-                            Id = 33,
-                            CreatedAt = new DateTime(2026, 7, 7, 14, 35, 5, 835, DateTimeKind.Utc).AddTicks(4976),
-                            Icon = "Info",
-                            IsVisible = true,
-                            Name = "简介",
-                            ParentId = 32,
-                            Path = "/settings/introduction",
-                            Permission = "settings:intro",
-                            SortOrder = 1
-                        },
-                        new
-                        {
-                            Id = 34,
-                            CreatedAt = new DateTime(2026, 7, 7, 14, 35, 5, 835, DateTimeKind.Utc).AddTicks(4979),
-                            Icon = "Settings",
-                            IsVisible = true,
-                            Name = "设置",
-                            ParentId = 32,
-                            Path = "/settings",
-                            Permission = "settings:main",
-                            SortOrder = 2
-                        },
-                        new
-                        {
-                            Id = 35,
-                            CreatedAt = new DateTime(2026, 7, 7, 14, 35, 5, 835, DateTimeKind.Utc).AddTicks(4980),
-                            Icon = "Wallpaper",
-                            IsVisible = true,
-                            Name = "背景设置",
-                            ParentId = 32,
-                            Path = "/settings/background",
-                            Permission = "settings:background",
-                            SortOrder = 3
-                        },
-                        new
-                        {
-                            Id = 36,
-                            CreatedAt = new DateTime(2026, 7, 7, 14, 35, 5, 835, DateTimeKind.Utc).AddTicks(4982),
-                            Icon = "DashboardOutlined",
-                            IsVisible = true,
-                            Name = "看板",
-                            ParentId = 32,
-                            Path = "/settings/dashboard",
-                            Permission = "settings:dashboard",
-                            SortOrder = 4
-                        },
-                        new
-                        {
-                            Id = 37,
-                            CreatedAt = new DateTime(2026, 7, 7, 14, 35, 5, 835, DateTimeKind.Utc).AddTicks(4985),
-                            Icon = "Folder",
-                            IsVisible = true,
-                            Name = "项目",
-                            ParentId = 32,
-                            Path = "/settings/projects",
-                            Permission = "settings:projects",
-                            SortOrder = 5
-                        },
-                        new
-                        {
-                            Id = 38,
-                            CreatedAt = new DateTime(2026, 7, 7, 14, 35, 5, 835, DateTimeKind.Utc).AddTicks(4987),
-                            Icon = "Help",
-                            IsVisible = true,
-                            Name = "常见问题",
-                            ParentId = 32,
-                            Path = "/settings/faq",
-                            Permission = "settings:faq",
-                            SortOrder = 6
-                        },
-                        new
-                        {
-                            Id = 39,
-                            CreatedAt = new DateTime(2026, 7, 7, 14, 35, 5, 835, DateTimeKind.Utc).AddTicks(4989),
-                            Icon = "People",
-                            IsVisible = true,
-                            Name = "用户",
-                            ParentId = 32,
-                            Path = "/settings/users",
-                            Permission = "settings:users",
-                            SortOrder = 7
-                        },
-                        new
-                        {
-                            Id = 40,
-                            CreatedAt = new DateTime(2026, 7, 7, 14, 35, 5, 835, DateTimeKind.Utc).AddTicks(4990),
-                            Icon = "Security",
-                            IsVisible = true,
-                            Name = "认证",
-                            ParentId = 32,
-                            Path = "/settings/auth",
-                            Permission = "settings:auth",
-                            SortOrder = 8
-                        },
-                        new
-                        {
-                            Id = 41,
-                            CreatedAt = new DateTime(2026, 7, 7, 14, 35, 5, 835, DateTimeKind.Utc).AddTicks(4992),
-                            Icon = "Storage",
-                            IsVisible = true,
-                            Name = "文件管理",
-                            ParentId = 32,
-                            Path = "/settings/files",
-                            Permission = "settings:files",
-                            SortOrder = 9
-                        },
-                        new
-                        {
-                            Id = 42,
-                            CreatedAt = new DateTime(2026, 7, 7, 14, 35, 5, 835, DateTimeKind.Utc).AddTicks(4993),
-                            Icon = "Send",
-                            IsVisible = true,
-                            Name = "聊天",
-                            ParentId = 32,
-                            Path = "/settings/chat",
-                            Permission = "settings:chat",
-                            SortOrder = 10
                         });
                 });
 
@@ -1004,14 +716,14 @@ namespace CesiumApi.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2026, 7, 7, 14, 35, 5, 835, DateTimeKind.Utc).AddTicks(4712),
+                            CreatedAt = new DateTime(2026, 7, 7, 14, 26, 10, 272, DateTimeKind.Utc).AddTicks(8957),
                             Description = "系统管理员",
                             Name = "Admin"
                         },
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2026, 7, 7, 14, 35, 5, 835, DateTimeKind.Utc).AddTicks(4719),
+                            CreatedAt = new DateTime(2026, 7, 7, 14, 26, 10, 272, DateTimeKind.Utc).AddTicks(8963),
                             Description = "普通用户",
                             Name = "User"
                         });
