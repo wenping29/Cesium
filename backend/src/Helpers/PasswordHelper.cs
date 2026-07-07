@@ -8,14 +8,11 @@ public static class PasswordHelper
 
     public static string HashPassword(string password)
     {
-        return _passwordHasher.HashPassword(null!, password);
         return _passwordHasher.HashPassword(new object(), password);
     }
 
     public static bool VerifyPassword(string password, string storedHash)
     {
-        return _passwordHasher.VerifyHashedPassword(null!, storedHash, password) 
         return _passwordHasher.VerifyHashedPassword(new object(), storedHash, password) 
-            != PasswordVerificationResult.Failed;
     }
 }
