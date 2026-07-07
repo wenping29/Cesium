@@ -8,8 +8,8 @@ import {
 import LogoutIcon from '@mui/icons-material/Logout'
 import PersonIcon from '@mui/icons-material/Person'
 import LockIcon from '@mui/icons-material/Lock'
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
-import ChevronRightIcon from '@mui/icons-material/ChevronRight'
+import MenuIcon from '@mui/icons-material/Menu'
+import MenuOpenIcon from '@mui/icons-material/MenuOpen'
 import NotificationsIcon from '@mui/icons-material/Notifications'
 import SystemUpdateIcon from '@mui/icons-material/SystemUpdate'
 import AssignmentIcon from '@mui/icons-material/Assignment'
@@ -108,7 +108,7 @@ export default function NavBar() {
       <Toolbar sx={{ minHeight: 48 }}>
         <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center', gap: 0 }}>
           <IconButton onClick={toggleSidebar} color="inherit" size="small">
-            {sidebarOpen ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+            {sidebarOpen ? <MenuOpenIcon /> : <MenuIcon />}
           </IconButton>
           <Breadcrumb />
         </Box>
