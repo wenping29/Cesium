@@ -38,28 +38,103 @@ export default function EditProfilePage() {
 
   return (
     <Box sx={{ display: 'flex', justifyContent: 'center', p: 4 }}>
-      <Paper sx={{ width: 650, boxShadow: 3 }}>
-        <CardContent sx={{ p: 0 }}>
-          <Box sx={{ backgroundColor: '#1976d2', color: 'white', p: 4, textAlign: 'center' }}>
-            <Typography variant="h5" fontWeight={700}>{t('profile.title')}</Typography>
-            <Typography variant="body2" sx={{ mt: 1, opacity: 0.9 }}>{t('profile.titleDesc')}</Typography>
-          </Box>
-
+      <Paper sx={{ width: "100%", boxShadow: 3 }}>
+        {/* <CardContent sx={{ p: 0 }}> */}
+          <Grid container spacing={3}>
+            <Grid sx={{ display: 'flex', justifyContent: 'center', gap: 2 }}>
+                <grid>
+                  <Typography variant="h5" fontWeight={700}>{t('profile.title')}</Typography>
+                  <Avatar src={form.avatar} sx={{ width: 100, height: 100, border: '3px solid #e0e0e0' }} />
+                </grid>
+                <Box>
+                  <Grid sx={{ display: 'flex', justifyContent: 'center', gap: 2 }}>
+                    <Box sx={{ mb: 4 }}>
+                    <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>{t('profile.username')}</Typography>
+                    </Box>
+                    <Box>
+                    <TextField fullWidth size="small" value={form.username} disabled sx={{ bgcolor: '#f5f5f5' }} />
+                    </Box>
+                    <Box>
+                    <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>{t('profile.username')}</Typography>
+                    </Box>
+                    <Box>
+                    <TextField fullWidth size="small" value={form.username} disabled sx={{ bgcolor: '#f5f5f5' }} /> 
+                    </Box>
+                    <Box>
+                    <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>{t('profile.username')}</Typography>
+                    </Box>
+                    <Box>
+                    <TextField fullWidth size="small" value={form.username} disabled sx={{ bgcolor: '#f5f5f5' }} />
+                    </Box>
+                    <Box item xs={4}>
+                    <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>{t('profile.name')}</Typography>
+                    </Box>
+                    <Box item xs={4}>
+                    <TextField fullWidth size="small" value={form.name} onChange={handleChange('name')} />
+                    </Box>
+                  </Grid>
+                  <Grid sx={{ display: 'flex', justifyContent: 'center', gap: 2 }}>
+                    <Box sx={{ mb: 4 }}>
+                    <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>{t('profile.username')}</Typography>
+                    </Box>
+                    <Box>
+                    <TextField fullWidth size="small" value={form.username} disabled sx={{ bgcolor: '#f5f5f5' }} />
+                    </Box>
+                    <Box>
+                    <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>{t('profile.username')}</Typography>
+                    </Box>
+                    <Box>
+                    <TextField fullWidth size="small" value={form.username} disabled sx={{ bgcolor: '#f5f5f5' }} /> 
+                    </Box>
+                    <Box>
+                    <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>{t('profile.username')}</Typography>
+                    </Box>
+                    <Box>
+                    <TextField fullWidth size="small" value={form.username} disabled sx={{ bgcolor: '#f5f5f5' }} />
+                    </Box>
+                    <Box item xs={4}>
+                    <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>{t('profile.name')}</Typography>
+                    </Box>
+                    <Box item xs={4}>
+                    <TextField fullWidth size="small" value={form.name} onChange={handleChange('name')} />
+                    </Box>
+                  </Grid>
+                  <Grid sx={{ display: 'flex', justifyContent: 'center', gap: 2 }}>
+                    <Box sx={{ mb: 4 }}>
+                    <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>{t('profile.username')}</Typography>
+                    </Box>
+                    <Box>
+                    <TextField fullWidth size="small" value={form.username} disabled sx={{ bgcolor: '#f5f5f5' }} />
+                    </Box>
+                    <Box>
+                    <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>{t('profile.username')}</Typography>
+                    </Box>
+                    <Box>
+                    <TextField fullWidth size="small" value={form.username} disabled sx={{ bgcolor: '#f5f5f5' }} /> 
+                    </Box>
+                    <Box>
+                    <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>{t('profile.username')}</Typography>
+                    </Box>
+                    <Box>
+                    <TextField fullWidth size="small" value={form.username} disabled sx={{ bgcolor: '#f5f5f5' }} />
+                    </Box>
+                    <Box item xs={4}>
+                    <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>{t('profile.name')}</Typography>
+                    </Box>
+                    <Box item xs={4}>
+                    <TextField fullWidth size="small" value={form.name} onChange={handleChange('name')} />
+                    </Box>
+                  </Grid>
+                </Box>
+            </Grid>
+          </Grid>
+        {/* </CardContent> */}
           <Box sx={{ p: 4 }}>
             {success && <Alert severity="success" sx={{ mb: 4 }}>{t('profile.success')}</Alert>}
-
-            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mb: 5 }}>
-              <Avatar src={form.avatar} sx={{ width: 100, height: 100, border: '3px solid #e0e0e0' }} />
-              <Typography variant="body1" fontWeight={600} sx={{ mt: 2 }}>{form.name || form.username}</Typography>
-              <Typography variant="body2" color="text.secondary">{form.username}</Typography>
-            </Box>
-
+  
             <Box component="form" onSubmit={handleSubmit}>
               <Box sx={{ mb: 4 }}>
-                <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
-                  <Box sx={{ width: 8, height: 8, borderRadius: '50%', backgroundColor: '#1976d2', mr: 2 }} />
-                  <Typography variant="subtitle1" fontWeight={600}>{t('profile.basicInfo')}</Typography>
-                </Box>
+              
                 <Divider sx={{ mb: 3 }} />
                 <Grid container spacing={3}>
                   <Grid item xs={4}>
@@ -143,7 +218,7 @@ export default function EditProfilePage() {
               {t('profile.footer')}
             </Typography>
           </Box>
-        </CardContent>
+
       </Paper>
     </Box>
   )
