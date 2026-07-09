@@ -27,13 +27,14 @@ import { themeConfigs } from './theme/config'
 
 const { Header: AntHeader, Sider, Content, Footer } = Layout
 
-const menuItems: any[] = [
+const menuItems = [
   { key: '/home', icon: <HomeOutlined />, label: '首页' },
   { key: '/about', icon: <InfoCircleOutlined />, label: '关于' },
   {
     key: '/map',
     icon: <CompassOutlined />,
     label: '地图管理',
+    type: 'group' as const,
     children: [
       { key: '/map/baidu', icon: <EnvironmentOutlined />, label: '百度地图' },
       { key: '/map/amap', icon: <EnvironmentOutlined />, label: '高德地图' },
@@ -45,6 +46,7 @@ const menuItems: any[] = [
     key: '/system',
     icon: <SettingOutlined />,
     label: '系统管理',
+    type: 'group' as const,
     children: [
       { key: '/system/user', icon: <TeamOutlined />, label: '用户管理' },
       { key: '/system/role', icon: <SafetyOutlined />, label: '角色管理' },
