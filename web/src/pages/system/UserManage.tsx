@@ -31,16 +31,17 @@ function UserManage() {
   const [data, setData] = useState<UserItem[]>([])
   const [total, setTotal] = useState(0)
   const [page, setPage] = useState(1)
-  const [pageSize] = useState(10)
+  const [pageSize, setPageSize] = useState(10)
   const [loading, setLoading] = useState(false)
   const [modalOpen, setModalOpen] = useState(false)
   const [searchForm] = Form.useForm<SearchParams>()
   const [addForm] = Form.useForm()
 
-  const fetchList = async (p: number, params?: SearchParams) => {
+  const fetchList = async (p: number, size?: number, params?: SearchParams) => {
     setLoading(true)
     try {
-      const query: Record<string, string | number> = { page: p, pageSize }
+      const s = size || pageSize
+      const query: Record<string, string | number> = { page: p, pageSize: s }
       if (params?.username) query.username = params.username
       if (params?.email) query.email = params.email
       if (params?.status) query.status = params.status
@@ -56,19 +57,19 @@ function UserManage() {
   }
 
   useEffect(() => {
-    fetchList(page)
+    fetchList(page, pageSize)
   }, [page])
 
   const handleSearch = () => {
     const values = searchForm.getFieldsValue()
     setPage(1)
-    fetchList(1, values)
+    fetchList(1, pageSize, values)
   }
 
   const handleReset = () => {
     searchForm.resetFields()
     setPage(1)
-    fetchList(1)
+    fetchList(1, pageSize)
   }
 
   const handleAdd = async () => {
@@ -80,7 +81,7 @@ function UserManage() {
         setModalOpen(false)
         addForm.resetFields()
         setPage(1)
-        fetchList(1)
+        fetchList(1, pageSize)
       }
     } catch {
       // validation or request error
@@ -144,7 +145,14 @@ function UserManage() {
             current: page,
             pageSize,
             total,
+            showSizeChanger: true,
+            pageSizeOptions: [10, 20, 50, 100],
             onChange: (p) => setPage(p),
+            onShowSizeChange: (_p, size) => {
+              setPageSize(size)
+              setPage(1)
+              fetchList(1, size)
+            },
             showTotal: (t) => `共 ${t} 条`,
           }}
         />

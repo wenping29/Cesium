@@ -4,7 +4,7 @@ const { Random } = Mock
 
 const statusList = ['active', 'inactive', 'locked']
 
-const users: any[] = Array.from({ length: 35 }, (_, i) => ({
+const users: any[] = Array.from({ length: 100 }, (_, i) => ({
   id: i + 1,
   username: Random.string(4, 10),
   name: Random.cname(),
