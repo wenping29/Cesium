@@ -5,9 +5,7 @@ import { RouterProvider } from 'react-router-dom'
 import { store } from './store'
 import router from './router'
 
-if (import.meta.env.DEV) {
-  import('./mock')
-}
+import './mock'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

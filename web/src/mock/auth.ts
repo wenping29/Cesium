@@ -3,7 +3,7 @@ import Mock from 'mockjs'
 Mock.mock('/api/auth/login', 'post', (options) => {
   const { username, password } = JSON.parse(options.body)
 
-  if (username === 'admin' && password === '123456') {
+  if (username === 'admin' && password === 'Admin123!') {
     return {
       code: 0,
       message: 'success',
