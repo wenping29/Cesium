@@ -9,6 +9,10 @@ import RoleManage from '../pages/system/RoleManage'
 import MenuManage from '../pages/system/MenuManage'
 import Settings from '../pages/system/Settings'
 import Logs from '../pages/system/Logs'
+import BaiduMap from '../pages/map/BaiduMap'
+import Amap from '../pages/map/Amap'
+import OpenLayer from '../pages/map/OpenLayer'
+import Cesium from '../pages/map/Cesium'
 
 const router = createBrowserRouter([
   {
@@ -18,6 +22,15 @@ const router = createBrowserRouter([
       { index: true, element: <Navigate to="/home" replace /> },
       { path: 'home', element: <Home /> },
       { path: 'about', element: <About /> },
+      {
+        path: 'map',
+        children: [
+          { path: 'baidu', element: <BaiduMap /> },
+          { path: 'amap', element: <Amap /> },
+          { path: 'openlayer', element: <OpenLayer /> },
+          { path: 'cesium', element: <Cesium /> },
+        ],
+      },
       {
         path: 'system',
         children: [

@@ -12,6 +12,8 @@ import {
   MenuOutlined,
   FileTextOutlined,
   UnorderedListOutlined,
+  MapOutlined,
+  GlobeOutlined,
 } from '@ant-design/icons'
 import { Navigate, Outlet, useNavigate, useLocation } from 'react-router-dom'
 import zhCN from 'antd/locale/zh_CN'
@@ -26,8 +28,19 @@ import { themeConfigs } from './theme/config'
 const { Header: AntHeader, Sider, Content, Footer } = Layout
 
 const menuItems = [
-  { key: '/home', icon: <HomeOutlined />, label: 'Home' },
-  { key: '/about', icon: <InfoCircleOutlined />, label: 'About' },
+  { key: '/home', icon: <HomeOutlined />, label: '首页' },
+  { key: '/about', icon: <InfoCircleOutlined />, label: '关于' },
+  {
+    key: 'map',
+    icon: <MapOutlined />,
+    label: '地图管理',
+    children: [
+      { key: '/map/baidu', icon: <GlobeOutlined />, label: '百度地图' },
+      { key: '/map/amap', icon: <GlobeOutlined />, label: '高德地图' },
+      { key: '/map/openlayer', icon: <GlobeOutlined />, label: 'OpenLayer' },
+      { key: '/map/cesium', icon: <GlobeOutlined />, label: 'Cesium 3D' },
+    ],
+  },
   {
     key: 'system',
     icon: <SettingOutlined />,
