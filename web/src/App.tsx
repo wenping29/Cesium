@@ -23,7 +23,6 @@ import { useAppDispatch, useAppSelector } from './store/hooks'
 import { setMenuMode, type MenuMode } from './store/slices/layoutSlice'
 import { logout } from './store/slices/authSlice'
 import HeaderExtras from './components/HeaderExtras'
-import BreadcrumbNav from './components/BreadcrumbNav'
 import { themeConfigs } from './theme/config'
 
 const { Header: AntHeader, Sider, Content, Footer } = Layout
@@ -120,7 +119,6 @@ function HeaderLayout() {
         </Space>
       </AntHeader>
       <Content>
-        <BreadcrumbNav />
         <Outlet />
       </Content>
       <Footer style={{ textAlign: 'center' }}>
@@ -202,7 +200,6 @@ function SidebarLayout() {
             overflow: 'auto',
           }}
         >
-          <BreadcrumbNav />
           <Outlet />
         </Content>
         <Footer style={{ textAlign: 'center' }}>
@@ -275,7 +272,6 @@ function SiderTopLayout() {
         </Sider>
         <Layout>
           <Content style={{ overflow: 'auto' }}>
-            <BreadcrumbNav />
             <Outlet />
           </Content>
           <Footer style={{ textAlign: 'center' }}>
