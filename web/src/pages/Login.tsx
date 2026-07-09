@@ -68,7 +68,7 @@ function Login() {
               label="密码"
               rules={[{ required: true, message: '请输入密码' }]}
             >
-              <Input.Password prefix={<LockOutlined />} placeholder="123456" size="large" />
+              <Input.Password prefix={<LockOutlined />} placeholder="Admin123!" size="large" />
             </Form.Item>
             <Form.Item>
               <Button type="primary" htmlType="submit" block size="large">

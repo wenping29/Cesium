@@ -1,31 +1,22 @@
 import { useState, useEffect, useCallback } from 'react'
 import { Tabs } from 'antd'
 import { Outlet, useLocation, useNavigate } from 'react-router-dom'
+import { useAppSelector } from '../store/hooks'
+import { convertToTabLabels } from '../utils/menu.tsx'
 
 interface TabItem {
   key: string
   label: string
 }
 
-const tabLabelMap: Record<string, string> = {
-  '/home': '首页',
-  '/workspace': '工作台',
-  '/about': '关于',
-  '/map/baidu': '百度地图',
-  '/map/amap': '高德地图',
-  '/map/openlayer': 'OpenLayer',
-  '/map/cesium': 'Cesium 3D',
-  '/system/user': '用户管理',
-  '/system/role': '角色管理',
-  '/system/menu': '菜单管理',
-  '/system/settings': '系统设置',
-  '/system/logs': '系统日志',
-}
-
 function TabView() {
   const location = useLocation()
   const navigate = useNavigate()
+  const menus = useAppSelector((state) => state.menu.items)
   const [activeKey, setActiveKey] = useState(location.pathname)
+  
+  const tabLabelMap = convertToTabLabels(menus)
+  
   const [tabs, setTabs] = useState<TabItem[]>([{ key: location.pathname, label: tabLabelMap[location.pathname] || location.pathname }])
 
   useEffect(() => {
@@ -44,14 +35,15 @@ function TabView() {
     navigate(key)
   }
 
-  const handleTabClose = useCallback((key: string) => {
+  const handleTabClose = useCallback((key: string | React.MouseEvent | React.KeyboardEvent) => {
+    const targetKey = typeof key === 'string' ? key : ''
     setTabs((prev) => {
-      const newTabs = prev.filter((t) => t.key !== key)
+      const newTabs = prev.filter((t) => t.key !== targetKey)
       if (newTabs.length === 0) {
         navigate('/home')
         return [{ key: '/home', label: '首页' }]
       }
-      if (activeKey === key) {
+      if (activeKey === targetKey) {
         const nextKey = newTabs[0].key
         setActiveKey(nextKey)
         navigate(nextKey)

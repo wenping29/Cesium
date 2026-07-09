@@ -1,20 +1,9 @@
 import { useEffect, useState, type ReactNode } from 'react'
-import { Button, ConfigProvider, Dropdown, Layout, Menu, Space } from 'antd'
+import { Button, ConfigProvider, Dropdown, Layout, Menu, Space, Spin } from 'antd'
 import {
   AppstoreOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
-  HomeOutlined,
-  InfoCircleOutlined,
-  SettingOutlined,
-  TeamOutlined,
-  SafetyOutlined,
-  MenuOutlined,
-  FileTextOutlined,
-  UnorderedListOutlined,
-  CompassOutlined,
-  EnvironmentOutlined,
-  DashboardOutlined,
 } from '@ant-design/icons'
 import { Navigate, Outlet, useNavigate, useLocation } from 'react-router-dom'
 import zhCN from 'antd/locale/zh_CN'
@@ -22,39 +11,12 @@ import enUS from 'antd/locale/en_US'
 import { useAppDispatch, useAppSelector } from './store/hooks'
 import { setMenuMode, type MenuMode } from './store/slices/layoutSlice'
 import { logout } from './store/slices/authSlice'
+import { fetchMenus } from './store/slices/menuSlice'
 import HeaderExtras from './components/HeaderExtras'
 import { themeConfigs } from './theme/config'
+import { convertMenuItems } from './utils/menu.tsx'
 
 const { Header: AntHeader, Sider, Content, Footer } = Layout
-
-const menuItems = [
-  { key: '/home', icon: <HomeOutlined />, label: '首页' },
-  { key: '/workspace', icon: <DashboardOutlined />, label: '工作台' },
-  { key: '/about', icon: <InfoCircleOutlined />, label: '关于' },
-  {
-    key: '/map',
-    icon: <CompassOutlined />,
-    label: '地图管理',
-    children: [
-      { key: '/map/baidu', icon: <EnvironmentOutlined />, label: '百度地图' },
-      { key: '/map/amap', icon: <EnvironmentOutlined />, label: '高德地图' },
-      { key: '/map/openlayer', icon: <EnvironmentOutlined />, label: 'OpenLayer' },
-      { key: '/map/cesium', icon: <EnvironmentOutlined />, label: 'Cesium 3D' },
-    ],
-  },
-  {
-    key: '/system',
-    icon: <SettingOutlined />,
-    label: '系统管理',
-    children: [
-      { key: '/system/user', icon: <TeamOutlined />, label: '用户管理' },
-      { key: '/system/role', icon: <SafetyOutlined />, label: '角色管理' },
-      { key: '/system/menu', icon: <MenuOutlined />, label: '菜单管理' },
-      { key: '/system/settings', icon: <FileTextOutlined />, label: '系统设置' },
-      { key: '/system/logs', icon: <UnorderedListOutlined />, label: '系统日志' },
-    ],
-  },
-]
 
 const layoutOptions = [
   { value: 'header', label: '顶部菜单' },
@@ -87,6 +49,10 @@ function HeaderLayout() {
   const location = useLocation()
   const themeName = useAppSelector((state) => state.theme.themeName)
   const themeCfg = themeConfigs[themeName]
+  const menus = useAppSelector((state) => state.menu.items)
+  const menuLoading = useAppSelector((state) => state.menu.loading)
+
+  const menuItems = convertMenuItems(menus)
 
   return (
     <Layout style={{ minHeight: '100vh' }}>
@@ -105,14 +71,18 @@ function HeaderLayout() {
         >
           MyApp
         </div>
-        <Menu
-          theme="dark"
-          mode="horizontal"
-          selectedKeys={[location.pathname]}
-          items={menuItems}
-          onClick={({ key }) => navigate(key)}
-          style={{ flex: 1, minWidth: 0, background: themeCfg.headerBg }}
-        />
+        {menuLoading ? (
+          <Spin style={{ color: themeCfg.headerFontColor }} />
+        ) : (
+          <Menu
+            theme="dark"
+            mode="horizontal"
+            selectedKeys={[location.pathname]}
+            items={menuItems}
+            onClick={({ key }) => navigate(key)}
+            style={{ flex: 1, minWidth: 0, background: themeCfg.headerBg }}
+          />
+        )}
         <Space>
           <LayoutSwitcher />
           <HeaderExtras />
@@ -134,6 +104,10 @@ function SidebarLayout() {
   const [collapsed, setCollapsed] = useState(false)
   const themeName = useAppSelector((state) => state.theme.themeName)
   const themeCfg = themeConfigs[themeName]
+  const menus = useAppSelector((state) => state.menu.items)
+  const menuLoading = useAppSelector((state) => state.menu.loading)
+
+  const menuItems = convertMenuItems(menus)
 
   return (
     <Layout style={{ minHeight: '100vh' }}>
@@ -162,14 +136,20 @@ function SidebarLayout() {
         >
           {collapsed ? 'M' : 'MyApp'}
         </div>
-        <Menu
-          theme="dark"
-          mode="inline"
-          selectedKeys={[location.pathname]}
-          items={menuItems}
-          onClick={({ key }) => navigate(key)}
-          style={{ background: themeCfg.siderBg }}
-        />
+        {menuLoading ? (
+          <div style={{ textAlign: 'center', padding: '20px' }}>
+            <Spin />
+          </div>
+        ) : (
+          <Menu
+            theme="dark"
+            mode="inline"
+            selectedKeys={[location.pathname]}
+            items={menuItems}
+            onClick={({ key }) => navigate(key)}
+            style={{ background: themeCfg.siderBg }}
+          />
+        )}
       </Sider>
       <Layout>
         <AntHeader
@@ -216,6 +196,10 @@ function SiderTopLayout() {
   const [collapsed, setCollapsed] = useState(false)
   const themeName = useAppSelector((state) => state.theme.themeName)
   const themeCfg = themeConfigs[themeName]
+  const menus = useAppSelector((state) => state.menu.items)
+  const menuLoading = useAppSelector((state) => state.menu.loading)
+
+  const menuItems = convertMenuItems(menus)
 
   return (
     <Layout style={{ minHeight: '100vh' }}>
@@ -261,14 +245,20 @@ function SiderTopLayout() {
             background: themeCfg.siderBg,
           }}
         >
-          <Menu
-            theme="dark"
-            mode="inline"
-            selectedKeys={[location.pathname]}
-            items={menuItems}
-            onClick={({ key }) => navigate(key)}
-            style={{ background: themeCfg.siderBg, borderInlineEnd: 'none' }}
-          />
+          {menuLoading ? (
+            <div style={{ textAlign: 'center', padding: '20px' }}>
+              <Spin />
+            </div>
+          ) : (
+            <Menu
+              theme="dark"
+              mode="inline"
+              selectedKeys={[location.pathname]}
+              items={menuItems}
+              onClick={({ key }) => navigate(key)}
+              style={{ background: themeCfg.siderBg, borderInlineEnd: 'none' }}
+            />
+          )}
         </Sider>
         <Layout>
           <Content style={{ overflow: 'auto' }}>
@@ -300,6 +290,12 @@ function App() {
       setExpired(true)
     }
   }, [isExpired])
+
+  useEffect(() => {
+    if (token) {
+      dispatch(fetchMenus())
+    }
+  }, [token, dispatch])
 
   if (!token) {
     if (expired) {
