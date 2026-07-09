@@ -12,8 +12,8 @@ import {
   MenuOutlined,
   FileTextOutlined,
   UnorderedListOutlined,
-  MapOutlined,
-  GlobeOutlined,
+  CompassOutlined,
+  EnvironmentOutlined,
 } from '@ant-design/icons'
 import { Navigate, Outlet, useNavigate, useLocation } from 'react-router-dom'
 import zhCN from 'antd/locale/zh_CN'
@@ -27,22 +27,22 @@ import { themeConfigs } from './theme/config'
 
 const { Header: AntHeader, Sider, Content, Footer } = Layout
 
-const menuItems = [
+const menuItems: any[] = [
   { key: '/home', icon: <HomeOutlined />, label: '首页' },
   { key: '/about', icon: <InfoCircleOutlined />, label: '关于' },
   {
-    key: 'map',
-    icon: <MapOutlined />,
+    key: '/map',
+    icon: <CompassOutlined />,
     label: '地图管理',
     children: [
-      { key: '/map/baidu', icon: <GlobeOutlined />, label: '百度地图' },
-      { key: '/map/amap', icon: <GlobeOutlined />, label: '高德地图' },
-      { key: '/map/openlayer', icon: <GlobeOutlined />, label: 'OpenLayer' },
-      { key: '/map/cesium', icon: <GlobeOutlined />, label: 'Cesium 3D' },
+      { key: '/map/baidu', icon: <EnvironmentOutlined />, label: '百度地图' },
+      { key: '/map/amap', icon: <EnvironmentOutlined />, label: '高德地图' },
+      { key: '/map/openlayer', icon: <EnvironmentOutlined />, label: 'OpenLayer' },
+      { key: '/map/cesium', icon: <EnvironmentOutlined />, label: 'Cesium 3D' },
     ],
   },
   {
-    key: 'system',
+    key: '/system',
     icon: <SettingOutlined />,
     label: '系统管理',
     children: [
