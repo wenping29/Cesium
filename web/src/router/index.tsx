@@ -2,6 +2,7 @@ import { createBrowserRouter, Navigate } from 'react-router-dom'
 import App from '../App'
 import Home from '../pages/Home'
 import About from '../pages/About'
+import Workspace from '../pages/Workspace'
 import Login from '../pages/Login'
 import Register from '../pages/Register'
 import UserManage from '../pages/system/UserManage'
@@ -21,6 +22,7 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <Navigate to="/home" replace /> },
       { path: 'home', element: <Home /> },
+      { path: 'workspace', element: <Workspace /> },
       { path: 'about', element: <About /> },
       {
         path: 'map',

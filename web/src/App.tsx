@@ -14,6 +14,7 @@ import {
   UnorderedListOutlined,
   CompassOutlined,
   EnvironmentOutlined,
+  DashboardOutlined,
 } from '@ant-design/icons'
 import { Navigate, Outlet, useNavigate, useLocation } from 'react-router-dom'
 import zhCN from 'antd/locale/zh_CN'
@@ -29,6 +30,7 @@ const { Header: AntHeader, Sider, Content, Footer } = Layout
 
 const menuItems = [
   { key: '/home', icon: <HomeOutlined />, label: '首页' },
+  { key: '/workspace', icon: <DashboardOutlined />, label: '工作台' },
   { key: '/about', icon: <InfoCircleOutlined />, label: '关于' },
   {
     key: '/map',
