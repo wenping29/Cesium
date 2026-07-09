@@ -36,7 +36,6 @@ const menuItems = [
     key: '/map',
     icon: <CompassOutlined />,
     label: '地图管理',
-    type: 'group' as const,
     children: [
       { key: '/map/baidu', icon: <EnvironmentOutlined />, label: '百度地图' },
       { key: '/map/amap', icon: <EnvironmentOutlined />, label: '高德地图' },
@@ -48,7 +47,6 @@ const menuItems = [
     key: '/system',
     icon: <SettingOutlined />,
     label: '系统管理',
-    type: 'group' as const,
     children: [
       { key: '/system/user', icon: <TeamOutlined />, label: '用户管理' },
       { key: '/system/role', icon: <SafetyOutlined />, label: '角色管理' },
