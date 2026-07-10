@@ -8,7 +8,9 @@
       "Bash(sqlite3 cesium.db \"SELECT COUNT\\(*\\) FROM Users;\")",
       "Bash(sqlite3 cesium.db)",
       "Bash(sqlite3 cesium.db \"PRAGMA table_info\\(Notifications\\);\")",
-      "Bash(cd *)"
+      "Bash(cd *)",
+      "Bash(sqlite3 --version)",
+      "Bash(sqlite3 *)"
     ]
   }
 }
