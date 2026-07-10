@@ -93,21 +93,22 @@ export default function SideBar() {
         { id: 'workbench', label: t('nav.workbench'), path: '/workbench', icon: <DashboardIcon /> },
         { id: 'analysis', label: t('nav.analysis'), path: '/analysis', icon: <AnalyticsIcon /> },
         { id: 'notifications', label: t('nav.notifications'), path: '/notifications', icon: <NotificationsIcon /> },
+        {
+          id: 'dashboard',
+          label: t('nav.dashboard'),
+          path: '/dashboard',
+          icon: <DashboardIcon />
+        },
+        {
+          id: 'bigScreen',
+          label: t('nav.bigScreen'),
+          path: '/big-screen',
+          icon: <DesktopWindowsIcon />
+        },
         { id: 'sendNotification', label: t('nav.sendNotification'), path: '/send-notification', icon: <SendIcon /> }
       ]
     },
-    {
-      id: 'dashboard',
-      label: t('nav.dashboard'),
-      path: '/dashboard',
-      icon: <DashboardIcon />
-    },
-    {
-      id: 'bigScreen',
-      label: t('nav.bigScreen'),
-      path: '/big-screen',
-      icon: <DesktopWindowsIcon />
-    },
+
     {
       id: 'maps',
       label: t('nav.mapCategory'),
