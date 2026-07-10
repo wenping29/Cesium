@@ -21,9 +21,9 @@ import TyphoonTablePage from './pages/TyphoonTablePage'
 import WindTablePage from './pages/WindTablePage'
 import AirQualityTablePage from './pages/AirQualityTablePage'
 
-import OpenLayerMapPage from './pages/map/OpenLayerMapPage'
-import LeafletMapPage from './pages/map/LeafletMapPage'
-import MapPage from './pages/map/MapPage'
+import OpenLayerMapPage from './pages/Map/OpenLayerMapPage'
+import LeafletMapPage from './pages/Map/LeafletMapPage'
+import MapPage from './pages/Map/MapPage'
 
 import ImageToBimPage from './pages/ImageToBimPage'
 
@@ -31,7 +31,7 @@ import AuditLogReportPage from './pages/AuditLogReportPage'
 
 
 
-import EditProfilePage from './pages/Profile/EditProfilePage'
+import EditProfilePage from './pages/profile/EditProfilePage'
 
 
 

@@ -340,17 +340,7 @@ let menuData = [
       }
     ]
   },
-  {
-    id: '9',
-    name: '影像转BIM',
-    path: '/image-to-bim',
-    icon: 'Insights',
-    parentId: null,
-    sortOrder: 9,
-    isVisible: true,
-    permission: '',
-    children: []
-  },
+
   {
     id: '10',
     name: '其他',
@@ -368,6 +358,17 @@ let menuData = [
         icon: 'Info',
         parentId: '10',
         sortOrder: 1,
+        isVisible: true,
+        permission: '',
+        children: []
+      },
+      {
+        id: '10-9',
+        name: '影像转BIM',
+        path: '/image-to-bim',
+        icon: 'Insights',
+        parentId: null,
+        sortOrder: 9,
         isVisible: true,
         permission: '',
         children: []
