@@ -129,11 +129,35 @@ public class AppDbContext : DbContext
 
     private void SeedInitialData(ModelBuilder modelBuilder)
     {
-        // Seed roles
+        // Seed roles - 从 mock/authmanagement.js 导入
         modelBuilder.Entity<Role>().HasData(
-            new Role { Id = 1, Name = "Admin", Description = "系统管理员" },
-            new Role { Id = 2, Name = "User", Description = "普通用户" }
+            new Role { Id = 1, Name = "超级管理员", Description = "拥有所有权限", CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, DateTimeKind.Utc) },
+            new Role { Id = 2, Name = "管理员", Description = "拥有大部分管理权限", CreatedAt = new DateTime(2024, 1, 5, 0, 0, 0, DateTimeKind.Utc) },
+            new Role { Id = 3, Name = "普通用户", Description = "普通用户权限", CreatedAt = new DateTime(2024, 1, 10, 0, 0, 0, DateTimeKind.Utc) },
+            new Role { Id = 4, Name = "访客", Description = "只读权限", CreatedAt = new DateTime(2024, 2, 1, 0, 0, 0, DateTimeKind.Utc) }
         );
+
+        // Seed RoleMenu - 角色菜单关联
+        // 超级管理员 - 所有菜单
+        var superAdminMenuIds = new[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47 };
+        // 管理员 - 部分菜单
+        var adminMenuIds = new[] { 1, 2, 3, 6, 7, 8, 9, 10, 12, 13, 14, 17, 18, 19, 22, 23, 24, 27, 28, 29 };
+        // 普通用户 - 基本菜单
+        var userMenuIds = new[] { 1, 2, 3, 4, 6, 7, 8, 9, 12, 13, 14 };
+        // 访客 - 最少菜单
+        var guestMenuIds = new[] { 1, 2, 6, 7 };
+
+        var roleMenus = new List<object>();
+        foreach (var menuId in superAdminMenuIds)
+            roleMenus.Add(new { RoleId = 1, MenuId = menuId });
+        foreach (var menuId in adminMenuIds)
+            roleMenus.Add(new { RoleId = 2, MenuId = menuId });
+        foreach (var menuId in userMenuIds)
+            roleMenus.Add(new { RoleId = 3, MenuId = menuId });
+        foreach (var menuId in guestMenuIds)
+            roleMenus.Add(new { RoleId = 4, MenuId = menuId });
+
+        modelBuilder.Entity<RoleMenu>().HasData(roleMenus.ToArray());
 
         // Seed menus - 完整菜单结构 (从 mock/menu.js 导入)
         modelBuilder.Entity<Menu>().HasData(
