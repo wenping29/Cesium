@@ -1,20 +1,20 @@
 import { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Box, Typography } from '@mui/material'
-import OpenLayerMap from '../components/OpenLayerMap'
-import LayerControl from '../components/LayerControl'
-import EarthquakeControl from '../components/EarthquakeControl'
-import AirQualityControl from '../components/AirQualityControl'
-import TyphoonControl from '../components/TyphoonControl'
-import WindControl from '../components/WindControl'
-import { generateHexGrid } from '../utils/hexGrid'
-import useLayerStore from '../store/layerStore'
-import useEarthquakeStore from '../store/earthquakeStore'
-import useAirQualityStore from '../store/airQualityStore'
-import useTyphoonStore from '../store/typhoonStore'
-import useWindStore from '../store/windStore'
+import LeafletMap from '../../components/Map/LeafletMap'
+import LayerControl from '../../components/LayerControl'
+import EarthquakeControl from '../../components/EarthquakeControl'
+import AirQualityControl from '../../components/AirQualityControl'
+import TyphoonControl from '../../components/TyphoonControl'
+import WindControl from '../../components/WindControl'
+import { generateHexGrid } from '../../utils/hexGrid'
+import useLayerStore from '../../store/layerStore'
+import useEarthquakeStore from '../../store/earthquakeStore'
+import useAirQualityStore from '../../store/airQualityStore'
+import useTyphoonStore from '../../store/typhoonStore'
+import useWindStore from '../../store/windStore'
 
-export default function OpenLayerMapPage() {
+export default function LeafletMapPage() {
   const { t } = useTranslation()
   const [currentBasemap, setCurrentBasemap] = useState('tianditu_vec')
   const [hexGridCells, setHexGridCells] = useState([])
@@ -142,7 +142,7 @@ export default function OpenLayerMapPage() {
           color: 'white', bgcolor: 'rgba(0,0,0,0.5)', px: 2, py: 0.5, borderRadius: 1,
         }}
       >
-        {t('map.olTitle')}
+        {t('map.leafletTitle')}
       </Typography>
 
       <LayerControl
@@ -175,7 +175,7 @@ export default function OpenLayerMapPage() {
         </Box>
       ))}
 
-      <OpenLayerMap
+      <LeafletMap
         currentBasemap={currentBasemap}
         hexGridCells={hexGridVisible ? hexGridCells : []}
         hexGridVisible={hexGridVisible}

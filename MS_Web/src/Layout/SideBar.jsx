@@ -12,49 +12,17 @@ import {
   Box,
   Collapse,
   Divider,
-  Tooltip
+  Tooltip,
+  CircularProgress
 } from '@mui/material'
-import MenuIcon from '@mui/icons-material/Menu'
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import ExpandLessIcon from '@mui/icons-material/ExpandLess'
-import DashboardIcon from '@mui/icons-material/Dashboard'
-import DesktopWindowsIcon from '@mui/icons-material/DesktopWindows'
-import MapIcon from '@mui/icons-material/Map'
-import LayersIcon from '@mui/icons-material/Layers'
-import MapOutlinedIcon from '@mui/icons-material/MapOutlined'
-import TableChartIcon from '@mui/icons-material/TableChart'
-import VolcanoIcon from '@mui/icons-material/Volcano'
-import StormIcon from '@mui/icons-material/Storm'
-import WavesIcon from '@mui/icons-material/Waves'
-import AirIcon from '@mui/icons-material/Air'
-import PeopleIcon from '@mui/icons-material/People'
-import InsightsIcon from '@mui/icons-material/Insights'
-import SettingsIcon from '@mui/icons-material/Settings'
-import ShieldIcon from '@mui/icons-material/Shield'
-import BusinessIcon from '@mui/icons-material/Business'
-import HomeIcon from '@mui/icons-material/Home'
-import AnalyticsIcon from '@mui/icons-material/Analytics'
-import ScheduleIcon from '@mui/icons-material/Schedule'
-import DescriptionIcon from '@mui/icons-material/Description'
-import TimerIcon from '@mui/icons-material/Timer'
-import HolidayVillageIcon from '@mui/icons-material/HolidayVillage'
-import BeachAccessIcon from '@mui/icons-material/BeachAccess'
-import HistoryIcon from '@mui/icons-material/History'
-import FindInPageIcon from '@mui/icons-material/FindInPage'
-import VisibilityIcon from '@mui/icons-material/Visibility'
-import NotificationsIcon from '@mui/icons-material/Notifications'
-import SendIcon from '@mui/icons-material/Send'
-import InfoIcon from '@mui/icons-material/Info'
-import WallpaperIcon from '@mui/icons-material/Wallpaper'
-import DashboardOutlined from '@mui/icons-material/DashboardOutlined'
-import FolderIcon from '@mui/icons-material/Folder'
-import HelpIcon from '@mui/icons-material/Help'
-import SecurityIcon from '@mui/icons-material/Security'
-import StorageIcon from '@mui/icons-material/Storage'
 import { useTranslation } from 'react-i18next'
 import sidebarStore from '../store/sidebarStore'
+import useMenuStore from '../store/menuStore'
+import { getIconComponent } from '../utils/iconMap'
 
 const DRAWER_WIDTH = 240
 const DRAWER_COLLAPSED_WIDTH = 64
@@ -64,17 +32,34 @@ export default function SideBar() {
   const navigate = useNavigate()
   const location = useLocation()
   const { open } = sidebarStore()
+  const { menus, loading, fetchMenus } = useMenuStore()
   const [expandedMenu, setExpandedMenu] = useState(null)
+
+  // 获取菜单数据
+  useEffect(() => {
+    fetchMenus()
+  }, [fetchMenus])
 
   // 当路由变化时，自动展开包含当前活动路径的父菜单
   useEffect(() => {
-    const activeParent = menuItems.find(item =>
-      item.children && item.children.some(child => isActive(child.path))
-    )
-    if (activeParent) {
-      setExpandedMenu(activeParent.id)
+    const findActiveParent = (items) => {
+      for (const item of items) {
+        if (item.children && item.children.length > 0) {
+          const hasActiveChild = item.children.some(child => location.pathname === child.path)
+          if (hasActiveChild) {
+            return item.id
+          }
+          const found = findActiveParent(item.children)
+          if (found) return found
+        }
+      }
+      return null
     }
-  }, [location.pathname])
+    const activeParentId = findActiveParent(menus)
+    if (activeParentId) {
+      setExpandedMenu(activeParentId)
+    }
+  }, [location.pathname, menus])
 
   const toggleSubMenu = (menuId) => {
     setExpandedMenu(prev =>
@@ -84,116 +69,11 @@ export default function SideBar() {
 
   const isActive = (path) => location.pathname === path
 
-  const menuItems = [
-    {
-      id: 'home',
-      label: t('nav.home'),
-      icon: <HomeIcon />,
-      children: [
-        { id: 'workbench', label: t('nav.workbench'), path: '/workbench', icon: <DashboardIcon /> },
-        { id: 'analysis', label: t('nav.analysis'), path: '/analysis', icon: <AnalyticsIcon /> },
-        { id: 'notifications', label: t('nav.notifications'), path: '/notifications', icon: <NotificationsIcon /> },
-        {
-          id: 'dashboard',
-          label: t('nav.dashboard'),
-          path: '/dashboard',
-          icon: <DashboardIcon />
-        },
-        {
-          id: 'bigScreen',
-          label: t('nav.bigScreen'),
-          path: '/big-screen',
-          icon: <DesktopWindowsIcon />
-        },
-        { id: 'sendNotification', label: t('nav.sendNotification'), path: '/send-notification', icon: <SendIcon /> }
-      ]
-    },
-
-    {
-      id: 'maps',
-      label: t('nav.mapCategory'),
-      icon: <MapIcon />,
-      children: [
-        { id: 'cesiumMap', label: t('nav.map'), path: '/map', icon: <MapIcon /> },
-        { id: 'olMap', label: t('nav.olMap'), path: '/openlayer-map', icon: <LayersIcon /> },
-        { id: 'leafletMap', label: t('nav.leafletMap'), path: '/leaflet-map', icon: <MapOutlinedIcon /> }
-      ]
-    },
-    {
-      id: 'dataTables',
-      label: t('nav.dataTables'),
-      icon: <TableChartIcon />,
-      children: [
-        { id: 'earthquake', label: t('earthquakeTable.title'), path: '/earthquake-table', icon: <VolcanoIcon /> },
-        { id: 'typhoon', label: t('typhoonTable.title'), path: '/typhoon-table', icon: <StormIcon /> },
-        { id: 'wind', label: t('windTable.title'), path: '/wind-table', icon: <WavesIcon /> },
-        { id: 'airQuality', label: t('airQualityTable.title'), path: '/airquality-table', icon: <AirIcon /> }
-      ]
-    },
-    {
-          id: 'permission',
-          label: t('nav.permissionManagement'),
-          icon: <SettingsIcon />,
-          children: [
-            { id: 'userMgmt', label: t('nav.userManagement'), path: '/user-management', icon: <PeopleIcon /> },
-            { id: 'roleMgmt', label: t('nav.roleManagement'), path: '/role-management', icon: <ShieldIcon /> },
-            { id: 'menuMgmt', label: t('nav.menuManagement'), path: '/menu-management', icon: <MenuIcon /> },
-            { id: 'deptMgmt', label: t('nav.departmentManagement'), path: '/department-management', icon: <BusinessIcon /> }
-          ]
-        },
-        {
-          id: 'attendance',
-          label: t('nav.attendanceManagement'),
-          icon: <ScheduleIcon />,
-          children: [
-            { id: 'attendanceReport', label: t('nav.openReport'), path: '/attendance-report', icon: <DescriptionIcon /> },
-            { id: 'workHourReport', label: t('nav.workHourReport'), path: '/workhour-report', icon: <TimerIcon /> },
-            { id: 'leaveReport', label: t('nav.leaveReport'), path: '/leave-report', icon: <HolidayVillageIcon /> },
-            { id: 'annualLeaveReport', label: t('nav.annualLeaveReport'), path: '/annual-leave-report', icon: <BeachAccessIcon /> }
-          ]
-        },
-        {
-      id: 'log',
-      label: t('nav.logManagement'),
-      icon: <HistoryIcon />,
-      children: [
-        { id: 'loginLogReport', label: t('nav.loginLogReport'), path: '/login-log-report', icon: <HistoryIcon /> },
-        { id: 'auditLogReport', label: t('nav.auditLogReport'), path: '/audit-log-report', icon: <FindInPageIcon /> },
-        { id: 'visitorLogReport', label: t('nav.visitorLogReport'), path: '/visitor-log-report', icon: <VisibilityIcon /> }
-      ]
-    },
-    {
-      id: 'other',
-      label: '其他',
-      icon: <SettingsIcon />,
-      children: [
-          { id: 'imageToBim',label: t('nav.imageToBim'),path: '/image-to-bim',icon: <InsightsIcon />},
-          { id: 'settings-intro', label: '简介', path: '/settings/introduction', icon: <InfoIcon /> },
-          { id: 'settings-faq', label: '常见问题', path: '/settings/faq', icon: <HelpIcon /> },
-          { id: 'settings-chat', label: '聊天', path: '/settings/chat', icon: <SendIcon /> },
-          { id: 'settings-files', label: '文件管理', path: '/settings/files', icon: <StorageIcon /> },
-      ]
-    },
-    
-    {
-      id: 'settings',
-      label: '设置',
-      icon: <SettingsIcon />,
-      children: [
-        { id: 'settings-main', label: '设置', path: '/settings', icon: <SettingsIcon /> },
-        { id: 'settings-dashboard', label: '看板', path: '/settings/dashboard', icon: <DashboardOutlined /> },
-        { id: 'settings-projects', label: '项目', path: '/settings/projects', icon: <FolderIcon /> },
-        { id: 'settings-users', label: '用户', path: '/settings/users', icon: <PeopleIcon /> },
-        { id: 'settings-auth', label: '认证', path: '/settings/auth', icon: <SecurityIcon /> },
-        
-      ]
-    }
-  ]
-
   const renderMenuItem = (item) => {
-    if (item.children) {
+    if (item.children && item.children.length > 0) {
       const hasActiveChild = item.children.some(child => isActive(child.path))
       const isExpanded = expandedMenu === item.id
+      const IconComponent = getIconComponent(item.icon)
 
       return (
         <Box key={item.id}>
@@ -215,11 +95,11 @@ export default function SideBar() {
                   color: hasActiveChild ? 'primary.main' : 'inherit'
                 }}
               >
-                {item.icon}
+                {IconComponent ? <IconComponent /> : null}
               </ListItemIcon>
               {open && (
                 <ListItemText
-                  primary={item.label}
+                  primary={item.name}
                   sx={{ color: hasActiveChild ? 'primary.main' : 'inherit' }}
                 />
               )}
@@ -231,30 +111,33 @@ export default function SideBar() {
           {open && (
             <Collapse in={isExpanded} timeout="auto" unmountOnExit>
               <List component="div" disablePadding>
-                {item.children.map(child => (
-                  <ListItemButton
-                    key={child.id}
-                    onClick={() => navigate(child.path)}
-                    sx={{
-                      pl: 4,
-                      minHeight: 40,
-                      bgcolor: isActive(child.path) ? 'rgba(0,0,0,0.08)' : 'transparent'
-                    }}
-                  >
-                    <ListItemIcon
+                {item.children.map(child => {
+                  const ChildIcon = getIconComponent(child.icon)
+                  return (
+                    <ListItemButton
+                      key={child.id}
+                      onClick={() => navigate(child.path)}
                       sx={{
-                        minWidth: 32,
-                        color: isActive(child.path) ? 'primary.main' : 'inherit'
+                        pl: 4,
+                        minHeight: 40,
+                        bgcolor: isActive(child.path) ? 'rgba(0,0,0,0.08)' : 'transparent'
                       }}
                     >
-                      {child.icon}
-                    </ListItemIcon>
-                    <ListItemText
-                      primary={child.label}
-                      sx={{ color: isActive(child.path) ? 'primary.main' : 'inherit' }}
-                    />
-                  </ListItemButton>
-                ))}
+                      <ListItemIcon
+                        sx={{
+                          minWidth: 32,
+                          color: isActive(child.path) ? 'primary.main' : 'inherit'
+                        }}
+                      >
+                        {ChildIcon ? <ChildIcon /> : null}
+                      </ListItemIcon>
+                      <ListItemText
+                        primary={child.name}
+                        sx={{ color: isActive(child.path) ? 'primary.main' : 'inherit' }}
+                      />
+                    </ListItemButton>
+                  )
+                })}
               </List>
             </Collapse>
           )}
@@ -262,11 +145,13 @@ export default function SideBar() {
       )
     }
 
+    const IconComponent = getIconComponent(item.icon)
+
     return (
       <ListItem key={item.id} disablePadding sx={{ display: 'block' }}>
-        <Tooltip title={!open ? item.label : ''} placement="right" arrow>
+        <Tooltip title={!open ? item.name : ''} placement="right" arrow>
           <ListItemButton
-            onClick={() => navigate(item.path)}
+            onClick={() => item.path && navigate(item.path)}
             sx={{
               minHeight: 48,
               justifyContent: open ? 'initial' : 'center',
@@ -282,17 +167,40 @@ export default function SideBar() {
                 color: isActive(item.path) ? 'primary.main' : 'inherit'
               }}
             >
-              {item.icon}
+              {IconComponent ? <IconComponent /> : null}
             </ListItemIcon>
             {open && (
               <ListItemText
-                primary={item.label}
+                primary={item.name}
                 sx={{ color: isActive(item.path) ? 'primary.main' : 'inherit' }}
               />
             )}
           </ListItemButton>
         </Tooltip>
       </ListItem>
+    )
+  }
+
+  if (loading) {
+    return (
+      <Drawer
+        variant="permanent"
+        sx={{
+          width: DRAWER_WIDTH,
+          flexShrink: 0,
+          '& .MuiDrawer-paper': {
+            width: DRAWER_WIDTH,
+            height: 'calc(100% - 48px)',
+            boxSizing: 'border-box',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center'
+          }
+        }}
+        open={open}
+      >
+        <CircularProgress />
+      </Drawer>
     )
   }
 
@@ -335,7 +243,7 @@ export default function SideBar() {
         </Box>
         <Divider />
         <List sx={{ flexGrow: 1, pt: 1, overflowY: 'auto', overflowX: 'hidden' }}>
-          {menuItems.map(renderMenuItem)}
+          {menus.map(renderMenuItem)}
         </List>
       </Drawer>
     </>

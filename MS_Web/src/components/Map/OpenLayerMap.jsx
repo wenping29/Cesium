@@ -24,7 +24,7 @@ import Text from 'ol/style/Text'
 import RegularShape from 'ol/style/RegularShape'
 import Overlay from 'ol/Overlay'
 import { fromLonLat } from 'ol/proj'
-import { getCities } from '../api/cesium'
+import { getCities } from '../../api/cesium'
 
 const TIANDITU_TOKEN = import.meta.env.VITE_TIANDITU_TOKEN || ''
 

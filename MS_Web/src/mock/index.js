@@ -44,6 +44,7 @@ import './typhoon'
 import './wind'
 import './imageToBim'
 import './notification'
+import './menu'
 console.log('[Mock] All mocks loaded')
 
 const { Random } = Mock

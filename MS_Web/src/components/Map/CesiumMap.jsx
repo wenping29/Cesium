@@ -2,8 +2,8 @@ import { useEffect, useRef, useState } from 'react'
 import * as Cesium from 'cesium'
 import { Box, CircularProgress, Typography } from '@mui/material'
 import { useTranslation } from 'react-i18next'
-import { getCities } from '../api/cesium'
-import { generateEarthquakeHeatmap } from '../utils/heatmap'
+import { getCities } from '../../api/cesium'
+import { generateEarthquakeHeatmap } from '../../utils/heatmap'
 
 Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJiYjM0OTdiZi0yN2EzLTRkNmItODlkZC1iNGQyZWNjODk1MjkiLCJpZCI6NTc3NjQsInN1YiI6IuaEpOaAkueahOmYv-aWhyIsImlzcyI6Imh0dHBzOi8vaW9uLmNlc2l1bS5jb20iLCJhdWQiOiJhcHAyIiwiaWF0IjoxNzc4ODIxOTk4fQ.HTtyOKV1KT7CNZypQcaqPJYQAYCpaInCh0NwfbctEng'
 

@@ -19,9 +19,9 @@ import ChatIcon from '@mui/icons-material/Chat'
 import { useTranslation } from 'react-i18next'
 import useAuthStore from '../store/authStore'
 import sidebarStore from '../store/sidebarStore'
-import LanguageSwitcher from '../components/LanguageSwitcher'
-import ThemeSwitcher from '../components/ThemeSwitcher'
-import Breadcrumb from '../components/Breadcrumb'
+import LanguageSwitcher from '../components/header/LanguageSwitcher'
+import ThemeSwitcher from '../components/header/ThemeSwitcher'
+import Breadcrumb from '../components/header/Breadcrumb'
 import { getUnreadCount, getNotifications } from '../api/notification'
 
 const iconMap = {

@@ -2,7 +2,7 @@ import { useState, useRef, useCallback } from 'react'
 import { Button, Popper, Paper, Grow, MenuList, MenuItem, Box } from '@mui/material'
 import PaletteIcon from '@mui/icons-material/Palette'
 import { useTranslation } from 'react-i18next'
-import useThemeStore from '../store/themeStore'
+import useThemeStore from '../../store/themeStore'
 
 const themes = ['light', 'dark', 'ocean', 'forest', 'sunset', 'midnight']
 

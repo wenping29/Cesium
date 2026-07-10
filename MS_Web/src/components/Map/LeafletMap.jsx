@@ -2,7 +2,7 @@ import { useEffect, useRef, useState, useCallback } from 'react'
 import { Box, CircularProgress, Typography } from '@mui/material'
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
-import { getCities } from '../api/cesium'
+import { getCities } from '../../api/cesium'
 
 const HeatmapCanvas = L.Layer.extend({
   initialize: function (options) {
