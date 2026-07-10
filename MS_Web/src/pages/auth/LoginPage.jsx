@@ -4,7 +4,7 @@ import {
   Box, Card, TextField, Typography, Button, Alert,
 } from '@mui/material'
 import { useTranslation } from 'react-i18next'
-import useAuthStore from '../store/authStore'
+import useAuthStore from '../../store/authStore'
 
 function getDeviceInfo() {
   const ua = navigator.userAgent

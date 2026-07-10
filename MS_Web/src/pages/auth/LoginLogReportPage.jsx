@@ -4,7 +4,7 @@ import {
   Box, Paper, Table, TableHead, TableBody, TableRow, TableCell,
   TableContainer, CircularProgress, Alert, TablePagination, Button, TextField, Stack,
 } from '@mui/material'
-import { getLoginLogs } from '../api/loginLogs'
+import { getLoginLogs } from '../../api/loginLogs'
 
 export default function LoginLogReportPage() {
   const { t } = useTranslation()

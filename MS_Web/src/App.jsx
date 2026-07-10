@@ -4,13 +4,13 @@ import { Box } from '@mui/material'
 import { recordVisit } from './api/visitorLogs'
 import useAuthStore from './store/authStore'
 import tabStore from './store/tabStore'
-import NavBar from './components/NavBar'
-import SideBar from './components/SideBar'
-import TabBar from './components/TabBar'
-import Footer from './components/Footer'
+import Header from './Layout/Header'
+import SideBar from './Layout/SideBar'
+import TabBar from './Layout/TabBar'
+import Footer from './Layout/Footer'
 import UsersPage from './pages/UsersPage'
 import MapPage from './pages/MapPage'
-import LoginPage from './pages/LoginPage'
+import LoginPage from './pages/auth/LoginPage'
 import EditProfilePage from './pages/EditProfilePage'
 import ChangePasswordPage from './pages/ChangePasswordPage'
 import DashboardPage from './pages/DashboardPage'
@@ -22,7 +22,7 @@ import AirQualityTablePage from './pages/AirQualityTablePage'
 import OpenLayerMapPage from './pages/OpenLayerMapPage'
 import LeafletMapPage from './pages/LeafletMapPage'
 import ImageToBimPage from './pages/ImageToBimPage'
-import LoginLogReportPage from './pages/LoginLogReportPage'
+import LoginLogReportPage from './pages/auth/LoginLogReportPage'
 import AuditLogReportPage from './pages/AuditLogReportPage'
 import VisitorLogReportPage from './pages/VisitorLogReportPage'
 import UserManagementPage from './pages/UserManagementPage'
@@ -130,7 +130,7 @@ export default function App() {
     <Box sx={{ display: 'flex', flexDirection: 'row', height: '100vh' }}>
       <SideBar />
       <Box sx={{ display: 'flex', flex: 1, flexDirection: 'column', overflow: 'hidden' }}>
-        <NavBar />
+        <Header />
         <TabBar />
           <Box sx={{ flex: 1, overflow: 'hidden' }}>
             <Routes>

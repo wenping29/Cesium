@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import {
   Drawer,
@@ -64,13 +64,21 @@ export default function SideBar() {
   const navigate = useNavigate()
   const location = useLocation()
   const { open } = sidebarStore()
-  const [expandedMenus, setExpandedMenus] = useState([])
+  const [expandedMenu, setExpandedMenu] = useState(null)
+
+  // 当路由变化时，自动展开包含当前活动路径的父菜单
+  useEffect(() => {
+    const activeParent = menuItems.find(item =>
+      item.children && item.children.some(child => isActive(child.path))
+    )
+    if (activeParent) {
+      setExpandedMenu(activeParent.id)
+    }
+  }, [location.pathname])
 
   const toggleSubMenu = (menuId) => {
-    setExpandedMenus(prev =>
-      prev.includes(menuId)
-        ? prev.filter(id => id !== menuId)
-        : [...prev, menuId]
+    setExpandedMenu(prev =>
+      prev === menuId ? null : menuId
     )
   }
 
@@ -154,26 +162,29 @@ export default function SideBar() {
       ]
     },
     {
-      id: 'imageToBim',
-      label: t('nav.imageToBim'),
-      path: '/image-to-bim',
-      icon: <InsightsIcon />
+      id: 'other',
+      label: '其他',
+      icon: <SettingsIcon />,
+      children: [
+          { id: 'imageToBim',label: t('nav.imageToBim'),path: '/image-to-bim',icon: <InsightsIcon />},
+          { id: 'settings-intro', label: '简介', path: '/settings/introduction', icon: <InfoIcon /> },
+          { id: 'settings-faq', label: '常见问题', path: '/settings/faq', icon: <HelpIcon /> },
+          { id: 'settings-chat', label: '聊天', path: '/settings/chat', icon: <SendIcon /> },
+          { id: 'settings-files', label: '文件管理', path: '/settings/files', icon: <StorageIcon /> },
+      ]
     },
+    
     {
       id: 'settings',
       label: '设置',
       icon: <SettingsIcon />,
       children: [
-        { id: 'settings-intro', label: '简介', path: '/settings/introduction', icon: <InfoIcon /> },
         { id: 'settings-main', label: '设置', path: '/settings', icon: <SettingsIcon /> },
-        { id: 'settings-background', label: '背景设置', path: '/settings/background', icon: <WallpaperIcon /> },
         { id: 'settings-dashboard', label: '看板', path: '/settings/dashboard', icon: <DashboardOutlined /> },
         { id: 'settings-projects', label: '项目', path: '/settings/projects', icon: <FolderIcon /> },
-        { id: 'settings-faq', label: '常见问题', path: '/settings/faq', icon: <HelpIcon /> },
         { id: 'settings-users', label: '用户', path: '/settings/users', icon: <PeopleIcon /> },
         { id: 'settings-auth', label: '认证', path: '/settings/auth', icon: <SecurityIcon /> },
-        { id: 'settings-files', label: '文件管理', path: '/settings/files', icon: <StorageIcon /> },
-        { id: 'settings-chat', label: '聊天', path: '/settings/chat', icon: <SendIcon /> },
+        
       ]
     }
   ]
@@ -181,7 +192,7 @@ export default function SideBar() {
   const renderMenuItem = (item) => {
     if (item.children) {
       const hasActiveChild = item.children.some(child => isActive(child.path))
-      const isExpanded = expandedMenus.includes(item.id)
+      const isExpanded = expandedMenu === item.id
 
       return (
         <Box key={item.id}>
