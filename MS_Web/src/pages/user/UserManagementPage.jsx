@@ -8,9 +8,9 @@ import {
 } from '@mui/material'
 import { Add as AddIcon, Edit as EditIcon, Delete as DeleteIcon } from '@mui/icons-material'
 import { useTranslation } from 'react-i18next'
-import useUserStore from '../store/userStore'
-import useRoleStore from '../store/roleStore'
-import useDepartmentStore from '../store/departmentStore'
+import useUserStore from '../../store/userStore'
+import useRoleStore from '../../store/roleStore'
+import useDepartmentStore from '../../store/departmentStore'
 
 export default function UserManagementPage() {
   const { t } = useTranslation()

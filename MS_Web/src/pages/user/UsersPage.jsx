@@ -5,7 +5,7 @@ import {
   Chip
 } from '@mui/material'
 import { useTranslation } from 'react-i18next'
-import useUserStore from '../store/userStore'
+import useUserStore from '../../store/userStore'
 
 export default function UsersPage() {
   const { t } = useTranslation()

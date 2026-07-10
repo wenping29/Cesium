@@ -4,7 +4,7 @@ import {
   Box, Paper, Table, TableHead, TableBody, TableRow, TableCell,
   TableContainer, CircularProgress, Alert, TablePagination, Button, TextField, Stack,
 } from '@mui/material'
-import { getVisitorLogs } from '../api/visitorLogs'
+import { getVisitorLogs } from '../../api/visitorLogs'
 
 export default function VisitorLogReportPage() {
   const { t } = useTranslation()

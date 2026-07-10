@@ -3,7 +3,7 @@ import {
   Box, Card, CardContent, Typography, TextField, Button, Avatar, Alert, CircularProgress, Select, MenuItem, FormControl, InputLabel, Divider, Grid, Paper,
 } from '@mui/material'
 import { useTranslation } from 'react-i18next'
-import useAuthStore from '../store/authStore'
+import useAuthStore from '../../store/authStore'
 
 export default function EditProfilePage() {
   const { t } = useTranslation()

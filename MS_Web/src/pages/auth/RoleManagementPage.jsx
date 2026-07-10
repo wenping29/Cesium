@@ -8,8 +8,8 @@ import {
 } from '@mui/material'
 import { Add as AddIcon, Edit as EditIcon, Delete as DeleteIcon } from '@mui/icons-material'
 import { useTranslation } from 'react-i18next'
-import useRoleStore from '../store/roleStore'
-import useMenuStore from '../store/menuStore'
+import useRoleStore from '../../store/roleStore'
+import useMenuStore from '../../store/menuStore'
 
 const flattenMenus = (menus, result = []) => {
   menus?.forEach(m => {
