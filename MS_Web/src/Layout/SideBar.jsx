@@ -38,6 +38,7 @@ export default function SideBar() {
   // 获取菜单数据
   useEffect(() => {
     fetchMenus()
+    
   }, [fetchMenus])
 
   // 当路由变化时，自动展开包含当前活动路径的父菜单

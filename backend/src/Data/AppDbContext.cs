@@ -135,69 +135,76 @@ public class AppDbContext : DbContext
             new Role { Id = 2, Name = "User", Description = "普通用户" }
         );
 
-        // Seed menus - 完整菜单结构
+        // Seed menus - 完整菜单结构 (从 mock/menu.js 导入)
         modelBuilder.Entity<Menu>().HasData(
-            // 首页
-            new Menu { Id = 1, Name = "首页", Path = null, Icon = "Home", ParentId = null, SortOrder = 0, IsVisible = true, Permission = "home" },
-            new Menu { Id = 2, Name = "工作台", Path = "/workbench", Icon = "Dashboard", ParentId = 1, SortOrder = 1, IsVisible = true, Permission = "home:workbench" },
-            new Menu { Id = 3, Name = "分析页", Path = "/analysis", Icon = "Analytics", ParentId = 1, SortOrder = 2, IsVisible = true, Permission = "home:analysis" },
-            new Menu { Id = 4, Name = "通知中心", Path = "/notifications", Icon = "Notifications", ParentId = 1, SortOrder = 3, IsVisible = true, Permission = "home:notifications" },
-            new Menu { Id = 5, Name = "发送消息", Path = "/send-notification", Icon = "Send", ParentId = 1, SortOrder = 4, IsVisible = true, Permission = "home:sendNotification" },
+            // 首页 (Id 1-5)
+            new Menu { Id = 1, Name = "首页", Path = null, Icon = "Home", ParentId = null, SortOrder = 1, IsVisible = true, Permission = null },
+            new Menu { Id = 2, Name = "工作台", Path = "/workbench", Icon = "Dashboard", ParentId = 1, SortOrder = 1, IsVisible = true, Permission = null },
+            new Menu { Id = 3, Name = "数据分析", Path = "/analysis", Icon = "Analytics", ParentId = 1, SortOrder = 2, IsVisible = true, Permission = null },
+            new Menu { Id = 4, Name = "通知中心", Path = "/notifications", Icon = "Notifications", ParentId = 1, SortOrder = 3, IsVisible = true, Permission = null },
+            new Menu { Id = 5, Name = "发送消息", Path = "/send-notification", Icon = "Send", ParentId = 1, SortOrder = 4, IsVisible = true, Permission = null },
 
-            // 地图管理
-            new Menu { Id = 6, Name = "地图管理", Path = null, Icon = "Map", ParentId = null, SortOrder = 1, IsVisible = true, Permission = "map" },
-            new Menu { Id = 7, Name = "Cesium地图", Path = "/map", Icon = "Map", ParentId = 6, SortOrder = 1, IsVisible = true, Permission = "map:cesium" },
-            new Menu { Id = 8, Name = "OL地图", Path = "/openlayer-map", Icon = "Layers", ParentId = 6, SortOrder = 2, IsVisible = true, Permission = "map:openlayer" },
-            new Menu { Id = 9, Name = "Leaflet地图", Path = "/leaflet-map", Icon = "MapOutlined", ParentId = 6, SortOrder = 3, IsVisible = true, Permission = "map:leaflet" },
+            // 仪表盘 (Id 6)
+            new Menu { Id = 6, Name = "仪表盘", Path = "/dashboard", Icon = "Dashboard", ParentId = null, SortOrder = 2, IsVisible = true, Permission = null },
 
-            // 专题数据
-            new Menu { Id = 10, Name = "专题数据", Path = null, Icon = "BarChart", ParentId = null, SortOrder = 2, IsVisible = true, Permission = "data" },
-            new Menu { Id = 11, Name = "地震数据表格", Path = "/earthquake-table", Icon = "Volcano", ParentId = 10, SortOrder = 1, IsVisible = true, Permission = "data:earthquake" },
-            new Menu { Id = 12, Name = "台风数据表格", Path = "/typhoon-table", Icon = "Storm", ParentId = 10, SortOrder = 2, IsVisible = true, Permission = "data:typhoon" },
-            new Menu { Id = 13, Name = "风向数据表格", Path = "/wind-table", Icon = "Waves", ParentId = 10, SortOrder = 3, IsVisible = true, Permission = "data:wind" },
-            new Menu { Id = 14, Name = "空气质量数据表格", Path = "/airquality-table", Icon = "Air", ParentId = 10, SortOrder = 4, IsVisible = true, Permission = "data:airquality" },
+            // 大屏展示 (Id 7)
+            new Menu { Id = 7, Name = "大屏展示", Path = "/big-screen", Icon = "DesktopWindows", ParentId = null, SortOrder = 3, IsVisible = true, Permission = null },
 
-            // 大屏
-            new Menu { Id = 15, Name = "大屏", Path = "/big-screen", Icon = "Monitor", ParentId = null, SortOrder = 3, IsVisible = true, Permission = "bigScreen" },
+            // 地图相关 (Id 8-11)
+            new Menu { Id = 8, Name = "地图相关", Path = null, Icon = "Map", ParentId = null, SortOrder = 4, IsVisible = true, Permission = null },
+            new Menu { Id = 9, Name = "Cesium地图", Path = "/map", Icon = "Map", ParentId = 8, SortOrder = 1, IsVisible = true, Permission = null },
+            new Menu { Id = 10, Name = "OpenLayer地图", Path = "/openlayer-map", Icon = "Layers", ParentId = 8, SortOrder = 2, IsVisible = true, Permission = null },
+            new Menu { Id = 11, Name = "Leaflet地图", Path = "/leaflet-map", Icon = "MapOutlined", ParentId = 8, SortOrder = 3, IsVisible = true, Permission = null },
 
-            // 数据表格
-            new Menu { Id = 16, Name = "数据表格", Path = "/dataTables", Icon = "Table", ParentId = null, SortOrder = 4, IsVisible = true, Permission = "dataTables" },
+            // 数据表格 (Id 12-16)
+            new Menu { Id = 12, Name = "数据表格", Path = null, Icon = "TableChart", ParentId = null, SortOrder = 5, IsVisible = true, Permission = null },
+            new Menu { Id = 13, Name = "地震数据", Path = "/earthquake-table", Icon = "Volcano", ParentId = 12, SortOrder = 1, IsVisible = true, Permission = null },
+            new Menu { Id = 14, Name = "台风数据", Path = "/typhoon-table", Icon = "Storm", ParentId = 12, SortOrder = 2, IsVisible = true, Permission = null },
+            new Menu { Id = 15, Name = "风力数据", Path = "/wind-table", Icon = "Waves", ParentId = 12, SortOrder = 3, IsVisible = true, Permission = null },
+            new Menu { Id = 16, Name = "空气质量", Path = "/airquality-table", Icon = "Air", ParentId = 12, SortOrder = 4, IsVisible = true, Permission = null },
 
-            // 权限管理
-            new Menu { Id = 17, Name = "权限管理", Path = null, Icon = "Settings", ParentId = null, SortOrder = 5, IsVisible = true, Permission = "permission" },
-            new Menu { Id = 18, Name = "用户管理", Path = "/user-management", Icon = "People", ParentId = 17, SortOrder = 1, IsVisible = true, Permission = "permission:users" },
-            new Menu { Id = 19, Name = "角色管理", Path = "/role-management", Icon = "Shield", ParentId = 17, SortOrder = 2, IsVisible = true, Permission = "permission:roles" },
-            new Menu { Id = 20, Name = "菜单管理", Path = "/menu-management", Icon = "Menu", ParentId = 17, SortOrder = 3, IsVisible = true, Permission = "permission:menus" },
-            new Menu { Id = 21, Name = "部门管理", Path = "/department-management", Icon = "Business", ParentId = 17, SortOrder = 4, IsVisible = true, Permission = "permission:departments" },
+            // 权限管理 (Id 17-21)
+            new Menu { Id = 17, Name = "权限管理", Path = null, Icon = "Settings", ParentId = null, SortOrder = 6, IsVisible = true, Permission = "admin" },
+            new Menu { Id = 18, Name = "用户管理", Path = "/user-management", Icon = "People", ParentId = 17, SortOrder = 1, IsVisible = true, Permission = "admin" },
+            new Menu { Id = 19, Name = "角色管理", Path = "/role-management", Icon = "Shield", ParentId = 17, SortOrder = 2, IsVisible = true, Permission = "admin" },
+            new Menu { Id = 20, Name = "菜单管理", Path = "/menu-management", Icon = "Menu", ParentId = 17, SortOrder = 3, IsVisible = true, Permission = "admin" },
+            new Menu { Id = 21, Name = "部门管理", Path = "/department-management", Icon = "Business", ParentId = 17, SortOrder = 4, IsVisible = true, Permission = "admin" },
 
-            // 考勤管理
-            new Menu { Id = 22, Name = "考勤管理", Path = null, Icon = "Schedule", ParentId = null, SortOrder = 6, IsVisible = true, Permission = "attendance" },
-            new Menu { Id = 23, Name = "打卡报表", Path = "/attendance-report", Icon = "Description", ParentId = 22, SortOrder = 1, IsVisible = true, Permission = "attendance:report" },
-            new Menu { Id = 24, Name = "工时报表", Path = "/workhour-report", Icon = "Timer", ParentId = 22, SortOrder = 2, IsVisible = true, Permission = "attendance:workhour" },
-            new Menu { Id = 25, Name = "休假报表", Path = "/leave-report", Icon = "HolidayVillage", ParentId = 22, SortOrder = 3, IsVisible = true, Permission = "attendance:leave" },
-            new Menu { Id = 26, Name = "年假报表", Path = "/annual-leave-report", Icon = "BeachAccess", ParentId = 22, SortOrder = 4, IsVisible = true, Permission = "attendance:annual" },
+            // 考勤管理 (Id 22-26)
+            new Menu { Id = 22, Name = "考勤管理", Path = null, Icon = "Schedule", ParentId = null, SortOrder = 7, IsVisible = true, Permission = null },
+            new Menu { Id = 23, Name = "打卡报表", Path = "/attendance-report", Icon = "Description", ParentId = 22, SortOrder = 1, IsVisible = true, Permission = null },
+            new Menu { Id = 24, Name = "工时报表", Path = "/workhour-report", Icon = "Timer", ParentId = 22, SortOrder = 2, IsVisible = true, Permission = null },
+            new Menu { Id = 25, Name = "休假报表", Path = "/leave-report", Icon = "HolidayVillage", ParentId = 22, SortOrder = 3, IsVisible = true, Permission = null },
+            new Menu { Id = 26, Name = "年假报表", Path = "/annual-leave-report", Icon = "BeachAccess", ParentId = 22, SortOrder = 4, IsVisible = true, Permission = null },
 
-            // 日志管理
-            new Menu { Id = 27, Name = "日志管理", Path = null, Icon = "History", ParentId = null, SortOrder = 7, IsVisible = true, Permission = "log" },
-            new Menu { Id = 28, Name = "登录日志", Path = "/login-log-report", Icon = "History", ParentId = 27, SortOrder = 1, IsVisible = true, Permission = "log:login" },
-            new Menu { Id = 29, Name = "查询日志", Path = "/audit-log-report", Icon = "FindInPage", ParentId = 27, SortOrder = 2, IsVisible = true, Permission = "log:audit" },
-            new Menu { Id = 30, Name = "访客日志", Path = "/visitor-log-report", Icon = "Visibility", ParentId = 27, SortOrder = 3, IsVisible = true, Permission = "log:visitor" },
+            // 日志管理 (Id 27-30)
+            new Menu { Id = 27, Name = "日志管理", Path = null, Icon = "History", ParentId = null, SortOrder = 8, IsVisible = true, Permission = null },
+            new Menu { Id = 28, Name = "登录日志", Path = "/login-log-report", Icon = "History", ParentId = 27, SortOrder = 1, IsVisible = true, Permission = null },
+            new Menu { Id = 29, Name = "审计日志", Path = "/audit-log-report", Icon = "FindInPage", ParentId = 27, SortOrder = 2, IsVisible = true, Permission = null },
+            new Menu { Id = 30, Name = "访客日志", Path = "/visitor-log-report", Icon = "Visibility", ParentId = 27, SortOrder = 3, IsVisible = true, Permission = null },
 
-            // 图片转BIM
-            new Menu { Id = 31, Name = "图片转BIM", Path = "/image-to-bim", Icon = "Image", ParentId = null, SortOrder = 8, IsVisible = true, Permission = "imageToBim" },
+            // 影像转BIM (Id 31)
+            new Menu { Id = 31, Name = "影像转BIM", Path = "/image-to-bim", Icon = "Insights", ParentId = null, SortOrder = 9, IsVisible = true, Permission = null },
 
-            // 设置
-            new Menu { Id = 32, Name = "设置", Path = null, Icon = "Settings", ParentId = null, SortOrder = 9, IsVisible = true, Permission = "settings" },
-            new Menu { Id = 33, Name = "简介", Path = "/settings/introduction", Icon = "Info", ParentId = 32, SortOrder = 1, IsVisible = true, Permission = "settings:intro" },
-            new Menu { Id = 34, Name = "设置", Path = "/settings", Icon = "Settings", ParentId = 32, SortOrder = 2, IsVisible = true, Permission = "settings:main" },
-            new Menu { Id = 35, Name = "背景设置", Path = "/settings/background", Icon = "Wallpaper", ParentId = 32, SortOrder = 3, IsVisible = true, Permission = "settings:background" },
-            new Menu { Id = 36, Name = "看板", Path = "/settings/dashboard", Icon = "DashboardOutlined", ParentId = 32, SortOrder = 4, IsVisible = true, Permission = "settings:dashboard" },
-            new Menu { Id = 37, Name = "项目", Path = "/settings/projects", Icon = "Folder", ParentId = 32, SortOrder = 5, IsVisible = true, Permission = "settings:projects" },
-            new Menu { Id = 38, Name = "常见问题", Path = "/settings/faq", Icon = "Help", ParentId = 32, SortOrder = 6, IsVisible = true, Permission = "settings:faq" },
-            new Menu { Id = 39, Name = "用户", Path = "/settings/users", Icon = "People", ParentId = 32, SortOrder = 7, IsVisible = true, Permission = "settings:users" },
-            new Menu { Id = 40, Name = "认证", Path = "/settings/auth", Icon = "Security", ParentId = 32, SortOrder = 8, IsVisible = true, Permission = "settings:auth" },
-            new Menu { Id = 41, Name = "文件管理", Path = "/settings/files", Icon = "Storage", ParentId = 32, SortOrder = 9, IsVisible = true, Permission = "settings:files" },
-            new Menu { Id = 42, Name = "聊天", Path = "/settings/chat", Icon = "Send", ParentId = 32, SortOrder = 10, IsVisible = true, Permission = "settings:chat" }
+            // 其他 (Id 32-36)
+            new Menu { Id = 32, Name = "其他", Path = null, Icon = "Settings", ParentId = null, SortOrder = 10, IsVisible = true, Permission = null },
+            new Menu { Id = 33, Name = "简介", Path = "/settings/introduction", Icon = "Info", ParentId = 32, SortOrder = 1, IsVisible = true, Permission = null },
+            new Menu { Id = 34, Name = "常见问题", Path = "/settings/faq", Icon = "Help", ParentId = 32, SortOrder = 2, IsVisible = true, Permission = null },
+            new Menu { Id = 35, Name = "聊天", Path = "/settings/chat", Icon = "Send", ParentId = 32, SortOrder = 3, IsVisible = true, Permission = null },
+            new Menu { Id = 36, Name = "文件管理", Path = "/settings/files", Icon = "Storage", ParentId = 32, SortOrder = 4, IsVisible = true, Permission = null },
+
+            // 设置 (Id 37-47)
+            new Menu { Id = 37, Name = "设置", Path = null, Icon = "Settings", ParentId = null, SortOrder = 11, IsVisible = true, Permission = null },
+            new Menu { Id = 38, Name = "简介", Path = "/settings/introduction", Icon = "Info", ParentId = 37, SortOrder = 1, IsVisible = true, Permission = null },
+            new Menu { Id = 39, Name = "设置", Path = "/settings", Icon = "Settings", ParentId = 37, SortOrder = 2, IsVisible = true, Permission = null },
+            new Menu { Id = 40, Name = "背景设置", Path = "/settings/background", Icon = "Wallpaper", ParentId = 37, SortOrder = 3, IsVisible = true, Permission = null },
+            new Menu { Id = 41, Name = "看板", Path = "/settings/dashboard", Icon = "DashboardOutlined", ParentId = 37, SortOrder = 4, IsVisible = true, Permission = null },
+            new Menu { Id = 42, Name = "项目", Path = "/settings/projects", Icon = "Folder", ParentId = 37, SortOrder = 5, IsVisible = true, Permission = null },
+            new Menu { Id = 43, Name = "常见问题", Path = "/settings/faq", Icon = "Help", ParentId = 37, SortOrder = 6, IsVisible = true, Permission = null },
+            new Menu { Id = 44, Name = "个人资料", Path = "/settings/users", Icon = "People", ParentId = 37, SortOrder = 7, IsVisible = true, Permission = null },
+            new Menu { Id = 45, Name = "认证", Path = "/settings/auth", Icon = "Security", ParentId = 37, SortOrder = 8, IsVisible = true, Permission = null },
+            new Menu { Id = 46, Name = "文件管理", Path = "/settings/files", Icon = "Storage", ParentId = 37, SortOrder = 9, IsVisible = true, Permission = null },
+            new Menu { Id = 47, Name = "聊天", Path = "/settings/chat", Icon = "Send", ParentId = 37, SortOrder = 10, IsVisible = true, Permission = null }
         );
 
         // Seed departments (10个部门)

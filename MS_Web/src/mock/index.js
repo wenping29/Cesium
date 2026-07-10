@@ -34,8 +34,7 @@ import Mock from 'mockjs'
 
 console.log('[Mock] Initializing mocks...')
 import './cesium'
-import './auth'
-import './authManagement'
+// import './authManagement'
 import './bim'
 import './hexgrid'
 import './layers'
@@ -44,8 +43,8 @@ import './airquality'
 import './typhoon'
 import './wind'
 import './imageToBim'
-import './notification'
-import './menu'
+// import './notification'
+//import './menu'
 console.log('[Mock] All mocks loaded')
 
 const { Random } = Mock
@@ -54,43 +53,43 @@ Random.extend({
   fruit: () => ['apple', 'banana', 'orange', 'grape', 'watermelon'][Random.natural(0, 4)],
 })
 
-Mock.mock('/api/users', 'get', () => {
-  return {
-    code: 200,
-    message: 'success',
-    data: Array.from({ length: 10 }, (_, i) => ({
-      id: Random.guid(),
-      name: Random.cname(),
-      age: Random.natural(18, 60),
-      email: Random.email(),
-      fruit: Random.fruit(),
-      avatar: Random.image('100x100', Random.color(), '#fff', Random.first()),
-      created_at: Random.datetime('yyyy-MM-dd HH:mm:ss'),
-    })),
-  }
-})
+// Mock.mock('/api/users', 'get', () => {
+//   return {
+//     code: 200,
+//     message: 'success',
+//     data: Array.from({ length: 10 }, (_, i) => ({
+//       id: Random.guid(),
+//       name: Random.cname(),
+//       age: Random.natural(18, 60),
+//       email: Random.email(),
+//       fruit: Random.fruit(),
+//       avatar: Random.image('100x100', Random.color(), '#fff', Random.first()),
+//       created_at: Random.datetime('yyyy-MM-dd HH:mm:ss'),
+//     })),
+//   }
+// })
 
-Mock.mock('/api/users', 'post', (options) => {
-  const body = JSON.parse(options.body)
-  return {
-    code: 200,
-    message: '创建成功',
-    data: { id: Random.guid(), ...body, created_at: Random.datetime('yyyy-MM-dd HH:mm:ss') },
-  }
-})
+// Mock.mock('/api/users', 'post', (options) => {
+//   const body = JSON.parse(options.body)
+//   return {
+//     code: 200,
+//     message: '创建成功',
+//     data: { id: Random.guid(), ...body, created_at: Random.datetime('yyyy-MM-dd HH:mm:ss') },
+//   }
+// })
 
-Mock.mock(/\/api\/users\/\w+/, 'get', (options) => {
-  const id = options.url.split('/').pop()
-  return {
-    code: 200,
-    message: 'success',
-    data: {
-      id,
-      name: Random.cname(),
-      age: Random.natural(18, 60),
-      email: Random.email(),
-      avatar: Random.image('100x100', Random.color(), '#fff', Random.first()),
-      created_at: Random.datetime('yyyy-MM-dd HH:mm:ss'),
-    },
-  }
-})
+// Mock.mock(/\/api\/users\/\w+/, 'get', (options) => {
+//   const id = options.url.split('/').pop()
+//   return {
+//     code: 200,
+//     message: 'success',
+//     data: {
+//       id,
+//       name: Random.cname(),
+//       age: Random.natural(18, 60),
+//       email: Random.email(),
+//       avatar: Random.image('100x100', Random.color(), '#fff', Random.first()),
+//       created_at: Random.datetime('yyyy-MM-dd HH:mm:ss'),
+//     },
+//   }
+// })
