@@ -8,10 +8,11 @@ import Header from './Layout/Header'
 import SideBar from './Layout/SideBar'
 import TabBar from './Layout/TabBar'
 import Footer from './Layout/Footer'
-import UsersPage from './pages/UsersPage'
-import MapPage from './pages/MapPage'
-import LoginPage from './pages/auth/LoginPage'
-import EditProfilePage from './pages/EditProfilePage'
+
+import UserManagementPage from './pages/user/UserManagementPage'
+import UsersPage from './pages/user/UsersPage'
+import UsersSettingsPage from './pages/user/UsersSettingsPage'
+
 import ChangePasswordPage from './pages/ChangePasswordPage'
 import DashboardPage from './pages/DashboardPage'
 import BigScreenPage from './pages/BigScreenPage'
@@ -19,14 +20,21 @@ import EarthquakeTablePage from './pages/EarthquakeTablePage'
 import TyphoonTablePage from './pages/TyphoonTablePage'
 import WindTablePage from './pages/WindTablePage'
 import AirQualityTablePage from './pages/AirQualityTablePage'
-import OpenLayerMapPage from './pages/OpenLayerMapPage'
-import LeafletMapPage from './pages/LeafletMapPage'
+
+import OpenLayerMapPage from './pages/map/OpenLayerMapPage'
+import LeafletMapPage from './pages/map/LeafletMapPage'
+import MapPage from './pages/map/MapPage'
+
 import ImageToBimPage from './pages/ImageToBimPage'
-import LoginLogReportPage from './pages/auth/LoginLogReportPage'
+
 import AuditLogReportPage from './pages/AuditLogReportPage'
-import VisitorLogReportPage from './pages/VisitorLogReportPage'
-import UserManagementPage from './pages/UserManagementPage'
-import RoleManagementPage from './pages/RoleManagementPage'
+
+
+
+import EditProfilePage from './pages/Profile/EditProfilePage'
+
+
+
 import MenuManagementPage from './pages/MenuManagementPage'
 import DepartmentManagementPage from './pages/DepartmentManagementPage'
 import WorkbenchPage from './pages/WorkbenchPage'
@@ -37,14 +45,22 @@ import LeaveReportPage from './pages/LeaveReportPage'
 import AnnualLeaveReportPage from './pages/AnnualLeaveReportPage'
 import NotificationsPage from './pages/NotificationsPage'
 import SendMessagePage from './pages/SendMessagePage'
-import SettingsIntroductionPage from './pages/SettingsIntroductionPage'
-import SettingsPage from './pages/SettingsPage'
+
+import SettingsPage from './pages/system/SettingsPage'
+import SettingsIntroductionPage from './pages/system/SettingsIntroductionPage'
+import VisitorLogReportPage from './pages/system/VisitorLogReportPage'
+
 import BackgroundSettingsPage from './pages/BackgroundSettingsPage'
 import DashboardSettingsPage from './pages/DashboardSettingsPage'
 import ProjectsSettingsPage from './pages/ProjectsSettingsPage'
 import FAQPage from './pages/FAQPage'
-import UsersSettingsPage from './pages/UsersSettingsPage'
-import AuthSettingsPage from './pages/AuthSettingsPage'
+
+
+import LoginPage from './pages/auth/LoginPage'
+import LoginLogReportPage from './pages/auth/LoginLogReportPage'
+import RoleManagementPage from './pages/auth/RoleManagementPage'
+import AuthSettingsPage from './pages/auth/AuthSettingsPage'
+
 import FileManagementPage from './pages/FileManagementPage'
 import ChatPage from './pages/ChatPage'
 
