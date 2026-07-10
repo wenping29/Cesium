@@ -11,10 +11,12 @@ import { useTranslation } from 'react-i18next'
 import useDepartmentStore from '../store/departmentStore'
 
 const flattenDepartments = (depts, result = []) => {
-  depts?.forEach(d => {
-    result.push(d)
-    flattenDepartments(d.children, result)
-  })
+  if (Array.isArray(depts)) {
+    depts.forEach(d => {
+      result.push(d)
+      flattenDepartments(d.children, result)
+    })
+  }
   return result
 }
 

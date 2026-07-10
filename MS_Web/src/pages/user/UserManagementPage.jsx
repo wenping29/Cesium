@@ -92,10 +92,12 @@ export default function UserManagementPage() {
   }
 
   const flattenDepartments = (depts, result = []) => {
-    depts?.forEach(d => {
-      result.push(d)
-      flattenDepartments(d.children, result)
-    })
+    if (Array.isArray(depts)) {
+      depts.forEach(d => {
+        result.push(d)
+        flattenDepartments(d.children, result)
+      })
+    }
     return result
   }
 

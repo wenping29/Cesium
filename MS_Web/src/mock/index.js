@@ -35,6 +35,7 @@ import Mock from 'mockjs'
 console.log('[Mock] Initializing mocks...')
 import './cesium'
 import './auth'
+import './authManagement'
 import './bim'
 import './hexgrid'
 import './layers'

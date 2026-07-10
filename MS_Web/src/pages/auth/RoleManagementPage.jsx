@@ -12,10 +12,12 @@ import useRoleStore from '../../store/roleStore'
 import useMenuStore from '../../store/menuStore'
 
 const flattenMenus = (menus, result = []) => {
-  menus?.forEach(m => {
-    result.push(m)
-    flattenMenus(m.children, result)
-  })
+  if (Array.isArray(menus)) {
+    menus.forEach(m => {
+      result.push(m)
+      flattenMenus(m.children, result)
+    })
+  }
   return result
 }
 
