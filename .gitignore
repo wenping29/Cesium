@@ -27,7 +27,4 @@ dist-ssr
 [Bb]in/
 [Oo]bj/
 
-# SQLite database
-*.db
-*.db-shm
-*.db-wal
+
