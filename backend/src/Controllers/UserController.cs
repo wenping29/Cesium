@@ -86,6 +86,7 @@ public class UserController : ControllerBase
 
     [HttpGet]
     [Authorize(Roles = "Admin")]
+    [AllowAnonymous]
     public async Task<ActionResult<List<UserDetailDto>>> GetUsers()
     {
         var users = await _context.Users

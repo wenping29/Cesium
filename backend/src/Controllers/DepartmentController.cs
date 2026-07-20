@@ -33,6 +33,7 @@ public class DepartmentController : ControllerBase
     }
 
     [HttpGet("all")]
+        [AllowAnonymous]
     public async Task<ActionResult<List<DepartmentDto>>> GetAllDepartments()
     {
         var departments = await _context.Departments

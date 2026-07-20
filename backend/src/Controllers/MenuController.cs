@@ -32,11 +32,13 @@ public class MenuController : ControllerBase
     }
 
     [HttpGet("all")]
+        [AllowAnonymous]
     public async Task<ActionResult<List<MenuDto>>> GetAllMenus()
     {
         var menus = await _context.Menus
             .OrderBy(m => m.SortOrder)
             .ToListAsync();
+
 
         return BuildMenuTree(menus, null);
     }
