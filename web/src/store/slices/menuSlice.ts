@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk, type PayloadAction } from '@reduxjs/toolkit'
-import axios from 'axios'
+import { fetchMenus as fetchMenusApi } from '../../api'
 
 export interface MenuItem {
   id: number
@@ -26,8 +26,8 @@ const initialState: MenuState = {
 }
 
 export const fetchMenus = createAsyncThunk('menu/fetchMenus', async () => {
-  const response = await axios.get('/api/menu')
-  return response.data.data
+  const response = await fetchMenusApi()
+  return response.data
 })
 
 const menuSlice = createSlice({

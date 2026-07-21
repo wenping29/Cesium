@@ -1,7 +1,7 @@
 import { Alert, Button, Card, ConfigProvider, Flex, Form, Input, Typography, message } from 'antd'
 import { LockOutlined, UserOutlined } from '@ant-design/icons'
 import { useNavigate, useSearchParams } from 'react-router-dom'
-import axios from 'axios'
+import { login } from '../api'
 import { useAppDispatch } from '../store/hooks'
 import { setCredentials } from '../store/slices/authSlice'
 
@@ -21,8 +21,8 @@ function Login() {
 
   const onFinish = async (values: LoginForm) => {
     try {
-      const res: any = await axios.post('/api/auth/login', values)
-      const { code, message: msg, data } = res.data
+      const res: any = await login(values)
+      const { code, message: msg, data } = res
       if (code === 0) {
         dispatch(setCredentials(data))
         message.success('登录成功')

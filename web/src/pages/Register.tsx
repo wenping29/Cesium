@@ -1,7 +1,7 @@
 import { Button, Card, ConfigProvider, Flex, Form, Input, Typography, message } from 'antd'
 import { LockOutlined, MailOutlined, UserOutlined } from '@ant-design/icons'
 import { useNavigate } from 'react-router-dom'
-import axios from 'axios'
+import { register } from '../api'
 import { useAppDispatch } from '../store/hooks'
 import { setCredentials } from '../store/slices/authSlice'
 
@@ -21,12 +21,12 @@ function Register() {
 
   const onFinish = async (values: RegisterForm) => {
     try {
-      const res: any = await axios.post('/api/auth/register', {
+      const res: any = await register({
         username: values.username,
         email: values.email,
         password: values.password,
       })
-      const { code, message: msg, data } = res.data
+      const { code, message: msg, data } = res
       if (code === 0) {
         dispatch(setCredentials(data))
         message.success('注册成功')

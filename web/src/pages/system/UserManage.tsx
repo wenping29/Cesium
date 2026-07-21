@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Button, Card, Form, Input, Modal, Select, Space, Table, Tag, Typography, message } from 'antd'
 import { PlusOutlined, SearchOutlined } from '@ant-design/icons'
-import request from '../../api/request'
+import { getUserList, createUser } from '../../api'
 
 const { Title } = Typography
 
@@ -46,7 +46,7 @@ function UserManage() {
       if (params?.email) query.email = params.email
       if (params?.status) query.status = params.status
 
-      const res: any = await request.get('/api/system/user/list', { params: query })
+      const res: any = await getUserList(query)
       setData(res.data.list)
       setTotal(res.data.total)
     } catch {
@@ -75,7 +75,7 @@ function UserManage() {
   const handleAdd = async () => {
     try {
       const values = await addForm.validateFields()
-      const res: any = await request.post('/api/system/user', values)
+      const res: any = await createUser(values)
       if (res.code === 0) {
         message.success('新增用户成功')
         setModalOpen(false)
