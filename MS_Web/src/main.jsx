@@ -13,7 +13,7 @@ const themes = {
     palette: { mode: 'light', primary: { main: '#1976d2' }, secondary: { main: '#9c27b0' } },
   },
   dark: {
-    palette: { mode: 'dark', primary: { main: '#90caf9' }, secondary: { main: '#ce93d8' }},
+    palette: { mode: 'dark', primary: { main: '#000000' }, secondary: { main: '#ce93d8' }},
   },
   ocean: {
     palette: { mode: 'light', primary: { main: '#00695c' }, secondary: { main: '#00897b' } },
@@ -25,7 +25,8 @@ const themes = {
     palette: { mode: 'light', primary: { main: '#e65100' }, secondary: { main: '#f57c00' } },
   },
   midnight: {
-    palette: { mode: 'dark', primary: { main: '#7c4dff' }, secondary: { main: '#b388ff'  } },
+ 
+    palette: { mode: 'dark', primary: { main: '#151515' }, secondary: { main: '#b388ff'  } },
   },
 }
 

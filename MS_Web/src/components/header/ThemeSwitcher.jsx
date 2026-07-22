@@ -8,7 +8,7 @@ const themes = ['light', 'dark', 'ocean', 'forest', 'sunset', 'midnight']
 
 const themeColors = {
   light: '#1976d2',
-  dark: '#90caf9',
+  dark: '#151515',
   ocean: '#00695c',
   forest: '#2e7d32',
   sunset: '#e65100',

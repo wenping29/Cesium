@@ -31,7 +31,19 @@
     "logManagement": "Log Management",
     "loginLogReport": "Login Log",
     "auditLogReport": "Audit Log",
-    "visitorLogReport": "Visitor Log"
+    "visitorLogReport": "Visitor Log",
+    "settingsGroup": "Settings",
+    "settingsIntroduction": "Introduction",
+    "settings": "Settings",
+    "settingsBackground": "Background",
+    "settingsDashboard": "Dashboard",
+    "settingsProjects": "Projects",
+    "settingsFaq": "FAQ",
+    "settingsUsers": "Users",
+    "settingsAuth": "Auth",
+    "settingsFiles": "Files",
+    "settingsChat": "Chat",
+    "attendance": "Attendance"
   },
   "footer": {
     "allRightsReserved": "All rights reserved"

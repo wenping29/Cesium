@@ -26,14 +26,8 @@ import LeafletMapPage from './pages/Map/LeafletMapPage'
 import MapPage from './pages/Map/MapPage'
 
 import ImageToBimPage from './pages/ImageToBimPage'
-
 import AuditLogReportPage from './pages/AuditLogReportPage'
-
-
-
 import EditProfilePage from './pages/profile/EditProfilePage'
-
-
 
 import MenuManagementPage from './pages/MenuManagementPage'
 import DepartmentManagementPage from './pages/DepartmentManagementPage'
@@ -54,7 +48,6 @@ import BackgroundSettingsPage from './pages/BackgroundSettingsPage'
 import DashboardSettingsPage from './pages/DashboardSettingsPage'
 import ProjectsSettingsPage from './pages/ProjectsSettingsPage'
 import FAQPage from './pages/FAQPage'
-
 
 import LoginPage from './pages/auth/LoginPage'
 import LoginLogReportPage from './pages/auth/LoginLogReportPage'

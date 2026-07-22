@@ -232,12 +232,18 @@ export default function SideBar() {
             px: 1,
             py: 1,
             minHeight: 64,
-            backgroundColor: (theme) => theme.palette.background.contrastText,
-            color: (theme) => theme.palette.text.contrastText
+            bgcolor: 'primary.main',
+            color: 'common.white'
           }}
         >
           {open && (
-            <Typography variant="h6" sx={{ cursor: 'pointer', flexGrow: 1, pl: 2 }} onClick={() => navigate('/dashboard')}>
+            <Typography variant="h6" 
+            sx={{ 
+              cursor: 'pointer', 
+              flexGrow: 1, pl: 2,
+              color: 'common.white'
+             }}
+             onClick={() => navigate('/dashboard')}>
               {t('nav.appTitle')}
             </Typography>
           )}

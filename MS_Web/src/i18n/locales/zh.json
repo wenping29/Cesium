@@ -31,7 +31,19 @@
     "logManagement": "日志管理",
     "loginLogReport": "登录日志",
     "auditLogReport": "查询日志",
-    "visitorLogReport": "访客日志"
+    "visitorLogReport": "访客日志",
+    "settingsGroup": "设置",
+    "settingsIntroduction": "简介",
+    "settings": "设置",
+    "settingsBackground": "背景设置",
+    "settingsDashboard": "看板",
+    "settingsProjects": "项目",
+    "settingsFaq": "常见问题",
+    "settingsUsers": "用户",
+    "settingsAuth": "认证",
+    "settingsFiles": "文件管理",
+    "settingsChat": "聊天",
+    "attendance": "考勤管理"
   },
   "footer": {
     "allRightsReserved": "保留所有权利"
