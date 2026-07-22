@@ -9,6 +9,7 @@ import { Visibility, VisibilityOff, PhotoCamera } from '@mui/icons-material'
 import { useTranslation } from 'react-i18next'
 import { register } from '../../api/auth'
 import { getDepartments } from '../../api/department'
+import { rsaEncrypt } from '../../api/crypto'
 
 export default function RegisterPage() {
   const { t } = useTranslation()
@@ -76,6 +77,8 @@ export default function RegisterPage() {
     try {
       const { confirmPassword, ...payload } = formData
       payload.departmentId = formData.departmentId || null
+      payload.username = await rsaEncrypt(payload.username)
+      payload.password = await rsaEncrypt(payload.password)
       await register(payload)
       navigate('/login', { replace: true })
     } catch (err) {

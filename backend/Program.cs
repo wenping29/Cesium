@@ -74,6 +74,8 @@ builder.Services.AddCors(options =>
 });
 
 var app = builder.Build();
+
+RsaHelper.Initialize();
 /*
 using (var scope = app.Services.CreateScope())
 {

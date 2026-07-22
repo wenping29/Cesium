@@ -3,6 +3,7 @@ using CesiumApi.DTOs;
 using CesiumApi.Helpers;
 using CesiumApi.Models;
 using CesiumApi.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -21,9 +22,19 @@ public class AuthController : ControllerBase
         _tokenService = tokenService;
     }
 
+    [HttpGet("public-key")]
+    [AllowAnonymous]
+    public IActionResult GetPublicKey()
+    {
+        return Ok(new { publicKey = RsaHelper.GetPublicKeyPem() });
+    }
+
     [HttpPost("register")]
     public async Task<ActionResult<AuthResponseDto>> Register(RegisterDto dto)
     {
+        dto.Username = TryDecrypt(dto.Username);
+        dto.Password = TryDecrypt(dto.Password);
+
         if (await _context.Users.AnyAsync(u => u.Username == dto.Username))
             return BadRequest("Username already exists");
 
@@ -82,6 +93,9 @@ public class AuthController : ControllerBase
     [HttpPost("login")]
     public async Task<ActionResult<AuthResponseDto>> Login(LoginDto dto)
     {
+        dto.Username = TryDecrypt(dto.Username);
+        dto.Password = TryDecrypt(dto.Password);
+
         var user = await _context.Users
             .Include(u => u.UserRoles)
             .ThenInclude(ur => ur.Role)
@@ -145,5 +159,18 @@ public class AuthController : ControllerBase
 
         await _context.SaveChangesAsync();
         return Ok("Password changed successfully");
+    }
+
+    private static string TryDecrypt(string value)
+    {
+        if (string.IsNullOrEmpty(value)) return value;
+        try
+        {
+            return RsaHelper.DecryptBase64Url(value);
+        }
+        catch
+        {
+            return value;
+        }
     }
 }

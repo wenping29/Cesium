@@ -7,6 +7,7 @@ import {
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 import { useTranslation } from 'react-i18next'
 import useAuthStore from '../../store/authStore'
+import { rsaEncrypt } from '../../api/crypto'
 
 function getDeviceInfo() {
   const ua = navigator.userAgent
@@ -48,7 +49,9 @@ export default function LoginPage() {
     setLoading(true)
     setError('')
     try {
-      await login({ username, password, ...deviceInfo })
+      const encryptedUsername = await rsaEncrypt(username)
+      const encryptedPassword = await rsaEncrypt(password)
+      await login({ username: encryptedUsername, password: encryptedPassword, ...deviceInfo })
       navigate('/workbench', { replace: true })
     } catch (err) {
       const errorMessage = err?.response?.data || err?.message || t('login.failed')
