@@ -49,6 +49,7 @@ dotnet run
 
 | ID | 角色名 | 说明 |
 |----|--------|------|
+| 1 | SuperAdmin | 管理员 |
 | 1 | Admin | 管理员 |
 | 2 | User | 普通用户 |
 | 3 | Manager | 经理 |
@@ -57,18 +58,15 @@ dotnet run
 
 ### 用户
 
-| 用户名 | 邮箱 | 密码 | 角色 |
-|--------|------|------|------|
-| admin | admin@example.com | Admin123! | Admin, User |
-| john.doe | john@example.com | Test123! | Manager, User |
-| jane.smith | jane@example.com | Test123! | Editor, User |
-| bob.wilson | bob@example.com | Test123! | User |
-| alice.brown | alice@example.com | Test123! | User |
-| charlie.davis | charlie@example.com | Test123! | Viewer |
-| diana.miller | diana@example.com | Test123! | User |
-| edward.taylor | edward@example.com | Test123! | - |
-| fiona.anderson | fiona@example.com | Test123! | - |
-| george.thomas | george@example.com | Test123! | - |
+# 用户密码
+|序号|名称|邮箱|密码|
+|---|---|---|---|
+|1	|admin|	admin@example.com	|Admin123!|
+|2	|manager|	admin2@163.com	|Admin123!|
+|3	|editor|	user001@example.com|	Admin123!|
+|4	|viewer	|user12@123.com	|Admin123!|
+|5	|user13|	user13@123.com	|Admin123!|
+|6  |SuperAdmin|	SuperAdmin@123.com |Admin123!|
 
 ## 重置数据库
 
