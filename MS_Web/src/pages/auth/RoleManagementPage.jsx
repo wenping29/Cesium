@@ -149,8 +149,8 @@ export default function RoleManagementPage() {
                   <TableCell sx={{ height: 48, py: 0 }}>{role.name}</TableCell>
                   <TableCell sx={{ height: 48, py: 0 }}>{role.description || '-'}</TableCell>
                   <TableCell sx={{ height: 48, py: 0 }}>
-                    {getMenuNames(role.menuIds).map(name => (
-                      <Chip key={name} label={name} size="small" sx={{ mr: 0.5, mb: 0.5 }} />
+                    {getMenuNames(role.menuIds).map((name, i) => (
+                      <Chip key={`${name}-${i}`} label={name} size="small" sx={{ mr: 0.5, mb: 0.5 }} />
                     ))}
                   </TableCell>
                   <TableCell sx={{ height: 48, py: 0 }}>

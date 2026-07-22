@@ -13,7 +13,7 @@ const useMenuStore = create((set) => ({
       const res = await getMenus()
       set({ menus: res, loading: false })
     } catch (err) {
-      set({ error: err?.response?.data || err?.message, loading: false })
+      set({ error: err?.response?.data?.title || err?.response?.data || err?.message, loading: false })
     }
   },
 
@@ -23,7 +23,7 @@ const useMenuStore = create((set) => ({
       const res = await getAllMenus()
       set({ allMenus: res, loading: false })
     } catch (err) {
-      set({ error: err?.response?.data || err?.message, loading: false })
+      set({ error: err?.response?.data?.title || err?.response?.data || err?.message, loading: false })
     }
   },
 
@@ -33,7 +33,7 @@ const useMenuStore = create((set) => ({
       const res = await getAllMenus()
       set({ allMenus: res })
     } catch (err) {
-      set({ error: err?.response?.data || err?.message })
+      set({ error: err?.response?.data?.title || err?.response?.data || err?.message })
     }
   },
 
@@ -43,7 +43,7 @@ const useMenuStore = create((set) => ({
       const res = await getAllMenus()
       set({ allMenus: res })
     } catch (err) {
-      set({ error: err?.response?.data || err?.message })
+      set({ error: err?.response?.data?.title || err?.response?.data || err?.message })
     }
   },
 
@@ -53,7 +53,7 @@ const useMenuStore = create((set) => ({
       const res = await getAllMenus()
       set({ allMenus: res })
     } catch (err) {
-      set({ error: err?.response?.data || err?.message })
+      set({ error: err?.response?.data?.title || err?.response?.data || err?.message })
     }
   },
 }))

@@ -32,7 +32,7 @@ public class MenuController : ControllerBase
     }
 
     [HttpGet("all")]
-        [AllowAnonymous]
+    [AllowAnonymous]
     public async Task<ActionResult<List<MenuDto>>> GetAllMenus()
     {
         var menus = await _context.Menus

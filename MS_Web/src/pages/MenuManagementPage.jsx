@@ -82,10 +82,17 @@ export default function MenuManagementPage() {
   }
 
   const handleSubmit = async () => {
+    const payload = {
+      ...formData,
+      parentId: formData.parentId || null,
+      path: formData.path || null,
+      icon: formData.icon || null,
+      permission: formData.permission || null
+    }
     if (editingMenu) {
-      await updateMenu(editingMenu.id, formData)
+      await updateMenu(editingMenu.id, payload)
     } else {
-      await createMenu(formData)
+      await createMenu(payload)
     }
     handleClose()
   }
