@@ -4,6 +4,7 @@ using CesiumApi.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace CesiumApi.Controllers;
 
@@ -28,7 +29,44 @@ public class MenuController : ControllerBase
             .OrderBy(m => m.SortOrder)
             .ToListAsync();
 
-        return BuildMenuTree(menus, null);
+        if (!User.Identity?.IsAuthenticated ?? true)
+            return BuildMenuTree(menus, null);
+
+        var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+        var userRoleIds = await _context.UserRoles
+            .Where(ur => ur.UserId == userId)
+            .Select(ur => ur.RoleId)
+            .ToListAsync();
+
+        var allowedMenuIds = await _context.RoleMenus
+            .Where(rm => userRoleIds.Contains(rm.RoleId))
+            .Select(rm => rm.MenuId)
+            .Distinct()
+            .ToListAsync();
+
+        var allowedIds = new HashSet<int>(allowedMenuIds);
+        var filtered = menus.Where(m => allowedIds.Contains(m.Id)).ToList();
+
+        var parentIds = filtered
+            .Where(m => m.ParentId.HasValue)
+            .Select(m => m.ParentId!.Value)
+            .ToHashSet();
+        while (parentIds.Count > 0)
+        {
+            var newParentIds = new HashSet<int>();
+            foreach (var pid in parentIds)
+            {
+                if (allowedIds.Contains(pid)) continue;
+                allowedIds.Add(pid);
+                var parent = menus.FirstOrDefault(m => m.Id == pid);
+                if (parent?.ParentId.HasValue == true)
+                    newParentIds.Add(parent.ParentId.Value);
+            }
+            parentIds = newParentIds;
+        }
+
+        filtered = menus.Where(m => allowedIds.Contains(m.Id)).ToList();
+        return BuildMenuTree(filtered, null);
     }
 
     [HttpGet("all")]
