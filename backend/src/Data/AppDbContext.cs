@@ -22,6 +22,7 @@ public class AppDbContext : DbContext
     public DbSet<LoginLog> LoginLogs { get; set; }
     public DbSet<Notification> Notifications { get; set; }
     public DbSet<VisitorLog> VisitorLogs { get; set; }
+    public DbSet<EarthquakeRecord> EarthquakeRecords { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -122,6 +123,16 @@ public class AppDbContext : DbContext
 
         modelBuilder.Entity<VisitorLog>()
             .HasIndex(v => v.IpAddress);
+
+        // EarthquakeRecord configuration
+        modelBuilder.Entity<EarthquakeRecord>()
+            .HasIndex(e => e.Time);
+
+        modelBuilder.Entity<EarthquakeRecord>()
+            .HasIndex(e => e.Region);
+
+        modelBuilder.Entity<EarthquakeRecord>()
+            .HasIndex(e => e.Magnitude);
 
         // Seed initial data
         SeedInitialData(modelBuilder);
