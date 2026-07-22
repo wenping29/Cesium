@@ -42,90 +42,9 @@ export default function EditProfilePage() {
         {/* <CardContent sx={{ p: 0 }}> */}
           <Grid container spacing={3}>
             <Grid sx={{ display: 'flex', justifyContent: 'center', gap: 2 }}>
-                <grid>
-                  <Typography variant="h5" fontWeight={700}>{t('profile.title')}</Typography>
-                  <Avatar src={form.avatar} sx={{ width: 100, height: 100, border: '3px solid #e0e0e0' }} />
-                </grid>
-                <Box>
-                  <Grid sx={{ display: 'flex', justifyContent: 'center', gap: 2 }}>
-                    <Box sx={{ mb: 4 }}>
-                    <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>{t('profile.username')}</Typography>
-                    </Box>
-                    <Box>
-                    <TextField fullWidth size="small" value={form.username} disabled sx={{ bgcolor: '#f5f5f5' }} />
-                    </Box>
-                    <Box>
-                    <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>{t('profile.username')}</Typography>
-                    </Box>
-                    <Box>
-                    <TextField fullWidth size="small" value={form.username} disabled sx={{ bgcolor: '#f5f5f5' }} /> 
-                    </Box>
-                    <Box>
-                    <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>{t('profile.username')}</Typography>
-                    </Box>
-                    <Box>
-                    <TextField fullWidth size="small" value={form.username} disabled sx={{ bgcolor: '#f5f5f5' }} />
-                    </Box>
-                    <Box item xs={4}>
-                    <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>{t('profile.name')}</Typography>
-                    </Box>
-                    <Box item xs={4}>
-                    <TextField fullWidth size="small" value={form.name} onChange={handleChange('name')} />
-                    </Box>
-                  </Grid>
-                  <Grid sx={{ display: 'flex', justifyContent: 'center', gap: 2 }}>
-                    <Box sx={{ mb: 4 }}>
-                    <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>{t('profile.username')}</Typography>
-                    </Box>
-                    <Box>
-                    <TextField fullWidth size="small" value={form.username} disabled sx={{ bgcolor: '#f5f5f5' }} />
-                    </Box>
-                    <Box>
-                    <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>{t('profile.username')}</Typography>
-                    </Box>
-                    <Box>
-                    <TextField fullWidth size="small" value={form.username} disabled sx={{ bgcolor: '#f5f5f5' }} /> 
-                    </Box>
-                    <Box>
-                    <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>{t('profile.username')}</Typography>
-                    </Box>
-                    <Box>
-                    <TextField fullWidth size="small" value={form.username} disabled sx={{ bgcolor: '#f5f5f5' }} />
-                    </Box>
-                    <Box item xs={4}>
-                    <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>{t('profile.name')}</Typography>
-                    </Box>
-                    <Box item xs={4}>
-                    <TextField fullWidth size="small" value={form.name} onChange={handleChange('name')} />
-                    </Box>
-                  </Grid>
-                  <Grid sx={{ display: 'flex', justifyContent: 'center', gap: 2 }}>
-                    <Box sx={{ mb: 4 }}>
-                    <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>{t('profile.username')}</Typography>
-                    </Box>
-                    <Box>
-                    <TextField fullWidth size="small" value={form.username} disabled sx={{ bgcolor: '#f5f5f5' }} />
-                    </Box>
-                    <Box>
-                    <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>{t('profile.username')}</Typography>
-                    </Box>
-                    <Box>
-                    <TextField fullWidth size="small" value={form.username} disabled sx={{ bgcolor: '#f5f5f5' }} /> 
-                    </Box>
-                    <Box>
-                    <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>{t('profile.username')}</Typography>
-                    </Box>
-                    <Box>
-                    <TextField fullWidth size="small" value={form.username} disabled sx={{ bgcolor: '#f5f5f5' }} />
-                    </Box>
-                    <Box item xs={4}>
-                    <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>{t('profile.name')}</Typography>
-                    </Box>
-                    <Box item xs={4}>
-                    <TextField fullWidth size="small" value={form.name} onChange={handleChange('name')} />
-                    </Box>
-                  </Grid>
-                </Box>
+        
+                    <Avatar src={form.avatar} sx={{ width: 100, height: 100, border: '3px solid #e0e0e0' }} />
+     
             </Grid>
           </Grid>
         {/* </CardContent> */}
