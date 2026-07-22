@@ -20,8 +20,11 @@ public class WindController : ControllerBase
     [HttpGet("current")]
     public async Task<IActionResult> GetCurrent()
     {
-        var records = await _context.WindRecords
+        var all = await _context.WindRecords
             .OrderByDescending(w => w.Time)
+            .ToListAsync();
+
+        var records = all
             .GroupBy(w => w.Region)
             .Select(g => g.First())
             .Select(w => new
@@ -35,7 +38,7 @@ public class WindController : ControllerBase
                 w.Gust,
                 time = w.Time.ToString("HH:mm:ss"),
             })
-            .ToListAsync();
+            .ToList();
 
         return Ok(new
         {

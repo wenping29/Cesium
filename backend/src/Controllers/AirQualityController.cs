@@ -20,8 +20,11 @@ public class AirQualityController : ControllerBase
     [HttpGet("current")]
     public async Task<IActionResult> GetCurrent()
     {
-        var stations = await _context.AirQualityStations
+        var all = await _context.AirQualityStations
             .OrderByDescending(a => a.Time)
+            .ToListAsync();
+
+        var stations = all
             .GroupBy(a => a.Station)
             .Select(g => g.First())
             .Select(a => new
@@ -38,7 +41,7 @@ public class AirQualityController : ControllerBase
                 a.No2,
                 time = a.Time.ToString("HH:mm:ss"),
             })
-            .ToListAsync();
+            .ToList();
 
         return Ok(new
         {

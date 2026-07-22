@@ -25,6 +25,32 @@ public class NotificationController : ControllerBase
             .ToListAsync();
     }
 
+    // 分页获取所有通知
+    [HttpGet("all")]
+    public async Task<IActionResult> GetAllNotifications(
+        [FromQuery] int page = 1,
+        [FromQuery] int size = 20)
+    {
+        var query = _context.Notifications
+            .OrderByDescending(n => n.Date);
+
+        var total = await query.CountAsync();
+        var items = await query
+            .Skip((page - 1) * size)
+            .Take(size)
+            .ToListAsync();
+
+        return Ok(new
+        {
+            code = 200,
+            message = "success",
+            data = items,
+            total,
+            page,
+            size,
+        });
+    }
+
     // 获取单个通知
     [HttpGet("{id}")]
     public async Task<ActionResult<Notification>> GetNotification(int id)
