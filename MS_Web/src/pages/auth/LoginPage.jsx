@@ -119,7 +119,7 @@ export default function LoginPage() {
 
         <Typography variant="body2" sx={{ textAlign: 'center', mt: 2 }}>
           {t('login.noAccount', '没有账号？')}{' '}
-          <Link component={RouterLink} to="/register" underline="hover" sx={{ color: 'primary.main' }}>
+          <Link component={RouterLink} to="/register" underline="hover" sx={{ color: 'primary.color' }}>
             {t('login.goRegister', '去注册')}
           </Link>
         </Typography>

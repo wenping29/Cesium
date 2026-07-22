@@ -34,7 +34,16 @@ public class AuthController : ControllerBase
         {
             Username = dto.Username,
             Email = dto.Email,
-            PasswordHash = PasswordHelper.HashPassword(dto.Password)
+            PasswordHash = PasswordHelper.HashPassword(dto.Password),
+            Name = dto.Name,
+            Phone = dto.Phone,
+            Gender = dto.Gender,
+            Address = dto.Address,
+            Hometown = dto.Hometown,
+            Avatar = dto.Avatar,
+            Bio = dto.Bio,
+            DepartmentId = dto.DepartmentId,
+            IsActive = dto.IsActive
         };
 
         var userRole = await _context.Roles.FirstOrDefaultAsync(r => r.Name == "User");
