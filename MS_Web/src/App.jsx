@@ -50,6 +50,7 @@ import ProjectsSettingsPage from './pages/ProjectsSettingsPage'
 import FAQPage from './pages/FAQPage'
 
 import LoginPage from './pages/auth/LoginPage'
+import RegisterPage from './pages/auth/RegisterPage'
 import LoginLogReportPage from './pages/auth/LoginLogReportPage'
 import RoleManagementPage from './pages/auth/RoleManagementPage'
 import AuthSettingsPage from './pages/auth/AuthSettingsPage'
@@ -130,6 +131,7 @@ export default function App() {
     return (
       <Routes>
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
         <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>
     )

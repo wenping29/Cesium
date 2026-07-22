@@ -1,58 +1,37 @@
-import { useState, useMemo } from 'react'
+import { useState } from 'react'
 import { useNavigate, Link as RouterLink } from 'react-router-dom'
 import {
-  Box, Card, TextField, Typography, Button, Alert,
-  InputAdornment, IconButton, Link,
+  Box, Card, TextField, Typography, Button, Alert, Link,
+  InputAdornment, IconButton,
 } from '@mui/material'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 import { useTranslation } from 'react-i18next'
-import useAuthStore from '../../store/authStore'
+import { register } from '../../api/auth'
 
-function getDeviceInfo() {
-  const ua = navigator.userAgent
-  let browserInfo = 'Unknown'
-  if (ua.includes('Chrome')) browserInfo = 'Chrome'
-  else if (ua.includes('Firefox')) browserInfo = 'Firefox'
-  else if (ua.includes('Safari')) browserInfo = 'Safari'
-  else if (ua.includes('Edge')) browserInfo = 'Edge'
-  else if (ua.includes('MSIE') || ua.includes('Trident')) browserInfo = 'Internet Explorer'
-
-  let osInfo = 'Unknown'
-  if (ua.includes('Windows')) osInfo = 'Windows'
-  else if (ua.includes('Mac OS')) osInfo = 'macOS'
-  else if (ua.includes('Linux')) osInfo = 'Linux'
-  else if (ua.includes('Android')) osInfo = 'Android'
-  else if (ua.includes('iPhone') || ua.includes('iPad')) osInfo = 'iOS'
-
-  return {
-    deviceInfo: window.screen ? `${window.screen.width}x${window.screen.height}` : 'Unknown',
-    browserInfo,
-    osInfo,
-  }
-}
-
-export default function LoginPage() {
+export default function RegisterPage() {
   const { t } = useTranslation()
   const [username, setUsername] = useState('')
+  const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
-  const login = useAuthStore((s) => s.login)
   const navigate = useNavigate()
-  const deviceInfo = useMemo(() => getDeviceInfo(), [])
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    if (!username || !password) { setError(t('login.validation')); return }
+    if (!username || !email || !password) {
+      setError(t('login.validation'))
+      return
+    }
     setLoading(true)
     setError('')
     try {
-      await login({ username, password, ...deviceInfo })
-      navigate('/users', { replace: true })
+      await register({ username, email, password })
+      navigate('/login', { replace: true })
     } catch (err) {
-      const errorMessage = err?.response?.data || err?.message || t('login.failed')
-      setError(errorMessage)
+      const msg = err?.response?.data?.title || err?.response?.data || err?.message || t('login.failed')
+      setError(typeof msg === 'string' ? msg : t('login.failed'))
     } finally {
       setLoading(false)
     }
@@ -68,7 +47,7 @@ export default function LoginPage() {
     }}>
       <Card sx={{ p: 4, width: 360, boxShadow: 4 }}>
         <Typography variant="h5" sx={{ textAlign: 'center', fontWeight: 600, mb: 3 }}>
-          {t('login.title')}
+          {t('register.title', '注册账号')}
         </Typography>
 
         {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
@@ -80,6 +59,14 @@ export default function LoginPage() {
             size="small"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
+            sx={{ mb: 2 }}
+          />
+          <TextField
+            fullWidth
+            label={t('register.email', '邮箱')}
+            size="small"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             sx={{ mb: 2 }}
           />
           <TextField
@@ -113,14 +100,14 @@ export default function LoginPage() {
             disabled={loading}
             sx={{ py: 1.2 }}
           >
-            {loading ? t('login.loggingIn') : t('login.title')}
+            {loading ? t('register.submitting', '注册中...') : t('register.title', '注册账号')}
           </Button>
         </Box>
 
         <Typography variant="body2" sx={{ textAlign: 'center', mt: 2 }}>
-          {t('login.noAccount', '没有账号？')}{' '}
-          <Link component={RouterLink} to="/register" underline="hover" sx={{ color: 'primary.main' }}>
-            {t('login.goRegister', '去注册')}
+          {t('register.hasAccount', '已有账号？')}{' '}
+          <Link component={RouterLink} to="/login" underline="hover">
+            {t('register.goLogin', '去登录')}
           </Link>
         </Typography>
       </Card>
