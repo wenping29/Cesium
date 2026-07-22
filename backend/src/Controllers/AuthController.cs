@@ -35,6 +35,7 @@ public class AuthController : ControllerBase
         dto.Username = TryDecrypt(dto.Username);
         dto.Password = TryDecrypt(dto.Password);
 
+
         if (await _context.Users.AnyAsync(u => u.Username == dto.Username))
             return BadRequest("Username already exists");
 
@@ -95,6 +96,9 @@ public class AuthController : ControllerBase
     {
         dto.Username = TryDecrypt(dto.Username);
         dto.Password = TryDecrypt(dto.Password);
+        
+        Console.WriteLine($"Decrypted Username: {dto.Username}");
+        Console.WriteLine($"Decrypted Password: {dto.Password}");
 
         var user = await _context.Users
             .Include(u => u.UserRoles)

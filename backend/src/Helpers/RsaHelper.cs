@@ -12,12 +12,6 @@ public static class RsaHelper
         _rsa = RSA.Create(2048);
     }
 
-    public static string GetPublicKey()
-    {
-        if (_rsa == null) throw new InvalidOperationException("RSA not initialized");
-        return _rsa.ExportPkcs8PublicKeyInfo().ToString();
-    }
-
     public static string GetPublicKeyPem()
     {
         if (_rsa == null) throw new InvalidOperationException("RSA not initialized");
@@ -31,7 +25,7 @@ public static class RsaHelper
     {
         if (_rsa == null) throw new InvalidOperationException("RSA not initialized");
         var encryptedBytes = Convert.FromBase64String(encryptedBase64);
-        var decryptedBytes = _rsa.Decrypt(encryptedBytes, RSAEncryptionPadding.OaepSHA256);
+        var decryptedBytes = _rsa.Decrypt(encryptedBytes, RSAEncryptionPadding.Pkcs1);
         return Encoding.UTF8.GetString(decryptedBytes);
     }
 
