@@ -24,6 +24,7 @@ public class AppDbContext : DbContext
     public DbSet<VisitorLog> VisitorLogs { get; set; }
     public DbSet<EarthquakeRecord> EarthquakeRecords { get; set; }
     public DbSet<TyphoonRecord> TyphoonRecords { get; set; }
+    public DbSet<AirQualityStation> AirQualityStations { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -144,6 +145,13 @@ public class AppDbContext : DbContext
 
         modelBuilder.Entity<TyphoonRecord>()
             .HasIndex(t => t.Status);
+
+        // AirQualityStation configuration
+        modelBuilder.Entity<AirQualityStation>()
+            .HasIndex(a => a.Station);
+
+        modelBuilder.Entity<AirQualityStation>()
+            .HasIndex(a => a.Time);
 
         // Seed initial data
         SeedInitialData(modelBuilder);
