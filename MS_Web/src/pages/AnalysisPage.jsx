@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import {
   Box,
   Typography,
@@ -11,79 +11,51 @@ import {
   Select,
   MenuItem,
   Divider,
-  Paper
+  CircularProgress
 } from '@mui/material'
 import {
-  TrendingUp as TrendingUpIcon,
-  ShowChart as ShowChartIcon,
-  BarChart as BarChartIcon,
-  PieChart as PieChartIcon
+  TrendingUp as TrendingUpIcon
 } from '@mui/icons-material'
 import { useTranslation } from 'react-i18next'
+import { getAnalysis } from '../api/analysis'
 
 export default function AnalysisPage() {
   const { t } = useTranslation()
   const [timeRange, setTimeRange] = useState('7days')
+  const [data, setData] = useState(null)
+  const [loading, setLoading] = useState(true)
 
-  const chartData = [
-    { name: t('analysis.charts.lineChart'), icon: <ShowChartIcon />, color: 'primary.main' },
-    { name: t('analysis.charts.barChart'), icon: <BarChartIcon />, color: 'success.main' },
-    { name: t('analysis.charts.pieChart'), icon: <PieChartIcon />, color: 'warning.main' }
-  ]
+  useEffect(() => {
+    let cancelled = false
+    setLoading(true)
+    getAnalysis({ timeRange })
+      .then((res) => {
+        if (!cancelled) setData(res.data)
+      })
+      .catch(() => {})
+      .finally(() => {
+        if (!cancelled) setLoading(false)
+      })
+    return () => { cancelled = true }
+  }, [timeRange])
 
-  const keyMetrics = [
-    {
-      title: t('analysis.metrics.totalRevenue'),
-      value: '¥126,560',
-      trend: '+12.5%',
-      trendUp: true,
-      subtitle: t('analysis.metrics.comparedYesterday')
-    },
-    {
-      title: t('analysis.metrics.visits'),
-      value: '8,846',
-      trend: '+5.2%',
-      trendUp: true,
-      subtitle: t('analysis.metrics.comparedYesterday')
-    },
-    {
-      title: t('analysis.metrics.payments'),
-      value: '6,560',
-      trend: '-2.1%',
-      trendUp: false,
-      subtitle: t('analysis.metrics.comparedYesterday')
-    },
-    {
-      title: t('analysis.metrics.conversionRate'),
-      value: '78%',
-      trend: '+8.3%',
-      trendUp: true,
-      subtitle: t('analysis.metrics.comparedYesterday')
-    }
-  ]
+  if (loading || !data) {
+    return (
+      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+        <CircularProgress />
+      </Box>
+    )
+  }
 
-  const salesData = [
-    { month: t('analysis.months.jan'), value: 4000 },
-    { month: t('analysis.months.feb'), value: 3000 },
-    { month: t('analysis.months.mar'), value: 5000 },
-    { month: t('analysis.months.apr'), value: 4500 },
-    { month: t('analysis.months.may'), value: 6000 },
-    { month: t('analysis.months.jun'), value: 7000 }
-  ]
+  const { keyMetrics, salesData, categories, topProducts } = data
 
-  const categoryData = [
-    { name: t('analysis.categories.electronics'), value: 35, color: '#1976d2' },
-    { name: t('analysis.categories.clothing'), value: 25, color: '#2e7d32' },
-    { name: t('analysis.categories.food'), value: 20, color: '#ed6c02' },
-    { name: t('analysis.categories.other'), value: 20, color: '#757575' }
-  ]
+  const maxValue = Math.max(...salesData.map((d) => d.value), 1)
 
-  const topProducts = [
-    { rank: 1, name: t('analysis.products.productA'), sales: 1234, revenue: '¥45,600' },
-    { rank: 2, name: t('analysis.products.productB'), sales: 987, revenue: '¥32,500' },
-    { rank: 3, name: t('analysis.products.productC'), sales: 765, revenue: '¥28,700' },
-    { rank: 4, name: t('analysis.products.productD'), sales: 654, revenue: '¥21,300' },
-    { rank: 5, name: t('analysis.products.productE'), sales: 543, revenue: '¥18,900' }
+  const metricsList = [
+    { title: t('analysis.metrics.totalRevenue'), ...keyMetrics.totalRevenue, subtitle: t('analysis.metrics.comparedYesterday') },
+    { title: t('analysis.metrics.visits'), ...keyMetrics.visits, subtitle: t('analysis.metrics.comparedYesterday') },
+    { title: t('analysis.metrics.payments'), ...keyMetrics.payments, subtitle: t('analysis.metrics.comparedYesterday') },
+    { title: t('analysis.metrics.conversionRate'), ...keyMetrics.conversionRate, subtitle: t('analysis.metrics.comparedYesterday') },
   ]
 
   return (
@@ -108,7 +80,7 @@ export default function AnalysisPage() {
 
       {/* Key Metrics */}
       <Grid container spacing={3} sx={{ mb: 4 }}>
-        {keyMetrics.map((metric, index) => (
+        {metricsList.map((metric, index) => (
           <Grid item xs={12} sm={6} md={3} key={index}>
             <Card>
               <CardContent>
@@ -155,7 +127,7 @@ export default function AnalysisPage() {
                     <Box
                       sx={{
                         width: '100%',
-                        height: `${(item.value / 7000) * 240}px`,
+                        height: `${(item.value / maxValue) * 240}px`,
                         bgcolor: 'primary.main',
                         borderRadius: 1,
                         minHeight: 20,
@@ -180,7 +152,7 @@ export default function AnalysisPage() {
             <Divider />
             <CardContent>
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-                {categoryData.map((item, index) => (
+                {categories.map((item, index) => (
                   <Box key={index}>
                     <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 0.5 }}>
                       <Typography variant="body2">{item.name}</Typography>
