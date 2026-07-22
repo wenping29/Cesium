@@ -49,7 +49,7 @@ export default function LoginPage() {
     setError('')
     try {
       await login({ username, password, ...deviceInfo })
-      navigate('/users', { replace: true })
+      navigate('/workbench', { replace: true })
     } catch (err) {
       const errorMessage = err?.response?.data || err?.message || t('login.failed')
       setError(errorMessage)
