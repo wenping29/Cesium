@@ -1,5 +1,6 @@
 import { create } from 'zustand'
 import { login as apiLogin, logout as apiLogout, getMe as apiGetMe, changePassword as apiChangePassword, updateProfile as apiUpdateProfile } from '../api/auth'
+import tabStore from './tabStore'
 
 const useAuthStore = create((set, get) => ({
   user: JSON.parse(localStorage.getItem('user') || 'null'),
@@ -19,6 +20,7 @@ const useAuthStore = create((set, get) => ({
     localStorage.removeItem('token')
     localStorage.removeItem('user')
     set({ token: null, user: null })
+    tabStore.getState().clearAll()
   },
 
   getProfile: async () => {
