@@ -23,11 +23,7 @@ const themes = {
   },
   sunset: {
     palette: { mode: 'light', primary: { main: '#e65100' }, secondary: { main: '#f57c00' } },
-  },
-  midnight: {
- 
-    palette: { mode: 'dark', primary: { main: '#151515' }, secondary: { main: '#b388ff'  } },
-  },
+  }
 }
 
 function Root() {

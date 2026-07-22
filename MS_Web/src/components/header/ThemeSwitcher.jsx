@@ -4,15 +4,14 @@ import PaletteIcon from '@mui/icons-material/Palette'
 import { useTranslation } from 'react-i18next'
 import useThemeStore from '../../store/themeStore'
 
-const themes = ['light', 'dark', 'ocean', 'forest', 'sunset', 'midnight']
+const themes = ['light', 'dark', 'ocean', 'forest', 'sunset']
 
 const themeColors = {
   light: '#1976d2',
   dark: '#151515',
   ocean: '#00695c',
   forest: '#2e7d32',
-  sunset: '#e65100',
-  midnight: '#7c4dff',
+  sunset: '#e65100'
 }
 
 export default function ThemeSwitcher() {
