@@ -23,6 +23,7 @@ public class AppDbContext : DbContext
     public DbSet<Notification> Notifications { get; set; }
     public DbSet<VisitorLog> VisitorLogs { get; set; }
     public DbSet<EarthquakeRecord> EarthquakeRecords { get; set; }
+    public DbSet<TyphoonRecord> TyphoonRecords { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -133,6 +134,16 @@ public class AppDbContext : DbContext
 
         modelBuilder.Entity<EarthquakeRecord>()
             .HasIndex(e => e.Magnitude);
+
+        // TyphoonRecord configuration
+        modelBuilder.Entity<TyphoonRecord>()
+            .HasIndex(t => t.Time);
+
+        modelBuilder.Entity<TyphoonRecord>()
+            .HasIndex(t => t.Name);
+
+        modelBuilder.Entity<TyphoonRecord>()
+            .HasIndex(t => t.Status);
 
         // Seed initial data
         SeedInitialData(modelBuilder);
