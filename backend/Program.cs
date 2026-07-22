@@ -20,10 +20,10 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("DevCorsPolicy", policy =>
     {
-        //  policy.WithOrigins("http://localhost:5173") // 前端调试地址
-        //       .AllowAnyHeader()
-        //       .AllowAnyMethod()
-        //       .AllowCredentials(); // 允许cookie、token凭证
+         policy.WithOrigins("http://localhost:5173") // 前端调试地址
+              .AllowAnyHeader()
+              .AllowAnyMethod()
+              .AllowCredentials(); // 允许cookie、token凭证
         // 调试模式允许所有源、所有Header、所有Method，允许携带Cookie
         // policy.AllowAnyOrigin()
         //       .AllowAnyHeader()
@@ -31,9 +31,9 @@ builder.Services.AddCors(options =>
               // 如需前端携带token/cookie不要搭配AllowAnyOrigin！看方案2
               ;
 
-        policy.WithOrigins("http://localhost:5173","http://localhost:5174","http://localhost:5176")
-            .AllowAnyHeader()
-            .AllowAnyMethod();
+        // policy.WithOrigins("http://localhost:5173","http://localhost:5174","http://localhost:5176")
+        //     .AllowAnyHeader()
+        //     .AllowAnyMethod();
     });
 });
 
