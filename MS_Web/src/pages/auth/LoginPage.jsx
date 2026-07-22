@@ -2,7 +2,9 @@ import { useState, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
   Box, Card, TextField, Typography, Button, Alert,
+  InputAdornment, IconButton,
 } from '@mui/material'
+import { Visibility, VisibilityOff } from '@mui/icons-material'
 import { useTranslation } from 'react-i18next'
 import useAuthStore from '../../store/authStore'
 
@@ -33,6 +35,7 @@ export default function LoginPage() {
   const { t } = useTranslation()
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  const [showPassword, setShowPassword] = useState(false)
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
   const login = useAuthStore((s) => s.login)
@@ -82,11 +85,26 @@ export default function LoginPage() {
           <TextField
             fullWidth
             label={t('login.password')}
-            type="password"
+            type={showPassword ? 'text' : 'password'}
             size="small"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             sx={{ mb: 3 }}
+            slotProps={{
+              input: {
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      onClick={() => setShowPassword(!showPassword)}
+                      edge="end"
+                      size="small"
+                    >
+                      {showPassword ? <VisibilityOff fontSize="small" /> : <Visibility fontSize="small" />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              },
+            }}
           />
           <Button
             fullWidth
