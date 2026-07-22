@@ -77,10 +77,14 @@ export default function UserManagementPage() {
   }
 
   const handleSubmit = async () => {
+    const payload = {
+      ...formData,
+      departmentId: formData.departmentId || null
+    }
     if (editingUser) {
-      await updateUser(editingUser.id, formData)
+      await updateUser(editingUser.id, payload)
     } else {
-      await createUser(formData)
+      await createUser(payload)
     }
     handleClose()
   }
