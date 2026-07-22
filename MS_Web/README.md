@@ -1,3 +1,17 @@
+
+# 用户密码
+|序号|名称|邮箱|密码|
+|---|---|---|---|
+|1	|admin|	admin@example.com	|Admin123!|
+|2	|manager|	admin2@163.com	|Admin123!|
+|3	|editor|	user001@example.com|	Admin123!|
+|4	|viewer	|user12@123.com	|Admin123!|
+|5	|user13|	user13@123.com	|Admin123!|
+|6|	SuperAdmin|	SuperAdmin@123.com |Admin123!|
+||||
+
+
+
 # React + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
