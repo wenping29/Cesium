@@ -28,6 +28,6 @@ dist-ssr
 [Oo]bj/
 
 
-*.db
+*.db*
 *.db-shm
 *.db-wal
