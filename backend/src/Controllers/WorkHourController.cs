@@ -19,31 +19,52 @@ public class WorkHourController : ControllerBase
         _context = context;
     }
     [HttpGet("all")]
-    public async Task<ActionResult<List<WorkHourRecordDto>>> All(int page = 1, int pageSize = 20, int? month = null)
+    public async Task<ActionResult<PagedResult<WorkHourRecordDto>>> GetAll(
+        [FromQuery] int page = 1,
+        [FromQuery] int pageSize = 20,
+        [FromQuery] int? month = null)
     {
         var query = _context.WorkHourRecords
             .Include(w => w.User)
             .AsQueryable();
 
+        if (month.HasValue)
+        {
+            var year = DateTime.UtcNow.Year;
+            var startDate = new DateTime(year, month.Value, 1);
+            var endDate = startDate.AddMonths(1);
+            query = query.Where(w => w.Date >= startDate && w.Date < endDate);
+        }
+
+        var total = await query.CountAsync();
+
         var records = await query
             .OrderByDescending(w => w.Date)
+            .Skip((page - 1) * pageSize)
+            .Take(pageSize)
             .ToListAsync();
 
-        return records.Select(w => new WorkHourRecordDto
+        return new PagedResult<WorkHourRecordDto>
         {
-            Id = w.Id,
-            UserId = w.UserId,
-            UserName = w.User?.Username ?? string.Empty,
-            Date = w.Date,
-            RegularHours = w.RegularHours,
-            OvertimeHours = w.OvertimeHours,
-            WeekendHours = w.WeekendHours,
-            HolidayHours = w.HolidayHours,
-            ProjectName = w.ProjectName,
-            TaskDescription = w.TaskDescription,
-            Remark = w.Remark,
-            CreatedAt = w.CreatedAt
-        }).ToList();
+            Total = total,
+            Page = page,
+            PageSize = pageSize,
+            Data = records.Select(w => new WorkHourRecordDto
+            {
+                Id = w.Id,
+                UserId = w.UserId,
+                UserName = w.User?.Username ?? string.Empty,
+                Date = w.Date,
+                RegularHours = w.RegularHours,
+                OvertimeHours = w.OvertimeHours,
+                WeekendHours = w.WeekendHours,
+                HolidayHours = w.HolidayHours,
+                ProjectName = w.ProjectName,
+                TaskDescription = w.TaskDescription,
+                Remark = w.Remark,
+                CreatedAt = w.CreatedAt
+            }).ToList()
+        };
     }
 
     [HttpGet("list")]
