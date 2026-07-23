@@ -1,6 +1,6 @@
 import request from './index'
 
-export const getWorkHours = (params) => request.get('/workhour', { params })
+export const getWorkHours = (params) => request.get('/workhour/all', { params })
 
 export const getWorkHour = (id) => request.get(`/workhour/${id}`)
 

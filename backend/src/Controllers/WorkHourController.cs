@@ -18,9 +18,35 @@ public class WorkHourController : ControllerBase
     {
         _context = context;
     }
+    [HttpGet("all")]
+    public async Task<ActionResult<List<WorkHourRecordDto>>> All(int page = 1, int pageSize = 20, int? month = null)
+    {
+        var query = _context.WorkHourRecords
+            .Include(w => w.User)
+            .AsQueryable();
 
-    [HttpGet]
-    [Authorize(Roles = "Admin")]
+        var records = await query
+            .OrderByDescending(w => w.Date)
+            .ToListAsync();
+
+        return records.Select(w => new WorkHourRecordDto
+        {
+            Id = w.Id,
+            UserId = w.UserId,
+            UserName = w.User?.Username ?? string.Empty,
+            Date = w.Date,
+            RegularHours = w.RegularHours,
+            OvertimeHours = w.OvertimeHours,
+            WeekendHours = w.WeekendHours,
+            HolidayHours = w.HolidayHours,
+            ProjectName = w.ProjectName,
+            TaskDescription = w.TaskDescription,
+            Remark = w.Remark,
+            CreatedAt = w.CreatedAt
+        }).ToList();
+    }
+
+    [HttpGet("list")]
     public async Task<ActionResult<List<WorkHourRecordDto>>> GetWorkHours(
         DateTime? startDate = null, DateTime? endDate = null, int? userId = null)
     {
@@ -57,7 +83,6 @@ public class WorkHourController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    [Authorize(Roles = "Admin")]
     public async Task<ActionResult<WorkHourRecordDto>> GetWorkHour(int id)
     {
         var record = await _context.WorkHourRecords
@@ -122,7 +147,6 @@ public class WorkHourController : ControllerBase
     }
 
     [HttpPost]
-    [Authorize(Roles = "Admin")]
     public async Task<ActionResult<WorkHourRecordDto>> CreateWorkHour(CreateWorkHourDto dto)
     {
         var record = new WorkHourRecord
@@ -161,7 +185,6 @@ public class WorkHourController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> UpdateWorkHour(int id, UpdateWorkHourDto dto)
     {
         var record = await _context.WorkHourRecords.FindAsync(id);
@@ -181,7 +204,6 @@ public class WorkHourController : ControllerBase
     }
 
     [HttpDelete("{id}")]
-    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> DeleteWorkHour(int id)
     {
         var record = await _context.WorkHourRecords.FindAsync(id);

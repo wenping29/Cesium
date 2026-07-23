@@ -20,7 +20,6 @@ public class AttendanceController : ControllerBase
     }
 
     [HttpGet]
-    [Authorize(Roles = "Admin")]
     public async Task<ActionResult<PagedResult<AttendanceRecordDto>>> GetAttendances(
         DateTime? startDate = null, DateTime? endDate = null, int? userId = null,
         string? userName = null, string? status = null,
