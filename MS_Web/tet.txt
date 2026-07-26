@@ -1,0 +1,15 @@
+
+/home/sn/www/html/nginxconf
+
+
+docker run -d \
+--name nginx \
+-p 80:80 \
+-p 5008:5008 \
+-p 443:443 \
+-v /home/sn/www/html/nginxconf/nginx.conf:/etc/nginx/nginx.conf \
+-v /opt/nginx/conf/conf.d:/etc/nginx/conf.d \
+-v /opt/nginx/html:/usr/share/nginx/html \
+-v /opt/nginx/logs:/var/log/nginx \
+--restart always \
+nginx

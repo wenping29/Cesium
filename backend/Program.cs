@@ -20,7 +20,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("DevCorsPolicy", policy =>
     {
-         policy.WithOrigins("http://localhost:5173") // 前端调试地址
+         policy.WithOrigins("http://localhost:5173","http://192.168.2.24:8081") // 前端调试地址
               .AllowAnyHeader()
               .AllowAnyMethod()
               .AllowCredentials(); // 允许cookie、token凭证
