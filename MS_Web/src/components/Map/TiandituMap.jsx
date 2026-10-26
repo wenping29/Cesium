@@ -84,7 +84,7 @@ export default function TiandituMap({
         zoom,
         maxZoom: 18,
       }),
-      controls: [new ScaleLine({ units: 'metric' }), new Zoom(), new Attribution()],
+      controls: [new ScaleLine({ units: 'metric' }), new Zoom(), new Attribution({ collapsible: false })],
     })
 
     map.on('loadend', () => setLoading(false))

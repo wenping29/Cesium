@@ -14,7 +14,7 @@ function OpenLayer() {
     script.onload = () => {
       if (mapRef.current && (window as any).ol) {
         const ol = (window as any).ol
-        const map = new ol.Map({
+        new ol.Map({
           target: mapRef.current,
           layers: [
             new ol.layer.Tile({

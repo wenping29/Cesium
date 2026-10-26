@@ -31,3 +31,6 @@ dist-ssr
 *.db*
 *.db-shm
 *.db-wal
+
+# 打包产物（scripts/build-package.ps1 输出）
+output/

@@ -88,6 +88,17 @@ const menus = [
         permission: 'map:cesium',
         children: [],
       },
+      {
+        id: 15,
+        name: '天地图',
+        path: '/map/tianditu',
+        icon: 'Environment',
+        parentId: 4,
+        sortOrder: 5,
+        isVisible: true,
+        permission: 'map:tianditu',
+        children: [],
+      },
     ],
   },
   {

@@ -8,14 +8,16 @@ function Amap() {
     script.src = 'https://webapi.amap.com/maps?v=2.0&key=YOUR_AMAP_KEY'
     script.onload = () => {
       if (mapRef.current && (window as any).AMap) {
-        const map = new (window as any).AMap.Map(mapRef.current, {
+        new (window as any).AMap.Map(mapRef.current, {
           zoom: 12,
           center: [116.397428, 39.90923],
         })
       }
     }
     document.body.appendChild(script)
-    return () => document.body.removeChild(script)
+    return () => {
+      document.body.removeChild(script)
+    }
   }, [])
 
   return (

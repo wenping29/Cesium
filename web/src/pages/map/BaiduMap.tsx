@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react'
 
 function BaiduMap() {
   const mapRef = useRef<HTMLDivElement>(null)
-  const baidu_key="Sa88qXQ26x7yoEuX1CcS7eGwScjBvcfn";
+  // 备用 ak：Sa88qXQ26x7yoEuX1CcS7eGwScjBvcfn（当前生效的是下方请求 URL 里的 ak）
 
   useEffect(() => {
     const script = document.createElement('script')
@@ -16,7 +16,9 @@ function BaiduMap() {
       }
     }
     document.body.appendChild(script)
-    return () => document.body.removeChild(script)
+    return () => {
+      document.body.removeChild(script)
+    }
   }, [])
 
   return (

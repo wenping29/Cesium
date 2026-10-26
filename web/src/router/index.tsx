@@ -14,6 +14,7 @@ import Logs from '../pages/system/Logs'
 import BaiduMap from '../pages/map/BaiduMap'
 import Amap from '../pages/map/Amap'
 import OpenLayer from '../pages/map/OpenLayer'
+import Tianditu from '../pages/map/Tianditu'
 import Cesium from '../pages/map/Cesium'
 
 const router = createBrowserRouter([
@@ -34,6 +35,7 @@ const router = createBrowserRouter([
               { path: 'baidu', element: <BaiduMap /> },
               { path: 'amap', element: <Amap /> },
               { path: 'openlayer', element: <OpenLayer /> },
+              { path: 'tianditu', element: <Tianditu /> },
               { path: 'cesium', element: <Cesium /> },
             ],
           },
