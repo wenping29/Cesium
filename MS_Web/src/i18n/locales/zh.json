@@ -6,6 +6,7 @@
     "mapCategory": "地图管理",
     "olMap": "OL地图",
     "leafletMap": "Leaflet地图",
+    "tiandituMap": "天地图",
     "dashboard": "仪表盘",
     "bigScreen": "大屏",
     "dataTables": "数据表格",
@@ -404,7 +405,16 @@
   "map": {
     "title": "Cesium 三维地图",
     "olTitle": "OpenLayers 二维地图",
-    "leafletTitle": "Leaflet 二维地图"
+    "leafletTitle": "Leaflet 二维地图",
+    "tiandituTitle": "天地图"
+  },
+  "tianditu": {
+    "basemap": "底图",
+    "vec": "矢量地图",
+    "img": "影像地图",
+    "ter": "地形晕渲",
+    "annotation": "注记叠加",
+    "hint": "瓦片由国家地理信息公共服务平台提供"
   },
   "layer": {
     "title": "图层管理",

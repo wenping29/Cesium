@@ -23,6 +23,7 @@ import AirQualityTablePage from './pages/AirQualityTablePage'
 
 import OpenLayerMapPage from './pages/Map/OpenLayerMapPage'
 import LeafletMapPage from './pages/Map/LeafletMapPage'
+import TiandituMapPage from './pages/Map/TiandituMapPage'
 import MapPage from './pages/Map/MapPage'
 
 import ImageToBimPage from './pages/ImageToBimPage'
@@ -84,6 +85,7 @@ export default function App() {
     '/map': '地图',
     '/openlayer-map': 'OpenLayer地图',
     '/leaflet-map': 'Leaflet地图',
+    '/tianditu-map': '天地图',
     '/image-to-bim': '影像转BIM',
     '/login-log-report': '登录日志',
     '/audit-log-report': '查询日志',
@@ -161,6 +163,7 @@ export default function App() {
               <Route path="/map" element={<PrivateRoute><MapPage /></PrivateRoute>} />
               <Route path="/openlayer-map" element={<PrivateRoute><OpenLayerMapPage /></PrivateRoute>} />
               <Route path="/leaflet-map" element={<PrivateRoute><LeafletMapPage /></PrivateRoute>} />
+              <Route path="/tianditu-map" element={<PrivateRoute><TiandituMapPage /></PrivateRoute>} />
               <Route path="/profile" element={<PrivateRoute><EditProfilePage /></PrivateRoute>} />
               <Route path="/change-password" element={<PrivateRoute><ChangePasswordPage /></PrivateRoute>} />
               <Route path="/image-to-bim" element={<PrivateRoute><ImageToBimPage /></PrivateRoute>} />

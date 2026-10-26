@@ -6,6 +6,7 @@
     "mapCategory": "Map Management",
     "olMap": "OL Map",
     "leafletMap": "Leaflet Map",
+    "tiandituMap": "Tianditu Map",
     "dashboard": "Dashboard",
     "bigScreen": "Big Screen",
     "dataTables": "Data Tables",
@@ -403,7 +404,16 @@
   "map": {
     "title": "Cesium 3D Map",
     "olTitle": "OpenLayers 2D Map",
-    "leafletTitle": "Leaflet 2D Map"
+    "leafletTitle": "Leaflet 2D Map",
+    "tiandituTitle": "Tianditu Map"
+  },
+  "tianditu": {
+    "basemap": "Basemap",
+    "vec": "Vector",
+    "img": "Imagery",
+    "ter": "Terrain",
+    "annotation": "Annotation overlay",
+    "hint": "Tiles served by the National Geospatial Information Public Service Platform"
   },
   "layer": {
     "title": "Layer Management",

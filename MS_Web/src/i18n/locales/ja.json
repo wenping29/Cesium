@@ -6,6 +6,7 @@
     "mapCategory": "マップ管理",
     "olMap": "OLマップ",
     "leafletMap": "Leaflet マップ",
+    "tiandituMap": "天地図",
     "dashboard": "ダッシュボード",
     "bigScreen": "大画面",
     "dataTables": "データテーブル",
@@ -204,7 +205,16 @@
   "map": {
     "title": "Cesium 3D マップ",
     "olTitle": "OpenLayers 2D マップ",
-    "leafletTitle": "Leaflet 2D マップ"
+    "leafletTitle": "Leaflet 2D マップ",
+    "tiandituTitle": "天地図"
+  },
+  "tianditu": {
+    "basemap": "ベースマップ",
+    "vec": "ベクター",
+    "img": "画像",
+    "ter": "地形",
+    "annotation": "注記オーバーレイ",
+    "hint": "タイルは国家地理情報公共サービスプラットフォームから提供"
   },
   "layer": {
     "title": "レイヤー管理",

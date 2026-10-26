@@ -196,7 +196,7 @@ namespace CesiumApi.Migrations
                             Id = 1,
                             Address = "北京市朝阳区建国路88号",
                             Code = "HQ",
-                            CreatedAt = new DateTime(2026, 7, 22, 6, 17, 31, 384, DateTimeKind.Utc).AddTicks(1717),
+                            CreatedAt = new DateTime(2026, 10, 26, 3, 41, 5, 11, DateTimeKind.Utc).AddTicks(6027),
                             Email = "zhangzong@company.com",
                             IsActive = true,
                             Leader = "张总",
@@ -209,7 +209,7 @@ namespace CesiumApi.Migrations
                             Id = 2,
                             Address = "北京市朝阳区建国路88号A座3层",
                             Code = "TECH",
-                            CreatedAt = new DateTime(2026, 7, 22, 6, 17, 31, 384, DateTimeKind.Utc).AddTicks(1723),
+                            CreatedAt = new DateTime(2026, 10, 26, 3, 41, 5, 11, DateTimeKind.Utc).AddTicks(6032),
                             Email = "tech@company.com",
                             IsActive = true,
                             Leader = "李经理",
@@ -223,7 +223,7 @@ namespace CesiumApi.Migrations
                             Id = 3,
                             Address = "北京市朝阳区建国路88号A座5层",
                             Code = "PROD",
-                            CreatedAt = new DateTime(2026, 7, 22, 6, 17, 31, 384, DateTimeKind.Utc).AddTicks(1724),
+                            CreatedAt = new DateTime(2026, 10, 26, 3, 41, 5, 11, DateTimeKind.Utc).AddTicks(6034),
                             Email = "product@company.com",
                             IsActive = true,
                             Leader = "王经理",
@@ -237,7 +237,7 @@ namespace CesiumApi.Migrations
                             Id = 4,
                             Address = "北京市朝阳区建国路88号B座2层",
                             Code = "MKT",
-                            CreatedAt = new DateTime(2026, 7, 22, 6, 17, 31, 384, DateTimeKind.Utc).AddTicks(1726),
+                            CreatedAt = new DateTime(2026, 10, 26, 3, 41, 5, 11, DateTimeKind.Utc).AddTicks(6035),
                             Email = "marketing@company.com",
                             IsActive = true,
                             Leader = "赵经理",
@@ -251,7 +251,7 @@ namespace CesiumApi.Migrations
                             Id = 5,
                             Address = "北京市朝阳区建国路88号B座3层",
                             Code = "SALES",
-                            CreatedAt = new DateTime(2026, 7, 22, 6, 17, 31, 384, DateTimeKind.Utc).AddTicks(1727),
+                            CreatedAt = new DateTime(2026, 10, 26, 3, 41, 5, 11, DateTimeKind.Utc).AddTicks(6037),
                             Email = "sales@company.com",
                             IsActive = true,
                             Leader = "孙经理",
@@ -265,7 +265,7 @@ namespace CesiumApi.Migrations
                             Id = 6,
                             Address = "北京市朝阳区建国路88号A座8层",
                             Code = "HR",
-                            CreatedAt = new DateTime(2026, 7, 22, 6, 17, 31, 384, DateTimeKind.Utc).AddTicks(1729),
+                            CreatedAt = new DateTime(2026, 10, 26, 3, 41, 5, 11, DateTimeKind.Utc).AddTicks(6038),
                             Email = "hr@company.com",
                             IsActive = true,
                             Leader = "周经理",
@@ -279,7 +279,7 @@ namespace CesiumApi.Migrations
                             Id = 7,
                             Address = "北京市朝阳区建国路88号A座9层",
                             Code = "FIN",
-                            CreatedAt = new DateTime(2026, 7, 22, 6, 17, 31, 384, DateTimeKind.Utc).AddTicks(1730),
+                            CreatedAt = new DateTime(2026, 10, 26, 3, 41, 5, 11, DateTimeKind.Utc).AddTicks(6040),
                             Email = "finance@company.com",
                             IsActive = true,
                             Leader = "吴经理",
@@ -293,7 +293,7 @@ namespace CesiumApi.Migrations
                             Id = 8,
                             Address = "北京市朝阳区建国路88号A座301室",
                             Code = "DEV1",
-                            CreatedAt = new DateTime(2026, 7, 22, 6, 17, 31, 384, DateTimeKind.Utc).AddTicks(1731),
+                            CreatedAt = new DateTime(2026, 10, 26, 3, 41, 5, 11, DateTimeKind.Utc).AddTicks(6041),
                             Email = "dev1@company.com",
                             IsActive = true,
                             Leader = "郑组长",
@@ -307,7 +307,7 @@ namespace CesiumApi.Migrations
                             Id = 9,
                             Address = "北京市朝阳区建国路88号A座302室",
                             Code = "DEV2",
-                            CreatedAt = new DateTime(2026, 7, 22, 6, 17, 31, 384, DateTimeKind.Utc).AddTicks(1732),
+                            CreatedAt = new DateTime(2026, 10, 26, 3, 41, 5, 11, DateTimeKind.Utc).AddTicks(6042),
                             Email = "dev2@company.com",
                             IsActive = true,
                             Leader = "陈组长",
@@ -321,7 +321,7 @@ namespace CesiumApi.Migrations
                             Id = 10,
                             Address = "北京市朝阳区建国路88号A座4层",
                             Code = "OPS",
-                            CreatedAt = new DateTime(2026, 7, 22, 6, 17, 31, 384, DateTimeKind.Utc).AddTicks(1734),
+                            CreatedAt = new DateTime(2026, 10, 26, 3, 41, 5, 11, DateTimeKind.Utc).AddTicks(6044),
                             Email = "ops@company.com",
                             IsActive = true,
                             Leader = "刘组长",
@@ -514,7 +514,7 @@ namespace CesiumApi.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2026, 7, 22, 6, 17, 31, 384, DateTimeKind.Utc).AddTicks(1585),
+                            CreatedAt = new DateTime(2026, 10, 26, 3, 41, 5, 11, DateTimeKind.Utc).AddTicks(5871),
                             Icon = "Home",
                             IsVisible = true,
                             Name = "首页",
@@ -523,7 +523,7 @@ namespace CesiumApi.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2026, 7, 22, 6, 17, 31, 384, DateTimeKind.Utc).AddTicks(1592),
+                            CreatedAt = new DateTime(2026, 10, 26, 3, 41, 5, 11, DateTimeKind.Utc).AddTicks(5877),
                             Icon = "Dashboard",
                             IsVisible = true,
                             Name = "工作台",
@@ -534,7 +534,7 @@ namespace CesiumApi.Migrations
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(2026, 7, 22, 6, 17, 31, 384, DateTimeKind.Utc).AddTicks(1593),
+                            CreatedAt = new DateTime(2026, 10, 26, 3, 41, 5, 11, DateTimeKind.Utc).AddTicks(5878),
                             Icon = "Analytics",
                             IsVisible = true,
                             Name = "数据分析",
@@ -545,7 +545,7 @@ namespace CesiumApi.Migrations
                         new
                         {
                             Id = 4,
-                            CreatedAt = new DateTime(2026, 7, 22, 6, 17, 31, 384, DateTimeKind.Utc).AddTicks(1594),
+                            CreatedAt = new DateTime(2026, 10, 26, 3, 41, 5, 11, DateTimeKind.Utc).AddTicks(5880),
                             Icon = "Notifications",
                             IsVisible = true,
                             Name = "通知中心",
@@ -556,7 +556,7 @@ namespace CesiumApi.Migrations
                         new
                         {
                             Id = 5,
-                            CreatedAt = new DateTime(2026, 7, 22, 6, 17, 31, 384, DateTimeKind.Utc).AddTicks(1596),
+                            CreatedAt = new DateTime(2026, 10, 26, 3, 41, 5, 11, DateTimeKind.Utc).AddTicks(5881),
                             Icon = "Send",
                             IsVisible = true,
                             Name = "发送消息",
@@ -567,7 +567,7 @@ namespace CesiumApi.Migrations
                         new
                         {
                             Id = 6,
-                            CreatedAt = new DateTime(2026, 7, 22, 6, 17, 31, 384, DateTimeKind.Utc).AddTicks(1597),
+                            CreatedAt = new DateTime(2026, 10, 26, 3, 41, 5, 11, DateTimeKind.Utc).AddTicks(5882),
                             Icon = "Dashboard",
                             IsVisible = true,
                             Name = "仪表盘",
@@ -577,7 +577,7 @@ namespace CesiumApi.Migrations
                         new
                         {
                             Id = 7,
-                            CreatedAt = new DateTime(2026, 7, 22, 6, 17, 31, 384, DateTimeKind.Utc).AddTicks(1598),
+                            CreatedAt = new DateTime(2026, 10, 26, 3, 41, 5, 11, DateTimeKind.Utc).AddTicks(5883),
                             Icon = "DesktopWindows",
                             IsVisible = true,
                             Name = "大屏展示",
@@ -587,7 +587,7 @@ namespace CesiumApi.Migrations
                         new
                         {
                             Id = 8,
-                            CreatedAt = new DateTime(2026, 7, 22, 6, 17, 31, 384, DateTimeKind.Utc).AddTicks(1599),
+                            CreatedAt = new DateTime(2026, 10, 26, 3, 41, 5, 11, DateTimeKind.Utc).AddTicks(5884),
                             Icon = "Map",
                             IsVisible = true,
                             Name = "地图相关",
@@ -596,7 +596,7 @@ namespace CesiumApi.Migrations
                         new
                         {
                             Id = 9,
-                            CreatedAt = new DateTime(2026, 7, 22, 6, 17, 31, 384, DateTimeKind.Utc).AddTicks(1600),
+                            CreatedAt = new DateTime(2026, 10, 26, 3, 41, 5, 11, DateTimeKind.Utc).AddTicks(5885),
                             Icon = "Map",
                             IsVisible = true,
                             Name = "Cesium地图",
@@ -607,7 +607,7 @@ namespace CesiumApi.Migrations
                         new
                         {
                             Id = 10,
-                            CreatedAt = new DateTime(2026, 7, 22, 6, 17, 31, 384, DateTimeKind.Utc).AddTicks(1601),
+                            CreatedAt = new DateTime(2026, 10, 26, 3, 41, 5, 11, DateTimeKind.Utc).AddTicks(5887),
                             Icon = "Layers",
                             IsVisible = true,
                             Name = "OpenLayer地图",
@@ -618,7 +618,7 @@ namespace CesiumApi.Migrations
                         new
                         {
                             Id = 11,
-                            CreatedAt = new DateTime(2026, 7, 22, 6, 17, 31, 384, DateTimeKind.Utc).AddTicks(1602),
+                            CreatedAt = new DateTime(2026, 10, 26, 3, 41, 5, 11, DateTimeKind.Utc).AddTicks(5888),
                             Icon = "MapOutlined",
                             IsVisible = true,
                             Name = "Leaflet地图",
@@ -628,8 +628,19 @@ namespace CesiumApi.Migrations
                         },
                         new
                         {
+                            Id = 48,
+                            CreatedAt = new DateTime(2026, 10, 26, 3, 41, 5, 11, DateTimeKind.Utc).AddTicks(5889),
+                            Icon = "Satellite",
+                            IsVisible = true,
+                            Name = "天地图",
+                            ParentId = 8,
+                            Path = "/tianditu-map",
+                            SortOrder = 4
+                        },
+                        new
+                        {
                             Id = 12,
-                            CreatedAt = new DateTime(2026, 7, 22, 6, 17, 31, 384, DateTimeKind.Utc).AddTicks(1604),
+                            CreatedAt = new DateTime(2026, 10, 26, 3, 41, 5, 11, DateTimeKind.Utc).AddTicks(5890),
                             Icon = "TableChart",
                             IsVisible = true,
                             Name = "数据表格",
@@ -638,7 +649,7 @@ namespace CesiumApi.Migrations
                         new
                         {
                             Id = 13,
-                            CreatedAt = new DateTime(2026, 7, 22, 6, 17, 31, 384, DateTimeKind.Utc).AddTicks(1605),
+                            CreatedAt = new DateTime(2026, 10, 26, 3, 41, 5, 11, DateTimeKind.Utc).AddTicks(5891),
                             Icon = "Volcano",
                             IsVisible = true,
                             Name = "地震数据",
@@ -649,7 +660,7 @@ namespace CesiumApi.Migrations
                         new
                         {
                             Id = 14,
-                            CreatedAt = new DateTime(2026, 7, 22, 6, 17, 31, 384, DateTimeKind.Utc).AddTicks(1606),
+                            CreatedAt = new DateTime(2026, 10, 26, 3, 41, 5, 11, DateTimeKind.Utc).AddTicks(5892),
                             Icon = "Storm",
                             IsVisible = true,
                             Name = "台风数据",
@@ -660,7 +671,7 @@ namespace CesiumApi.Migrations
                         new
                         {
                             Id = 15,
-                            CreatedAt = new DateTime(2026, 7, 22, 6, 17, 31, 384, DateTimeKind.Utc).AddTicks(1607),
+                            CreatedAt = new DateTime(2026, 10, 26, 3, 41, 5, 11, DateTimeKind.Utc).AddTicks(5894),
                             Icon = "Waves",
                             IsVisible = true,
                             Name = "风力数据",
@@ -671,7 +682,7 @@ namespace CesiumApi.Migrations
                         new
                         {
                             Id = 16,
-                            CreatedAt = new DateTime(2026, 7, 22, 6, 17, 31, 384, DateTimeKind.Utc).AddTicks(1608),
+                            CreatedAt = new DateTime(2026, 10, 26, 3, 41, 5, 11, DateTimeKind.Utc).AddTicks(5895),
                             Icon = "Air",
                             IsVisible = true,
                             Name = "空气质量",
@@ -682,7 +693,7 @@ namespace CesiumApi.Migrations
                         new
                         {
                             Id = 17,
-                            CreatedAt = new DateTime(2026, 7, 22, 6, 17, 31, 384, DateTimeKind.Utc).AddTicks(1609),
+                            CreatedAt = new DateTime(2026, 10, 26, 3, 41, 5, 11, DateTimeKind.Utc).AddTicks(5896),
                             Icon = "Settings",
                             IsVisible = true,
                             Name = "权限管理",
@@ -692,7 +703,7 @@ namespace CesiumApi.Migrations
                         new
                         {
                             Id = 18,
-                            CreatedAt = new DateTime(2026, 7, 22, 6, 17, 31, 384, DateTimeKind.Utc).AddTicks(1610),
+                            CreatedAt = new DateTime(2026, 10, 26, 3, 41, 5, 11, DateTimeKind.Utc).AddTicks(5897),
                             Icon = "People",
                             IsVisible = true,
                             Name = "用户管理",
@@ -704,7 +715,7 @@ namespace CesiumApi.Migrations
                         new
                         {
                             Id = 19,
-                            CreatedAt = new DateTime(2026, 7, 22, 6, 17, 31, 384, DateTimeKind.Utc).AddTicks(1611),
+                            CreatedAt = new DateTime(2026, 10, 26, 3, 41, 5, 11, DateTimeKind.Utc).AddTicks(5898),
                             Icon = "Shield",
                             IsVisible = true,
                             Name = "角色管理",
@@ -716,7 +727,7 @@ namespace CesiumApi.Migrations
                         new
                         {
                             Id = 20,
-                            CreatedAt = new DateTime(2026, 7, 22, 6, 17, 31, 384, DateTimeKind.Utc).AddTicks(1612),
+                            CreatedAt = new DateTime(2026, 10, 26, 3, 41, 5, 11, DateTimeKind.Utc).AddTicks(5899),
                             Icon = "Menu",
                             IsVisible = true,
                             Name = "菜单管理",
@@ -728,7 +739,7 @@ namespace CesiumApi.Migrations
                         new
                         {
                             Id = 21,
-                            CreatedAt = new DateTime(2026, 7, 22, 6, 17, 31, 384, DateTimeKind.Utc).AddTicks(1614),
+                            CreatedAt = new DateTime(2026, 10, 26, 3, 41, 5, 11, DateTimeKind.Utc).AddTicks(5901),
                             Icon = "Business",
                             IsVisible = true,
                             Name = "部门管理",
@@ -740,7 +751,7 @@ namespace CesiumApi.Migrations
                         new
                         {
                             Id = 22,
-                            CreatedAt = new DateTime(2026, 7, 22, 6, 17, 31, 384, DateTimeKind.Utc).AddTicks(1615),
+                            CreatedAt = new DateTime(2026, 10, 26, 3, 41, 5, 11, DateTimeKind.Utc).AddTicks(5902),
                             Icon = "Schedule",
                             IsVisible = true,
                             Name = "考勤管理",
@@ -749,7 +760,7 @@ namespace CesiumApi.Migrations
                         new
                         {
                             Id = 23,
-                            CreatedAt = new DateTime(2026, 7, 22, 6, 17, 31, 384, DateTimeKind.Utc).AddTicks(1617),
+                            CreatedAt = new DateTime(2026, 10, 26, 3, 41, 5, 11, DateTimeKind.Utc).AddTicks(5903),
                             Icon = "Description",
                             IsVisible = true,
                             Name = "打卡报表",
@@ -760,7 +771,7 @@ namespace CesiumApi.Migrations
                         new
                         {
                             Id = 24,
-                            CreatedAt = new DateTime(2026, 7, 22, 6, 17, 31, 384, DateTimeKind.Utc).AddTicks(1618),
+                            CreatedAt = new DateTime(2026, 10, 26, 3, 41, 5, 11, DateTimeKind.Utc).AddTicks(5904),
                             Icon = "Timer",
                             IsVisible = true,
                             Name = "工时报表",
@@ -771,7 +782,7 @@ namespace CesiumApi.Migrations
                         new
                         {
                             Id = 25,
-                            CreatedAt = new DateTime(2026, 7, 22, 6, 17, 31, 384, DateTimeKind.Utc).AddTicks(1619),
+                            CreatedAt = new DateTime(2026, 10, 26, 3, 41, 5, 11, DateTimeKind.Utc).AddTicks(5968),
                             Icon = "HolidayVillage",
                             IsVisible = true,
                             Name = "休假报表",
@@ -782,7 +793,7 @@ namespace CesiumApi.Migrations
                         new
                         {
                             Id = 26,
-                            CreatedAt = new DateTime(2026, 7, 22, 6, 17, 31, 384, DateTimeKind.Utc).AddTicks(1620),
+                            CreatedAt = new DateTime(2026, 10, 26, 3, 41, 5, 11, DateTimeKind.Utc).AddTicks(5969),
                             Icon = "BeachAccess",
                             IsVisible = true,
                             Name = "年假报表",
@@ -793,7 +804,7 @@ namespace CesiumApi.Migrations
                         new
                         {
                             Id = 27,
-                            CreatedAt = new DateTime(2026, 7, 22, 6, 17, 31, 384, DateTimeKind.Utc).AddTicks(1622),
+                            CreatedAt = new DateTime(2026, 10, 26, 3, 41, 5, 11, DateTimeKind.Utc).AddTicks(5971),
                             Icon = "History",
                             IsVisible = true,
                             Name = "日志管理",
@@ -802,7 +813,7 @@ namespace CesiumApi.Migrations
                         new
                         {
                             Id = 28,
-                            CreatedAt = new DateTime(2026, 7, 22, 6, 17, 31, 384, DateTimeKind.Utc).AddTicks(1623),
+                            CreatedAt = new DateTime(2026, 10, 26, 3, 41, 5, 11, DateTimeKind.Utc).AddTicks(5972),
                             Icon = "History",
                             IsVisible = true,
                             Name = "登录日志",
@@ -813,7 +824,7 @@ namespace CesiumApi.Migrations
                         new
                         {
                             Id = 29,
-                            CreatedAt = new DateTime(2026, 7, 22, 6, 17, 31, 384, DateTimeKind.Utc).AddTicks(1624),
+                            CreatedAt = new DateTime(2026, 10, 26, 3, 41, 5, 11, DateTimeKind.Utc).AddTicks(5973),
                             Icon = "FindInPage",
                             IsVisible = true,
                             Name = "审计日志",
@@ -824,7 +835,7 @@ namespace CesiumApi.Migrations
                         new
                         {
                             Id = 30,
-                            CreatedAt = new DateTime(2026, 7, 22, 6, 17, 31, 384, DateTimeKind.Utc).AddTicks(1625),
+                            CreatedAt = new DateTime(2026, 10, 26, 3, 41, 5, 11, DateTimeKind.Utc).AddTicks(5974),
                             Icon = "Visibility",
                             IsVisible = true,
                             Name = "访客日志",
@@ -835,7 +846,7 @@ namespace CesiumApi.Migrations
                         new
                         {
                             Id = 31,
-                            CreatedAt = new DateTime(2026, 7, 22, 6, 17, 31, 384, DateTimeKind.Utc).AddTicks(1666),
+                            CreatedAt = new DateTime(2026, 10, 26, 3, 41, 5, 11, DateTimeKind.Utc).AddTicks(5975),
                             Icon = "Insights",
                             IsVisible = true,
                             Name = "影像转BIM",
@@ -845,7 +856,7 @@ namespace CesiumApi.Migrations
                         new
                         {
                             Id = 32,
-                            CreatedAt = new DateTime(2026, 7, 22, 6, 17, 31, 384, DateTimeKind.Utc).AddTicks(1668),
+                            CreatedAt = new DateTime(2026, 10, 26, 3, 41, 5, 11, DateTimeKind.Utc).AddTicks(5977),
                             Icon = "Settings",
                             IsVisible = true,
                             Name = "其他",
@@ -854,7 +865,7 @@ namespace CesiumApi.Migrations
                         new
                         {
                             Id = 33,
-                            CreatedAt = new DateTime(2026, 7, 22, 6, 17, 31, 384, DateTimeKind.Utc).AddTicks(1669),
+                            CreatedAt = new DateTime(2026, 10, 26, 3, 41, 5, 11, DateTimeKind.Utc).AddTicks(5978),
                             Icon = "Info",
                             IsVisible = true,
                             Name = "简介",
@@ -865,7 +876,7 @@ namespace CesiumApi.Migrations
                         new
                         {
                             Id = 34,
-                            CreatedAt = new DateTime(2026, 7, 22, 6, 17, 31, 384, DateTimeKind.Utc).AddTicks(1670),
+                            CreatedAt = new DateTime(2026, 10, 26, 3, 41, 5, 11, DateTimeKind.Utc).AddTicks(5979),
                             Icon = "Help",
                             IsVisible = true,
                             Name = "常见问题",
@@ -876,7 +887,7 @@ namespace CesiumApi.Migrations
                         new
                         {
                             Id = 35,
-                            CreatedAt = new DateTime(2026, 7, 22, 6, 17, 31, 384, DateTimeKind.Utc).AddTicks(1671),
+                            CreatedAt = new DateTime(2026, 10, 26, 3, 41, 5, 11, DateTimeKind.Utc).AddTicks(5980),
                             Icon = "Send",
                             IsVisible = true,
                             Name = "聊天",
@@ -887,7 +898,7 @@ namespace CesiumApi.Migrations
                         new
                         {
                             Id = 36,
-                            CreatedAt = new DateTime(2026, 7, 22, 6, 17, 31, 384, DateTimeKind.Utc).AddTicks(1672),
+                            CreatedAt = new DateTime(2026, 10, 26, 3, 41, 5, 11, DateTimeKind.Utc).AddTicks(5981),
                             Icon = "Storage",
                             IsVisible = true,
                             Name = "文件管理",
@@ -898,7 +909,7 @@ namespace CesiumApi.Migrations
                         new
                         {
                             Id = 37,
-                            CreatedAt = new DateTime(2026, 7, 22, 6, 17, 31, 384, DateTimeKind.Utc).AddTicks(1674),
+                            CreatedAt = new DateTime(2026, 10, 26, 3, 41, 5, 11, DateTimeKind.Utc).AddTicks(5982),
                             Icon = "Settings",
                             IsVisible = true,
                             Name = "设置",
@@ -907,7 +918,7 @@ namespace CesiumApi.Migrations
                         new
                         {
                             Id = 38,
-                            CreatedAt = new DateTime(2026, 7, 22, 6, 17, 31, 384, DateTimeKind.Utc).AddTicks(1675),
+                            CreatedAt = new DateTime(2026, 10, 26, 3, 41, 5, 11, DateTimeKind.Utc).AddTicks(5984),
                             Icon = "Info",
                             IsVisible = true,
                             Name = "简介",
@@ -918,7 +929,7 @@ namespace CesiumApi.Migrations
                         new
                         {
                             Id = 39,
-                            CreatedAt = new DateTime(2026, 7, 22, 6, 17, 31, 384, DateTimeKind.Utc).AddTicks(1676),
+                            CreatedAt = new DateTime(2026, 10, 26, 3, 41, 5, 11, DateTimeKind.Utc).AddTicks(5985),
                             Icon = "Settings",
                             IsVisible = true,
                             Name = "设置",
@@ -929,7 +940,7 @@ namespace CesiumApi.Migrations
                         new
                         {
                             Id = 40,
-                            CreatedAt = new DateTime(2026, 7, 22, 6, 17, 31, 384, DateTimeKind.Utc).AddTicks(1677),
+                            CreatedAt = new DateTime(2026, 10, 26, 3, 41, 5, 11, DateTimeKind.Utc).AddTicks(5986),
                             Icon = "Wallpaper",
                             IsVisible = true,
                             Name = "背景设置",
@@ -940,7 +951,7 @@ namespace CesiumApi.Migrations
                         new
                         {
                             Id = 41,
-                            CreatedAt = new DateTime(2026, 7, 22, 6, 17, 31, 384, DateTimeKind.Utc).AddTicks(1678),
+                            CreatedAt = new DateTime(2026, 10, 26, 3, 41, 5, 11, DateTimeKind.Utc).AddTicks(5987),
                             Icon = "DashboardOutlined",
                             IsVisible = true,
                             Name = "看板",
@@ -951,7 +962,7 @@ namespace CesiumApi.Migrations
                         new
                         {
                             Id = 42,
-                            CreatedAt = new DateTime(2026, 7, 22, 6, 17, 31, 384, DateTimeKind.Utc).AddTicks(1679),
+                            CreatedAt = new DateTime(2026, 10, 26, 3, 41, 5, 11, DateTimeKind.Utc).AddTicks(5988),
                             Icon = "Folder",
                             IsVisible = true,
                             Name = "项目",
@@ -962,7 +973,7 @@ namespace CesiumApi.Migrations
                         new
                         {
                             Id = 43,
-                            CreatedAt = new DateTime(2026, 7, 22, 6, 17, 31, 384, DateTimeKind.Utc).AddTicks(1680),
+                            CreatedAt = new DateTime(2026, 10, 26, 3, 41, 5, 11, DateTimeKind.Utc).AddTicks(5989),
                             Icon = "Help",
                             IsVisible = true,
                             Name = "常见问题",
@@ -973,7 +984,7 @@ namespace CesiumApi.Migrations
                         new
                         {
                             Id = 44,
-                            CreatedAt = new DateTime(2026, 7, 22, 6, 17, 31, 384, DateTimeKind.Utc).AddTicks(1682),
+                            CreatedAt = new DateTime(2026, 10, 26, 3, 41, 5, 11, DateTimeKind.Utc).AddTicks(5991),
                             Icon = "People",
                             IsVisible = true,
                             Name = "个人资料",
@@ -984,7 +995,7 @@ namespace CesiumApi.Migrations
                         new
                         {
                             Id = 45,
-                            CreatedAt = new DateTime(2026, 7, 22, 6, 17, 31, 384, DateTimeKind.Utc).AddTicks(1683),
+                            CreatedAt = new DateTime(2026, 10, 26, 3, 41, 5, 11, DateTimeKind.Utc).AddTicks(5992),
                             Icon = "Security",
                             IsVisible = true,
                             Name = "认证",
@@ -995,7 +1006,7 @@ namespace CesiumApi.Migrations
                         new
                         {
                             Id = 46,
-                            CreatedAt = new DateTime(2026, 7, 22, 6, 17, 31, 384, DateTimeKind.Utc).AddTicks(1684),
+                            CreatedAt = new DateTime(2026, 10, 26, 3, 41, 5, 11, DateTimeKind.Utc).AddTicks(5993),
                             Icon = "Storage",
                             IsVisible = true,
                             Name = "文件管理",
@@ -1006,7 +1017,7 @@ namespace CesiumApi.Migrations
                         new
                         {
                             Id = 47,
-                            CreatedAt = new DateTime(2026, 7, 22, 6, 17, 31, 384, DateTimeKind.Utc).AddTicks(1685),
+                            CreatedAt = new DateTime(2026, 10, 26, 3, 41, 5, 11, DateTimeKind.Utc).AddTicks(5994),
                             Icon = "Send",
                             IsVisible = true,
                             Name = "聊天",
@@ -1387,6 +1398,11 @@ namespace CesiumApi.Migrations
                         },
                         new
                         {
+                            RoleId = 1,
+                            MenuId = 48
+                        },
+                        new
+                        {
                             RoleId = 2,
                             MenuId = 1
                         },
@@ -1487,6 +1503,11 @@ namespace CesiumApi.Migrations
                         },
                         new
                         {
+                            RoleId = 2,
+                            MenuId = 48
+                        },
+                        new
+                        {
                             RoleId = 3,
                             MenuId = 1
                         },
@@ -1539,6 +1560,11 @@ namespace CesiumApi.Migrations
                         {
                             RoleId = 3,
                             MenuId = 14
+                        },
+                        new
+                        {
+                            RoleId = 3,
+                            MenuId = 48
                         },
                         new
                         {

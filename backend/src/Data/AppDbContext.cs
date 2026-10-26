@@ -177,11 +177,11 @@ public class AppDbContext : DbContext
 
         // Seed RoleMenu - 角色菜单关联
         // 超级管理员 - 所有菜单
-        var superAdminMenuIds = new[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47 };
+        var superAdminMenuIds = new[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48 };
         // 管理员 - 部分菜单
-        var adminMenuIds = new[] { 1, 2, 3, 6, 7, 8, 9, 10, 12, 13, 14, 17, 18, 19, 22, 23, 24, 27, 28, 29 };
+        var adminMenuIds = new[] { 1, 2, 3, 6, 7, 8, 9, 10, 12, 13, 14, 17, 18, 19, 22, 23, 24, 27, 28, 29, 48 };
         // 普通用户 - 基本菜单
-        var userMenuIds = new[] { 1, 2, 3, 4, 6, 7, 8, 9, 12, 13, 14 };
+        var userMenuIds = new[] { 1, 2, 3, 4, 6, 7, 8, 9, 12, 13, 14, 48 };
         // 访客 - 最少菜单
         var guestMenuIds = new[] { 1, 2, 6, 7 };
 
@@ -217,6 +217,7 @@ public class AppDbContext : DbContext
             new Menu { Id = 9, Name = "Cesium地图", Path = "/map", Icon = "Map", ParentId = 8, SortOrder = 1, IsVisible = true, Permission = null },
             new Menu { Id = 10, Name = "OpenLayer地图", Path = "/openlayer-map", Icon = "Layers", ParentId = 8, SortOrder = 2, IsVisible = true, Permission = null },
             new Menu { Id = 11, Name = "Leaflet地图", Path = "/leaflet-map", Icon = "MapOutlined", ParentId = 8, SortOrder = 3, IsVisible = true, Permission = null },
+            new Menu { Id = 48, Name = "天地图", Path = "/tianditu-map", Icon = "Satellite", ParentId = 8, SortOrder = 4, IsVisible = true, Permission = null },
 
             // 数据表格 (Id 12-16)
             new Menu { Id = 12, Name = "数据表格", Path = null, Icon = "TableChart", ParentId = null, SortOrder = 5, IsVisible = true, Permission = null },

@@ -6,7 +6,7 @@ function BaiduMap() {
 
   useEffect(() => {
     const script = document.createElement('script')
-    script.src = 'https://api.map.baidu.com/api?v=3.0&ak=baidu_key'
+    script.src = 'https://api.map.baidu.com/api?v=3.0&ak=DD279b2a90afdf0ae7a3796787a0742e'
     script.onload = () => {
       if (mapRef.current && (window as any).BMap) {
         const map = new (window as any).BMap.Map(mapRef.current)

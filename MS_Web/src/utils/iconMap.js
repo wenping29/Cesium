@@ -33,6 +33,7 @@ import HelpIcon from '@mui/icons-material/Help'
 import SecurityIcon from '@mui/icons-material/Security'
 import StorageIcon from '@mui/icons-material/Storage'
 import MenuIcon from '@mui/icons-material/Menu'
+import SatelliteIcon from '@mui/icons-material/Satellite'
 
 export const iconMap = {
   'Home': HomeIcon,
@@ -69,7 +70,8 @@ export const iconMap = {
   'Help': HelpIcon,
   'Security': SecurityIcon,
   'Storage': StorageIcon,
-  'Menu': MenuIcon
+  'Menu': MenuIcon,
+  'Satellite': SatelliteIcon
 }
 
 export const getIconComponent = (iconName) => {

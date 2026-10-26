@@ -18,6 +18,7 @@ const breadcrumbMap = {
   '/map': { label: 'nav.map', parent: '/maps' },
   '/openlayer-map': { label: 'nav.olMap', parent: '/maps' },
   '/leaflet-map': { label: 'nav.leafletMap', parent: '/maps' },
+  '/tianditu-map': { label: 'nav.tiandituMap', parent: '/maps' },
   '/image-to-bim': { label: 'nav.imageToBim', parent: '/' },
   '/attendance-report': { label: 'nav.openReport', parent: '/attendance' },
   '/workhour-report': { label: 'nav.workHourReport', parent: '/attendance' },
